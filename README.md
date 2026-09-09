@@ -11,10 +11,10 @@ cards, live HTML, presentation mode. Three.js scenes are not part of this repo.
 **[Open the live DeepSeek-V4.1 Flash Showcase ↗](https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/)** — browse the generated websites, click any card to open the original page, or use the presentation view.
 
 <p align="center">
-  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/architecture-studio/desktop.png" alt="DeepSeek architecture studio" width="48%"></a>
-  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/creative-gallery/desktop.png" alt="DeepSeek creative gallery" width="48%"></a>
-  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/cinema-streaming/desktop.png" alt="DeepSeek cinema streaming" width="48%"></a>
-  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/fashion-editorial/desktop.png" alt="DeepSeek fashion editorial" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/fintech-dashboard/desktop.png" alt="DeepSeek fintech dashboard" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/inventory-manager/desktop.png" alt="DeepSeek inventory manager dashboard" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/fleet-logistics/desktop.png" alt="DeepSeek fleet logistics dashboard" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/transit-control/desktop.png" alt="DeepSeek transit control dashboard" width="48%"></a>
 </p>
 
 Local preview (after export):
