@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEAL / PLANNER — Your week, plated.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a17;
+    --paper:#f4efe4;
+    --paper-2:#ebe4d3;
+    --line:#1a1a17;
+    --tomato:#e94b2c;
+    --tomato-deep:#c23a1f;
+    --olive:#5b6b3a;
+    --mustard:#e8b53a;
+    --plum:#5a2a4a;
+    --sky:#a8c5d6;
+    --muted:#6b6656;
+    --shadow: 4px 4px 0 var(--ink);
+    --shadow-sm: 2px 2px 0 var(--ink);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(232,181,58,.18), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(233,75,44,.12), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(26,26,23,.025) 0 1px, transparent 1px 4px);
+    min-height:100vh;
+  }
+  .wrap{max-width:1440px;margin:0 auto;padding:22px 40px 60px}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:18px;border-bottom:2px solid var(--ink);
+    margin-bottom:26px;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{
+    width:44px;height:44px;border:2px solid var(--ink);border-radius:50%;
+    background:var(--tomato);position:relative;box-shadow:var(--shadow-sm);
+    display:grid;place-items:center;
+  }
+  .brand-mark::before{
+    content:"";position:absolute;inset:6px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #ffd9a8, var(--tomato) 60%, var(--tomato-deep));
+  }
+  .brand-mark::after{
+    content:"";position:absolute;width:8px;height:8px;border-radius:50%;
+    background:var(--olive);top:4px;right:6px;border:1.5px solid var(--ink);
+  }
+  .brand-name{
+    font-family:'Fraunces',serif;font-weight:900;font-size:22px;letter-spacing:-.02em;
+    line-height:1;
+  }
+  .brand-name span{color:var(--tomato)}
+  .brand-sub{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);margin-top:4px;
+  }
+  .topnav{display:flex;gap:6px;align-items:center}
+  .topnav a{
+    font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;
+    padding:8px 14px;border-radius:999px;border:1.5px solid transparent;
+    transition:.15s;
+  }
+  .topnav a:hover{border-color:var(--ink);background:var(--paper-2)}
+  .topnav a.active{background:var(--ink);color:var(--paper)}
+  .top-actions{display:flex;gap:10px;align-items:center}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);
+    background:linear-gradient(135deg,var(--mustard),var(--tomato));
+    display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;
+    font-size:14px;color:var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end;
+    margin-bottom:28px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;font-weight:500;font-size:clamp(38px,4.4vw,60px);
+    line-height:.98;letter-spacing:-.03em;
+  }
+  .hero h1 em{font-style:italic;font-weight:400;color:var(--tomato)}
+  .hero h1 .under{
+    background:linear-gradient(transparent 62%, var(--mustard) 62% 92%, transparent 92%);
+    padding:0 4px;
+  }
+  .hero-meta{
+    display:flex;gap:22px;margin-top:18px;flex-wrap:wrap;
+  }
+  .hero-meta div{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .hero-meta div b{color:var(--ink);font-weight:600}
+  .hero-side{
+    border:2px solid var(--ink);background:var(--paper-2);
+    padding:18px 20px;box-shadow:var(--shadow);border-radius:14px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .hero-side .label{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .hero-side .big{
+    font-family:'Fraunces',serif;font-size:34px;font-weight:700;line-height:1;
+    letter-spacing:-.02em;
+  }
+  .hero-side .big small{font-size:14px;font-weight:500;color:var(--muted);margin-left:6px}
+  .progress{
+    height:10px;border:1.5px solid var(--ink);border-radius:999px;background:var(--paper);
+    overflow:hidden;position:relative;
+  }
+  .progress i{
+    display:block;height:100%;width:72%;
+    background:repeating-linear-gradient(45deg,var(--olive) 0 6px, #6f8149 6px 12px);
+  }
+  .hero-side .row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .hero-side .row b{color:var(--ink)}
+
+  /* ---------- Layout grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap:26px;
+  }
+  .panel{
+    border:2px solid var(--ink);background:var(--paper);
+    border-radius:16px;box-shadow:var(--shadow);overflow:hidden;
+  }
+  .panel-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:2px solid var(--ink);
+    background:var(--paper-2);
+  }
+  .panel-head h2{
+    font-family:'Fraunces',serif;font-size:18px;font-weight:700;letter-spacing:-.01em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .panel-head h2 .dot{
+    width:10px;height:10px;border-radius:50%;background:var(--tomato);
+    border:1.5px solid var(--ink);
+  }
+  .panel-head .tools{display:flex;gap:6px}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;padding:5px 10px;border:1.5px solid var(--ink);
+    border-radius:999px;background:var(--paper);cursor:pointer;transition:.15s;
+  }
+  .chip:hover{background:var(--ink);color:var(--paper)}
+  .chip.on{background:var(--ink);color:var(--paper)}
+
+  /* ---------- Week calendar ---------- */
+  .week{
+    display:grid;grid-template-columns:repeat(7,1fr);
+    border-bottom:2px solid var(--ink);
+  }
+  .day{
+    padding:12px 10px 14px;border-right:1.5px dashed rgba(26,26,23,.25);
+    min-height:118px;position:relative;cursor:pointer;transition:.15s;
+  }
+  .day:last-child{border-right:none}
+  .day:hover{background:var(--paper-2)}
+  .day .dow{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .day .num{
+    font-family:'Fraunces',serif;font-size:22px;font-weight:700;line-height:1;
+    margin-top:2px;
+  }
+  .day.today{background:linear-gradient(180deg, rgba(232,181,58,.28), transparent 70%)}
+  .day.today .num{color:var(--tomato)}
+  .day.today::after{
+    content:"TODAY";position:absolute;top:8px;right:8px;
+    font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;
+    background:var(--tomato);color:var(--paper);padding:2px 5px;border-radius:3px;
+  }
+  .meal-tag{
+    margin-top:10px;font-size:11px;line-height:1.25;font-weight:500;
+    padding:6px 8px;border-radius:6px;border:1.5px solid var(--ink);
+    background:var(--paper);display:flex;align-items:center;gap:6px;
+  }
+  .meal-tag .swatch{
+    width:8px;height:8px;border-radius:2px;flex-shrink:0;border:1px solid var(--ink);
+  }
+  .meal-tag.empty{
+    border-style:dashed;color:var(--muted);background:transparent;
+    justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+  .meal-tag.empty:hover{background:var(--mustard);color:var(--ink);border-style:solid}
+
+  /* ---------- Recipe cards ---------- */
+  .recipes{padding:18px}
+  .recipes-head{
+    display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;
+  }
+  .recipes-head h3{
+    font-family:'Fraunces',serif;font-size:16px;font-weight:700;
+  }
+  .recipes-head .count{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  }
+  .recipe-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .recipe{
+    border:2px solid var(--ink);border-radius:12px;overflow:hidden;
+    background:var(--paper);box-shadow:var(--shadow-sm);
+    display:flex;flex-direction:column;transition:.18s;cursor:pointer;
+  }
+  .recipe:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .recipe .art{
+    height:96px;position:relative;border-bottom:2px solid var(--ink);
+    overflow:hidden;
+  }
+  .recipe .art svg{width:100%;height:100%;display:block}
+  .recipe .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .recipe .cat{
+    font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .recipe h4{
+    font-family:'Fraunces',serif;font-size:15px;font-weight:700;line-height:1.15;
+    letter-spacing:-.01em;
+  }
+  .recipe .meta{
+    display:flex;gap:10px;font-size:11px;color:var(--muted);margin-top:auto;
+    padding-top:8px;border-top:1px dashed rgba(26,26,23,.25);
+  }
+  .recipe .meta span{display:flex;align-items:center;gap:4px}
+  .recipe .meta svg{width:11px;height:11px}
+
+  /* ---------- Right column ---------- */
+  .right{display:flex;flex-direction:column;gap:26px}
+
+  /* Servings control */
+  .servings{padding:16px 18px}
+  .servings-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .servings-label{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .servings-title{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-top:2px;
+  }
+  .stepper{
+    display:flex;align-items:center;border:2px solid var(--ink);border-radius:999px;
+    background:var(--paper);overflow:hidden;box-shadow:var(--shadow-sm);
+  }
+  .stepper button{
+    width:38px;height:38px;border:none;background:transparent;cursor:pointer;
+    font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink);
+    transition:.15s;
+  }
+  .stepper button:hover{background:var(--mustard)}
+  .stepper .val{
+    min-width:52px;text-align:center;font-family:'Fraunces',serif;font-size:20px;
+    font-weight:700;border-left:2px solid var(--ink);border-right:2px solid var(--ink);
+    padding:6px 0;
+  }
+  .servings-note{
+    margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5;
+  }
+  .servings-note b{color:var(--ink)}
+
+  /* Nutrition */
+  .nutrition{padding:16px 18px}
+  .nut-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;
+  }
+  .nut{
+    border:1.5px solid var(--ink);border-radius:10px;padding:10px 8px;
+    text-align:center;background:var(--paper-2);
+  }
+  .nut .v{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:700;line-height:1;
+  }
+  .nut .v small{font-size:11px;font-weight:500;color:var(--muted)}
+  .nut .k{
+    font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-top:6px;
+  }
+  .nut-bar{
+    margin-top:14px;display:flex;flex-direction:column;gap:8px;
+  }
+  .nut-bar .row{display:flex;align-items:center;gap:10px;font-size:11px}
+  .nut-bar .row .name{width:70px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  .nut-bar .row .track{
+    flex:1;height:8px;border:1.5px solid var(--ink);border-radius:999px;
+    background:var(--paper);overflow:hidden;
+  }
+  .nut-bar .row .track i{display:block;height:100%}
+  .nut-bar .row .pct{width:34px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink)}
+
+  /* Grocery list */
+  .grocery{padding:0}
+  .grocery .panel-head{background:var(--olive);color:var(--paper);border-bottom-color:var(--ink)}
+  .grocery .panel-head h2 .dot{background:var(--mustard)}
+  .grocery .panel-head .chip{border-color:var(--paper);color:var(--paper);background:transparent}
+  .grocery .panel-head .chip:hover{background:var(--paper);color:var(--olive)}
+  .grocery-list{padding:8px 0;max-height:280px;overflow-y:auto}
+  .grocery-list::-webkit-scrollbar{width:8px}
+  .grocery-list::-webkit-scrollbar-thumb{background:var(--ink);border-radius:4px}
+  .g-item{
+    display:flex;align-items:center;gap:12px;padding:9px 18px;
+    border-bottom:1px dashed rgba(26,26,23,.2);cursor:pointer;transition:.12s;
+  }
+  .g-item:last-child{border-bottom:none}
+  .g-item:hover{background:var(--paper-2)}
+  .g-item .box{
+    width:18px;height:18px;border:2px solid var(--ink);border-radius:5px;
+    display:grid;place-items:center;flex-shrink:0;background:var(--paper);
+    transition:.15s;
+  }
+  .g-item .box svg{width:11px;height:11px;opacity:0;transition:.15s}
+  .g-item.done .box{background:var(--olive)}
+  .g-item.done .box svg{opacity:1}
+  .g-item.done .name{text-decoration:line-through;color:var(--muted)}
+  .g-item .name{font-size:13px;font-weight:500;flex:1}
+  .g-item .qty{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  }
+  .g-item .cat-dot{
+    width:6px;height:6px;border-radius:50%;flex-shrink:0;
+  }
+  .grocery-foot{
+    padding:12px 18px;border-top:2px solid var(--ink);background:var(--paper-2);
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .grocery-foot b{color:var(--ink)}
+
+  /* Quick add */
+  .quickadd{
+    padding:16px 18px;background:var(--ink);color:var(--paper);
+    border-radius:14px;box-shadow:var(--shadow);border:2px solid var(--ink);
+  }
+  .quickadd .label{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--mustard);
+  }
+  .quickadd h3{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-top:4px;
+    letter-spacing:-.01em;
+  }
+  .qa-input{
+    display:flex;gap:8px;margin-top:14px;
+  }
+  .qa-input input{
+    flex:1;background:var(--paper);border:2px solid var(--paper);border-radius:10px;
+    padding:11px 14px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);
+    outline:none;
+  }
+  .qa-input input:focus{border-color:var(--mustard)}
+  .qa-input button{
+    background:var(--tomato);color:var(--paper);border:2px solid var(--paper);
+    border-radius:10px;padding:0 18px;font-family:'Inter',sans-serif;font-weight:600;
+    font-size:13px;cursor:pointer;transition:.15s;
+  }
+  .qa-input button:hover{background:var(--mustard);color:var(--ink)}
+  .qa-suggest{
+    display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;
+  }
+  .qa-suggest button{
+    background:transparent;border:1.5px solid rgba(244,239,228,.4);color:var(--paper);
+    border-radius:999px;padding:5px 11px;font-size:11px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;letter-spacing:.05em;transition:.15s;
+  }
+  .qa-suggest button:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+
+  /* Toast */
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120%);
+    background:var(--ink);color:var(--paper);padding:12px 22px;border-radius:999px;
+    font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);
+    transition:transform .35s cubic-bezier(.2,.9,.3,1.2);z-index:100;
+    display:flex;align-items:center;gap:10px;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast .dot{width:8px;height:8px;border-radius:50%;background:var(--mustard)}
+
+  /* Responsive */
+  @media (max-width:1100px){
+    .grid{grid-template-columns:1fr}
+    .hero{grid-template-columns:1fr}
+    .recipe-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:720px){
+    .wrap{padding:16px 18px 40px}
+    .topnav{display:none}
+    .week{grid-template-columns:repeat(2,1fr)}
+    .day{border-right:none;border-bottom:1.5px dashed rgba(26,26,23,.25)}
+    .recipe-grid{grid-template-columns:1fr}
+    .nut-grid{grid-template-columns:repeat(2,1fr)}
+    .hero h1{font-size:36px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">MEAL <span>/</span> PLANNER</div>
+        <div class="brand-sub">Week of March 18 — 24</div>
+      </div>
+    </div>
+    <nav class="topnav">
+      <a href="#" class="active">This Week</a>
+      <a href="#">Recipes</a>
+      <a href="#">Grocery</a>
+      <a href="#">Pantry</a>
+      <a href="#">Insights</a>
+    </nav>
+    <div class="top-actions">
+      <div class="avatar">AR</div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Your week, <em>plated</em> —<br>one <span class="under">deliberate</span> meal at a time.</h1>
+      <div class="hero-meta">
+        <div>Planned <b>18 / 21</b> meals</div>
+        <div>Prep time <b>4h 20m</b></div>
+        <div>Est. cost <b>$142.60</b></div>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="label">Weekly progress</div>
+      <div class="big">86<small>%</small></div>
+      <div class="progress"><i></i></div>
+      <div class="row"><span>3 meals left to plan</span><b>Sun · Mon · Tue</b></div>
+    </aside>
+  </section>
+
+  <!-- Main grid -->
+  <div class="grid">
+
+    <!-- LEFT: Calendar + Recipes -->
+    <div style="display:flex;flex-direction:column;gap:26px">
+
+      <!-- Week calendar -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2><span class="dot"></span>Weekly Calendar</h2>
+          <div class="tools">
+            <button class="chip on">Dinner</button>
+            <button class="chip">Lunch</button>
+            <button class="chip">Breakfast</button>
+          </div>
+        </div>
+        <div class="week" id="week">
+          <!-- days injected by JS -->
+        </div>
+      </section>
+
+      <!-- Recipe cards -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2><span class="dot" style="background:var(--mustard)"></span>Recipe Library</h2>
+          <div class="tools">
+            <button class="chip on">All</button>
+            <button class="chip">Quick</button>
+            <button class="chip">Veg</button>
+          </div>
+        </div>
+        <div class="recipes">
+          <div class="recipes-head">
+            <h3>Suggested for this week</h3>
+            <span class="count">6 recipes · 4 cuisines</span>
+          </div>
+          <div class="recipe-grid" id="recipeGrid">
+            <!-- recipes injected by JS -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT: Servings, Nutrition, Grocery, Quick add -->
+    <div class="right">
+
+      <!-- Servings control -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2><span class="dot" style="background:var(--plum)"></span>Servings</h2>
+          <div class="tools"><button class="chip">Reset</button></div>
+        </div>
+        <div class="servings">
+          <div class="servings-row">
+            <div>
+              <div class="servings-label">Cooking for</div>
+              <div class="servings-title" id="servingsTitle">4 people</div>
+            </div>
+            <div class="stepper">
+              <button id="minus" aria-label="Decrease servings">−</button>
+              <div class="val" id="servingsVal">4</div>
+              <button id="plus" aria-label="Increase servings">+</button>
+            </div>
+          </div>
+          <p class="servings-note">All recipe quantities and the grocery list scale automatically. <b>Leftovers</b> are packed for tomorrow's lunch.</p>
+        </div>
+      </section>
+
+      <!-- Nutrition -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2><span class="dot" style="background:var(--olive)"></span>Nutrition Summary</h2>
+          <div class="tools"><button class="chip">Daily</button></div>
+        </div>
+        <div class="nutrition">
+          <div class="nut-grid">
+            <div class="nut"><div class="v">2,140<small> kcal</small></div><div class="k">Energy</div></div>
+            <div class="nut"><div class="v">128<small> g</small></div><div class="k">Protein</div></div>
+            <div class="nut"><div class="v">74<small> g</small></div><div class="k">Fat</div></div>
+            <div class="nut"><div class="v">212<small> g</small></div><div class="k">Carbs</div></div>
+          </div>
+          <div class="nut-bar">
+            <div class="row"><span class="name">Fiber</span><div class="track"><i style="width:78%;background:var(--olive)"></i></div><span class="pct">78%</span></div>
+            <div class="row"><span class="name">Iron</span><div class="track"><i style="width:62%;background:var(--tomato)"></i></div><span class="pct">62%</span></div>
+            <div class="row"><span class="name">Vit C</span><div class="track"><i style="width:91%;background:var(--mustard)"></i></div><span class="pct">91%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grocery list -->
+      <section class="panel grocery">
+        <div class="panel-head">
+          <h2><span class="dot"></span>Grocery List</h2>
+          <div class="tools"><button class="chip" id="clearDone">Clear done</button></div>
+        </div>
+        <div class="grocery-list" id="groceryList">
+          <!-- items injected by JS -->
+        </div>
+        <div class="grocery-foot">
+          <span><b id="gDone">0</b> of <b id="gTotal">0</b> items</span>
+          <span>Est. <b>$142.60</b></span>
+        </div>
+      </section>
+
+      <!-- Quick add -->
+      <section class="quickadd">
+        <div class="label">Quick add</div>
+        <h3>Add to your list</h3>
+        <div class="qa-input">
+          <input type="text" id="qaInput" placeholder="e.g. 2 lemons, olive oil…" />
+          <button id="qaBtn">Add</button>
+        </div>
+        <div class="qa-suggest">
+          <button data-add="Greek yogurt">Greek yogurt</button>
+          <button data-add="Fresh basil">Fresh basil</button>
+          <button data-add="Chicken thighs">Chicken thighs</button>
+          <button data-add="Sourdough">Sourdough</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toastMsg">Added to list</span></div>
+
+<script>
+  // ---------- Data ----------
+  const days = [
+    { dow:'Mon', num:18, meal:{name:'Lemon Herb Chicken', color:'var(--tomato)'} },
+    { dow:'Tue', num:19, meal:{name:'Miso Mushroom Risotto', color:'var(--plum)'} },
+    { dow:'Wed', num:20, meal:{name:'Sheet-Pan Salmon', color:'var(--olive)'} },
+    { dow:'Thu', num:21, meal:{name:'Chickpea Tagine', color:'var(--mustard)'} },
+    { dow:'Fri', num:22, meal:{name:'Sourdough Pizza Night', color:'var(--tomato)'} },
+    { dow:'Sat', num:23, meal:null },
+    { dow:'Sun', num:24, meal:null, today:true }
+  ];
+
+  const recipes = [
+    { cat:'Dinner · 35 min', title:'Lemon Herb Chicken', kcal:520, protein:42, art:'chicken' },
+    { cat:'Dinner · 40 min', title:'Miso Mushroom Risotto', kcal:610, protein:18, art:'risotto' },
+    { cat:'Dinner · 25 min', title:'Sheet-Pan Salmon', kcal:480, protein:38, art:'salmon' },
+    { cat:'Dinner · 45 min', title:'Chickpea Tagine', kcal:430, protein:16, art:'tagine' },
+    { cat:'Dinner · 60 min', title:'Sourdough Pizza Night', kcal:720, protein:24, art:'pizza' },
+    { cat:'Lunch · 15 min', title:'Harvest Grain Bowl', kcal:390, protein:14, art:'bowl' }
+  ];
+
+  const groceries = [
+    { name:'Chicken thighs, bone-in', qty:'1.2 kg', cat:'var(--tomato)' },
+    { name:'Arborio rice', qty:'400 g', cat:'var(--mustard)' },
+    { name:'Salmon fillets', qty:'4 × 180 g', cat:'var(--tomato)' },
+    { name:'Chickpeas, dried', qty:'500 g', cat:'var(--olive)' },
+    { name:'Miso paste, white', qty:'1 jar', cat:'var(--plum)' },
+    { name:'Lemons', qty:'4', cat:'var(--mustard)' },
+    { name:'Fresh basil', qty:'1 bunch', cat:'var(--olive)' },
+    { name:'Sourdough loaf', qty:'1', cat:'var(--mustard)' },
+    { name:'Greek yogurt', qty:'500 g', cat:'var(--sky)' },
+    { name:'Olive oil, extra virgin', qty:'1 bottle', cat:'var(--olive)' }
+  ];
+
+  // ---------- Render week ----------
+  const weekEl = document.getElementById('week');
+  weekEl.innerHTML = days.map(d => `
+    <div class="day ${d.today?'today':''}">
+      <div class="dow">${d.dow}</div>
+      <div class="num">${d.num}</div>
+      ${d.meal
+        ? `<div class="meal-tag"><span class="swatch" style="background:${d.meal.color}"></span>${d.meal.name}</div>`
+        : `<div class="meal-tag empty" data-day="${d.dow}">+ Add meal</div>`}
+    </div>
+  `).join('');
+
+  // ---------- Render recipes ----------
+  const artSVG = {
+    chicken: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f4c98a"/><stop offset="1" stop-color="#e94b2c"/>
+      </linearGradient></defs>
+      <rect width="200" height="100" fill="url(#g1)"/>
+      <circle cx="60" cy="55" r="26" fill="#f4efe4" opacity=".85"/>
+      <circle cx="60" cy="55" r="18" fill="#e8b53a"/>
+      <circle cx="60" cy="55" r="8" fill="#c23a1f"/>
+      <path d="M120 40 q30 -10 55 5 q-25 25 -55 15 z" fill="#5b6b3a" opacity=".8"/>
+      <circle cx="150" cy="70" r="4" fill="#1a1a17" opacity=".5"/>
+      <circle cx="165" cy="60" r="3" fill="#1a1a17" opacity=".5"/>
+    </svg>`,
+    risotto: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e8b53a"/><stop offset="1" stop-color="#5a2a4a"/>
+      </linearGradient></defs>
+      <rect width="200" height="100" fill="url(#g2)"/>
+      <ellipse cx="100" cy="70" rx="70" ry="22" fill="#f4efe4" opacity=".9"/>
+      <ellipse cx="100" cy="68" rx="55" ry="14" fill="#e8b53a"/>
+      <circle cx="80" cy="66" r="4" fill="#5a2a4a"/>
+      <circle cx="105" cy="70" r="3" fill="#5a2a4a"/>
+      <circle cx="125" cy="65" r="4" fill="#5a2a4a"/>
+      <path d="M60 40 q10 -15 25 -10" stroke="#f4efe4" stroke-width="2" fill="none" opacity=".7"/>
+    </svg>`,
+    salmon: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#a8c5d6"/><stop offset="1" stop-color="#5b6b3a"/>
+      </linearGradient></defs>
+      <rect width="200" height="100" fill="url(#g3)"/>
+      <path d="M40 60 q40 -30 90 -20 q30 5 40 25 q-40 20 -90 15 q-30 -3 -40 -20 z" fill="#e94b2c"/>
+      <path d="M50 60 q40 -20 80 -12" stroke="#f4efe4" stroke-width="2" fill="none" opacity=".6"/>
+      <circle cx="150" cy="35" r="6" fill="#e8b53a"/>
+      <circle cx="165" cy="45" r="4" fill="#e8b53a"/>
+    </svg>`,
+    tagine: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e8b53a"/><stop offset="1" stop-color="#c23a1f"/>
+      </linearGradient></defs>
+      <rect width="200" height="100" fill="url(#g4)"/>
+      <path d="M60 80 q40 -60 80 0 z" fill="#5b6b3a"/>
+      <circle cx="100" cy="55" r="6" fill="#f4efe4"/>
+      <circle cx="85" cy="65" r="4" fill="#f4efe4"/>
+      <circle cx="115" cy="65" r="4" fill="#f4efe4"/>
+      <path d="M100 20 l0 15" stroke="#1a1a17" stroke-width="2"/>
+      <circle cx="100" cy="18" r="4" fill="#1a1a17"/>
+    </svg>`,
+    pizza: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><radialGradient id="g5" cx=".5" cy=".5" r=".7">
+        <stop offset="0" stop-color="#e8b53a"/><stop offset="1" stop-color="#c23a1f"/>
+      </radialGradient></defs>
+      <rect width="200" height="100" fill="url(#g5)"/>
+      <circle cx="100" cy="55" r="38" fill="#f4efe4"/>
+      <circle cx="100" cy="55" r="32" fill="#e94b2c"/>
+      <circle cx="88" cy="48" r="5" fill="#f4efe4"/>
+      <circle cx="112" cy="52" r="5" fill="#f4efe4"/>
+      <circle cx="100" cy="68" r="5" fill="#f4efe4"/>
+      <circle cx="118" cy="68" r="4" fill="#5b6b3a"/>
+      <circle cx="82" cy="65" r="4" fill="#5b6b3a"/>
+    </svg>`,
+    bowl: `<svg viewBox="0 0 200 100" preserveAspectRatio="none">
+      <defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5b6b3a"/><stop offset="1" stop-color="#a8c5d6"/>
+      </linearGradient></defs>
+      <rect width="200" height="100" fill="url(#g6)"/>
+      <path d="M50 55 q50 -25 100 0 q-10 30 -50 30 q-40 0 -50 -30 z" fill="#f4efe4"/>
+      <circle cx="80" cy="55" r="6" fill="#e8b53a"/>
+      <circle cx="100" cy="52" r="6" fill="#e94b2c"/>
+      <circle cx="120" cy="55" r="6" fill="#5b6b3a"/>
+      <circle cx="90" cy="65" r="4" fill="#5a2a4a"/>
+      <circle cx="110" cy="65" r="4" fill="#5a2a4a"/>
+    </svg>`
+  };
+
+  const recipeGrid = document.getElementById('recipeGrid');
+  recipeGrid.innerHTML = recipes.map(r => `
+    <article class="recipe">
+      <div class="art">${artSVG[r.art]}</div>
+      <div class="body">
+        <div class="cat">${r.cat}</div>
+        <h4>${r.title}</h4>
+        <div class="meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${r.kcal} kcal</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h10"/></svg>${r.protein}g protein</span>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  // ---------- Render grocery ----------
+  const groceryList = document.getElementById('groceryList');
+  function renderGrocery(){
+    groceryList.innerHTML = groceries.map((g,i) => `
+      <div class="g-item ${g.done?'done':''}" data-i="${i}">
+        <div class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#f4efe4" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <span class="cat-dot" style="background:${g.cat}"></span>
+        <span class="name">${g.name}</span>
+        <span class="qty">${g.qty}</span>
+      </div>
+    `).join('');
+    const done = groceries.filter(g=>g.done).length;
+    document.getElementById('gDone').textContent = done;
+    document.getElementById('gTotal').textContent = groceries.length;
+  }
+  renderGrocery();
+
+  groceryList.addEventListener('click', e => {
+    const item = e.target.closest('.g-item');
+    if(!item) return;
+    const i = +item.dataset.i;
+    groceries[i].done = !groceries[i].done;
+    renderGrocery();
+  });
+
+  document.getElementById('clearDone').addEventListener('click', () => {
+    for(let i=groceries.length-1;i>=0;i--) if(groceries[i].done) groceries.splice(i,1);
+    renderGrocery();
+    showToast('Cleared completed items');
+  });
+
+  // ---------- Servings ----------
+  let servings = 4;
+  const servingsVal = document.getElementById('servingsVal');
+  const servingsTitle = document.getElementById('servingsTitle');
+  function updateServings(){
+    servingsVal.textContent = servings;
+    servingsTitle.textContent = servings + (servings===1?' person':' people');
+  }
+  document.getElementById('plus').addEventListener('click', () => { if(servings<12){servings++;updateServings();showToast('Scaled to '+servings+' servings');} });
+  document.getElementById('minus').addEventListener('click', () => { if(servings>1){servings--;updateServings();showToast('Scaled to '+servings+' servings');} });
+
+  // ---------- Quick add ----------
+  const qaInput = document.getElementById('qaInput');
+  function addItem(name){
+    if(!name.trim()) return;
+    groceries.push({ name:name.trim(), qty:'1', cat:'var(--mustard)' });
+    renderGrocery();
+    showToast('Added "'+name.trim()+'" to list');
+  }
+  document.getElementById('qaBtn').addEventListener('click', () => { addItem(qaInput.value); qaInput.value=''; });
+  qaInput.addEventListener('keydown', e => { if(e.key==='Enter'){ addItem(qaInput.value); qaInput.value=''; } });
+  document.querySelectorAll('.qa-suggest button').forEach(b => {
+    b.addEventListener('click', () => addItem(b.dataset.add));
+  });
+
+  // ---------- Empty meal tag click ----------
+  weekEl.addEventListener('click', e => {
+    const tag = e.target.closest('.meal-tag.empty');
+    if(!tag) return;
+    showToast('Pick a recipe to fill '+tag.dataset.day);
+  });
+
+  // ---------- Toast ----------
+  let toastTimer;
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  function showToast(msg){
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 2200);
+  }
+</script>
+</body>
+</html>

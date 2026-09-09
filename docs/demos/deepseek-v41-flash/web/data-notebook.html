@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATA / NOTEBOOK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0e0e12;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #eaeef2;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ---------- MAIN CONTAINER (1440x900 target) ---------- */
+    .app {
+      width: 100%;
+      max-width: 1440px;
+      height: 900px;
+      background: #14141c;
+      border-radius: 28px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---------- SIDEBAR (DATASETS) ---------- */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      background: #0c0c12;
+      border-right: 1px solid #262630;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0 20px 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #2e2e3a #0c0c12;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar::-webkit-scrollbar-track {
+      background: #0c0c12;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #2e2e3a;
+      border-radius: 8px;
+    }
+
+    .brand {
+      padding: 0 20px 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #b7a6ff 0%, #7c6df0 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #0e0e12;
+      box-shadow: 0 4px 12px rgba(124, 109, 240, 0.3);
+    }
+
+    .brand-text {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      color: #f0f2f5;
+    }
+
+    .brand-text span {
+      color: #7c6df0;
+      font-weight: 700;
+    }
+
+    .dataset-section {
+      padding: 0 12px;
+    }
+
+    .dataset-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b6b7a;
+      padding: 0 8px 12px 8px;
+    }
+
+    .dataset-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: default;
+      transition: background 0.15s;
+      margin-bottom: 2px;
+    }
+
+    .dataset-item:hover {
+      background: #1c1c26;
+    }
+
+    .dataset-item.active {
+      background: #1e1e2c;
+      box-shadow: 0 0 0 1px #2e2e42 inset;
+    }
+
+    .dataset-icon {
+      width: 28px;
+      height: 28px;
+      background: #1e1e2c;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #9b9bae;
+      flex-shrink: 0;
+    }
+
+    .dataset-item.active .dataset-icon {
+      background: #2a2a3c;
+      color: #b7a6ff;
+    }
+
+    .dataset-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dataset-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #d0d4dc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dataset-meta {
+      font-size: 11px;
+      color: #6b6b7a;
+      display: flex;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .dataset-meta span {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .dataset-meta .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #3e3e4e;
+      display: inline-block;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 20px 20px 0 20px;
+      border-top: 1px solid #1e1e28;
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f0a6ca, #b7a6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      color: #0e0e12;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #d0d4dc;
+    }
+
+    .user-role {
+      font-size: 11px;
+      color: #6b6b7a;
+    }
+
+    /* ---------- MAIN NOTEBOOK AREA ---------- */
+    .notebook {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #14141c;
+      min-width: 0;
+    }
+
+    /* ---------- TOP BAR ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      border-bottom: 1px solid #262630;
+      flex-shrink: 0;
+      background: #14141c;
+    }
+
+    .notebook-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .notebook-title h1 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #f0f2f5;
+    }
+
+    .notebook-title .badge {
+      font-size: 11px;
+      font-weight: 500;
+      background: #1e1e2c;
+      color: #9b9bae;
+      padding: 2px 10px;
+      border-radius: 20px;
+      border: 1px solid #2e2e3e;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      cursor: default;
+      transition: all 0.15s;
+      background: transparent;
+      color: #b0b4c0;
+    }
+
+    .btn:hover {
+      background: #1e1e2c;
+      color: #eaeef2;
+    }
+
+    .btn-primary {
+      background: #7c6df0;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(124, 109, 240, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #8b7cf5;
+      color: #fff;
+    }
+
+    .btn-icon {
+      padding: 8px;
+      border-radius: 10px;
+    }
+
+    .btn-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ---------- CELLS CONTAINER ---------- */
+    .cells {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px 40px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: #2e2e3a #14141c;
+    }
+
+    .cells::-webkit-scrollbar {
+      width: 6px;
+    }
+    .cells::-webkit-scrollbar-track {
+      background: #14141c;
+    }
+    .cells::-webkit-scrollbar-thumb {
+      background: #2e2e3a;
+      border-radius: 8px;
+    }
+
+    /* ---------- CELL ---------- */
+    .cell {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+
+    .cell-gutter {
+      width: 32px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .cell-index {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: #5a5a6e;
+      font-weight: 400;
+      width: 24px;
+      text-align: center;
+    }
+
+    .cell-run {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid #2e2e3e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      transition: all 0.15s;
+      margin-top: 4px;
+    }
+
+    .cell-run:hover {
+      background: #1e1e2c;
+      border-color: #7c6df0;
+    }
+
+    .cell-run svg {
+      width: 12px;
+      height: 12px;
+      fill: #7c6df0;
+      stroke: none;
+    }
+
+    .cell-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ---------- CODE CELL ---------- */
+    .code-cell {
+      background: #0e0e16;
+      border-radius: 14px;
+      border: 1px solid #262630;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #12121c;
+      border-bottom: 1px solid #262630;
+    }
+
+    .code-lang {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: #7c6df0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .code-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .code-actions .btn-icon {
+      padding: 4px;
+      border-radius: 6px;
+    }
+
+    .code-actions .btn-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .code-content {
+      padding: 16px 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #c8ccd6;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .code-content .kw { color: #b7a6ff; }
+    .code-content .fn { color: #7c6df0; }
+    .code-content .str { color: #a6e3a1; }
+    .code-content .num { color: #f9e2af; }
+    .code-content .cm { color: #5a5a6e; font-style: italic; }
+    .code-content .op { color: #89b4fa; }
+
+    /* ---------- OUTPUT CELL ---------- */
+    .output-cell {
+      background: #0e0e16;
+      border-radius: 14px;
+      border: 1px solid #262630;
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #12121c;
+      border-bottom: 1px solid #262630;
+    }
+
+    .output-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: #6b6b7a;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .output-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: #a6e3a1;
+      background: rgba(166, 227, 161, 0.1);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .output-content {
+      padding: 20px;
+    }
+
+    /* ---------- SVG CHART ---------- */
+    .chart-container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #9b9bae;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* ---------- MARKDOWN CELL ---------- */
+    .markdown-cell {
+      background: #14141c;
+      border-radius: 14px;
+      border: 1px solid #262630;
+      padding: 20px 24px;
+    }
+
+    .markdown-cell h2 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #f0f2f5;
+      margin-bottom: 8px;
+    }
+
+    .markdown-cell p {
+      font-size: 14px;
+      color: #9b9bae;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .markdown-cell p strong {
+      color: #d0d4dc;
+      font-weight: 500;
+    }
+
+    .markdown-cell .inline-code {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      background: #1e1e2c;
+      padding: 2px 8px;
+      border-radius: 6px;
+      color: #b7a6ff;
+    }
+
+    /* ---------- COMMENTS ---------- */
+    .comments-section {
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid #262630;
+    }
+
+    .comments-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .comments-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #d0d4dc;
+    }
+
+    .comments-count {
+      font-size: 11px;
+      font-weight: 500;
+      background: #1e1e2c;
+      color: #9b9bae;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .comment {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #1e1e28;
+    }
+
+    .comment:last-child {
+      border-bottom: none;
+    }
+
+    .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: #0e0e12;
+    }
+
+    .comment-avatar.a1 { background: linear-gradient(135deg, #f0a6ca, #b7a6ff); }
+    .comment-avatar.a2 { background: linear-gradient(135deg, #a6e3a1, #89b4fa); }
+    .comment-avatar.a3 { background: linear-gradient(135deg, #f9e2af, #f0a6ca); }
+
+    .comment-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comment-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .comment-author {
+      font-size: 13px;
+      font-weight: 600;
+      color: #d0d4dc;
+    }
+
+    .comment-time {
+      font-size: 11px;
+      color: #5a5a6e;
+    }
+
+    .comment-text {
+      font-size: 13px;
+      color: #9b9bae;
+      line-height: 1.6;
+    }
+
+    .comment-text .mention {
+      color: #b7a6ff;
+      font-weight: 500;
+    }
+
+    .comment-input {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .comment-input input {
+      flex: 1;
+      background: #0e0e16;
+      border: 1px solid #262630;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: #eaeef2;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .comment-input input::placeholder {
+      color: #5a5a6e;
+    }
+
+    .comment-input input:focus {
+      border-color: #7c6df0;
+    }
+
+    .comment-input .btn-primary {
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1100px) {
+      .app {
+        height: auto;
+        min-height: 900px;
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #262630;
+        padding: 16px 0;
+        max-height: 200px;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+      .dataset-section {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 0 16px;
+      }
+      .dataset-label {
+        display: none;
+      }
+      .dataset-item {
+        flex-shrink: 0;
+        min-width: 180px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 0;
+      }
+      .app {
+        border-radius: 0;
+        min-height: 100vh;
+      }
+      .topbar {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .notebook-title h1 {
+        font-size: 14px;
+      }
+      .cells {
+        padding: 16px;
+      }
+      .cell-gutter {
+        width: 24px;
+      }
+      .cell-index {
+        font-size: 10px;
+      }
+      .code-content {
+        font-size: 11px;
+        padding: 12px 14px;
+      }
+      .markdown-cell {
+        padding: 16px;
+      }
+      .markdown-cell h2 {
+        font-size: 16px;
+      }
+      .btn span {
+        display: none;
+      }
+      .btn {
+        padding: 8px 12px;
+      }
+      .btn-primary span {
+        display: inline;
+      }
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cell {
+      animation: fadeIn 0.4s ease-out both;
+    }
+
+    .cell:nth-child(1) { animation-delay: 0.05s; }
+    .cell:nth-child(2) { animation-delay: 0.1s; }
+    .cell:nth-child(3) { animation-delay: 0.15s; }
+    .cell:nth-child(4) { animation-delay: 0.2s; }
+    .cell:nth-child(5) { animation-delay: 0.25s; }
+    .cell:nth-child(6) { animation-delay: 0.3s; }
+
+    /* ---------- CHART ANIMATION ---------- */
+    .chart-line {
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: drawLine 1.2s ease-out forwards;
+    }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .chart-area {
+      opacity: 0;
+      animation: fadeArea 0.8s ease-out 0.6s forwards;
+    }
+
+    @keyframes fadeArea {
+      to { opacity: 1; }
+    }
+
+    .chart-dot {
+      opacity: 0;
+      animation: fadeDot 0.3s ease-out forwards;
+    }
+
+    .chart-dot:nth-child(1) { animation-delay: 0.8s; }
+    .chart-dot:nth-child(2) { animation-delay: 0.9s; }
+    .chart-dot:nth-child(3) { animation-delay: 1.0s; }
+    .chart-dot:nth-child(4) { animation-delay: 1.1s; }
+    .chart-dot:nth-child(5) { animation-delay: 1.2s; }
+    .chart-dot:nth-child(6) { animation-delay: 1.3s; }
+    .chart-dot:nth-child(7) { animation-delay: 1.4s; }
+
+    @keyframes fadeDot {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">D</div>
+        <div class="brand-text">DATA<span>/</span>NOTEBOOK</div>
+      </div>
+
+      <div class="dataset-section">
+        <div class="dataset-label">Datasets</div>
+
+        <div class="dataset-item active">
+          <div class="dataset-icon">📊</div>
+          <div class="dataset-info">
+            <div class="dataset-name">Q4 Revenue</div>
+            <div class="dataset-meta">
+              <span>2.4k rows</span>
+              <span class="dot"></span>
+              <span>CSV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dataset-item">
+          <div class="dataset-icon">👥</div>
+          <div class="dataset-info">
+            <div class="dataset-name">User Cohorts</div>
+            <div class="dataset-meta">
+              <span>18k rows</span>
+              <span class="dot"></span>
+              <span>Parquet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dataset-item">
+          <div class="dataset-icon">🌐</div>
+          <div class="dataset-info">
+            <div class="dataset-name">Traffic Sources</div>
+            <div class="dataset-meta">
+              <span>5.1k rows</span>
+              <span class="dot"></span>
+              <span>JSON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dataset-item">
+          <div class="dataset-icon">📦</div>
+          <div class="dataset-info">
+            <div class="dataset-name">Product Inventory</div>
+            <div class="dataset-meta">
+              <span>890 rows</span>
+              <span class="dot"></span>
+              <span>SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dataset-item">
+          <div class="dataset-icon">📈</div>
+          <div class="dataset-info">
+            <div class="dataset-name">Marketing Spend</div>
+            <div class="dataset-meta">
+              <span>1.2k rows</span>
+              <span class="dot"></span>
+              <span>CSV</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">MK</div>
+          <div>
+            <div class="user-name">Mira K.</div>
+            <div class="user-role">Data Analyst</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========== NOTEBOOK ========== -->
+    <main class="notebook">
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div class="notebook-title">
+          <h1>Q4 Revenue Analysis</h1>
+          <span class="badge">Draft</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-icon" title="Run all">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button class="btn btn-icon" title="Restart kernel">
+            <svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </button>
+          <button class="btn btn-icon" title="Share">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Run All</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CELLS -->
+      <div class="cells">
+
+        <!-- CELL 1: Markdown -->
+        <div class="cell">
+          <div class="cell-gutter">
+            <div class="cell-index">[1]</div>
+          </div>
+          <div class="cell-body">
+            <div class="markdown-cell">
+              <h2>Q4 Revenue Analysis</h2>
+              <p>
+                This notebook explores <strong>quarterly revenue trends</strong> across product lines.
+                We'll load the dataset, clean missing values, and visualize the <span class="inline-code">monthly_revenue</span> series
+                to identify growth patterns and seasonality.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CELL 2: Code -->
+        <div class="cell">
+          <div class="cell-gutter">
+            <div class="cell-index">[2]</div>
+            <div class="cell-run" title="Run cell">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="cell-body">
+            <div class="code-cell">
+              <div class="code-header">
+                <span class="code-lang">Python</span>
+                <div class="code-actions">
+                  <button class="btn btn-icon" title="Copy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                </div>
+              </div>
+              <div class="code-content"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+<span class="cm"># Load the Q4 revenue dataset</span>
+df = pd.<span class="fn">read_csv</span>(<span class="str">'q4_revenue.csv'</span>)
+df[<span class="str">'date'</span>] = pd.<span class="fn">to_datetime</span>(df[<span class="str">'date'</span>])
+df = df.<span class="fn">dropna</span>(subset=[<span class="str">'revenue'</span>])
+
+<span class="cm"># Aggregate monthly totals</span>
+monthly = df.<span class="fn">groupby</span>(df[<span class="str">'date'</span>].dt.<span class="fn">to_period</span>(<span class="str">'M'</span>))[<span class="str">'revenue'</span>].<span class="fn">sum</span>()
+<span class="fn">print</span>(<span class="str">f"Loaded {len(df):,} records across {len(monthly)} months"</span>)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CELL 3: Output -->
+        <div class="cell">
+          <div class="cell-gutter">
+            <div class="cell-index">[3]</div>
+          </div>
+          <div class="cell-body">
+            <div class="output-cell">
+              <div class="output-header">
+                <span class="output-label">Output</span>
+                <span class="output-badge">✓ Executed in 0.42s</span>
+              </div>
+              <div class="output-content">
+                <div class="chart-container">
+                  <svg class="chart-svg" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#7c6df0" stop-opacity="0.35"/>
+                        <stop offset="100%" stop-color="#7c6df0" stop-opacity="0.02"/>
+                      </linearGradient>
+                      <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#b7a6ff"/>
+                        <stop offset="100%" stop-color="#7c6df0"/>
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Grid lines -->
+                    <line x1="60" y1="40" x2="640" y2="40" stroke="#262630" stroke-width="1" stroke-dasharray="4 4"/>
+                    <line x1="60" y1="90" x2="640" y2="90" stroke="#262630" stroke-width="1" stroke-dasharray="4 4"/>
+                    <line x1="60" y1="140" x2="640" y2="140" stroke="#262630" stroke-width="1" stroke-dasharray="4 4"/>
+                    <line x1="60" y1="190" x2="640" y2="190" stroke="#262630" stroke-width="1" stroke-dasharray="4 4"/>
+                    <line x1="60" y1="240" x2="640" y2="240" stroke="#262630" stroke-width="1"/>
+
+                    <!-- Y-axis labels -->
+                    <text x="50" y="44" text-anchor="end" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">$120k</text>
+                    <text x="50" y="94" text-anchor="end" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">$90k</text>
+                    <text x="50" y="144" text-anchor="end" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">$60k</text>
+                    <text x="50" y="194" text-anchor="end" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">$30k</text>
+                    <text x="50" y="244" text-anchor="end" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">$0</text>
+
+                    <!-- X-axis labels -->
+                    <text x="100" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Oct</text>
+                    <text x="200" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Nov</text>
+                    <text x="300" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Dec</text>
+                    <text x="400" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Jan</text>
+                    <text x="500" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Feb</text>
+                    <text x="600" y="265" text-anchor="middle" fill="#5a5a6e" font-size="11" font-family="DM Mono, monospace">Mar</text>
+
+                    <!-- Area fill -->
+                    <path class="chart-area" d="M100,180 L200,150 L300,120 L400,90 L500,70 L600,50 L600,240 L100,240 Z" fill="url(#areaGrad)"/>
+
+                    <!-- Line -->
+                    <path class="chart-line" d="M100,180 L200,150 L300,120 L400,90 L500,70 L600,50" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Data points -->
+                    <circle class="chart-dot" cx="100" cy="180" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+                    <circle class="chart-dot" cx="200" cy="150" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+                    <circle class="chart-dot" cx="300" cy="120" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+                    <circle class="chart-dot" cx="400" cy="90" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+                    <circle class="chart-dot" cx="500" cy="70" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+                    <circle class="chart-dot" cx="600" cy="50" r="5" fill="#14141c" stroke="#b7a6ff" stroke-width="2.5"/>
+
+                    <!-- Value labels -->
+                    <text x="100" y="170" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$42k</text>
+                    <text x="200" y="140" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$58k</text>
+                    <text x="300" y="110" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$74k</text>
+                    <text x="400" y="80" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$91k</text>
+                    <text x="500" y="60" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$108k</text>
+                    <text x="600" y="40" text-anchor="middle" fill="#b7a6ff" font-size="11" font-family="DM Mono, monospace" font-weight="500">$124k</text>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background: linear-gradient(135deg, #b7a6ff, #7c6df0);"></div>
+                    <span>Monthly Revenue</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background: #262630;"></div>
+                    <span>Target ($100k)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CELL 4: Markdown -->
+        <div class="cell">
+          <div class="cell-gutter">
+            <div class="cell-index">[4]</div>
+          </div>
+          <div class="cell-body">
+            <div class="markdown-cell">
+              <h2>Key Findings</h2>
+              <p>
+                Revenue grew <strong>+195%</strong> from October to March, with the strongest acceleration
+                in <strong>January–February</strong>. The $100k target was surpassed in February,
+                and March closed at <strong>$124k</strong> — a new quarterly high.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CELL 5: Comments -->
+        <div class="cell">
+          <div class="cell-gutter">
+            <div class="cell-index">[5]</div>
+          </div>
+          <div class="cell-body">
+            <div class="comments-section">
+              <div class="comments-header">
+                <h3>Discussion</h3>
+                <span class="comments-count">3</span>
+              </div>
+
+              <div class="comment">
+                <div class="comment-avatar a1">MK</div>
+                <div class="comment-body">
+                  <div class="comment-meta">
+                    <span class="comment-author">Mira K.</span>
+                    <span class="comment-time">2 hours ago</span>
+                  </div>
+                  <div class="comment-text">
+                    The February spike aligns with the <span class="mention">@campaign-launch</span> — worth
+                    checking if the uplift is sustained or just a one-off.
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment">
+                <div class="comment-avatar a2">JT</div>
+                <div class="comment-body">
+                  <div class="comment-meta">
+                    <span class="comment-author">James T.</span>
+                    <span class="comment-time">1 hour ago</span>
+                  </div>
+                  <div class="comment-text">
+                    Great catch. I'll pull the campaign attribution data and overlay it on this chart.
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment">
+                <div class="comment-avatar a3">SR</div>
+                <div class="comment-body">
+                  <div class="comment-meta">
+                    <span class="comment-author">Sofia R.</span>
+                    <span class="comment-time">45 minutes ago</span>
+                  </div>
+                  <div class="comment-text">
+                    Should we also segment by product line? The aggregate might be hiding variance.
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment-input">
+                <input type="text" placeholder="Add a comment…" />
+                <button class="btn btn-primary">Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

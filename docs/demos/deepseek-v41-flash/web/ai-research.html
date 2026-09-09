@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI / RESEARCH / LAB — Advancing Machine Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-2: #101018;
+    --surface: #16161f;
+    --surface-2: #1c1c28;
+    --border: #26263a;
+    --border-2: #33334d;
+    --text: #e8e8f0;
+    --text-dim: #9a9ab0;
+    --text-mute: #6a6a85;
+    --accent: #d4ff3a;
+    --accent-2: #ff5c3a;
+    --accent-3: #6a5cff;
+    --accent-4: #3affd4;
+    --grid: rgba(255,255,255,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(106,92,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(10,10,15,0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .logo-mark {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+
+  .logo-mark svg { width: 100%; height: 100%; }
+
+  .logo-text .sep { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover::before { opacity: 1; }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--accent);
+    color: #0a0a0f;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(212,255,58,0.25);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 100px;
+    position: relative;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--border-2);
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .pulse {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(212,255,58,0.6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(212,255,58,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(212,255,58,0); }
+    100% { box-shadow: 0 0 0 0 rgba(212,255,58,0); }
+  }
+
+  h1 {
+    font-size: clamp(44px, 5.2vw, 76px);
+    line-height: 1.02;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+
+  h1 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  h1 .outline {
+    -webkit-text-stroke: 1.5px var(--text);
+    color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin-bottom: 36px;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(212,255,58,0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-2);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--text);
+    background: var(--surface);
+  }
+
+  .btn svg { width: 14px; height: 14px; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin-left: auto;
+  }
+
+  .orb {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(106,92,255,0.4), transparent 60%),
+                radial-gradient(circle at 70% 70%, rgba(212,255,58,0.25), transparent 55%);
+    filter: blur(20px);
+  }
+
+  .hero-visual svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .node-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    fill: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .node-label.highlight { fill: var(--accent); }
+
+  /* Stats bar */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-top: 80px;
+  }
+
+  .stat {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .stat-value .unit {
+    color: var(--accent);
+    font-size: 20px;
+    margin-left: 2px;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION */
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-size: clamp(32px, 3.6vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    max-width: 640px;
+  }
+
+  .section-desc {
+    color: var(--text-dim);
+    max-width: 380px;
+    font-size: 15px;
+  }
+
+  /* PAPERS */
+  .papers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .paper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+  }
+
+  .paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-3));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .paper:hover {
+    border-color: var(--border-2);
+    transform: translateY(-4px);
+    background: var(--surface-2);
+  }
+
+  .paper:hover::before { transform: scaleX(1); }
+
+  .paper-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.05em;
+  }
+
+  .paper-tag {
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(106,92,255,0.15);
+    color: #a89cff;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .paper-tag.alt { background: rgba(212,255,58,0.12); color: var(--accent); }
+  .paper-tag.alt2 { background: rgba(255,92,58,0.12); color: #ff8a6a; }
+  .paper-tag.alt3 { background: rgba(58,255,212,0.12); color: var(--accent-4); }
+
+  .paper h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin-bottom: 12px;
+  }
+
+  .paper p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .paper-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+
+  .paper-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .paper-footer a:hover { gap: 10px; }
+
+  /* BENCHMARK */
+  .benchmark {
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bench-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .bench-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .bench-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .bench-item:hover, .bench-item.active {
+    background: var(--surface);
+    border-color: var(--border);
+  }
+
+  .bench-item.active { border-color: var(--accent); }
+
+  .bench-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .bench-sub {
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-top: 2px;
+  }
+
+  .bench-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .bench-score .pct { font-size: 13px; color: var(--text-mute); }
+
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+  }
+
+  .chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .chart-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .chart-svg { width: 100%; height: auto; display: block; }
+
+  .chart-axis {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    fill: var(--text-mute);
+  }
+
+  /* TEAM */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .member {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+
+  .member:hover {
+    border-color: var(--border-2);
+    transform: translateY(-3px);
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 20px;
+    color: #0a0a0f;
+  }
+
+  .avatar-1 { background: linear-gradient(135deg, #d4ff3a, #3affd4); }
+  .avatar-2 { background: linear-gradient(135deg, #6a5cff, #d4ff3a); }
+  .avatar-3 { background: linear-gradient(135deg, #ff5c3a, #6a5cff); }
+  .avatar-4 { background: linear-gradient(135deg, #3affd4, #6a5cff); }
+  .avatar-5 { background: linear-gradient(135deg, #d4ff3a, #ff5c3a); }
+  .avatar-6 { background: linear-gradient(135deg, #6a5cff, #ff5c3a); }
+  .avatar-7 { background: linear-gradient(135deg, #3affd4, #d4ff3a); }
+  .avatar-8 { background: linear-gradient(135deg, #ff5c3a, #3affd4); }
+
+  .member-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .member-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+
+  .member-focus {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* OPEN SOURCE */
+  .oss {
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .oss-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .repo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s;
+  }
+
+  .repo:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .repo-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .repo-icon svg { width: 20px; height: 20px; }
+
+  .repo-body { flex: 1; min-width: 0; }
+
+  .repo-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .repo-name .org { color: var(--text-mute); font-weight: 400; }
+
+  .repo-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .repo-stats {
+    display: flex;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    flex-shrink: 0;
+  }
+
+  .repo-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .repo-stat svg { width: 12px; height: 12px; }
+
+  /* CTA */
+  .cta {
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(212,255,58,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .cta h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    margin: 0 auto 24px;
+    max-width: 100%;
+  }
+
+  .cta p {
+    color: var(--text-dim);
+    font-size: 17px;
+    margin-bottom: 40px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+    background: var(--bg-2);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-top: 16px;
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-mute);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-4);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-4);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { max-width: 380px; margin: 0 auto; }
+    .papers-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .bench-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+    .nav-links { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .papers-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .oss-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    section { padding: 72px 0; }
+    .hero { padding: 48px 0 72px; }
+    .repo { flex-wrap: wrap; }
+    .repo-stats { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="#d4ff3a" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="6" fill="#d4ff3a"/>
+          <circle cx="16" cy="16" r="10" stroke="#d4ff3a" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </span>
+      <span class="logo-text">AI<span class="sep">/</span>RESEARCH<span class="sep">/</span>LAB</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#benchmarks">Benchmarks</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#opensource">Open Source</a></li>
+    </ul>
+    <a href="#collaborate" class="nav-cta">
+      Collaborate
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">
+          <span class="pulse"></span>
+          Now publishing — Q4 2025 research cycle
+        </div>
+        <h1>
+          Building <span class="accent">interpretable</span> systems that <span class="outline">reason</span>.
+        </h1>
+        <p class="hero-desc">
+          We're an independent research lab studying the foundations of machine intelligence — from mechanistic interpretability to scalable reasoning architectures. Everything we build is open.
+        </p>
+        <div class="hero-actions">
+          <a href="#research" class="btn btn-primary">
+            Read our papers
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#opensource" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="orb"></div>
+        <svg viewBox="0 0 400 400" fill="none">
+          <!-- Concentric rings -->
+          <circle cx="200" cy="200" r="180" stroke="#26263a" stroke-width="1"/>
+          <circle cx="200" cy="200" r="140" stroke="#26263a" stroke-width="1"/>
+          <circle cx="200" cy="200" r="100" stroke="#26263a" stroke-width="1"/>
+          <circle cx="200" cy="200" r="60" stroke="#33334d" stroke-width="1"/>
+
+          <!-- Rotating dashed ring -->
+          <circle cx="200" cy="200" r="160" stroke="#d4ff3a" stroke-width="1" stroke-dasharray="2 8" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="40s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Connection lines -->
+          <g stroke="#6a5cff" stroke-width="1" opacity="0.5">
+            <line x1="200" y1="200" x2="80" y2="120"/>
+            <line x1="200" y1="200" x2="320" y2="140"/>
+            <line x1="200" y1="200" x2="120" y2="300"/>
+            <line x1="200" y1="200" x2="300" y2="290"/>
+            <line x1="200" y1="200" x2="200" y2="60"/>
+          </g>
+
+          <!-- Nodes -->
+          <g>
+            <circle cx="80" cy="120" r="6" fill="#d4ff3a"/>
+            <circle cx="80" cy="120" r="12" fill="#d4ff3a" opacity="0.2"/>
+            <text x="60" y="105" class="node-label highlight">ATTN</text>
+          </g>
+          <g>
+            <circle cx="320" cy="140" r="5" fill="#6a5cff"/>
+            <circle cx="320" cy="140" r="10" fill="#6a5cff" opacity="0.2"/>
+            <text x="330" y="130" class="node-label">MLP</text>
+          </g>
+          <g>
+            <circle cx="120" cy="300" r="5" fill="#3affd4"/>
+            <circle cx="120" cy="300" r="10" fill="#3affd4" opacity="0.2"/>
+            <text x="100" y="325" class="node-label">EMBED</text>
+          </g>
+          <g>
+            <circle cx="300" cy="290" r="5" fill="#ff5c3a"/>
+            <circle cx="300" cy="290" r="10" fill="#ff5c3a" opacity="0.2"/>
+            <text x="310" y="315" class="node-label">HEAD</text>
+          </g>
+          <g>
+            <circle cx="200" cy="60" r="4" fill="#d4ff3a"/>
+            <text x="210" y="55" class="node-label">INPUT</text>
+          </g>
+
+          <!-- Center -->
+          <circle cx="200" cy="200" r="24" fill="#0a0a0f" stroke="#d4ff3a" stroke-width="1.5"/>
+          <circle cx="200" cy="200" r="8" fill="#d4ff3a"/>
+          <circle cx="200" cy="200" r="16" stroke="#d4ff3a" stroke-width="0.5" opacity="0.5">
+            <animate attributeName="r" values="16;22;16" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">47<span class="unit">+</span></div>
+        <div class="stat-label">Peer-reviewed papers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">12.4<span class="unit">k</span></div>
+        <div class="stat-label">GitHub stars</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">28</div>
+        <div class="stat-label">Researchers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Open models</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Recent Publications</div>
+        <h2>Research that moves the field forward.</h2>
+      </div>
+      <p class="section-desc">
+        Every paper ships with reproducible code, model weights, and evaluation harnesses. No black boxes.
+      </p>
+    </div>
+
+    <div class="papers-grid">
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag">Interpretability</span>
+          <span>arXiv:2511.04821</span>
+        </div>
+        <h3>Sparse Autoencoders Reveal Compositional Circuits in Transformer MLPs</h3>
+        <p>We decompose MLP activations into monosemantic features and trace how they compose into higher-level reasoning circuits across 12 model scales.</p>
+        <div class="paper-footer">
+          <span>Nov 2025 · 24 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag alt">Reasoning</span>
+          <span>arXiv:2510.11203</span>
+        </div>
+        <h3>Chain-of-Thought Compression via Latent Reasoning Tokens</h3>
+        <p>A method for distilling long reasoning traces into compact latent representations, achieving 4× inference speedup with no accuracy loss on MATH and GPQA.</p>
+        <div class="paper-footer">
+          <span>Oct 2025 · 18 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag alt2">Alignment</span>
+          <span>arXiv:2509.08847</span>
+        </div>
+        <h3>Constitutional Critics: Scalable Oversight via Debate</h3>
+        <p>We train critic models that evaluate reasoning chains against a constitution, enabling scalable oversight without human annotation at every step.</p>
+        <div class="paper-footer">
+          <span>Sep 2025 · 32 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag alt3">Architecture</span>
+          <span>arXiv:2508.04412</span>
+        </div>
+        <h3>State-Space Attention: Linear-Time Sequence Modeling at Scale</h3>
+        <p>A hybrid architecture combining selective state spaces with sparse attention, matching transformer quality at 8× the context length.</p>
+        <div class="paper-footer">
+          <span>Aug 2025 · 21 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag">Interpretability</span>
+          <span>arXiv:2507.09931</span>
+        </div>
+        <h3>Feature Universality Across Language Model Families</h3>
+        <p>We find that sparse autoencoder features learned on one model transfer to others, suggesting a shared representational substrate.</p>
+        <div class="paper-footer">
+          <span>Jul 2025 · 27 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-meta">
+          <span class="paper-tag alt">Reasoning</span>
+          <span>arXiv:2506.02218</span>
+        </div>
+        <h3>Emergent Planning in Small Language Models</h3>
+        <p>Contrary to scaling hypotheses, we show that planning capabilities emerge in models as small as 1B parameters when trained on structured curricula.</p>
+        <div class="paper-footer">
+          <span>Jun 2025 · 15 pages</span>
+          <a href="#">Read paper →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARKS -->
+<section id="benchmarks" class="benchmark">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Benchmarks</div>
+        <h2>Where our models stand.</h2>
+      </div>
+      <p class="section-desc">
+        Evaluated on standard academic benchmarks. Full results, prompts, and evaluation code available in our repository.
+      </p>
+    </div>
+
+    <div class="bench-grid">
+      <div class="bench-list">
+        <div class="bench-item active">
+          <div>
+            <div class="bench-name">MMLU-Pro</div>
+            <div class="bench-sub">Massive multitask language understanding</div>
+          </div>
+          <div class="bench-score">78.4<span class="pct">%</span></div>
+        </div>
+        <div class="bench-item">
+          <div>
+            <div class="bench-name">GPQA Diamond</div>
+            <div class="bench-sub">Graduate-level science questions</div>
+          </div>
+          <div class="bench-score">62.1<span class="pct">%</span></div>
+        </div>
+        <div class="bench-item">
+          <div>
+            <div class="bench-name">MATH-500</div>
+            <div class="bench-sub">Competition mathematics</div>
+          </div>
+          <div class="bench-score">91.7<span class="pct">%</span></div>
+        </div>
+        <div class="bench-item">
+          <div>
+            <div class="bench-name">HumanEval+</div>
+            <div class="bench-sub">Code generation with extended tests</div>
+          </div>
+          <div class="bench-score">88.3<span class="pct">%</span></div>
+        </div>
+        <div class="bench-item">
+          <div>
+            <div class="bench-name">SWE-bench Verified</div>
+            <div class="bench-sub">Real-world software engineering</div>
+          </div>
+          <div class="bench-score">54.6<span class="pct">%</span></div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-head">
+          <div class="chart-title">PERFORMANCE / MODEL SCALE</div>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#d4ff3a"></span>ARL-7B</span>
+            <span><span class="legend-dot" style="background:#6a5cff"></span>ARL-32B</span>
+          </div>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 500 300" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid -->
+          <g stroke="#26263a" stroke-width="1">
+            <line x1="50" y1="40" x2="480" y2="40"/>
+            <line x1="50" y1="100" x2="480" y2="100"/>
+            <line x1="50" y1="160" x2="480" y2="160"/>
+            <line x1="50" y1="220" x2="480" y2="220"/>
+            <line x1="50" y1="260" x2="480" y2="260"/>
+          </g>
+
+          <!-- Y axis labels -->
+          <g class="chart-axis" text-anchor="end">
+            <text x="42" y="44">100</text>
+            <text x="42" y="104">75</text>
+            <text x="42" y="164">50</text>
+            <text x="42" y="224">25</text>
+            <text x="42" y="264">0</text>
+          </g>
+
+          <!-- X axis labels -->
+          <g class="chart-axis" text-anchor="middle">
+            <text x="80" y="285">1B</text>
+            <text x="160" y="285">3B</text>
+            <text x="240" y="285">7B</text>
+            <text x="320" y="285">13B</text>
+            <text x="400" y="285">32B</text>
+            <text x="470" y="285">70B</text>
+          </g>
+
+          <!-- ARL-7B line (accent) -->
+          <path d="M 80 240 L 160 210 L 240 170 L 320 140 L 400 110 L 470 90"
+                stroke="#d4ff3a" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#d4ff3a">
+            <circle cx="80" cy="240" r="4"/>
+            <circle cx="160" cy="210" r="4"/>
+            <circle cx="240" cy="170" r="4"/>
+            <circle cx="320" cy="140" r="4"/>
+            <circle cx="400" cy="110" r="4"/>
+            <circle cx="470" cy="90" r="4"/>
+          </g>
+
+          <!-- ARL-32B line (purple) -->
+          <path d="M 80 220 L 160 180 L 240 130 L 320 95 L 400 65 L 470 50"
+                stroke="#6a5cff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#6a5cff">
+            <circle cx="80" cy="220" r="4"/>
+            <circle cx="160" cy="180" r="4"/>
+            <circle cx="240" cy="130" r="4"/>
+            <circle cx="320" cy="95" r="4"/>
+            <circle cx="400" cy="65" r="4"/>
+            <circle cx="470" cy="50" r="4"/>
+          </g>
+
+          <!-- Highlight point -->
+          <circle cx="400" cy="65" r="8" fill="none" stroke="#6a5cff" stroke-width="1.5" opacity="0.5">
+            <animate attributeName="r" values="8;14;8" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">The Lab</div>
+        <h2>Small team. Deep focus.</h2>
+      </div>
+      <p class="section-desc">
+        We're a distributed group of researchers across four continents, united by a belief that understanding precedes capability.
+      </p>
+    </div>
+
+    <div class="team-grid">
+      <div class="member">
+        <div class="avatar avatar-1">MK</div>
+        <div class="member-name">Dr. Mira Kovač</div>
+        <div class="member-role">FOUNDING DIRECTOR</div>
+        <div class="member-focus">Mechanistic interpretability, sparse autoencoders. Previously at DeepMind.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-2">JT</div>
+        <div class="member-name">Jonas Thorne</div>
+        <div class="member-role">RESEARCH LEAD</div>
+        <div class="member-focus">Reasoning architectures, chain-of-thought distillation. PhD, MIT.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-3">AR</div>
+        <div class="member-name">Aisha Rahman</div>
+        <div class="member-role">ALIGNMENT LEAD</div>
+        <div class="member-focus">Scalable oversight, debate-based evaluation. Previously at Anthropic.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-4">LC</div>
+        <div class="member-name">Lucas Chen</div>
+        <div class="member-role">INFRASTRUCTURE</div>
+        <div class="member-focus">Distributed training, evaluation harnesses. Ex-Google Brain.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-5">SP</div>
+        <div class="member-name">Sofia Petrova</div>
+        <div class="member-role">RESEARCH SCIENTIST</div>
+        <div class="member-focus">State-space models, long-context architectures. PhD, ETH Zürich.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-6">DO</div>
+        <div class="member-name">Daniel Okafor</div>
+        <div class="member-role">RESEARCH SCIENTIST</div>
+        <div class="member-focus">Emergent capabilities, training dynamics. PhD, Stanford.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-7">YN</div>
+        <div class="member-name">Yuki Nakamura</div>
+        <div class="member-role">ENGINEERING</div>
+        <div class="member-focus">Model serving, inference optimization. Ex-NVIDIA.</div>
+      </div>
+      <div class="member">
+        <div class="avatar avatar-8">EV</div>
+        <div class="member-name">Elena Vasquez</div>
+        <div class="member-role">RESEARCH ENGINEER</div>
+        <div class="member-focus">Data pipelines, benchmark design. Previously at Cohere.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource" class="oss">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Open Source</div>
+        <h2>Everything we build is public.</h2>
+      </div>
+      <p class="section-desc">
+        Models, training code, evaluation harnesses, and interpretability tools — all under permissive licenses.
+      </p>
+    </div>
+
+    <div class="oss-grid">
+      <a href="#" class="repo">
+        <div class="repo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d4ff3a" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="repo-body">
+          <div class="repo-name"><span class="org">ai-research-lab/</span>arl-models</div>
+          <div class="repo-desc">Open weights for ARL-1B through ARL-32B, with training recipes and evaluation scripts.</div>
+        </div>
+        <div class="repo-stats">
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            4.2k
+          </span>
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            312
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="repo">
+        <div class="repo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6a5cff" stroke-width="1.5">
+            <circle cx="12" cy="12" r="3"/>
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v6M12 15v6M3 12h6M15 12h6"/>
+          </svg>
+        </div>
+        <div class="repo-body">
+          <div class="repo-name"><span class="org">ai-research-lab/</span>circuit-tracer</div>
+          <div class="repo-desc">Toolkit for tracing computational circuits in transformer models using sparse autoencoders.</div>
+        </div>
+        <div class="repo-stats">
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            2.8k
+          </span>
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            198
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="repo">
+        <div class="repo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3affd4" stroke-width="1.5">
+            <path d="M3 3v18h18"/>
+            <path d="M7 14l4-4 4 4 5-5"/>
+          </svg>
+        </div>
+        <div class="repo-body">
+          <div class="repo-name"><span class="org">ai-research-lab/</span>eval-harness</div>
+          <div class="repo-desc">Reproducible evaluation suite for reasoning, coding, and knowledge benchmarks.</div>
+        </div>
+        <div class="repo-stats">
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            1.6k
+          </span>
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            142
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="repo">
+        <div class="repo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ff5c3a" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M9 9h6v6H9z"/>
+            <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>
+          </svg>
+        </div>
+        <div class="repo-body">
+          <div class="repo-name"><span class="org">ai-research-lab/</span>latent-reasoner</div>
+          <div class="repo-desc">Reference implementation of latent reasoning token compression for chain-of-thought models.</div>
+        </div>
+        <div class="repo-stats">
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            3.8k
+          </span>
+          <span class="repo-stat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            276
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="collaborate" class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="section-tag" style="justify-content:center; display:inline-flex;">Collaborate</div>
+      <h2>Let's build the next generation of interpretable AI together.</h2>
+      <p>
+        We partner with academic institutions, independent researchers, and mission-aligned organizations. If our work resonates, we'd love to hear from you.
+      </p>
+      <div class="cta-actions">
+        <a href="mailto:hello@airesearchlab.org" class="btn btn-primary">
+          Get in touch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost">
+          Read our research agenda
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark">
+            <svg viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="#d4ff3a" stroke-width="1.5"/>
+              <circle cx="16" cy="16" r="6" fill="#d4ff3a"/>
+              <circle cx="16" cy="16" r="10" stroke="#d4ff3a" stroke-width="0.5" opacity="0.5"/>
+            </svg>
+          </span>
+          <span class="logo-text">AI<span class="sep">/</span>RESEARCH<span class="sep">/</span>LAB</span>
+        </a>
+        <p>An independent research lab studying the foundations of machine intelligence. Everything we build is open.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Research</h4>
+        <ul>
+          <li><a href="#">Publications</a></li>
+          <li><a href="#">Benchmarks</a></li>
+          <li><a href="#">Models</a></li>
+          <li><a href="#">Datasets</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Lab</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 AI / RESEARCH / LAB — All research released under CC-BY 4.0</div>
+      <div class="status">
+        <span class="status-dot"></span>
+        All systems operational
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Benchmark item interaction
+  const benchItems = document.querySelectorAll('.bench-item');
+  benchItems.forEach(item => {
+    item.addEventListener('click', () => {
+      benchItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // Subtle parallax on hero visual
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual && window.matchMedia('(min-width: 1024px)').matches) {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 12;
+      const y = (e.clientY / window.innerHeight - 0.5) * 12;
+      heroVisual.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.paper, .member, .repo, .bench-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

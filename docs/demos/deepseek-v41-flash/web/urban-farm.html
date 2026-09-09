@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URBAN / FARM — grow where you are</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1e1b;
+      --paper: #f3efe6;
+      --paper-2: #e8e2d4;
+      --moss: #2f4a2c;
+      --moss-2: #4a6b3f;
+      --sprout: #a8c66c;
+      --sprout-2: #d4e29a;
+      --clay: #c25a3a;
+      --clay-2: #e07a4f;
+      --sun: #e8b53a;
+      --sky: #b8d4d8;
+      --line: rgba(26,30,27,0.14);
+      --line-strong: rgba(26,30,27,0.28);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', ui-monospace, monospace;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 0.98;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(243,239,230,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .logo-mark {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, var(--sprout) 0%, var(--moss) 70%);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1.5px solid var(--paper);
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(-30deg);
+    }
+    .logo span { color: var(--clay); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .nav-links a {
+      position: relative;
+      padding: 4px 0;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 0; height: 1px;
+      background: var(--clay);
+      transition: width .25s;
+    }
+    .nav-links a:hover { color: var(--clay); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 18px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 100px;
+      transition: background .2s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--clay); transform: translateY(-1px); }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 72px 0 88px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 28px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--moss);
+    }
+    .hero h1 {
+      font-size: clamp(56px, 7.2vw, 104px);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 0.9;
+      margin-bottom: 32px;
+    }
+    .hero h1 .slash {
+      color: var(--clay);
+      font-weight: 400;
+      display: inline-block;
+      transform: translateY(-4px);
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--moss-2);
+    }
+    .hero-lede {
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 480px;
+      color: rgba(26,30,27,0.78);
+      margin-bottom: 40px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 26px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      border-radius: 100px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all .22s;
+    }
+    .btn-primary {
+      background: var(--moss);
+      color: var(--paper);
+    }
+    .btn-primary:hover { background: var(--clay); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--line-strong);
+      color: var(--ink);
+    }
+    .btn-ghost:hover { border-color: var(--ink); background: var(--paper-2); }
+    .btn .arrow { transition: transform .22s; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    /* Hero visual — layered SVG farm scene */
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--sky) 0%, #d8e4d4 45%, var(--sprout-2) 100%);
+      box-shadow: 0 30px 60px -30px rgba(47,74,44,0.4);
+    }
+    .hero-visual svg { width: 100%; height: 100%; display: block; }
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--paper);
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      box-shadow: 0 8px 24px -8px rgba(0,0,0,0.2);
+    }
+    .hero-badge strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--moss);
+      text-transform: none;
+    }
+
+    /* ---------- MARQUEE ---------- */
+    .marquee {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+      overflow: hidden;
+      background: var(--paper-2);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 48px;
+      white-space: nowrap;
+      animation: scroll 40s linear infinite;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: var(--moss);
+    }
+    .marquee-track span { display: inline-flex; align-items: center; gap: 48px; }
+    .marquee-track span::after {
+      content: '✳';
+      color: var(--clay);
+      font-size: 12px;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ---------- SECTION BASE ---------- */
+    section { padding: 96px 0; }
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 56px;
+    }
+    .section-head h2 {
+      font-size: clamp(38px, 4.4vw, 60px);
+      letter-spacing: -0.035em;
+    }
+    .section-head h2 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--clay);
+    }
+    .section-head p {
+      font-size: 15px;
+      color: rgba(26,30,27,0.72);
+      max-width: 420px;
+      justify-self: end;
+    }
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--moss);
+    }
+
+    /* ---------- SHARE SIGNUP ---------- */
+    .share {
+      background: var(--moss);
+      color: var(--paper);
+      border-radius: 4px;
+      padding: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .share::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,198,108,0.25) 0%, transparent 70%);
+    }
+    .share h2 {
+      font-size: clamp(34px, 3.6vw, 48px);
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .share h2 em { font-style: italic; font-weight: 400; color: var(--sprout); }
+    .share p {
+      color: rgba(243,239,230,0.78);
+      font-size: 15px;
+      max-width: 400px;
+      margin-bottom: 28px;
+    }
+    .share-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .share-features li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(243,239,230,0.9);
+    }
+    .share-features li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--sprout);
+      flex-shrink: 0;
+    }
+    .share-form {
+      background: var(--paper);
+      color: var(--ink);
+      padding: 36px;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    .share-form h3 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .share-form .form-sub {
+      font-size: 12px;
+      color: rgba(26,30,27,0.6);
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 6px;
+    }
+    .field input, .field select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      color: var(--ink);
+      border-radius: 3px;
+      transition: border-color .2s;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--moss);
+    }
+    .size-picker {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .size-opt {
+      padding: 12px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 3px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      font-size: 12px;
+    }
+    .size-opt strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+    .size-opt.active {
+      background: var(--moss);
+      color: var(--paper);
+      border-color: var(--moss);
+    }
+    .size-opt:hover:not(.active) { border-color: var(--moss); }
+    .share-form .btn-primary {
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .form-note {
+      font-size: 11px;
+      color: rgba(26,30,27,0.55);
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* ---------- MAP ---------- */
+    .map-section { background: var(--paper-2); }
+    .map-frame {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 32px;
+      position: relative;
+    }
+    .map-svg { width: 100%; height: auto; display: block; }
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.02em;
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+    }
+    .map-tooltip {
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .15s;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    .map-tooltip.show { opacity: 1; }
+
+    /* ---------- PRODUCE ---------- */
+    .produce-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .produce-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 24px;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .produce-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(47,74,44,0.3);
+      border-color: var(--moss);
+    }
+    .produce-icon {
+      width: 64px; height: 64px;
+      margin-bottom: 20px;
+    }
+    .produce-card h3 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .produce-card .season {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 12px;
+    }
+    .produce-card p {
+      font-size: 13px;
+      color: rgba(26,30,27,0.7);
+      line-height: 1.5;
+    }
+    .produce-card .price {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--line-strong);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--moss);
+    }
+
+    /* ---------- VOLUNTEER ---------- */
+    .volunteer { background: var(--ink); color: var(--paper); }
+    .volunteer .section-label { color: var(--sprout); }
+    .volunteer .section-label::before { background: var(--sprout); }
+    .volunteer .section-head h2 { color: var(--paper); }
+    .volunteer .section-head h2 em { color: var(--sprout); }
+    .volunteer .section-head p { color: rgba(243,239,230,0.7); }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      border: 1px solid rgba(243,239,230,0.14);
+      border-radius: 4px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all .2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .cal-day:hover {
+      border-color: var(--sprout);
+      background: rgba(168,198,108,0.08);
+    }
+    .cal-day .dow {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243,239,230,0.5);
+    }
+    .cal-day .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .cal-day .tag {
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      padding: 3px 6px;
+      border-radius: 2px;
+      align-self: flex-start;
+      text-transform: uppercase;
+    }
+    .tag-plant { background: var(--sprout); color: var(--ink); }
+    .tag-harvest { background: var(--clay); color: var(--paper); }
+    .tag-market { background: var(--sun); color: var(--ink); }
+    .tag-workshop { background: var(--sky); color: var(--ink); }
+    .cal-day.empty { opacity: 0.25; cursor: default; }
+    .cal-day.empty:hover { border-color: rgba(243,239,230,0.14); background: transparent; }
+    .cal-legend {
+      display: flex;
+      gap: 24px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+      font-size: 12px;
+    }
+    .cal-legend .legend-item { color: rgba(243,239,230,0.8); }
+
+    /* ---------- IMPACT ---------- */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .impact-cell {
+      padding: 40px 32px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+    .impact-cell .num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--moss);
+      margin-bottom: 12px;
+    }
+    .impact-cell .num .unit {
+      font-size: 0.4em;
+      color: var(--clay);
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .impact-cell .label {
+      font-size: 13px;
+      color: rgba(26,30,27,0.7);
+      line-height: 1.5;
+      max-width: 220px;
+    }
+    .impact-cell .idx {
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: 11px;
+      color: var(--line-strong);
+      letter-spacing: 0.1em;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+      padding: 72px 0 32px;
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+    .foot-brand h3 {
+      font-size: 32px;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .foot-brand h3 span { color: var(--clay); }
+    .foot-brand p {
+      font-size: 13px;
+      color: rgba(26,30,27,0.7);
+      max-width: 320px;
+      margin-bottom: 20px;
+    }
+    .foot-col h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+    .foot-col ul { list-style: none; }
+    .foot-col li { margin-bottom: 10px; }
+    .foot-col a {
+      font-size: 13px;
+      color: rgba(26,30,27,0.75);
+      transition: color .2s;
+    }
+    .foot-col a:hover { color: var(--clay); }
+    .foot-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: rgba(26,30,27,0.6);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .wrap { padding: 0 32px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { max-width: 480px; }
+      .section-head { grid-template-columns: 1fr; gap: 20px; }
+      .section-head p { justify-self: start; }
+      .share { grid-template-columns: 1fr; padding: 48px; gap: 40px; }
+      .produce-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 20px; }
+      section { padding: 64px 0; }
+      .hero { padding: 40px 0 56px; }
+      .share { padding: 32px 24px; }
+      .share-form { padding: 24px; }
+      .produce-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .cal-grid { grid-template-columns: repeat(4, 1fr); }
+      .foot-grid { grid-template-columns: 1fr; gap: 32px; }
+      .size-picker { grid-template-columns: 1fr; }
+      .map-frame { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      URBAN<span>/</span>FARM
+    </a>
+    <div class="nav-links">
+      <a href="#share">Weekly Share</a>
+      <a href="#map">The Farm</a>
+      <a href="#produce">Produce</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#impact">Impact</a>
+    </div>
+    <a href="#share" class="nav-cta">Join the harvest</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Rooftop farm · Est. 2019 · Brooklyn, NY</div>
+      <h1>Grow<br>where<br>you <em>are</em><span class="slash">/</span></h1>
+      <p class="hero-lede">
+        We turn unused rooftops and vacant lots into productive soil. Two acres of
+        living farm, twelve stories above the street — feeding 340 households a
+        weekly share of what the city can grow.
+      </p>
+      <div class="hero-actions">
+        <a href="#share" class="btn btn-primary">
+          Claim a weekly share
+          <span class="arrow">→</span>
+        </a>
+        <a href="#map" class="btn btn-ghost">Tour the farm</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <svg viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice" aria-label="Illustrated rooftop farm scene">
+        <defs>
+          <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b8d4d8"/>
+            <stop offset="60%" stop-color="#d8e4d4"/>
+            <stop offset="100%" stop-color="#e8e2d4"/>
+          </linearGradient>
+          <linearGradient id="soilG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4a3a2a"/>
+            <stop offset="100%" stop-color="#2a2018"/>
+          </linearGradient>
+          <radialGradient id="sunG" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color="#f5d76e"/>
+            <stop offset="100%" stop-color="#e8b53a"/>
+          </radialGradient>
+        </defs>
+
+        <!-- sky -->
+        <rect width="400" height="420" fill="url(#skyG)"/>
+
+        <!-- sun -->
+        <circle cx="320" cy="80" r="34" fill="url(#sunG)"/>
+        <circle cx="320" cy="80" r="46" fill="none" stroke="#e8b53a" stroke-width="1" opacity="0.4"/>
+
+        <!-- distant skyline -->
+        <g fill="#8fa89a" opacity="0.55">
+          <rect x="0" y="180" width="40" height="120"/>
+          <rect x="44" y="150" width="30" height="150"/>
+          <rect x="78" y="200" width="50" height="100"/>
+          <rect x="132" y="170" width="28" height="130"/>
+          <rect x="164" y="210" width="44" height="90"/>
+          <rect x="212" y="160" width="36" height="140"/>
+          <rect x="252" y="195" width="40" height="105"/>
+          <rect x="296" y="175" width="30" height="125"/>
+          <rect x="330" y="205" width="46" height="95"/>
+          <rect x="380" y="185" width="20" height="115"/>
+        </g>
+
+        <!-- rooftop platform -->
+        <rect x="0" y="300" width="400" height="120" fill="#3a3a3a"/>
+        <rect x="0" y="300" width="400" height="6" fill="#5a5a5a"/>
+
+        <!-- soil beds -->
+        <g>
+          <rect x="20" y="316" width="360" height="14" fill="url(#soilG)" rx="2"/>
+          <rect x="20" y="344" width="360" height="14" fill="url(#soilG)" rx="2"/>
+          <rect x="20" y="372" width="360" height="14" fill="url(#soilG)" rx="2"/>
+        </g>
+
+        <!-- plants row 1 -->
+        <g fill="#4a6b3f">
+          <path d="M40 316 q-6 -18 0 -26 q6 8 0 26z"/>
+          <path d="M70 316 q-6 -22 0 -30 q6 8 0 30z"/>
+          <path d="M100 316 q-6 -16 0 -24 q6 8 0 24z"/>
+          <path d="M130 316 q-6 -20 0 -28 q6 8 0 28z"/>
+          <path d="M160 316 q-6 -18 0 -26 q6 8 0 26z"/>
+          <path d="M190 316 q-6 -22 0 -30 q6 8 0 30z"/>
+          <path d="M220 316 q-6 -16 0 -24 q6 8 0 24z"/>
+          <path d="M250 316 q-6 -20 0 -28 q6 8 0 28z"/>
+          <path d="M280 316 q-6 -18 0 -26 q6 8 0 26z"/>
+          <path d="M310 316 q-6 -22 0 -30 q6 8 0 30z"/>
+          <path d="M340 316 q-6 -16 0 -24 q6 8 0 24z"/>
+          <path d="M370 316 q-6 -20 0 -28 q6 8 0 28z"/>
+        </g>
+
+        <!-- plants row 2 (tomatoes with red dots) -->
+        <g>
+          <g fill="#4a6b3f">
+            <path d="M40 344 q-6 -18 0 -26 q6 8 0 26z"/>
+            <path d="M70 344 q-6 -22 0 -30 q6 8 0 30z"/>
+            <path d="M100 344 q-6 -16 0 -24 q6 8 0 24z"/>
+            <path d="M130 344 q-6 -20 0 -28 q6 8 0 28z"/>
+            <path d="M160 344 q-6 -18 0 -26 q6 8 0 26z"/>
+            <path d="M190 344 q-6 -22 0 -30 q6 8 0 30z"/>
+            <path d="M220 344 q-6 -16 0 -24 q6 8 0 24z"/>
+            <path d="M250 344 q-6 -20 0 -28 q6 8 0 28z"/>
+            <path d="M280 344 q-6 -18 0 -26 q6 8 0 26z"/>
+            <path d="M310 344 q-6 -22 0 -30 q6 8 0 30z"/>
+            <path d="M340 344 q-6 -16 0 -24 q6 8 0 24z"/>
+            <path d="M370 344 q-6 -20 0 -28 q6 8 0 28z"/>
+          </g>
+          <g fill="#c25a3a">
+            <circle cx="70" cy="322" r="3"/>
+            <circle cx="130" cy="324" r="3"/>
+            <circle cx="190" cy="322" r="3"/>
+            <circle cx="250" cy="324" r="3"/>
+            <circle cx="310" cy="322" r="3"/>
+          </g>
+        </g>
+
+        <!-- plants row 3 (leafy greens) -->
+        <g fill="#a8c66c">
+          <path d="M40 372 q-8 -14 0 -22 q8 8 0 22z"/>
+          <path d="M70 372 q-8 -18 0 -26 q8 8 0 26z"/>
+          <path d="M100 372 q-8 -12 0 -20 q8 8 0 20z"/>
+          <path d="M130 372 q-8 -16 0 -24 q8 8 0 24z"/>
+          <path d="M160 372 q-8 -14 0 -22 q8 8 0 22z"/>
+          <path d="M190 372 q-8 -18 0 -26 q8 8 0 26z"/>
+          <path d="M220 372 q-8 -12 0 -20 q8 8 0 20z"/>
+          <path d="M250 372 q-8 -16 0 -24 q8 8 0 24z"/>
+          <path d="M280 372 q-8 -14 0 -22 q8 8 0 22z"/>
+          <path d="M310 372 q-8 -18 0 -26 q8 8 0 26z"/>
+          <path d="M340 372 q-8 -12 0 -20 q8 8 0 20z"/>
+          <path d="M370 372 q-8 -16 0 -24 q8 8 0 24z"/>
+        </g>
+
+        <!-- water tank -->
+        <g>
+          <rect x="30" y="240" width="34" height="60" fill="#8a8a8a" rx="2"/>
+          <rect x="30" y="240" width="34" height="6" fill="#6a6a6a"/>
+          <line x1="47" y1="246" x2="47" y2="300" stroke="#6a6a6a" stroke-width="1"/>
+        </g>
+
+        <!-- greenhouse -->
+        <g>
+          <path d="M300 300 L300 260 Q320 240 340 260 L340 300 Z" fill="#d4e29a" opacity="0.85"/>
+          <path d="M300 300 L300 260 Q320 240 340 260 L340 300 Z" fill="none" stroke="#4a6b3f" stroke-width="1.5"/>
+          <line x1="320" y1="248" x2="320" y2="300" stroke="#4a6b3f" stroke-width="1"/>
+          <line x1="300" y1="280" x2="340" y2="280" stroke="#4a6b3f" stroke-width="1"/>
+        </g>
+
+        <!-- birds -->
+        <g stroke="#1a1e1b" stroke-width="1.2" fill="none" opacity="0.5">
+          <path d="M60 100 q6 -6 12 0 q6 -6 12 0"/>
+          <path d="M100 130 q5 -5 10 0 q5 -5 10 0"/>
+        </g>
+      </svg>
+      <div class="hero-badge">
+        <strong>2.1 acres</strong>
+        under cultivation
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Kale</span><span>Heirloom tomatoes</span><span>Rainbow chard</span><span>Honey</span><span>Microgreens</span><span>Winter squash</span><span>Fresh eggs</span><span>Herbs</span>
+    <span>Kale</span><span>Heirloom tomatoes</span><span>Rainbow chard</span><span>Honey</span><span>Microgreens</span><span>Winter squash</span><span>Fresh eggs</span><span>Herbs</span>
+  </div>
+</div>
+
+<!-- SHARE SIGNUP -->
+<section id="share">
+  <div class="wrap">
+    <div class="share">
+      <div>
+        <div class="section-label" style="color: var(--sprout);">Weekly Share · CSA</div>
+        <h2>Your <em>share</em> of the harvest, every Thursday.</h2>
+        <p>
+          A seasonal box of whatever the farm is growing best that week — picked
+          the morning it arrives. Choose a size, pause anytime, and pick up at
+          one of six neighborhood hubs.
+        </p>
+        <ul class="share-features">
+          <li>18–22 week season, June through October</li>
+          <li>Free delivery to pickup hubs in Brooklyn & Queens</li>
+          <li>Swap items, skip weeks, or gift a share</li>
+          <li>Members get first access to workshops & events</li>
+        </ul>
+      </div>
+
+      <form class="share-form" onsubmit="event.preventDefault(); this.querySelector('.btn-primary').textContent='✓ You\'re on the list';">
+        <h3>Reserve your share</h3>
+        <div class="form-sub">2025 season · 47 spots remaining</div>
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="hub">Pickup hub</label>
+          <select id="hub">
+            <option>Bed-Stuy — Putnam Ave</option>
+            <option>Park Slope — 5th Ave</option>
+            <option>Bushwick — Wyckoff</option>
+            <option>Astoria — 31st Ave</option>
+            <option>Fort Greene — DeKalb</option>
+            <option>Long Island City — Vernon</option>
+          </select>
+        </div>
+
+        <label style="display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--moss); margin-bottom:8px;">Share size</label>
+        <div class="size-picker">
+          <div class="size-opt" data-size="solo">
+            <strong>Solo</strong>
+            1 person
+          </div>
+          <div class="size-opt active" data-size="duo">
+            <strong>Duo</strong>
+            2 people
+          </div>
+          <div class="size-opt" data-size="family">
+            <strong>Family</strong>
+            3–4 people
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Reserve my share
+          <span class="arrow">→</span>
+        </button>
+        <div class="form-note">No payment now · Cancel anytime before June 1</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map" class="map-section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-label">The Farm · Rooftop & Lot</div>
+        <h2>Every bed has a <em>name</em>.</h2>
+      </div>
+      <p>
+        Our farm spans two rooftops and a converted parking lot. Hover any plot
+        to see what's growing there this season.
+      </p>
+    </div>
+
+    <div class="map-frame">
+      <svg class="map-svg" viewBox="0 0 1200 520" aria-label="Farm map">
+        <defs>
+          <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#1a1e1b" stroke-width="0.5" opacity="0.15"/>
+          </pattern>
+        </defs>
+
+        <!-- background grid -->
+        <g stroke="#1a1e1b" stroke-width="0.5" opacity="0.08">
+          <line x1="0" y1="130" x2="1200" y2="130"/>
+          <line x1="0" y1="260" x2="1200" y2="260"/>
+          <line x1="0" y1="390" x2="1200" y2="390"/>
+          <line x1="300" y1="0" x2="300" y2="520"/>
+          <line x1="600" y1="0" x2="600" y2="520"/>
+          <line x1="900" y1="0" x2="900" y2="520"/>
+        </g>
+
+        <!-- paths -->
+        <path d="M0 260 L1200 260" stroke="#c9c2b0" stroke-width="14" fill="none"/>
+        <path d="M600 0 L600 520" stroke="#c9c2b0" stroke-width="14" fill="none"/>
+        <path d="M0 260 L1200 260" stroke="#1a1e1b" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.3" fill="none"/>
+        <path d="M600 0 L600 520" stroke="#1a1e1b" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.3" fill="none"/>
+
+        <!-- Plot A: Leafy greens -->
+        <g class="plot" data-name="Plot A · Leafy Greens — kale, chard, spinach">
+          <rect x="40" y="40" width="240" height="180" fill="#a8c66c" opacity="0.55" rx="4"/>
+          <rect x="40" y="40" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="40" y="40" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="60" y="72" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">A</text>
+          <text x="60" y="94" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">LEAFY GREENS</text>
+          <text x="60" y="112" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">kale · chard · spinach</text>
+        </g>
+
+        <!-- Plot B: Tomatoes -->
+        <g class="plot" data-name="Plot B · Nightshades — heirloom tomatoes, peppers, eggplant">
+          <rect x="320" y="40" width="240" height="180" fill="#c25a3a" opacity="0.5" rx="4"/>
+          <rect x="320" y="40" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="320" y="40" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="340" y="72" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">B</text>
+          <text x="340" y="94" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">NIGHTSHADES</text>
+          <text x="340" y="112" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">tomatoes · peppers · eggplant</text>
+        </g>
+
+        <!-- Plot C: Roots -->
+        <g class="plot" data-name="Plot C · Roots — carrots, beets, radishes, turnips">
+          <rect x="640" y="40" width="240" height="180" fill="#e8b53a" opacity="0.5" rx="4"/>
+          <rect x="640" y="40" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="640" y="40" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="660" y="72" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">C</text>
+          <text x="660" y="94" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">ROOTS</text>
+          <text x="660" y="112" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">carrots · beets · radishes</text>
+        </g>
+
+        <!-- Plot D: Herbs -->
+        <g class="plot" data-name="Plot D · Herbs — basil, mint, thyme, rosemary">
+          <rect x="920" y="40" width="240" height="180" fill="#4a6b3f" opacity="0.55" rx="4"/>
+          <rect x="920" y="40" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="920" y="40" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="940" y="72" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">D</text>
+          <text x="940" y="94" font-family="DM Mono, monospace" font-size="11" fill="#f3efe6" letter-spacing="0.08em">HERBS</text>
+          <text x="940" y="112" font-family="DM Mono, monospace" font-size="10" fill="#f3efe6" opacity="0.8">basil · mint · thyme</text>
+        </g>
+
+        <!-- Plot E: Greenhouse -->
+        <g class="plot" data-name="Plot E · Greenhouse — seedlings, microgreens, year-round starts">
+          <rect x="40" y="300" width="240" height="180" fill="#b8d4d8" opacity="0.7" rx="4"/>
+          <rect x="40" y="300" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="40" y="300" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="60" y="332" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">E</text>
+          <text x="60" y="354" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">GREENHOUSE</text>
+          <text x="60" y="372" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">seedlings · microgreens</text>
+        </g>
+
+        <!-- Plot F: Orchard -->
+        <g class="plot" data-name="Plot F · Orchard — figs, apples, plums, berries">
+          <rect x="320" y="300" width="240" height="180" fill="#d4e29a" opacity="0.7" rx="4"/>
+          <rect x="320" y="300" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="320" y="300" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="340" y="332" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">F</text>
+          <text x="340" y="354" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">ORCHARD</text>
+          <text x="340" y="372" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">figs · apples · berries</text>
+        </g>
+
+        <!-- Plot G: Compost -->
+        <g class="plot" data-name="Plot G · Compost & Soil — worm bins, compost, potting shed">
+          <rect x="640" y="300" width="240" height="180" fill="#8a6a4a" opacity="0.55" rx="4"/>
+          <rect x="640" y="300" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="640" y="300" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="660" y="332" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">G</text>
+          <text x="660" y="354" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">COMPOST</text>
+          <text x="660" y="372" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">worm bins · potting shed</text>
+        </g>
+
+        <!-- Plot H: Pollinator -->
+        <g class="plot" data-name="Plot H · Pollinator Garden — wildflowers, bee hives, habitat">
+          <rect x="920" y="300" width="240" height="180" fill="#e07a4f" opacity="0.5" rx="4"/>
+          <rect x="920" y="300" width="240" height="180" fill="url(#hatch)" rx="4"/>
+          <rect x="920" y="300" width="240" height="180" fill="none" stroke="#2f4a2c" stroke-width="1.5" rx="4"/>
+          <text x="940" y="332" font-family="Syne, sans-serif" font-weight="700" font-size="20" fill="#1a1e1b">H</text>
+          <text x="940" y="354" font-family="DM Mono, monospace" font-size="11" fill="#2f4a2c" letter-spacing="0.08em">POLLINATOR</text>
+          <text x="940" y="372" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">wildflowers · bee hives</text>
+        </g>
+
+        <!-- Compass -->
+        <g transform="translate(1140, 480)">
+          <circle r="18" fill="none" stroke="#1a1e1b" stroke-width="1" opacity="0.4"/>
+          <path d="M0 -14 L4 0 L0 14 L-4 0 Z" fill="#c25a3a"/>
+          <text x="0" y="-22" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="#1a1e1b" opacity="0.6">N</text>
+        </g>
+      </svg>
+      <div class="map-tooltip" id="mapTooltip"></div>
+
+      <div class="map-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#a8c66c"></span>Leafy greens</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#c25a3a"></span>Nightshades</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e8b53a"></span>Roots</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#4a6b3f"></span>Herbs</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#b8d4d8"></span>Greenhouse</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#d4e29a"></span>Orchard</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#8a6a4a"></span>Compost</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e07a4f"></span>Pollinator</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCE -->
+<section id="produce">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Seasonal Produce</div>
+        <h2>What's <em>growing</em> now.</h2>
+      </div>
+      <p>
+        Our planting calendar follows the seasons, not the supermarket. Here's
+        what's coming out of the beds this month.
+      </p>
+    </div>
+
+    <div class="produce-grid">
+      <div class="produce-card">
+        <svg class="produce-icon" viewBox="0 0 64 64">
+          <path d="M32 8 Q20 20 20 36 Q20 52 32 56 Q44 52 44 36 Q44 20 32 8 Z" fill="#4a6b3f"/>
+          <path d="M32 8 Q28 20 28 36 Q28 52 32 56" fill="none" stroke="#2f4a2c" stroke-width="1.5"/>
+          <path d="M32 8 Q36 20 36 36 Q36 52 32 56" fill="none" stroke="#2f4a2c" stroke-width="1.5"/>
+          <path d="M32 8 L32 56" stroke="#2f4a2c" stroke-width="1"/>
+        </svg>
+        <h3>Lacinato Kale</h3>
+        <div class="season">Peak · May–Nov</div>
+        <p>Deep blue-green leaves, sweet after frost. The workhorse of the winter share.</p>
+        <div class="price"><span>BUNCH</span><span>$4.50</span></div>
+      </div>
+
+      <div class="produce-card">
+        <svg class="produce-icon" viewBox="0 0 64 64">
+          <circle cx="32" cy="36" r="20" fill="#c25a3a"/>
+          <circle cx="32" cy="36" r="20" fill="none" stroke="#8a3a22" stroke-width="1.5"/>
+          <path d="M32 16 Q28 12 24 14 Q28 18 32 16 Z" fill="#4a6b3f"/>
+          <path d="M32 16 Q36 12 40 14 Q36 18 32 16 Z" fill="#4a6b3f"/>
+          <path d="M32 16 L32 20" stroke="#2f4a2c" stroke-width="1.5"/>
+          <circle cx="26" cy="32" r="2" fill="#e07a4f" opacity="0.6"/>
+          <circle cx="38" cy="40" r="2" fill="#e07a4f" opacity="0.6"/>
+        </svg>
+        <h3>Heirloom Tomatoes</h3>
+        <div class="season">Peak · Jul–Sep</div>
+        <p>Twelve varieties, from Green Zebra to Brandywine. Picked at full ripeness.</p>
+        <div class="price"><span>PINT</span><span>$6.00</span></div>
+      </div>
+
+      <div class="produce-card">
+        <svg class="produce-icon" viewBox="0 0 64 64">
+          <path d="M32 8 L38 24 L54 24 L42 34 L46 50 L32 40 L18 50 L22 34 L10 24 L26 24 Z" fill="#e8b53a"/>
+          <path d="M32 8 L38 24 L54 24 L42 34 L46 50 L32 40 L18 50 L22 34 L10 24 L26 24 Z" fill="none" stroke="#a87a1a" stroke-width="1.5"/>
+          <circle cx="32" cy="32" r="4" fill="#a87a1a"/>
+        </svg>
+        <h3>Rainbow Chard</h3>
+        <div class="season">Peak · Apr–Nov</div>
+        <p>Neon stems in pink, gold, and crimson. Sauté the ribs, wilt the leaves.</p>
+        <div class="price"><span>BUNCH</span><span>$4.00</span></div>
+      </div>
+
+      <div class="produce-card">
+        <svg class="produce-icon" viewBox="0 0 64 64">
+          <path d="M32 12 Q22 24 22 40 Q22 52 32 54 Q42 52 42 40 Q42 24 32 12 Z" fill="#a8c66c"/>
+          <path d="M32 12 Q28 24 28 40 Q28 52 32 54" fill="none" stroke="#4a6b3f" stroke-width="1.5"/>
+          <path d="M32 12 Q36 24 36 40 Q36 52 32 54" fill="none" stroke="#4a6b3f" stroke-width="1.5"/>
+          <path d="M32 12 L32 54" stroke="#4a6b3f" stroke-width="1"/>
+          <path d="M32 12 Q26 8 22 12 Q28 14 32 12 Z" fill="#4a6b3f"/>
+        </svg>
+        <h3>Winter Squash</h3>
+        <div class="season">Peak · Sep–Dec</div>
+        <p>Delicata, butternut, and honeynut. Cured for sweetness, stores for months.</p>
+        <div class="price"><span>EACH</span><span>$5.50</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section id="volunteer" class="volunteer">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Volunteer Calendar</div>
+        <h2>Come get your <em>hands</em> dirty.</h2>
+      </div>
+      <p>
+        Every week we host open volunteer hours on the roof. No experience
+        needed — just show up, we'll teach you the rest.
+      </p>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-day empty"><span class="dow">Sun</span></div>
+      <div class="cal-day">
+        <span class="dow">Mon</span>
+        <span class="num">03</span>
+        <span class="tag tag-plant">Plant</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Tue</span>
+        <span class="num">04</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Wed</span>
+        <span class="num">05</span>
+        <span class="tag tag-harvest">Harvest</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Thu</span>
+        <span class="num">06</span>
+        <span class="tag tag-market">Market</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Fri</span>
+        <span class="num">07</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Sat</span>
+        <span class="num">08</span>
+        <span class="tag tag-workshop">Workshop</span>
+      </div>
+
+      <div class="cal-day">
+        <span class="dow">Sun</span>
+        <span class="num">09</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Mon</span>
+        <span class="num">10</span>
+        <span class="tag tag-plant">Plant</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Tue</span>
+        <span class="num">11</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Wed</span>
+        <span class="num">12</span>
+        <span class="tag tag-harvest">Harvest</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Thu</span>
+        <span class="num">13</span>
+        <span class="tag tag-market">Market</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Fri</span>
+        <span class="num">14</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Sat</span>
+        <span class="num">15</span>
+        <span class="tag tag-workshop">Workshop</span>
+      </div>
+
+      <div class="cal-day">
+        <span class="dow">Sun</span>
+        <span class="num">16</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Mon</span>
+        <span class="num">17</span>
+        <span class="tag tag-plant">Plant</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Tue</span>
+        <span class="num">18</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Wed</span>
+        <span class="num">19</span>
+        <span class="tag tag-harvest">Harvest</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Thu</span>
+        <span class="num">20</span>
+        <span class="tag tag-market">Market</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Fri</span>
+        <span class="num">21</span>
+      </div>
+      <div class="cal-day">
+        <span class="dow">Sat</span>
+        <span class="num">22</span>
+        <span class="tag tag-workshop">Workshop</span>
+      </div>
+    </div>
+
+    <div class="cal-legend">
+      <div class="legend-item"><span class="legend-dot tag-plant" style="width:12px;height:12px;border-radius:3px;"></span>Planting day · 9am–12pm</div>
+      <div class="legend-item"><span class="legend-dot tag-harvest" style="width:12px;height:12px;border-radius:3px;"></span>Harvest day · 7am–11am</div>
+      <div class="legend-item"><span class="legend-dot tag-market" style="width:12px;height:12px;border-radius:3px;"></span>Farmers market · 8am–2pm</div>
+      <div class="legend-item"><span class="legend-dot tag-workshop" style="width:12px;height:12px;border-radius:3px;"></span>Workshop · 10am–1pm</div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Impact · 2024 Season</div>
+        <h2>What a rooftop <em>can</em> do.</h2>
+      </div>
+      <p>
+        We measure everything — pounds harvested, meals shared, and the
+        carbon we keep out of the air by growing food where people live.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact-cell">
+        <span class="idx">01</span>
+        <div class="num">18,400<span class="unit">lb</span></div>
+        <div class="label">Fresh produce harvested and distributed across the 2024 season.</div>
+      </div>
+      <div class="impact-cell">
+        <span class="idx">02</span>
+        <div class="num">340<span class="unit">hh</span></div>
+        <div class="label">Households receiving a weekly share, 62 of them subsidized.</div>
+      </div>
+      <div class="impact-cell">
+        <span class="idx">03</span>
+        <div class="num">2,100<span class="unit">hrs</span></div>
+        <div class="label">Volunteer hours logged by neighbors, students, and passersby.</div>
+      </div>
+      <div class="impact-cell">
+        <span class="idx">04</span>
+        <div class="num">41<span class="unit">t</span></div>
+        <div class="label">Food waste diverted from landfill into our compost system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h3>URBAN<span>/</span>FARM</h3>
+        <p>
+          A working farm on the rooftops and vacant lots of Brooklyn. Growing
+          food, community, and a little bit of stubborn hope.
+        </p>
+        <p style="font-size:12px; color:var(--moss);">
+          14 Wythe Ave, Brooklyn NY 11249<br>
+          hello@urbanfarm.nyc · (718) 555-0142
+        </p>
+      </div>
+      <div class="foot-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#map">Farm map</a></li>
+          <li><a href="#">Open hours</a></li>
+          <li><a href="#">Group tours</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Join</h4>
+        <ul>
+          <li><a href="#share">Weekly share</a></li>
+          <li><a href="#volunteer">Volunteer</a></li>
+          <li><a href="#">Workshops</a></li>
+          <li><a href="#">Donate</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Press kit</a></li>
+          <li><a href="#">Jobs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2025 URBAN / FARM · A 501(c)(3) nonprofit</div>
+      <div>Made on the roof · Powered by compost</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Size picker
+  document.querySelectorAll('.size-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.size-opt').forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+    });
+  });
+
+  // Map tooltip
+  const tooltip = document.getElementById('mapTooltip');
+  const mapFrame = document.querySelector('.map-frame');
+  document.querySelectorAll('.plot').forEach(plot => {
+    plot.style.cursor = 'pointer';
+    plot.addEventListener('mousemove', (e) => {
+      const rect = mapFrame.getBoundingClientRect();
+      tooltip.textContent = plot.dataset.name;
+      tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
+      tooltip.style.top = (e.clientY - rect.top + 14) + 'px';
+      tooltip.classList.add('show');
+    });
+    plot.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('show');
+    });
+  });
+
+  // Calendar day click
+  document.querySelectorAll('.cal-day:not(.empty)').forEach(day => {
+    day.addEventListener('click', () => {
+      const tag = day.querySelector('.tag');
+      if (tag) {
+        alert('Sign up for ' + tag.textContent + ' on the ' + day.querySelector('.num').textContent + 'th — we\'ll email you the details.');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

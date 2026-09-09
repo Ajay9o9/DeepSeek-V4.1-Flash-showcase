@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIELDHOUSE — Real Estate Discovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface-alt: #f3efe9;
+      --border: #e5dfd6;
+      --border-strong: #d4ccc0;
+      --text: #1a1815;
+      --text-secondary: #6b6560;
+      --text-tertiary: #9c958d;
+      --accent: #c45d3e;
+      --accent-hover: #a84d32;
+      --accent-light: #fdf0ec;
+      --green: #3d7a5a;
+      --green-light: #eef5f0;
+      --shadow-sm: 0 1px 2px rgba(26,24,21,0.04);
+      --shadow-md: 0 4px 12px rgba(26,24,21,0.06);
+      --shadow-lg: 0 12px 32px rgba(26,24,21,0.08);
+      --radius: 10px;
+      --radius-lg: 14px;
+      --radius-sm: 6px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-alt);
+    }
+
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--surface-alt); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+    .btn-ghost {
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .btn-ghost:hover { background: var(--surface-alt); }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c45d3e, #d4845e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Search Bar ── */
+    .search-section {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .search-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0 16px;
+      height: 44px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .search-box svg { flex-shrink: 0; color: var(--text-tertiary); }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      width: 100%;
+      outline: none;
+    }
+
+    .search-box input::placeholder { color: var(--text-tertiary); }
+
+    .search-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border-strong);
+      flex-shrink: 0;
+    }
+
+    .search-box select {
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      outline: none;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    /* ── Filter Bar ── */
+    .filter-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+    }
+
+    .filter-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-inner::-webkit-scrollbar { display: none; }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .filter-chip:hover { border-color: var(--border-strong); background: var(--surface-alt); }
+
+    .filter-chip.active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    .filter-chip svg { width: 14px; height: 14px; }
+
+    .filter-count {
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Main Layout ── */
+    .main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 32px 48px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ── Results Header ── */
+    .results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .results-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .results-header h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .results-meta {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .results-meta strong { color: var(--text); font-weight: 600; }
+
+    .sort-select {
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      background: var(--surface);
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* ── Listing Cards ── */
+    .listings {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .card-image {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-alt);
+    }
+
+    .card-image svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      color: var(--text);
+    }
+
+    .card-badge.new { background: var(--green); color: #fff; }
+    .card-badge.hot { background: var(--accent); color: #fff; }
+
+    .card-save {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--text-secondary);
+    }
+
+    .card-save:hover { background: #fff; color: var(--accent); }
+    .card-save.saved { color: var(--accent); }
+
+    .card-body {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .card-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .card-price small {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .card-type {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .card-address {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .card-address span {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .card-features {
+      display: flex;
+      gap: 16px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    .card-feature svg { color: var(--text-tertiary); flex-shrink: 0; }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .card-agent {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .card-agent-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--surface-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .card-days {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+
+    /* ── Map Panel ── */
+    .map-panel {
+      position: sticky;
+      top: 140px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .map-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .map-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+    }
+
+    .map-header-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .map-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+    }
+
+    .map-btn:hover { background: var(--surface-alt); color: var(--text); }
+
+    .map-canvas {
+      position: relative;
+      height: 340px;
+      background: #e8e4dc;
+      overflow: hidden;
+    }
+
+    .map-canvas svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      cursor: pointer;
+      transition: transform 0.15s;
+      z-index: 2;
+    }
+
+    .map-pin:hover { transform: translate(-50%, -100%) scale(1.15); z-index: 10; }
+
+    .map-pin-inner {
+      background: var(--surface);
+      border: 2px solid var(--text);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .map-pin-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 8px;
+      height: 8px;
+      background: var(--surface);
+      border-right: 2px solid var(--text);
+      border-bottom: 2px solid var(--text);
+    }
+
+    .map-pin.active .map-pin-inner {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .map-pin.active .map-pin-inner::after {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .map-legend {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .map-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ── Featured Property ── */
+    .featured {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .featured-image {
+      position: relative;
+      height: 220px;
+      background: var(--surface-alt);
+      overflow: hidden;
+    }
+
+    .featured-image svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .featured-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(transparent, rgba(26,24,21,0.7));
+      color: #fff;
+    }
+
+    .featured-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 4px;
+    }
+
+    .featured-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .featured-body {
+      padding: 20px 24px;
+    }
+
+    .featured-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .featured-stat {
+      text-align: center;
+    }
+
+    .featured-stat-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .featured-stat-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .featured-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .featured-actions .btn { flex: 1; text-align: center; }
+
+    /* ── Saved Search ── */
+    .saved-search {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .saved-search-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .saved-search-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .saved-search-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .saved-search-item:first-of-type { border-top: none; }
+
+    .saved-search-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .saved-search-info { flex: 1; }
+
+    .saved-search-name {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .saved-search-meta {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+      margin-top: 1px;
+    }
+
+    .saved-search-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      background: var(--green-light);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    /* ── Agent Contact ── */
+    .agent-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .agent-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .agent-avatar-lg {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3d7a5a, #5a9e78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .agent-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .agent-title {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .agent-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .agent-rating svg { color: #e8a838; }
+
+    .agent-contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .agent-contact-form input,
+    .agent-contact-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface-alt);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      resize: none;
+    }
+
+    .agent-contact-form input:focus,
+    .agent-contact-form textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+      background: var(--surface);
+    }
+
+    .agent-contact-form input::placeholder,
+    .agent-contact-form textarea::placeholder { color: var(--text-tertiary); }
+
+    .agent-contact-form .btn { width: 100%; text-align: center; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .main { grid-template-columns: 1fr; }
+      .map-panel { position: static; }
+      .card { grid-template-columns: 200px 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .header-inner, .search-inner, .filter-inner, .main { padding-left: 16px; padding-right: 16px; }
+      .nav-links { display: none; }
+      .card { grid-template-columns: 1fr; }
+      .card-image { height: 180px; }
+      .featured-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card { animation: fadeUp 0.4s ease both; }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">FIELD<span>HOUSE</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#" class="active">Discover</a></li>
+          <li><a href="#">Buy</a></li>
+          <li><a href="#">Rent</a></li>
+          <li><a href="#">Agents</a></li>
+          <li><a href="#">Journal</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-ghost">Sign in</button>
+        <button class="btn btn-primary">List a property</button>
+        <div class="avatar">JM</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search -->
+  <section class="search-section">
+    <div class="search-inner">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search by city, neighborhood, or ZIP code…" value="Portland, OR">
+        <div class="search-divider"></div>
+        <select>
+          <option>Any price</option>
+          <option>$0 – $500k</option>
+          <option>$500k – $1M</option>
+          <option>$1M – $2M</option>
+          <option>$2M+</option>
+        </select>
+        <div class="search-divider"></div>
+        <select>
+          <option>Any type</option>
+          <option>House</option>
+          <option>Apartment</option>
+          <option>Townhouse</option>
+          <option>Land</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="height:44px; padding:0 24px;">Search</button>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filter-bar">
+    <div class="filter-inner">
+      <button class="filter-chip active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        All filters
+        <span class="filter-count">3</span>
+      </button>
+      <button class="filter-chip">For sale</button>
+      <button class="filter-chip">New construction</button>
+      <button class="filter-chip">Open house</button>
+      <button class="filter-chip">3+ beds</button>
+      <button class="filter-chip">2+ baths</button>
+      <button class="filter-chip">Garage</button>
+      <button class="filter-chip">Pool</button>
+      <button class="filter-chip">Waterfront</button>
+      <button class="filter-chip">Price reduced</button>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Left column: listings -->
+    <div>
+      <div class="results-header">
+        <h1>Homes in <em>Portland</em></h1>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span class="results-meta"><strong>247</strong> results</span>
+          <select class="sort-select">
+            <option>Sort: Recommended</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Newest</option>
+            <option>Days on market</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Featured property -->
+      <div class="featured">
+        <div class="featured-image">
+          <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d4c8b8"/>
+                <stop offset="100%" stop-color="#e8e0d4"/>
+              </linearGradient>
+              <linearGradient id="house" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8a7a68"/>
+                <stop offset="100%" stop-color="#6b5d4e"/>
+              </linearGradient>
+            </defs>
+            <rect width="800" height="220" fill="url(#sky)"/>
+            <!-- distant hills -->
+            <path d="M0 160 Q100 120 200 150 Q300 130 400 145 Q500 110 600 140 Q700 120 800 150 L800 220 L0 220Z" fill="#b8a898" opacity="0.5"/>
+            <!-- house body -->
+            <rect x="280" y="100" width="240" height="120" fill="url(#house)"/>
+            <!-- roof -->
+            <path d="M260 100 L400 40 L540 100Z" fill="#5a4d40"/>
+            <!-- windows -->
+            <rect x="310" y="120" width="40" height="40" fill="#e8dcc8" opacity="0.8"/>
+            <rect x="370" y="120" width="40" height="40" fill="#e8dcc8" opacity="0.8"/>
+            <rect x="430" y="120" width="40" height="40" fill="#e8dcc8" opacity="0.8"/>
+            <!-- door -->
+            <rect x="380" y="170" width="40" height="50" fill="#4a3d30"/>
+            <!-- trees -->
+            <ellipse cx="200" cy="180" rx="40" ry="50" fill="#5a7a5a" opacity="0.7"/>
+            <ellipse cx="600" cy="175" rx="35" ry="45" fill="#5a7a5a" opacity="0.7"/>
+            <ellipse cx="650" cy="185" rx="25" ry="35" fill="#4a6a4a" opacity="0.6"/>
+            <!-- ground -->
+            <rect x="0" y="200" width="800" height="20" fill="#8a9a7a" opacity="0.4"/>
+          </svg>
+          <div class="featured-overlay">
+            <div class="featured-label">Featured property</div>
+            <div class="featured-title">The Willow House — 1420 NW Marshall St</div>
+          </div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-stats">
+            <div class="featured-stat">
+              <div class="featured-stat-value">$1.28M</div>
+              <div class="featured-stat-label">Price</div>
+            </div>
+            <div class="featured-stat">
+              <div class="featured-stat-value">4</div>
+              <div class="featured-stat-label">Beds</div>
+            </div>
+            <div class="featured-stat">
+              <div class="featured-stat-value">3</div>
+              <div class="featured-stat-label">Baths</div>
+            </div>
+            <div class="featured-stat">
+              <div class="featured-stat-value">2,840</div>
+              <div class="featured-stat-label">Sq ft</div>
+            </div>
+          </div>
+          <p class="featured-desc">
+            A meticulously restored 1920s Craftsman in the heart of the Alphabet District. Original fir floors, a chef's kitchen with marble counters, and a private garden with mature Japanese maples. Walk score 98 — steps from Couch Park and the streetcar.
+          </p>
+          <div class="featured-actions">
+            <button class="btn btn-primary">Schedule a tour</button>
+            <button class="btn">View details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listing cards -->
+      <div class="listings">
+
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="card-image">
+            <svg viewBox="0 0 260 200" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="c1sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c8d4e0"/>
+                  <stop offset="100%" stop-color="#e0e4e8"/>
+                </linearGradient>
+              </defs>
+              <rect width="260" height="200" fill="url(#c1sky)"/>
+              <rect x="60" y="80" width="140" height="120" fill="#7a6a5a"/>
+              <path d="M50 80 L130 30 L210 80Z" fill="#5a4a3a"/>
+              <rect x="80" y="100" width="30" height="30" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="150" y="100" width="30" height="30" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="115" y="140" width="30" height="60" fill="#4a3a2a"/>
+              <ellipse cx="40" cy="170" rx="30" ry="40" fill="#6a8a6a" opacity="0.6"/>
+              <ellipse cx="220" cy="165" rx="25" ry="35" fill="#6a8a6a" opacity="0.6"/>
+            </svg>
+            <span class="card-badge new">New</span>
+            <button class="card-save" onclick="this.classList.toggle('saved')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-price">$875,000 <small>est. $4,120/mo</small></div>
+              <span class="card-type">House</span>
+            </div>
+            <div class="card-address">
+              2847 SE Belmont St
+              <span>Portland, OR 97214 · Sunnyside</span>
+            </div>
+            <div class="card-features">
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></svg>
+                3 beds
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7"/><path d="M2 12h20"/></svg>
+                2 baths
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                1,920 sq ft
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-agent">
+                <div class="card-agent-avatar">SR</div>
+                Sarah Reeves · Windermere
+              </div>
+              <span class="card-days">2 days on market</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="card-image">
+            <svg viewBox="0 0 260 200" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="c2sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#d4c8b8"/>
+                  <stop offset="100%" stop-color="#e8e0d4"/>
+                </linearGradient>
+              </defs>
+              <rect width="260" height="200" fill="url(#c2sky)"/>
+              <rect x="40" y="60" width="180" height="140" fill="#8a7a68"/>
+              <rect x="40" y="60" width="180" height="8" fill="#6a5a4a"/>
+              <rect x="60" y="90" width="35" height="35" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="110" y="90" width="35" height="35" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="160" y="90" width="35" height="35" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="60" y="145" width="35" height="35" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="160" y="145" width="35" height="35" fill="#d8d0c0" opacity="0.8"/>
+              <rect x="110" y="145" width="35" height="55" fill="#4a3a2a"/>
+              <ellipse cx="30" cy="180" rx="25" ry="30" fill="#6a8a6a" opacity="0.5"/>
+            </svg>
+            <span class="card-badge hot">Hot</span>
+            <button class="card-save" onclick="this.classList.toggle('saved')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-price">$1,450,000 <small>est. $6,830/mo</small></div>
+              <span class="card-type">Townhouse</span>
+            </div>
+            <div class="card-address">
+              1120 NW 11th Ave
+              <span>Portland, OR 97209 · Pearl District</span>
+            </div>
+            <div class="card-features">
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></svg>
+                4 beds
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7"/><path d="M2 12h20"/></svg>
+                3.5 baths
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                2,650 sq ft
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-agent">
+                <div class="card-agent-avatar">MK</div>
+                Marcus Kim · Realty Group
+              </div>
+              <span class="card-days">5 days on market</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="card-image">
+            <svg viewBox="0 0 260 200" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="c3sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#b8c8d8"/>
+                  <stop offset="100%" stop-color="#d8e0e8"/>
+                </linearGradient>
+              </defs>
+              <rect width="260" height="200" fill="url(#c3sky)"/>
+              <rect x="70" y="70" width="120" height="130" fill="#6a7a8a"/>
+              <rect x="70" y="70" width="120" height="6" fill="#4a5a6a"/>
+              <rect x="90" y="95" width="30" height="30" fill="#d8e0e8" opacity="0.8"/>
+              <rect x="140" y="95" width="30" height="30" fill="#d8e0e8" opacity="0.8"/>
+              <rect x="90" y="145" width="30" height="30" fill="#d8e0e8" opacity="0.8"/>
+              <rect x="140" y="145" width="30" height="30" fill="#d8e0e8" opacity="0.8"/>
+              <rect x="115" y="175" width="30" height="25" fill="#3a4a5a"/>
+              <ellipse cx="230" cy="180" rx="30" ry="35" fill="#6a8a6a" opacity="0.5"/>
+            </svg>
+            <button class="card-save" onclick="this.classList.toggle('saved')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-price">$625,000 <small>est. $2,940/mo</small></div>
+              <span class="card-type">Condo</span>
+            </div>
+            <div class="card-address">
+              3405 SE Hawthorne Blvd #4
+              <span>Portland, OR 97214 · Hawthorne</span>
+            </div>
+            <div class="card-features">
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></svg>
+                2 beds
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7"/><path d="M2 12h20"/></svg>
+                2 baths
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                1,340 sq ft
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-agent">
+                <div class="card-agent-avatar">LP</div>
+                Lena Park · Coldwell Banker
+              </div>
+              <span class="card-days">8 days on market</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card">
+          <div class="card-image">
+            <svg viewBox="0 0 260 200" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="c4sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#d8c8b0"/>
+                  <stop offset="100%" stop-color="#e8e0d0"/>
+                </linearGradient>
+              </defs>
+              <rect width="260" height="200" fill="url(#c4sky)"/>
+              <rect x="50" y="90" width="160" height="110" fill="#9a8a78"/>
+              <path d="M40 90 L130 40 L220 90Z" fill="#7a6a58"/>
+              <rect x="75" y="115" width="35" height="35" fill="#e8e0d0" opacity="0.8"/>
+              <rect x="150" y="115" width="35" height="35" fill="#e8e0d0" opacity="0.8"/>
+              <rect x="110" y="155" width="40" height="45" fill="#5a4a3a"/>
+              <ellipse cx="30" cy="185" rx="25" ry="30" fill="#7a9a7a" opacity="0.5"/>
+              <ellipse cx="230" cy="180" rx="20" ry="25" fill="#7a9a7a" opacity="0.5"/>
+            </svg>
+            <span class="card-badge">Open house</span>
+            <button class="card-save" onclick="this.classList.toggle('saved')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-price">$2,100,000 <small>est. $9,890/mo</small></div>
+              <span class="card-type">House</span>
+            </div>
+            <div class="card-address">
+              7210 SW Canyon Dr
+              <span>Portland, OR 97225 · West Slope</span>
+            </div>
+            <div class="card-features">
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></svg>
+                5 beds
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7"/><path d="M2 12h20"/></svg>
+                4 baths
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                4,200 sq ft
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-agent">
+                <div class="card-agent-avatar">JT</div>
+                James Thornton · Sotheby's
+              </div>
+              <span class="card-days">12 days on market</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="card">
+          <div class="card-image">
+            <svg viewBox="0 0 260 200" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="c5sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c0d0c0"/>
+                  <stop offset="100%" stop-color="#e0e8e0"/>
+                </linearGradient>
+              </defs>
+              <rect width="260" height="200" fill="url(#c5sky)"/>
+              <rect x="80" y="100" width="100" height="100" fill="#7a8a7a"/>
+              <rect x="80" y="100" width="100" height="5" fill="#5a6a5a"/>
+              <rect x="100" y="120" width="25" height="25" fill="#e0e8e0" opacity="0.8"/>
+              <rect x="135" y="120" width="25" height="25" fill="#e0e8e0" opacity="0.8"/>
+              <rect x="115" y="160" width="30" height="40" fill="#4a5a4a"/>
+              <ellipse cx="50" cy="185" rx="30" ry="35" fill="#6a8a6a" opacity="0.6"/>
+              <ellipse cx="210" cy="180" rx="25" ry="30" fill="#6a8a6a" opacity="0.6"/>
+            </svg>
+            <button class="card-save" onclick="this.classList.toggle('saved')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-price">$540,000 <small>est. $2,540/mo</small></div>
+              <span class="card-type">Apartment</span>
+            </div>
+            <div class="card-address">
+              1825 NE 7th Ave #302
+              <span>Portland, OR 97212 · Irvington</span>
+            </div>
+            <div class="card-features">
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></svg>
+                1 bed
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7"/><path d="M2 12h20"/></svg>
+                1 bath
+              </div>
+              <div class="card-feature">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                780 sq ft
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-agent">
+                <div class="card-agent-avatar">AM</div>
+                Aisha Mohammed · Compass
+              </div>
+              <span class="card-days">15 days on market</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Right column: map + saved + agent -->
+    <aside>
+
+      <!-- Map panel -->
+      <div class="map-panel">
+        <div class="map-header">
+          <h2>Map view</h2>
+          <div class="map-header-actions">
+            <button class="map-btn" title="Zoom in">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <button class="map-btn" title="Zoom out">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+            </button>
+            <button class="map-btn" title="Expand">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="map-canvas">
+          <svg viewBox="0 0 420 340" preserveAspectRatio="xMidYMid slice">
+            <!-- base -->
+            <rect width="420" height="340" fill="#e8e4dc"/>
+            <!-- river -->
+            <path d="M0 200 Q80 180 140 210 Q200 240 260 220 Q320 200 420 230 L420 260 Q320 230 260 250 Q200 270 140 240 Q80 210 0 230Z" fill="#b8c8d4" opacity="0.6"/>
+            <!-- parks -->
+            <ellipse cx="80" cy="80" rx="50" ry="40" fill="#c8d8c0" opacity="0.7"/>
+            <ellipse cx="340" cy="120" rx="40" ry="35" fill="#c8d8c0" opacity="0.7"/>
+            <ellipse cx="200" cy="300" rx="60" ry="30" fill="#c8d8c0" opacity="0.6"/>
+            <!-- roads -->
+            <line x1="0" y1="60" x2="420" y2="60" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="0" y1="120" x2="420" y2="120" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="0" y1="180" x2="420" y2="180" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="0" y1="280" x2="420" y2="280" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="100" y1="0" x2="100" y2="340" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="200" y1="0" x2="200" y2="340" stroke="#d8d0c4" stroke-width="3"/>
+            <line x1="300" y1="0" x2="300" y2="340" stroke="#d8d0c4" stroke-width="3"/>
+            <!-- blocks -->
+            <rect x="110" y="70" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="210" y="70" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="110" y="130" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="210" y="130" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="110" y="190" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="210" y="190" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="110" y="290" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <rect x="210" y="290" width="80" height="40" fill="#d8d0c4" opacity="0.4" rx="2"/>
+            <!-- labels -->
+            <text x="80" y="85" font-family="Inter, sans-serif" font-size="8" fill="#8a9a8a" text-anchor="middle" font-weight="500">Forest Park</text>
+            <text x="340" y="125" font-family="Inter, sans-serif" font-size="8" fill="#8a9a8a" text-anchor="middle" font-weight="500">Laurelhurst</text>
+            <text x="200" y="305" font-family="Inter, sans-serif" font-size="8" fill="#8a9a8a" text-anchor="middle" font-weight="500">Reed College</text>
+            <text x="210" y="225" font-family="Inter, sans-serif" font-size="7" fill="#a8b8c8" text-anchor="middle" font-style="italic">Willamette River</text>
+          </svg>
+
+          <!-- Map pins -->
+          <div class="map-pin" style="left: 28%; top: 38%;">
+            <div class="map-pin-inner">$875k</div>
+          </div>
+          <div class="map-pin active" style="left: 52%; top: 30%;">
+            <div class="map-pin-inner">$1.45M</div>
+          </div>
+          <div class="map-pin" style="left: 72%; top: 52%;">
+            <div class="map-pin-inner">$625k</div>
+          </div>
+          <div class="map-pin" style="left: 38%; top: 68%;">
+            <div class="map-pin-inner">$2.1M</div>
+          </div>
+          <div class="map-pin" style="left: 60%; top: 78%;">
+            <div class="map-pin-inner">$540k</div>
+          </div>
+        </div>
+        <div class="map-legend">
+          <div class="map-legend-item">
+            <div class="map-legend-dot" style="background: var(--accent);"></div>
+            Selected
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-dot" style="background: var(--text);"></div>
+            For sale
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-dot" style="background: var(--green);"></div>
+            Open house
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved search -->
+      <div class="saved-search">
+        <div class="saved-search-header">
+          <h3>Saved searches</h3>
+          <button class="btn btn-ghost" style="font-size:12px; padding:4px 8px;">Manage</button>
+        </div>
+        <div class="saved-search-item">
+          <div class="saved-search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </div>
+          <div class="saved-search-info">
+            <div class="saved-search-name">Alphabet District · 3+ beds</div>
+            <div class="saved-search-meta">Updated 2 hours ago</div>
+          </div>
+          <span class="saved-search-count">12 new</span>
+        </div>
+        <div class="saved-search-item">
+          <div class="saved-search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </div>
+          <div class="saved-search-info">
+            <div class="saved-search-name">Pearl District · Under $1.5M</div>
+            <div class="saved-search-meta">Updated yesterday</div>
+          </div>
+          <span class="saved-search-count">5 new</span>
+        </div>
+        <div class="saved-search-item">
+          <div class="saved-search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </div>
+          <div class="saved-search-info">
+            <div class="saved-search-name">Sunnyside · Open house</div>
+            <div class="saved-search-meta">Updated 3 days ago</div>
+          </div>
+          <span class="saved-search-count">2 new</span>
+        </div>
+      </div>
+
+      <!-- Agent contact -->
+      <div class="agent-card">
+        <div class="agent-card-header">
+          <div class="agent-avatar-lg">SR</div>
+          <div>
+            <div class="agent-name">Sarah Reeves</div>
+            <div class="agent-title">Principal Broker · Windermere</div>
+            <div class="agent-rating">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              4.9 · 127 reviews
+            </div>
+          </div>
+        </div>
+        <form class="agent-contact-form" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Message sent ✓'; this.querySelector('.btn').style.background='var(--green)';">
+          <input type="text" placeholder="Your name" value="Jordan Mitchell">
+          <input type="email" placeholder="Email address" value="jordan@example.com">
+          <textarea rows="3" placeholder="I'd like to schedule a tour of 1420 NW Marshall St…">I'd like to schedule a tour of 1420 NW Marshall St this weekend.</textarea>
+          <button type="submit" class="btn btn-primary">Send message</button>
+        </form>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <script>
+    // Filter chip toggle
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        if (this.textContent.trim().startsWith('All filters')) return;
+        this.classList.toggle('active');
+      });
+    });
+
+    // Map pin click — highlight
+    document.querySelectorAll('.map-pin').forEach(pin => {
+      pin.addEventListener('click', function() {
+        document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Card click — highlight corresponding pin (simple demo)
+    document.querySelectorAll('.card').forEach((card, i) => {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('.card-save')) return;
+        const pins = document.querySelectorAll('.map-pin');
+        pins.forEach(p => p.classList.remove('active'));
+        if (pins[i]) pins[i].classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

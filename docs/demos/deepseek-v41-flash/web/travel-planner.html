@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRAVEL / PLANNER — Kyoto & Beyond</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #4a4a4a;
+      --ink-mute: #8a8a8a;
+      --paper: #f5f1ea;
+      --paper-warm: #ede7dc;
+      --paper-card: #faf7f2;
+      --accent: #c84b31;
+      --accent-deep: #8b2e1a;
+      --accent-soft: #e8a87c;
+      --sage: #6b7f5e;
+      --sage-soft: #a8b89a;
+      --gold: #d4a24e;
+      --line: #d9d2c5;
+      --line-soft: #e8e2d6;
+      --shadow: 0 1px 2px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.06);
+      --shadow-lg: 0 2px 4px rgba(26,26,26,0.04), 0 20px 48px rgba(26,26,26,0.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Subtle paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(200,75,49,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(107,127,94,0.03) 0%, transparent 50%);
+    }
+
+    .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245,241,234,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 48px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      opacity: 0.3;
+    }
+
+    .logo-text { color: var(--ink); }
+    .logo-text span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-links a.active {
+      color: var(--ink);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -26px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--paper);
+      margin-left: -8px;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .avatar:first-child { margin-left: 0; }
+    .avatar:nth-child(1) { background: linear-gradient(135deg, #c84b31, #8b2e1a); }
+    .avatar:nth-child(2) { background: linear-gradient(135deg, #6b7f5e, #4a5c3e); }
+    .avatar:nth-child(3) { background: linear-gradient(135deg, #d4a24e, #a87d2e); }
+    .avatar:nth-child(4) { background: linear-gradient(135deg, #5a6b8a, #3a4a6a); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ink);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 64px 48px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-left { max-width: 560px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 72px;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .meta-item .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 6px;
+    }
+
+    .meta-item .value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--ink);
+    }
+
+    /* Hero right — route card */
+    .hero-right {
+      position: relative;
+    }
+
+    .route-card {
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .route-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--gold), var(--sage));
+    }
+
+    .route-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .route-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      color: var(--ink);
+    }
+
+    .route-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+      background: rgba(107,127,94,0.1);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .route-svg {
+      width: 100%;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+
+    .route-stops {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    .route-stops span:first-child { color: var(--accent); font-weight: 600; }
+    .route-stops span:last-child { color: var(--sage); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 80px 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .section-head h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-head .section-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 14px;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== ITINERARY TIMELINE ===== */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--line);
+      z-index: 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-right: 24px;
+    }
+
+    .timeline-dot {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .timeline-dot .day {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--ink);
+    }
+
+    .timeline-item.active .timeline-dot {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .timeline-item.active .timeline-dot .day { color: var(--paper); }
+
+    .timeline-date {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 8px;
+    }
+
+    .timeline-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    /* ===== DESTINATION CARDS ===== */
+    .destinations {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .dest-card {
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .dest-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-soft);
+    }
+
+    .dest-visual {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dest-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .dest-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: rgba(26,26,26,0.7);
+      backdrop-filter: blur(8px);
+      padding: 5px 10px;
+      border-radius: 100px;
+    }
+
+    .dest-body {
+      padding: 24px;
+    }
+
+    .dest-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .dest-region {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 16px;
+    }
+
+    .dest-desc {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .dest-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .dest-days {
+      font-size: 13px;
+      color: var(--ink-mute);
+    }
+
+    .dest-days strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .dest-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--paper-warm);
+      display: grid;
+      place-items: center;
+      transition: all 0.2s;
+    }
+
+    .dest-card:hover .dest-arrow {
+      background: var(--accent);
+      color: var(--paper);
+    }
+
+    .dest-arrow svg { width: 14px; height: 14px; }
+
+    /* ===== BOTTOM GRID ===== */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .panel-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      color: var(--ink);
+    }
+
+    .panel-count {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-mute);
+      letter-spacing: 0.05em;
+    }
+
+    /* Checklist */
+    .checklist { list-style: none; }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-soft);
+      font-size: 14px;
+      color: var(--ink-soft);
+      transition: color 0.2s;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .checklist li:hover { color: var(--ink); }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 1.5px solid var(--line);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .checklist li.done .check-box {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+
+    .checklist li.done .check-box svg { opacity: 1; }
+
+    .check-box svg {
+      width: 12px;
+      height: 12px;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .checklist li.done .check-text {
+      text-decoration: line-through;
+      color: var(--ink-mute);
+    }
+
+    .check-text { flex: 1; }
+
+    .check-meta {
+      font-size: 11px;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    /* Travelers */
+    .travelers-list { list-style: none; }
+
+    .traveler {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .traveler:last-child { border-bottom: none; }
+
+    .traveler-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .traveler-info { flex: 1; }
+
+    .traveler-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .traveler-role {
+      font-size: 12px;
+      color: var(--ink-mute);
+    }
+
+    .traveler-status {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .status-confirmed {
+      color: var(--sage);
+      background: rgba(107,127,94,0.12);
+    }
+
+    .status-pending {
+      color: var(--gold);
+      background: rgba(212,162,78,0.12);
+    }
+
+    /* Weather note */
+    .weather-note {
+      margin-top: 24px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(200,75,49,0.06), rgba(212,162,78,0.06));
+      border: 1px solid var(--line-soft);
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .weather-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .weather-icon svg { width: 20px; height: 20px; color: var(--gold); }
+
+    .weather-text {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+
+    .weather-text strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--ink-mute);
+      position: relative;
+      z-index: 2;
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    footer a {
+      color: var(--ink-mute);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; }
+      .hero h1 { font-size: 56px; }
+      .timeline { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .timeline::before { display: none; }
+      .destinations { grid-template-columns: repeat(2, 1fr); }
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 40px 24px 32px; }
+      .hero h1 { font-size: 44px; }
+      .hero-meta { flex-wrap: wrap; gap: 24px; }
+      section { padding: 56px 24px; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .section-head h2 { font-size: 32px; }
+      .timeline { grid-template-columns: 1fr; }
+      .destinations { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 36px; }
+      .route-card { padding: 24px; }
+      .panel { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <div class="logo-text">TRAVEL <span>/</span> PLANNER</div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Itinerary</a></li>
+        <li><a href="#">Destinations</a></li>
+        <li><a href="#">Bookings</a></li>
+        <li><a href="#">Travelers</a></li>
+      </ul>
+      <div class="nav-cta">
+        <div class="avatar-stack">
+          <div class="avatar">MK</div>
+          <div class="avatar">JR</div>
+          <div class="avatar">AL</div>
+          <div class="avatar">+2</div>
+        </div>
+        <a href="#" class="btn btn-primary">Share trip</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Spring 2025 · 14 days</div>
+      <h1>Kyoto, <em>then</em> the quiet coast.</h1>
+      <p class="hero-sub">A slow route through temples, tea fields, and the Seto Inland Sea — built for five travelers who prefer trains to taxis and mornings to crowds.</p>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <div class="label">Departure</div>
+          <div class="value">Apr 04</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Return</div>
+          <div class="value">Apr 18</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Travelers</div>
+          <div class="value">5</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Stops</div>
+          <div class="value">6</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="route-card">
+        <div class="route-header">
+          <div class="route-title">The Route</div>
+          <div class="route-badge">Confirmed</div>
+        </div>
+        <svg class="route-svg" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background grid -->
+          <line x1="0" y1="45" x2="400" y2="45" stroke="#e8e2d6" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="0" y1="90" x2="400" y2="90" stroke="#e8e2d6" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="0" y1="135" x2="400" y2="135" stroke="#e8e2d6" stroke-width="1" stroke-dasharray="2 4"/>
+
+          <!-- Route path -->
+          <path d="M 30 130 C 80 130, 90 60, 140 60 S 200 110, 250 90 S 320 40, 370 50" 
+                stroke="#c84b31" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          
+          <!-- Dotted continuation -->
+          <path d="M 370 50 C 385 55, 395 65, 400 70" 
+                stroke="#c84b31" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="1 6"/>
+
+          <!-- Stops -->
+          <circle cx="30" cy="130" r="6" fill="#c84b31"/>
+          <circle cx="30" cy="130" r="10" fill="#c84b31" opacity="0.15"/>
+          
+          <circle cx="140" cy="60" r="5" fill="#d4a24e"/>
+          <circle cx="140" cy="60" r="9" fill="#d4a24e" opacity="0.15"/>
+          
+          <circle cx="250" cy="90" r="5" fill="#6b7f5e"/>
+          <circle cx="250" cy="90" r="9" fill="#6b7f5e" opacity="0.15"/>
+          
+          <circle cx="370" cy="50" r="6" fill="#c84b31"/>
+          <circle cx="370" cy="50" r="10" fill="#c84b31" opacity="0.15"/>
+
+          <!-- Labels -->
+          <text x="30" y="155" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#1a1a1a" text-anchor="middle">Tokyo</text>
+          <text x="140" y="45" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#1a1a1a" text-anchor="middle">Kyoto</text>
+          <text x="250" y="115" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#1a1a1a" text-anchor="middle">Naoshima</text>
+          <text x="370" y="35" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#1a1a1a" text-anchor="middle">Onomichi</text>
+        </svg>
+        <div class="route-stops">
+          <span>Tokyo</span>
+          <span>Kyoto</span>
+          <span>Naoshima</span>
+          <span>Onomichi</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ITINERARY TIMELINE -->
+  <section>
+    <div class="section-head">
+      <h2>Day by <em>day</em></h2>
+      <div class="section-num">01 / 04</div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item active">
+        <div class="timeline-dot"><span class="day">01</span></div>
+        <div class="timeline-date">Apr 04 · Fri</div>
+        <div class="timeline-title">Arrival in Tokyo</div>
+        <div class="timeline-desc">Land at Haneda, check into the Shinjuku loft, and walk to Omoide Yokocho for yakitori and a first-night toast.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"><span class="day">04</span></div>
+        <div class="timeline-date">Apr 07 · Mon</div>
+        <div class="timeline-title">Shinkansen to Kyoto</div>
+        <div class="timeline-desc">Morning train with bento boxes. Afternoon check-in at the machiya in Gion, then a slow walk through the Philosopher's Path.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"><span class="day">08</span></div>
+        <div class="timeline-date">Apr 11 · Fri</div>
+        <div class="timeline-title">Naoshima art island</div>
+        <div class="timeline-desc">Ferry from Uno. Benesse House, the Chichu Museum, and a sunset swim at Gotanji beach before the last boat back.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"><span class="day">12</span></div>
+        <div class="timeline-date">Apr 15 · Tue</div>
+        <div class="timeline-title">Onomichi & the coast</div>
+        <div class="timeline-desc">Rent bicycles for the Shimanami Kaido. Two nights at a ryokan overlooking the strait, with a private onsen at dusk.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATION CARDS -->
+  <section>
+    <div class="section-head">
+      <h2>Where we're <em>going</em></h2>
+      <div class="section-num">02 / 04</div>
+    </div>
+    <div class="destinations">
+      <!-- Card 1: Kyoto -->
+      <div class="dest-card">
+        <div class="dest-visual">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="kyotoSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f5d5c0"/>
+                <stop offset="60%" stop-color="#e8a87c"/>
+                <stop offset="100%" stop-color="#c84b31"/>
+              </linearGradient>
+              <linearGradient id="kyotoHill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6b7f5e"/>
+                <stop offset="100%" stop-color="#4a5c3e"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#kyotoSky)"/>
+            <!-- Sun -->
+            <circle cx="300" cy="60" r="28" fill="#f5f1ea" opacity="0.9"/>
+            <!-- Hills -->
+            <path d="M 0 140 Q 80 100, 160 130 T 320 120 L 400 140 L 400 200 L 0 200 Z" fill="url(#kyotoHill)" opacity="0.7"/>
+            <path d="M 0 160 Q 100 130, 200 155 T 400 150 L 400 200 L 0 200 Z" fill="#4a5c3e" opacity="0.8"/>
+            <!-- Pagoda silhouette -->
+            <g transform="translate(120, 90)">
+              <rect x="-3" y="0" width="6" height="50" fill="#2a2a2a"/>
+              <polygon points="-20,0 20,0 0,-12" fill="#2a2a2a"/>
+              <polygon points="-16,12 16,12 0,2" fill="#2a2a2a"/>
+              <polygon points="-12,24 12,24 0,14" fill="#2a2a2a"/>
+              <polygon points="-8,36 8,36 0,26" fill="#2a2a2a"/>
+            </g>
+            <!-- Torii gate -->
+            <g transform="translate(280, 130)" fill="#c84b31">
+              <rect x="-2" y="0" width="4" height="30"/>
+              <rect x="18" y="0" width="4" height="30"/>
+              <rect x="-6" y="-2" width="32" height="4"/>
+              <rect x="-4" y="6" width="28" height="3"/>
+            </g>
+          </svg>
+          <div class="dest-tag">Days 4–8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-name">Kyoto</div>
+          <div class="dest-region">Kansai · Japan</div>
+          <p class="dest-desc">Seventeen UNESCO sites, a thousand temples, and the best tofu you'll ever eat. We're staying in a restored machiya in Gion.</p>
+          <div class="dest-footer">
+            <div class="dest-days"><strong>5 nights</strong> · 4 travelers</div>
+            <div class="dest-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Naoshima -->
+      <div class="dest-card">
+        <div class="dest-visual">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="naoshimaSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a8c4d4"/>
+                <stop offset="100%" stop-color="#e8dcc8"/>
+              </linearGradient>
+              <linearGradient id="naoshimaSea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5a7a8a"/>
+                <stop offset="100%" stop-color="#3a5a6a"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#naoshimaSky)"/>
+            <!-- Sun -->
+            <circle cx="80" cy="50" r="22" fill="#f5f1ea" opacity="0.8"/>
+            <!-- Sea -->
+            <rect x="0" y="120" width="400" height="80" fill="url(#naoshimaSea)"/>
+            <!-- Waves -->
+            <path d="M 0 130 Q 20 125, 40 130 T 80 130 T 120 130 T 160 130 T 200 130 T 240 130 T 280 130 T 320 130 T 360 130 T 400 130" stroke="#a8c4d4" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <path d="M 0 145 Q 20 140, 40 145 T 80 145 T 120 145 T 160 145 T 200 145 T 240 145 T 280 145 T 320 145 T 360 145 T 400 145" stroke="#a8c4d4" stroke-width="1.5" fill="none" opacity="0.3"/>
+            <!-- Island -->
+            <path d="M 200 120 Q 220 90, 260 100 Q 290 95, 310 120 Z" fill="#6b7f5e"/>
+            <!-- Pumpkin (Yayoi Kusama) -->
+            <g transform="translate(255, 105)">
+              <ellipse cx="0" cy="0" rx="14" ry="12" fill="#d4a24e"/>
+              <ellipse cx="0" cy="-2" rx="14" ry="10" fill="#e8b85e"/>
+              <circle cx="-5" cy="-2" r="2" fill="#1a1a1a"/>
+              <circle cx="5" cy="-2" r="2" fill="#1a1a1a"/>
+              <circle cx="0" cy="4" r="2" fill="#1a1a1a"/>
+              <rect x="-2" y="-14" width="4" height="4" fill="#6b7f5e"/>
+            </g>
+            <!-- Boat -->
+            <g transform="translate(100, 140)">
+              <path d="M -15 0 L 15 0 L 10 8 L -10 8 Z" fill="#2a2a2a"/>
+              <rect x="-1" y="-12" width="2" height="12" fill="#2a2a2a"/>
+              <polygon points="1,-12 1,-2 10,-2" fill="#f5f1ea"/>
+            </g>
+          </svg>
+          <div class="dest-tag">Days 8–10</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-name">Naoshima</div>
+          <div class="dest-region">Seto Inland Sea</div>
+          <p class="dest-desc">A small island turned into a living art museum. Tadao Ando's concrete, Monet's water lilies, and a yellow pumpkin by the sea.</p>
+          <div class="dest-footer">
+            <div class="dest-days"><strong>2 nights</strong> · 5 travelers</div>
+            <div class="dest-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Onomichi -->
+      <div class="dest-card">
+        <div class="dest-visual">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="onomichiSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d4a24e"/>
+                <stop offset="50%" stop-color="#e8a87c"/>
+                <stop offset="100%" stop-color="#c84b31"/>
+              </linearGradient>
+              <linearGradient id="onomichiSea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8b2e1a"/>
+                <stop offset="100%" stop-color="#5a1e10"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#onomichiSky)"/>
+            <!-- Sun setting -->
+            <circle cx="200" cy="110" r="35" fill="#f5f1ea" opacity="0.95"/>
+            <circle cx="200" cy="110" r="50" fill="#f5f1ea" opacity="0.2"/>
+            <!-- Sea -->
+            <rect x="0" y="130" width="400" height="70" fill="url(#onomichiSea)"/>
+            <!-- Sun reflection -->
+            <ellipse cx="200" cy="140" rx="30" ry="4" fill="#f5f1ea" opacity="0.4"/>
+            <ellipse cx="200" cy="155" rx="20" ry="3" fill="#f5f1ea" opacity="0.3"/>
+            <ellipse cx="200" cy="170" rx="12" ry="2" fill="#f5f1ea" opacity="0.2"/>
+            <!-- Hills -->
+            <path d="M 0 130 Q 60 100, 120 125 T 240 120 T 400 130 L 400 130 L 0 130 Z" fill="#4a5c3e" opacity="0.6"/>
+            <!-- Temple silhouette -->
+            <g transform="translate(320, 100)" fill="#2a2a2a">
+              <rect x="-15" y="0" width="30" height="30"/>
+              <polygon points="-22,0 22,0 0,-10"/>
+              <rect x="-2" y="-18" width="4" height="8"/>
+            </g>
+            <!-- Boat -->
+            <g transform="translate(80, 145)">
+              <path d="M -12 0 L 12 0 L 8 6 L -8 6 Z" fill="#1a1a1a"/>
+              <rect x="-1" y="-10" width="2" height="10" fill="#1a1a1a"/>
+            </g>
+          </svg>
+          <div class="dest-tag">Days 10–14</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-name">Onomichi</div>
+          <div class="dest-region">Hiroshima Prefecture</div>
+          <p class="dest-desc">A hillside port town of narrow lanes and cats. The gateway to the Shimanami Kaido — 70km of bridges and islands by bicycle.</p>
+          <div class="dest-footer">
+            <div class="dest-days"><strong>4 nights</strong> · 5 travelers</div>
+            <div class="dest-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM GRID: CHECKLIST + TRAVELERS -->
+  <section>
+    <div class="section-head">
+      <h2>Before we <em>go</em></h2>
+      <div class="section-num">03 / 04</div>
+    </div>
+    <div class="bottom-grid">
+      <!-- Booking Checklist -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Booking checklist</div>
+          <div class="panel-count">3 of 7 done</div>
+        </div>
+        <ul class="checklist">
+          <li class="done">
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Book flights — HND → ITM</span>
+            <span class="check-meta">Done</span>
+          </li>
+          <li class="done">
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Reserve Kyoto machiya (5 nights)</span>
+            <span class="check-meta">Done</span>
+          </li>
+          <li class="done">
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">JR Pass — 7-day ordinary</span>
+            <span class="check-meta">Done</span>
+          </li>
+          <li>
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Naoshima ferry + Benesse tickets</span>
+            <span class="check-meta">Due Mar 15</span>
+          </li>
+          <li>
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Onomichi ryokan — 2 rooms</span>
+            <span class="check-meta">Due Mar 20</span>
+          </li>
+          <li>
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Travel insurance for 5</span>
+            <span class="check-meta">Due Mar 25</span>
+          </li>
+          <li>
+            <div class="check-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="check-text">Book Shimanami Kaido bicycles</span>
+            <span class="check-meta">Due Apr 1</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Travelers + Weather -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Shared with</div>
+          <div class="panel-count">5 travelers</div>
+        </div>
+        <ul class="travelers-list">
+          <li class="traveler">
+            <div class="traveler-avatar" style="background: linear-gradient(135deg, #c84b31, #8b2e1a);">MK</div>
+            <div class="traveler-info">
+              <div class="traveler-name">Mika Kobayashi</div>
+              <div class="traveler-role">Trip organizer</div>
+            </div>
+            <div class="traveler-status status-confirmed">Confirmed</div>
+          </li>
+          <li class="traveler">
+            <div class="traveler-avatar" style="background: linear-gradient(135deg, #6b7f5e, #4a5c3e);">JR</div>
+            <div class="traveler-info">
+              <div class="traveler-name">James Rivera</div>
+              <div class="traveler-role">Photographer</div>
+            </div>
+            <div class="traveler-status status-confirmed">Confirmed</div>
+          </li>
+          <li class="traveler">
+            <div class="traveler-avatar" style="background: linear-gradient(135deg, #d4a24e, #a87d2e);">AL</div>
+            <div class="traveler-info">
+              <div class="traveler-name">Amara Lindqvist</div>
+              <div class="traveler-role">Food scout</div>
+            </div>
+            <div class="traveler-status status-confirmed">Confirmed</div>
+          </li>
+          <li class="traveler">
+            <div class="traveler-avatar" style="background: linear-gradient(135deg, #5a6b8a, #3a4a6a);">TN</div>
+            <div class="traveler-info">
+              <div class="traveler-name">Theo Nakamura</div>
+              <div class="traveler-role">+1 guest</div>
+            </div>
+            <div class="traveler-status status-pending">Pending</div>
+          </li>
+          <li class="traveler">
+            <div class="traveler-avatar" style="background: linear-gradient(135deg, #8b6b8a, #5a3a5a);">SP</div>
+            <div class="traveler-info">
+              <div class="traveler-name">Sofia Petrova</div>
+              <div class="traveler-role">+1 guest</div>
+            </div>
+            <div class="traveler-status status-pending">Pending</div>
+          </li>
+        </ul>
+
+        <!-- Weather Note -->
+        <div class="weather-note">
+          <div class="weather-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+            </svg>
+          </div>
+          <div class="weather-text">
+            <strong>Weather note · April in Kansai</strong><br>
+            Expect 14–20°C, cherry blossoms peaking early April, and occasional rain. Pack layers and a compact umbrella — the Philosopher's Path is best in light drizzle.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© 2025 TRAVEL / PLANNER — Built for the curious.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Support</a>
+      <a href="#">Press kit</a>
+    </div>
+  </footer>
+
+</body>
+</html>

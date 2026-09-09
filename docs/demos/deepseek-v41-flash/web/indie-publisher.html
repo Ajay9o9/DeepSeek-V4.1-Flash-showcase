@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDEPENDENT / PUBLISHER — Books with a pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f7f3ed;
+      --paper-dark: #efe9e0;
+      --accent: #d6482b;
+      --accent-soft: #e86b4f;
+      --gold: #c49a3c;
+      --muted: #6b6560;
+      --border: #d9d2c8;
+      --radius: 2px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .label--accent {
+      color: var(--accent);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 24px;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 243, 237, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: var(--gold);
+      opacity: 0.7;
+    }
+
+    .logo-mark span {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .header-cta:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .header-cta svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-toggle {
+        display: block;
+      }
+      .header-cta {
+        display: none;
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 80px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -150px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(214, 72, 43, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(196, 154, 60, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 560px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow .line {
+      width: 32px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn--primary:hover {
+      background: #c03d22;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(214, 72, 43, 0.3);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Hero visual — stacked books */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      height: 420px;
+    }
+
+    .book-stack {
+      position: relative;
+      width: 280px;
+      height: 380px;
+    }
+
+    .book {
+      position: absolute;
+      border-radius: 2px 6px 6px 2px;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.4s ease;
+    }
+
+    .book:hover {
+      transform: translateY(-8px) rotate(-1deg);
+    }
+
+    .book--1 {
+      width: 200px;
+      height: 300px;
+      background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+      top: 40px;
+      left: 0;
+      z-index: 3;
+      transform: rotate(-6deg);
+    }
+
+    .book--1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px 0 0 2px;
+    }
+
+    .book--1::after {
+      content: 'THE SALT ROAD';
+      position: absolute;
+      top: 40px;
+      left: 24px;
+      right: 24px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: #e8dcc8;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+    }
+
+    .book--2 {
+      width: 190px;
+      height: 280px;
+      background: linear-gradient(135deg, #d6482b 0%, #a8321e 100%);
+      top: 80px;
+      left: 60px;
+      z-index: 2;
+      transform: rotate(3deg);
+    }
+
+    .book--2::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px 0 0 2px;
+    }
+
+    .book--2::after {
+      content: 'NIGHT BLOOM';
+      position: absolute;
+      top: 36px;
+      left: 22px;
+      right: 22px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: #f7f3ed;
+      line-height: 1.3;
+    }
+
+    .book--3 {
+      width: 180px;
+      height: 260px;
+      background: linear-gradient(135deg, #c49a3c 0%, #9a7a2e 100%);
+      top: 120px;
+      left: 110px;
+      z-index: 1;
+      transform: rotate(8deg);
+    }
+
+    .book--3::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: rgba(255,255,255,0.12);
+      border-radius: 2px 0 0 2px;
+    }
+
+    .book--3::after {
+      content: 'FIELD NOTES';
+      position: absolute;
+      top: 32px;
+      left: 20px;
+      right: 20px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 0;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-badge span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-visual {
+        height: 320px;
+      }
+      .book-stack {
+        transform: scale(0.8);
+      }
+      .hero {
+        padding: 48px 0 64px;
+      }
+    }
+
+    /* ---------- SECTION SHARED ---------- */
+    .section {
+      padding: 96px 0;
+    }
+
+    .section--alt {
+      background: var(--paper-dark);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    .section-header h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 400px;
+    }
+
+    /* ---------- NEW RELEASES ---------- */
+    .releases-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .release-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .release-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .release-cover {
+      aspect-ratio: 3/4;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .release-cover--1 {
+      background: linear-gradient(160deg, #1a252f 0%, #2c3e50 50%, #34495e 100%);
+    }
+
+    .release-cover--2 {
+      background: linear-gradient(160deg, #d6482b 0%, #e86b4f 50%, #f0a08a 100%);
+    }
+
+    .release-cover--3 {
+      background: linear-gradient(160deg, #c49a3c 0%, #d4b06a 50%, #e8d5a8 100%);
+    }
+
+    .release-cover--4 {
+      background: linear-gradient(160deg, #2d4a3e 0%, #3d6b5a 50%, #5a9a7a 100%);
+    }
+
+    .release-cover .cover-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: #fff;
+      text-align: center;
+      padding: 0 20px;
+      line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .release-cover--3 .cover-title {
+      color: #1a1a1a;
+      text-shadow: none;
+    }
+
+    .release-cover .cover-author {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .release-cover--3 .cover-author {
+      color: rgba(26,26,26,0.6);
+    }
+
+    .release-info {
+      padding: 20px;
+    }
+
+    .release-info .genre {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .release-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .release-info .author {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .release-info .price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    @media (max-width: 1024px) {
+      .releases-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .releases-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- AUTHOR SPOTLIGHT ---------- */
+    .spotlight {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .spotlight-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .author-portrait {
+      width: 320px;
+      height: 400px;
+      background: linear-gradient(160deg, #2c3e50 0%, #1a252f 100%);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .author-portrait::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 50% 30%, rgba(214, 72, 43, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(196, 154, 60, 0.1) 0%, transparent 50%);
+    }
+
+    .author-portrait .initials {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.05em;
+    }
+
+    .author-portrait .portrait-label {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .spotlight-content .label {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .spotlight-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .spotlight-content .author-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .spotlight-content blockquote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      padding-left: 20px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .spotlight-content p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .spotlight-meta {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .spotlight-meta .meta-item .meta-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--ink);
+    }
+
+    .spotlight-meta .meta-item .meta-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .spotlight {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .author-portrait {
+        width: 260px;
+        height: 320px;
+      }
+    }
+
+    /* ---------- CATALOG FILTERS ---------- */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 8px 20px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .filter-btn.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .catalog-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .catalog-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .catalog-item.hidden {
+      display: none;
+    }
+
+    .catalog-thumb {
+      width: 72px;
+      height: 96px;
+      border-radius: 2px 4px 4px 2px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .catalog-thumb::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .catalog-thumb--1 { background: linear-gradient(135deg, #2c3e50, #1a252f); }
+    .catalog-thumb--2 { background: linear-gradient(135deg, #d6482b, #a8321e); }
+    .catalog-thumb--3 { background: linear-gradient(135deg, #c49a3c, #9a7a2e); }
+    .catalog-thumb--4 { background: linear-gradient(135deg, #2d4a3e, #1a3028); }
+    .catalog-thumb--5 { background: linear-gradient(135deg, #5a3e6b, #3a2548); }
+    .catalog-thumb--6 { background: linear-gradient(135deg, #3e5a6b, #254048); }
+
+    .catalog-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .catalog-info .cat-genre {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .catalog-info h4 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .catalog-info .cat-author {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .catalog-info .cat-price {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1024px) {
+      .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .catalog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- SUBMISSION NOTE ---------- */
+    .submission {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius);
+      padding: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submission::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(214, 72, 43, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .submission::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(196, 154, 60, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .submission-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .submission .label {
+      color: var(--accent-soft);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .submission h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-bottom: 20px;
+      color: var(--paper);
+    }
+
+    .submission h2 em {
+      font-style: italic;
+      color: var(--accent-soft);
+    }
+
+    .submission p {
+      color: rgba(247, 243, 237, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .submission .btn--primary {
+      margin-top: 12px;
+    }
+
+    .submission-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .submission-detail {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .submission-detail .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent-soft);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .submission-detail .detail-text h4 {
+      font-size: 1rem;
+      color: var(--paper);
+      margin-bottom: 4px;
+    }
+
+    .submission-detail .detail-text p {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 900px) {
+      .submission {
+        padding: 40px 28px;
+      }
+      .submission-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    /* ---------- EVENTS ---------- */
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .event-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .event-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .event-item:hover {
+      background: rgba(214, 72, 43, 0.03);
+    }
+
+    .event-date {
+      text-align: center;
+    }
+
+    .event-date .month {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .event-date .day {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .event-info h3 {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+
+    .event-info .event-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .event-info .event-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .event-info .event-meta span + span::before {
+      content: '·';
+      margin: 0 8px;
+      color: var(--border);
+    }
+
+    .event-cta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .event-cta:hover {
+      gap: 10px;
+    }
+
+    .event-cta svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .event-item {
+        grid-template-columns: 70px 1fr;
+        gap: 20px;
+      }
+      .event-cta {
+        grid-column: 2;
+      }
+    }
+
+    /* ---------- BOOKSTORE CTA ---------- */
+    .bookstore-cta {
+      text-align: center;
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bookstore-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(214, 72, 43, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .bookstore-cta .label {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .bookstore-cta h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bookstore-cta h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .bookstore-cta p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .bookstore-cta .btn--primary {
+      font-size: 0.95rem;
+      padding: 16px 36px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 64px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-text {
+      color: var(--paper);
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand p {
+      color: rgba(247, 243, 237, 0.6);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247, 243, 237, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul a {
+      color: rgba(247, 243, 237, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--accent-soft);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(247, 243, 237, 0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(247, 243, 237, 0.4);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-social a {
+      color: rgba(247, 243, 237, 0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent-soft);
+    }
+
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- MOBILE NAV ---------- */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      z-index: 99;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav ul {
+      list-style: none;
+    }
+
+    .mobile-nav ul li {
+      margin-bottom: 16px;
+    }
+
+    .mobile-nav ul a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- SELECTION ---------- */
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"><span>IP</span></div>
+        <span class="logo-text">Independent <em>/</em> Publisher</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#releases">New Releases</a></li>
+          <li><a href="#spotlight">Authors</a></li>
+          <li><a href="#catalog">Catalog</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#submissions">Submissions</a></li>
+        </ul>
+      </nav>
+      <a href="#bookstore" class="header-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Bookstore
+      </a>
+      <button class="mobile-toggle" aria-label="Menu" onclick="document.querySelector('.mobile-nav').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav">
+    <ul>
+      <li><a href="#releases">New Releases</a></li>
+      <li><a href="#spotlight">Authors</a></li>
+      <li><a href="#catalog">Catalog</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#submissions">Submissions</a></li>
+      <li><a href="#bookstore">Bookstore</a></li>
+    </ul>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="line"></span>
+          <span class="label label--accent">Est. 2016 · Portland, OR</span>
+        </div>
+        <h1>Books that <em>refuse</em> to sit quietly on the shelf.</h1>
+        <p class="hero-desc">
+          We publish literary fiction, narrative nonfiction, and poetry that pushes against the expected. 
+          Independent by conviction, not by accident.
+        </p>
+        <div class="hero-actions">
+          <a href="#releases" class="btn btn--primary">
+            Browse New Releases
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#submissions" class="btn btn--outline">Submit Your Work</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="book-stack">
+          <div class="book book--1"></div>
+          <div class="book book--2"></div>
+          <div class="book book--3"></div>
+        </div>
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span>Now accepting Spring 2026 submissions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEW RELEASES ========== -->
+  <section class="section section--alt" id="releases">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="label label--accent">Just Off the Press</span>
+          <h2>New <em>Releases</em></h2>
+        </div>
+        <p>Four titles we couldn't wait to put in your hands. Each one a distinct voice, a singular vision.</p>
+      </div>
+      <div class="releases-grid">
+        <div class="release-card reveal">
+          <div class="release-cover release-cover--1">
+            <span class="cover-title">The Salt Road</span>
+            <span class="cover-author">Maren Voss</span>
+          </div>
+          <div class="release-info">
+            <div class="genre">Literary Fiction</div>
+            <h3>The Salt Road</h3>
+            <div class="author">Maren Voss</div>
+            <div class="price">$18.00 · Paperback</div>
+          </div>
+        </div>
+        <div class="release-card reveal">
+          <div class="release-cover release-cover--2">
+            <span class="cover-title">Night Bloom</span>
+            <span class="cover-author">Idris Cole</span>
+          </div>
+          <div class="release-info">
+            <div class="genre">Poetry</div>
+            <h3>Night Bloom</h3>
+            <div class="author">Idris Cole</div>
+            <div class="price">$16.00 · Paperback</div>
+          </div>
+        </div>
+        <div class="release-card reveal">
+          <div class="release-cover release-cover--3">
+            <span class="cover-title">Field Notes from the Anthropocene</span>
+            <span class="cover-author">Dr. Lena Okafor</span>
+          </div>
+          <div class="release-info">
+            <div class="genre">Narrative Nonfiction</div>
+            <h3>Field Notes from the Anthropocene</h3>
+            <div class="author">Dr. Lena Okafor</div>
+            <div class="price">$22.00 · Hardcover</div>
+          </div>
+        </div>
+        <div class="release-card reveal">
+          <div class="release-cover release-cover--4">
+            <span class="cover-title">The Cartographer's Daughter</span>
+            <span class="cover-author">Sofia Reyes</span>
+          </div>
+          <div class="release-info">
+            <div class="genre">Historical Fiction</div>
+            <h3>The Cartographer's Daughter</h3>
+            <div class="author">Sofia Reyes</div>
+            <div class="price">$19.00 · Paperback</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AUTHOR SPOTLIGHT ========== -->
+  <section class="section" id="spotlight">
+    <div class="container">
+      <div class="spotlight">
+        <div class="spotlight-visual reveal">
+          <div class="author-portrait">
+            <span class="initials">MV</span>
+            <span class="portrait-label">Maren Voss · Author Portrait</span>
+          </div>
+        </div>
+        <div class="spotlight-content reveal">
+          <span class="label label--accent">Author Spotlight</span>
+          <h2>Maren Voss on <em>writing the coast</em></h2>
+          <div class="author-name">Maren Voss</div>
+          <blockquote>
+            "I write about places that are disappearing — not with nostalgia, but with urgency. 
+            The salt marsh doesn't need my elegies. It needs witnesses."
+          </blockquote>
+          <p>
+            Maren Voss's debut novel, <em>The Salt Road</em>, follows three generations of a 
+            fishing family on the Oregon coast as they navigate the slow erosion of their 
+            livelihood and the faster erosion of their certainties. It's a book about what 
+            we inherit, what we lose, and what we choose to carry forward.
+          </p>
+          <div class="spotlight-meta">
+            <div class="meta-item">
+              <div class="meta-value">3</div>
+              <div class="meta-label">Books Published</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-value">2</div>
+              <div class="meta-label">Literary Awards</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-value">14</div>
+              <div class="meta-label">Years Writing</div>
+            </div>
+          </div>
+          <a href="#" class="btn btn--outline">
+            Read the Full Interview
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CATALOG FILTERS ========== -->
+  <section class="section section--alt" id="catalog">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="label label--accent">Browse the Shelves</span>
+          <h2>Our <em>Catalog</em></h2>
+        </div>
+        <p>Filter by genre to find your next read. Every title is hand-selected by our editorial team.</p>
+      </div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="fiction">Fiction</button>
+        <button class="filter-btn" data-filter="nonfiction">Nonfiction</button>
+        <button class="filter-btn" data-filter="poetry">Poetry</button>
+        <button class="filter-btn" data-filter="essays">Essays</button>
+      </div>
+      <div class="catalog-grid">
+        <div class="catalog-item reveal" data-category="fiction">
+          <div class="catalog-thumb catalog-thumb--1"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Fiction</div>
+            <h4>The Salt Road</h4>
+            <div class="cat-author">Maren Voss</div>
+            <div class="cat-price">$18.00</div>
+          </div>
+        </div>
+        <div class="catalog-item reveal" data-category="poetry">
+          <div class="catalog-thumb catalog-thumb--2"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Poetry</div>
+            <h4>Night Bloom</h4>
+            <div class="cat-author">Idris Cole</div>
+            <div class="cat-price">$16.00</div>
+          </div>
+        </div>
+        <div class="catalog-item reveal" data-category="nonfiction">
+          <div class="catalog-thumb catalog-thumb--3"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Nonfiction</div>
+            <h4>Field Notes from the Anthropocene</h4>
+            <div class="cat-author">Dr. Lena Okafor</div>
+            <div class="cat-price">$22.00</div>
+          </div>
+        </div>
+        <div class="catalog-item reveal" data-category="fiction">
+          <div class="catalog-thumb catalog-thumb--4"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Fiction</div>
+            <h4>The Cartographer's Daughter</h4>
+            <div class="cat-author">Sofia Reyes</div>
+            <div class="cat-price">$19.00</div>
+          </div>
+        </div>
+        <div class="catalog-item reveal" data-category="essays">
+          <div class="catalog-thumb catalog-thumb--5"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Essays</div>
+            <h4>Against the Quiet</h4>
+            <div class="cat-author">James Whitfield</div>
+            <div class="cat-price">$17.00</div>
+          </div>
+        </div>
+        <div class="catalog-item reveal" data-category="nonfiction">
+          <div class="catalog-thumb catalog-thumb--6"></div>
+          <div class="catalog-info">
+            <div class="cat-genre">Nonfiction</div>
+            <h4>The River Remembers</h4>
+            <div class="cat-author">Amara Diallo</div>
+            <div class="cat-price">$20.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SUBMISSION NOTE ========== -->
+  <section class="section" id="submissions">
+    <div class="container">
+      <div class="submission reveal">
+        <div class="submission-inner">
+          <div>
+            <span class="label">Submission Note</span>
+            <h2>We're looking for <em>voices that unsettle</em>.</h2>
+            <p>
+              We read every submission that comes through our door. We're drawn to work that 
+              takes risks, that refuses easy resolution, and that trusts the reader to meet it 
+              halfway. If that sounds like your writing, we want to see it.
+            </p>
+            <p>
+              We accept simultaneous submissions, but please let us know if your work finds 
+              a home elsewhere. Response time is typically 8–12 weeks.
+            </p>
+            <a href="#" class="btn btn--primary">
+              Read Submission Guidelines
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="submission-details">
+            <div class="submission-detail">
+              <span class="num">01</span>
+              <div class="detail-text">
+                <h4>What We Want</h4>
+                <p>Literary fiction, narrative nonfiction, poetry collections, and essay collections that challenge convention.</p>
+              </div>
+            </div>
+            <div class="submission-detail">
+              <span class="num">02</span>
+              <div class="detail-text">
+                <h4>How to Submit</h4>
+                <p>Send the first 50 pages, a synopsis, and a brief author bio through our online portal.</p>
+              </div>
+            </div>
+            <div class="submission-detail">
+              <span class="num">03</span>
+              <div class="detail-text">
+                <h4>What Happens Next</h4>
+                <p>Our editorial team reviews every submission. If we're interested, we'll request the full manuscript.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EVENTS ========== -->
+  <section class="section section--alt" id="events">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <span class="label label--accent">Mark Your Calendar</span>
+          <h2>Upcoming <em>Events</em></h2>
+        </div>
+        <p>Readings, launches, and conversations. Come find us in the wild.</p>
+      </div>
+      <div class="events-list">
+        <div class="event-item reveal">
+          <div class="event-date">
+            <div class="month">Apr</div>
+            <div class="day">12</div>
+          </div>
+          <div class="event-info">
+            <h3>Maren Voss: <em>The Salt Road</em> Launch</h3>
+            <div class="event-meta">
+              <span>Powell's Books, Portland</span>
+              <span>7:00 PM</span>
+            </div>
+          </div>
+          <a href="#" class="event-cta">
+            RSVP
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="event-item reveal">
+          <div class="event-date">
+            <div class="month">Apr</div>
+            <div class="day">26</div>
+          </div>
+          <div class="event-info">
+            <h3>Poetry Night with Idris Cole &amp; Guests</h3>
+            <div class="event-meta">
+              <span>Literary Arts, Portland</span>
+              <span>6:30 PM</span>
+            </div>
+          </div>
+          <a href="#" class="event-cta">
+            RSVP
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="event-item reveal">
+          <div class="event-date">
+            <div class="month">May</div>
+            <div class="day">08</div>
+          </div>
+          <div class="event-info">
+            <h3>Dr. Lena Okafor in Conversation with Bill McKibben</h3>
+            <div class="event-meta">
+              <span>Online Webinar</span>
+              <span>5:00 PM PT</span>
+            </div>
+          </div>
+          <a href="#" class="event-cta">
+            Register
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="event-item reveal">
+          <div class="event-date">
+            <div class="month">May</div>
+            <div class="day">22</div>
+          </div>
+          <div class="event-info">
+            <h3>Independent Bookstore Day: Pop-Up Reading Room</h3>
+            <div class="event-meta">
+              <span>Our Warehouse, SE Portland</span>
+              <span>11:00 AM – 4:00 PM</span>
+            </div>
+          </div>
+          <a href="#" class="event-cta">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BOOKSTORE CTA ========== -->
+  <section class="bookstore-cta" id="bookstore">
+    <div class="container">
+      <span class="label label--accent reveal">The Bookstore</span>
+      <h2 class="reveal">Every purchase <em>supports</em> independent publishing.</h2>
+      <p class="reveal">
+        When you buy directly from us, more of your money goes to the authors, editors, 
+        and designers who make these books possible. No middlemen. No algorithms. Just books.
+      </p>
+      <a href="#" class="btn btn--primary reveal">
+        Visit the Bookstore
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">Independent <em>/</em> Publisher</span>
+          <p>
+            An independent publisher of literary fiction, narrative nonfiction, and poetry. 
+            Based in Portland, Oregon, distributed worldwide.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#releases">New Releases</a></li>
+            <li><a href="#catalog">Catalog</a></li>
+            <li><a href="#spotlight">Authors</a></li>
+            <li><a href="#events">Events</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Shipping &amp; Returns</a></li>
+            <li><a href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Independent / Publisher. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // ---------- CATALOG FILTERS ----------
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const catalogItems = document.querySelectorAll('.catalog-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active state
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        catalogItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden');
+            // Re-trigger reveal animation
+            item.classList.remove('visible');
+            requestAnimationFrame(() => {
+              item.classList.add('visible');
+            });
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ---------- SCROLL REVEAL ----------
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ---------- MOBILE NAV CLOSE ON LINK CLICK ----------
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.mobile-nav').classList.remove('open');
+      });
+    });
+
+    // ---------- SMOOTH SCROLL FOR ANCHOR LINKS ----------
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

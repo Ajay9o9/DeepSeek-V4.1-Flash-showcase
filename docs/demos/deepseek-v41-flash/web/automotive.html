@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AER / 01 — Electric, Reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --near-black: #0a0a0c;
+      --deep-black: #060608;
+      --silver: #c8ccd4;
+      --silver-dim: #8a8e98;
+      --electric: #00a8ff;
+      --electric-glow: rgba(0, 168, 255, 0.35);
+      --electric-soft: rgba(0, 168, 255, 0.12);
+      --surface: #111114;
+      --surface-raised: #18181c;
+      --border: rgba(200, 204, 212, 0.08);
+      --border-hover: rgba(200, 204, 212, 0.18);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--near-black);
+      color: var(--silver);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Utility ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--electric);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title strong {
+      font-weight: 600;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(10, 10, 12, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span {
+      color: var(--electric);
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--silver-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-cta {
+      background: var(--electric);
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .nav-cta:hover {
+      background: #33bbff;
+      box-shadow: 0 0 30px var(--electric-glow);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 168, 255, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 20%, rgba(0, 168, 255, 0.04) 0%, transparent 60%),
+        var(--deep-black);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200, 204, 212, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 204, 212, 0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+      padding: 0 40px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border: 1px solid var(--border-hover);
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease-out both;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--electric);
+      box-shadow: 0 0 8px var(--electric-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 200;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease-out 0.1s both;
+    }
+
+    .hero h1 .accent {
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff 0%, var(--electric) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--silver-dim);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: fadeUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease-out 0.3s both;
+    }
+
+    .btn-primary {
+      background: var(--electric);
+      color: #fff;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #33bbff;
+      box-shadow: 0 0 40px var(--electric-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--silver);
+      border: 1px solid var(--border-hover);
+      padding: 16px 40px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--silver);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ── Vehicle SVG ── */
+    .hero-vehicle {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: -40px auto 0;
+      animation: fadeUp 1s ease-out 0.4s both;
+    }
+
+    .hero-vehicle svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── Performance Strip ── */
+    .performance {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+      background: var(--deep-black);
+    }
+
+    .perf-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .perf-item {
+      background: var(--surface);
+      padding: 48px 32px;
+      text-align: center;
+      transition: background 0.4s;
+    }
+
+    .perf-item:hover {
+      background: var(--surface-raised);
+    }
+
+    .perf-value {
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 200;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .perf-value .unit {
+      font-size: 0.5em;
+      font-weight: 400;
+      color: var(--silver-dim);
+      margin-left: 4px;
+    }
+
+    .perf-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+    }
+
+    /* ── Charging ── */
+    .charging {
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .charging::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--electric-soft) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .charging-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .charging-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .charge-ring {
+      width: 320px;
+      height: 320px;
+      position: relative;
+    }
+
+    .charge-ring svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .charge-ring .track {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 6;
+    }
+
+    .charge-ring .progress {
+      fill: none;
+      stroke: var(--electric);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 880;
+      stroke-dashoffset: 220;
+      filter: drop-shadow(0 0 12px var(--electric-glow));
+      animation: chargeProgress 3s ease-in-out infinite alternate;
+    }
+
+    .charge-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .charge-pct {
+      font-size: 3.5rem;
+      font-weight: 200;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .charge-pct .unit {
+      font-size: 0.4em;
+      color: var(--silver-dim);
+    }
+
+    .charge-time {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--electric);
+      margin-top: 8px;
+    }
+
+    .charging-text h2 {
+      margin-bottom: 20px;
+    }
+
+    .charging-text p {
+      color: var(--silver-dim);
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+
+    .charge-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .charge-stat .val {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .charge-stat .val .unit {
+      font-size: 0.6em;
+      color: var(--silver-dim);
+    }
+
+    .charge-stat .lbl {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--silver-dim);
+      margin-top: 4px;
+    }
+
+    /* ── Interior ── */
+    .interior {
+      padding: 120px 0;
+      background: var(--deep-black);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .interior-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .interior-header p {
+      color: var(--silver-dim);
+      max-width: 520px;
+      margin: 16px auto 0;
+    }
+
+    .interior-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .interior-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.4s, transform 0.4s;
+    }
+
+    .interior-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+    }
+
+    .interior-card-visual {
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interior-card-visual svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .interior-card-body {
+      padding: 28px 32px 32px;
+    }
+
+    .interior-card-body h3 {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .interior-card-body p {
+      font-size: 0.88rem;
+      color: var(--silver-dim);
+      line-height: 1.65;
+    }
+
+    .interior-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .interior-stack .interior-card-visual {
+      height: 160px;
+    }
+
+    /* ── Trim Cards ── */
+    .trims {
+      padding: 120px 0;
+    }
+
+    .trims-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .trims-header p {
+      color: var(--silver-dim);
+      max-width: 480px;
+      margin: 16px auto 0;
+    }
+
+    .trim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .trim-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      position: relative;
+      transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+    }
+
+    .trim-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .trim-card.featured {
+      border-color: var(--electric);
+      box-shadow: 0 0 40px var(--electric-soft);
+    }
+
+    .trim-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--electric);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 100px;
+    }
+
+    .trim-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--electric);
+      margin-bottom: 8px;
+    }
+
+    .trim-title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .trim-price {
+      font-size: 2rem;
+      font-weight: 200;
+      color: #fff;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .trim-price .from {
+      font-size: 0.5em;
+      font-weight: 400;
+      color: var(--silver-dim);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .trim-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .trim-features li {
+      font-size: 0.85rem;
+      color: var(--silver-dim);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .trim-features li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--electric);
+      flex-shrink: 0;
+    }
+
+    .trim-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .trim-card.featured .trim-btn {
+      background: var(--electric);
+      color: #fff;
+      border: none;
+    }
+
+    .trim-card.featured .trim-btn:hover {
+      background: #33bbff;
+      box-shadow: 0 0 30px var(--electric-glow);
+    }
+
+    .trim-card:not(.featured) .trim-btn {
+      background: transparent;
+      color: var(--silver);
+      border: 1px solid var(--border-hover);
+    }
+
+    .trim-card:not(.featured) .trim-btn:hover {
+      border-color: var(--silver);
+      color: #fff;
+    }
+
+    /* ── Reserve CTA ── */
+    .reserve {
+      padding: 120px 0;
+      background: var(--deep-black);
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reserve::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, var(--electric-soft) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .reserve-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reserve h2 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 200;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .reserve h2 strong {
+      font-weight: 600;
+    }
+
+    .reserve p {
+      color: var(--silver-dim);
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    .reserve-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .reserve-form input {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: 100px;
+      border: 1px solid var(--border-hover);
+      background: var(--surface);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .reserve-form input::placeholder {
+      color: var(--silver-dim);
+    }
+
+    .reserve-form input:focus {
+      border-color: var(--electric);
+      box-shadow: 0 0 20px var(--electric-soft);
+    }
+
+    .reserve-form button {
+      background: var(--electric);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .reserve-form button:hover {
+      background: #33bbff;
+      box-shadow: 0 0 30px var(--electric-glow);
+    }
+
+    .reserve-note {
+      font-size: 0.75rem;
+      color: var(--silver-dim);
+      margin-top: 16px;
+      opacity: 0.7;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 64px 0 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .nav-logo {
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--silver-dim);
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: var(--silver-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: var(--electric);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--silver-dim);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      color: var(--silver-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover {
+      color: var(--electric);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes chargeProgress {
+      from { stroke-dashoffset: 220; }
+      to { stroke-dashoffset: 80; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .perf-grid { grid-template-columns: repeat(2, 1fr); }
+      .charging-inner { grid-template-columns: 1fr; gap: 48px; }
+      .interior-grid { grid-template-columns: 1fr; }
+      .trim-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 24px; }
+      .nav-links { display: none; }
+      .perf-grid { grid-template-columns: 1fr 1fr; }
+      .perf-item { padding: 32px 20px; }
+      .reserve-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .charge-stats { flex-direction: column; gap: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .perf-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="container">
+      <div class="nav-logo">AER<span>/01</span></div>
+      <ul class="nav-links">
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#charging">Charging</a></li>
+        <li><a href="#interior">Interior</a></li>
+        <li><a href="#trims">Trims</a></li>
+      </ul>
+      <button class="nav-cta" onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})">Reserve</button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Now taking reservations
+      </div>
+      <h1>Electric.<br><span class="accent">Reimagined.</span></h1>
+      <p class="hero-sub">
+        The AER / 01 is a ground-up electric vehicle — not a conversion. 
+        620 miles of range, 0–60 in 2.8 seconds, and a cabin designed around silence.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})">Reserve Yours</button>
+        <button class="btn-ghost" onclick="document.getElementById('performance').scrollIntoView({behavior:'smooth'})">Explore Specs</button>
+      </div>
+    </div>
+    <div class="hero-vehicle">
+      <svg viewBox="0 0 900 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="AER / 01 vehicle silhouette">
+        <!-- Ground shadow -->
+        <ellipse cx="450" cy="360" rx="340" ry="20" fill="rgba(0,0,0,0.5)"/>
+        <!-- Body -->
+        <path d="M120 280 Q120 240 160 220 L280 180 Q320 160 380 155 L520 155 Q580 160 620 180 L740 220 Q780 240 780 280 L780 300 Q780 320 760 320 L140 320 Q120 320 120 300 Z" fill="url(#bodyGrad)" stroke="rgba(200,204,212,0.15)" stroke-width="1.5"/>
+        <!-- Roof / greenhouse -->
+        <path d="M280 180 Q320 160 380 155 L520 155 Q580 160 620 180 L600 200 Q560 185 520 180 L380 180 Q340 185 300 200 Z" fill="url(#roofGrad)" opacity="0.6"/>
+        <!-- Windshield -->
+        <path d="M300 200 Q340 185 380 180 L520 180 Q560 185 600 200 L580 220 Q540 210 520 208 L380 208 Q360 210 320 220 Z" fill="url(#glassGrad)" opacity="0.4"/>
+        <!-- Side window -->
+        <path d="M320 220 Q360 210 380 208 L520 208 Q540 210 580 220 L560 240 Q520 232 500 230 L400 230 Q380 232 340 240 Z" fill="url(#glassGrad)" opacity="0.25"/>
+        <!-- Headlight -->
+        <path d="M120 260 Q120 250 140 248 L180 248 Q200 250 200 260 L200 270 Q200 280 180 280 L140 280 Q120 280 120 270 Z" fill="url(#headlightGrad)"/>
+        <path d="M120 260 Q120 250 140 248 L180 248 Q200 250 200 260 L200 270 Q200 280 180 280 L140 280 Q120 280 120 270 Z" fill="none" stroke="var(--electric)" stroke-width="1" opacity="0.6"/>
+        <!-- Taillight -->
+        <path d="M700 260 Q700 250 720 248 L760 248 Q780 250 780 260 L780 270 Q780 280 760 280 L720 280 Q700 280 700 270 Z" fill="url(#taillightGrad)"/>
+        <!-- Front wheel -->
+        <circle cx="260" cy="320" r="52" fill="#0a0a0c" stroke="rgba(200,204,212,0.2)" stroke-width="2"/>
+        <circle cx="260" cy="320" r="38" fill="none" stroke="rgba(200,204,212,0.1)" stroke-width="1"/>
+        <circle cx="260" cy="320" r="24" fill="none" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+        <circle cx="260" cy="320" r="8" fill="rgba(200,204,212,0.15)"/>
+        <!-- Rear wheel -->
+        <circle cx="640" cy="320" r="52" fill="#0a0a0c" stroke="rgba(200,204,212,0.2)" stroke-width="2"/>
+        <circle cx="640" cy="320" r="38" fill="none" stroke="rgba(200,204,212,0.1)" stroke-width="1"/>
+        <circle cx="640" cy="320" r="24" fill="none" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+        <circle cx="640" cy="320" r="8" fill="rgba(200,204,212,0.15)"/>
+        <!-- Charge port glow -->
+        <circle cx="700" cy="240" r="6" fill="var(--electric)" opacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="700" cy="240" r="12" fill="none" stroke="var(--electric)" stroke-width="1" opacity="0.3">
+          <animate attributeName="r" values="12;20;12" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Gradients -->
+        <defs>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a2a30"/>
+            <stop offset="50%" stop-color="#1a1a1e"/>
+            <stop offset="100%" stop-color="#0e0e10"/>
+          </linearGradient>
+          <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a3a42"/>
+            <stop offset="100%" stop-color="#1a1a1e"/>
+          </linearGradient>
+          <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00a8ff" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#00a8ff" stop-opacity="0.05"/>
+          </linearGradient>
+          <linearGradient id="headlightGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00a8ff" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#00a8ff" stop-opacity="0.2"/>
+          </linearGradient>
+          <linearGradient id="taillightGrad" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stop-color="#ff3b3b" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ff3b3b" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ── Performance Strip ── -->
+  <section class="performance" id="performance">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Performance</div>
+        <h2 class="section-title">Numbers that <strong>redefine</strong> electric.</h2>
+      </div>
+      <div class="perf-grid reveal" style="margin-top: 48px;">
+        <div class="perf-item">
+          <div class="perf-value">2.8<span class="unit">s</span></div>
+          <div class="perf-label">0–60 mph</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-value">620<span class="unit">mi</span></div>
+          <div class="perf-label">EPA Range</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-value">1,020<span class="unit">hp</span></div>
+          <div class="perf-label">Peak Output</div>
+        </div>
+        <div class="perf-item">
+          <div class="perf-value">186<span class="unit">mph</span></div>
+          <div class="perf-label">Top Speed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Charging ── -->
+  <section class="charging" id="charging">
+    <div class="container">
+      <div class="charging-inner">
+        <div class="charging-visual reveal">
+          <div class="charge-ring">
+            <svg viewBox="0 0 320 320">
+              <circle class="track" cx="160" cy="160" r="140"/>
+              <circle class="progress" cx="160" cy="160" r="140"/>
+            </svg>
+            <div class="charge-center">
+              <div class="charge-pct">80<span class="unit">%</span></div>
+              <div class="charge-time">in 18 minutes</div>
+            </div>
+          </div>
+        </div>
+        <div class="charging-text reveal">
+          <div class="section-label">Charging</div>
+          <h2 class="section-title">Charge at the speed of <strong>life.</strong></h2>
+          <p>
+            The AER / 01 supports 350 kW DC fast charging. Plug in, grab a coffee, 
+            and you're back on the road before your cup is empty. At home, the 
+            included 11 kW wall charger adds 40 miles of range per hour.
+          </p>
+          <div class="charge-stats">
+            <div class="charge-stat">
+              <div class="val">350<span class="unit">kW</span></div>
+              <div class="lbl">Peak DC Rate</div>
+            </div>
+            <div class="charge-stat">
+              <div class="val">18<span class="unit">min</span></div>
+              <div class="lbl">10–80% Charge</div>
+            </div>
+            <div class="charge-stat">
+              <div class="val">11<span class="unit">kW</span></div>
+              <div class="lbl">Home Charger</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Interior ── -->
+  <section class="interior" id="interior">
+    <div class="container">
+      <div class="interior-header reveal">
+        <div class="section-label">Interior</div>
+        <h2 class="section-title">A cabin designed around <strong>silence.</strong></h2>
+        <p>
+          Every surface, every material, every line of code — engineered to 
+          disappear. The AER / 01 interior is a sanctuary, not a cockpit.
+        </p>
+      </div>
+      <div class="interior-grid">
+        <div class="interior-card reveal">
+          <div class="interior-card-visual">
+            <svg viewBox="0 0 600 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="280" fill="#0e0e10"/>
+              <!-- Dashboard -->
+              <path d="M0 200 Q150 160 300 155 Q450 160 600 200 L600 280 L0 280 Z" fill="#141418"/>
+              <!-- Steering wheel -->
+              <circle cx="300" cy="180" r="60" fill="none" stroke="#2a2a30" stroke-width="8"/>
+              <circle cx="300" cy="180" r="50" fill="none" stroke="#1a1a1e" stroke-width="2"/>
+              <circle cx="300" cy="180" r="12" fill="#1a1a1e"/>
+              <!-- Screen -->
+              <rect x="220" y="120" width="160" height="50" rx="6" fill="#0a0a0c" stroke="rgba(0,168,255,0.3)" stroke-width="1"/>
+              <rect x="230" y="130" width="60" height="4" rx="2" fill="rgba(0,168,255,0.4)"/>
+              <rect x="230" y="140" width="40" height="3" rx="1.5" fill="rgba(200,204,212,0.15)"/>
+              <rect x="230" y="148" width="80" height="3" rx="1.5" fill="rgba(200,204,212,0.1)"/>
+              <!-- Ambient light strip -->
+              <path d="M0 200 Q150 160 300 155 Q450 160 600 200" stroke="rgba(0,168,255,0.15)" stroke-width="2" fill="none"/>
+              <!-- Seats -->
+              <path d="M80 280 L80 220 Q80 200 100 200 L140 200 Q160 200 160 220 L160 280 Z" fill="#1a1a1e"/>
+              <path d="M440 280 L440 220 Q440 200 460 200 L500 200 Q520 200 520 220 L520 280 Z" fill="#1a1a1e"/>
+            </svg>
+          </div>
+          <div class="interior-card-body">
+            <h3>Minimalist Dashboard</h3>
+            <p>
+              A single 15.6-inch OLED display replaces every button. 
+              The interface adapts to your driving style, showing only what matters, when it matters.
+            </p>
+          </div>
+        </div>
+        <div class="interior-stack">
+          <div class="interior-card reveal">
+            <div class="interior-card-visual">
+              <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="400" height="160" fill="#0e0e10"/>
+                <!-- Seat detail -->
+                <path d="M100 160 L100 80 Q100 60 120 60 L180 60 Q200 60 200 80 L200 160 Z" fill="#1a1a1e"/>
+                <path d="M120 80 L120 160" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+                <path d="M140 80 L140 160" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+                <path d="M160 80 L160 160" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+                <path d="M180 80 L180 160" stroke="rgba(200,204,212,0.08)" stroke-width="1"/>
+                <!-- Stitching -->
+                <path d="M110 70 Q150 55 190 70" stroke="rgba(0,168,255,0.3)" stroke-width="1.5" fill="none"/>
+                <!-- Headrest -->
+                <rect x="120" y="40" width="60" height="24" rx="8" fill="#1a1a1e"/>
+              </svg>
+            </div>
+            <div class="interior-card-body">
+              <h3>Vegan Leather Seats</h3>
+              <p>Heated, ventilated, and 14-way adjustable. Wrapped in a material that feels like leather but isn't.</p>
+            </div>
+          </div>
+          <div class="interior-card reveal">
+            <div class="interior-card-visual">
+              <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="400" height="160" fill="#0e0e10"/>
+                <!-- Panoramic roof -->
+                <path d="M40 120 Q200 40 360 120" stroke="rgba(0,168,255,0.2)" stroke-width="2" fill="none"/>
+                <path d="M40 120 Q200 40 360 120 L360 160 L40 160 Z" fill="rgba(0,168,255,0.03)"/>
+                <!-- Stars -->
+                <circle cx="120" cy="80" r="1.5" fill="rgba(200,204,212,0.4)"/>
+                <circle cx="200" cy="60" r="1" fill="rgba(200,204,212,0.3)"/>
+                <circle cx="280" cy="85" r="1.5" fill="rgba(200,204,212,0.4)"/>
+                <circle cx="160" cy="100" r="1" fill="rgba(200,204,212,0.2)"/>
+                <circle cx="240" cy="95" r="1" fill="rgba(200,204,212,0.2)"/>
+              </svg>
+            </div>
+            <div class="interior-card-body">
+              <h3>Panoramic Glass Roof</h3>
+              <p>Electrochromic tint blocks 99% of UV and infrared. At night, it becomes a window to the stars.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trim Cards ── -->
+  <section class="trims" id="trims">
+    <div class="container">
+      <div class="trims-header reveal">
+        <div class="section-label">Trims</div>
+        <h2 class="section-title">Choose your <strong>configuration.</strong></h2>
+        <p>Three trims. One platform. Every AER / 01 is built in our carbon-neutral gigafactory in Austin, Texas.</p>
+      </div>
+      <div class="trim-grid">
+        <div class="trim-card reveal">
+          <div class="trim-name">AER / 01</div>
+          <div class="trim-title">Pure</div>
+          <div class="trim-price">
+            <span class="from">From</span>
+            $74,900
+          </div>
+          <ul class="trim-features">
+            <li>620 miles EPA range</li>
+            <li>Single motor, RWD</li>
+            <li>0–60 in 4.2 seconds</li>
+            <li>19" aero wheels</li>
+            <li>15.6" OLED display</li>
+            <li>11 kW home charger included</li>
+          </ul>
+          <button class="trim-btn">Configure Pure</button>
+        </div>
+        <div class="trim-card featured reveal">
+          <div class="trim-name">AER / 01</div>
+          <div class="trim-title">Dual Motor</div>
+          <div class="trim-price">
+            <span class="from">From</span>
+            $89,900
+          </div>
+          <ul class="trim-features">
+            <li>580 miles EPA range</li>
+            <li>Dual motor, AWD</li>
+            <li>0–60 in 3.2 seconds</li>
+            <li>20" sport wheels</li>
+            <li>Adaptive air suspension</li>
+            <li>Premium audio system</li>
+            <li>Heated rear seats</li>
+          </ul>
+          <button class="trim-btn">Configure Dual Motor</button>
+        </div>
+        <div class="trim-card reveal">
+          <div class="trim-name">AER / 01</div>
+          <div class="trim-title">Performance</div>
+          <div class="trim-price">
+            <span class="from">From</span>
+            $109,900
+          </div>
+          <ul class="trim-features">
+            <li>520 miles EPA range</li>
+            <li>Tri-motor, AWD</li>
+            <li>0–60 in 2.8 seconds</li>
+            <li>21" forged wheels</li>
+            <li>Carbon-ceramic brakes</li>
+            <li>Track mode & launch control</li>
+            <li>Sport seats with bolsters</li>
+          </ul>
+          <button class="trim-btn">Configure Performance</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Reserve CTA ── -->
+  <section class="reserve" id="reserve">
+    <div class="container">
+      <div class="reserve-inner reveal">
+        <div class="section-label">Reserve</div>
+        <h2>Be first. <strong>Be electric.</strong></h2>
+        <p>
+          Reservations are fully refundable and take less than two minutes. 
+          Configure your AER / 01 and lock in your place in line.
+        </p>
+        <form class="reserve-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Reserved ✓'; this.querySelector('button').style.background='#00a8ff'; this.querySelector('input').disabled=true;">
+          <input type="email" placeholder="Enter your email address" required>
+          <button type="submit">Reserve Now</button>
+        </form>
+        <p class="reserve-note">No commitment. Fully refundable. We'll never share your information.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">AER<span>/01</span></div>
+          <p>
+            AER is a new kind of car company. We design, engineer, and manufacture 
+            electric vehicles that are better for the planet and better to drive.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Vehicle</h4>
+          <ul>
+            <li><a href="#performance">Performance</a></li>
+            <li><a href="#charging">Charging</a></li>
+            <li><a href="#interior">Interior</a></li>
+            <li><a href="#trims">Trims & Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About AER</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Sustainability</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Warranty</a></li>
+            <li><a href="#">Service Centers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 AER Motors, Inc. All rights reserved.</div>
+        <div class="footer-social">
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scroll Reveal Script ── -->
+  <script>
+    (function() {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      reveals.forEach(el => observer.observe(el));
+    })();
+  </script>
+
+</body>
+</html>

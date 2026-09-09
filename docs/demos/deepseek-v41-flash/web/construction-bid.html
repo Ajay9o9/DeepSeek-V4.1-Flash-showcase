@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONSTRUCTION / BID / PORTAL — Riverside Logistics Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e1116;
+    --ink-2: #1a1f27;
+    --paper: #f2ede4;
+    --paper-2: #e8e1d3;
+    --line: #c9c0ad;
+    --line-2: #a89e88;
+    --accent: #ff5b1f;
+    --accent-2: #ffb800;
+    --teal: #0f5c5c;
+    --teal-2: #147a7a;
+    --muted: #6b6355;
+    --ok: #2f7d4f;
+    --warn: #b8860b;
+    --danger: #b23a2a;
+    --grid: rgba(14,17,22,0.06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Archivo', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .narrow { font-family: 'Archivo Narrow', sans-serif; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 3px solid var(--accent);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 28px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+  .brand-mark {
+    width: 34px; height: 34px;
+    background: var(--accent);
+    display: grid; place-items: center;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+  }
+  .brand-mark svg { width: 20px; height: 20px; }
+  .brand-slash { color: var(--accent); font-weight: 900; }
+  .brand-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #8a8272;
+    letter-spacing: 0.15em;
+    margin-left: 4px;
+    padding-left: 12px;
+    border-left: 1px solid #333;
+  }
+  .topnav {
+    display: flex; gap: 4px; margin-left: auto;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .topnav a {
+    color: #b8b0a0; text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid transparent;
+    transition: all .15s;
+  }
+  .topnav a:hover { color: var(--paper); border-color: #333; }
+  .topnav a.active { color: var(--ink); background: var(--accent-2); border-color: var(--accent-2); font-weight: 700; }
+  .user-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding-left: 20px; margin-left: 12px;
+    border-left: 1px solid #333;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #b8b0a0;
+  }
+  .user-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal-2), var(--teal));
+    display: grid; place-items: center;
+    color: var(--paper); font-weight: 700; font-size: 11px;
+    font-family: 'Archivo', sans-serif;
+  }
+
+  /* ============ HERO / PROJECT HEADER ============ */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #000;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(255,91,31,0.18), transparent 65%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 40px 32px 44px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    align-items: end;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: ""; width: 24px; height: 2px; background: var(--accent-2);
+  }
+  .hero h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 4.4vw, 62px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 20px;
+    max-width: 780px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 32px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #2a2f38;
+  }
+  .meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #7a7364;
+    margin-bottom: 6px;
+  }
+  .meta-item .value {
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .meta-item .value small { color: #8a8272; font-weight: 400; font-size: 13px; }
+
+  /* Deadline card */
+  .deadline-card {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 24px 26px;
+    position: relative;
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
+  }
+  .deadline-card::before {
+    content: "BID DEADLINE";
+    position: absolute; top: -10px; left: 22px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    padding: 3px 8px;
+    font-weight: 700;
+  }
+  .deadline-date {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 8px 0 4px;
+  }
+  .deadline-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .cd-cell {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 4px;
+    text-align: center;
+  }
+  .cd-num {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .cd-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: #8a8272;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .deadline-status {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ok);
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 0 0 rgba(47,125,79,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(47,125,79,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(47,125,79,0); }
+    100% { box-shadow: 0 0 0 0 rgba(47,125,79,0); }
+  }
+
+  /* ============ MAIN LAYOUT ============ */
+  .main {
+    max-width: 1440px; margin: 0 auto;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ============ TABS ============ */
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    background: transparent;
+    border: none;
+    padding: 14px 22px;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tab .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: var(--paper-2);
+    color: var(--ink);
+    padding: 2px 6px;
+    font-weight: 700;
+  }
+  .tab.active .count { background: var(--accent); color: var(--paper); }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: none;
+    padding: 32px;
+  }
+  .panel[hidden] { display: none; }
+
+  .panel h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .panel .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* Overview */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+  .overview-grid p { margin: 0 0 14px; color: #2a2f38; }
+  .spec-list {
+    list-style: none; padding: 0; margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .spec-list li {
+    display: flex; justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .spec-list .k {
+    font-family: 'Archivo Narrow', sans-serif;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px;
+  }
+  .spec-list .v { font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  .site-diagram {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 20px;
+    position: relative;
+  }
+  .site-diagram svg { width: 100%; height: auto; display: block; }
+  .site-diagram .caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 12px;
+    display: flex; justify-content: space-between;
+  }
+
+  /* Documents */
+  .doc-list { list-style: none; padding: 0; margin: 0; }
+  .doc-row {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .doc-row:first-child { border-top: 1px solid var(--line); }
+  .doc-icon {
+    width: 40px; height: 40px;
+    background: var(--paper-2);
+    display: grid; place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .doc-icon.pdf { background: #fde8e2; color: var(--danger); border-color: #f0c4b8; }
+  .doc-icon.dwg { background: #e2eef0; color: var(--teal); border-color: #b8d4d8; }
+  .doc-icon.xls { background: #e6f0e2; color: var(--ok); border-color: #c4d8b8; }
+  .doc-name { font-weight: 600; font-size: 14px; }
+  .doc-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .doc-size {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .doc-dl {
+    background: transparent;
+    border: 1px solid var(--ink);
+    padding: 7px 14px;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .doc-dl:hover { background: var(--ink); color: var(--paper); }
+
+  /* Cost summary */
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .cost-table th {
+    text-align: left;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 10px 0;
+    border-bottom: 2px solid var(--ink);
+    font-weight: 700;
+  }
+  .cost-table th.num, .cost-table td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+  .cost-table td {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .cost-table td .desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .cost-table tr.total td {
+    border-bottom: none;
+    border-top: 2px solid var(--ink);
+    padding-top: 18px;
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .cost-table tr.total td.num { font-size: 20px; color: var(--accent); }
+  .cost-table tr.subtotal td {
+    background: var(--paper-2);
+    font-weight: 700;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cost-table tr.subtotal td:first-child { padding-left: 12px; }
+  .cost-table tr.subtotal td:last-child { padding-right: 12px; }
+
+  /* Subcontractors */
+  .sub-list { list-style: none; padding: 0; margin: 0; }
+  .sub-row {
+    display: grid;
+    grid-template-columns: 44px 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .sub-row:first-child { border-top: 1px solid var(--line); }
+  .sub-avatar {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--paper);
+    background: var(--teal);
+  }
+  .sub-avatar.a2 { background: var(--accent); }
+  .sub-avatar.a3 { background: var(--ink); }
+  .sub-avatar.a4 { background: var(--warn); }
+  .sub-avatar.a5 { background: var(--teal-2); }
+  .sub-name { font-weight: 700; font-size: 14px; }
+  .sub-trade {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .sub-bid {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .sub-bid small { display: block; color: var(--muted); font-weight: 400; font-size: 10px; }
+  .status-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .status-pill.confirmed { color: var(--ok); border-color: var(--ok); background: #eaf5ee; }
+  .status-pill.pending { color: var(--warn); border-color: var(--warn); background: #fbf3dd; }
+  .status-pill.review { color: var(--teal); border-color: var(--teal); background: #e2eef0; }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 90px; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .card-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--paper-2);
+  }
+  .card-head h3 {
+    margin: 0;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .card-head .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 7px;
+    font-weight: 700;
+  }
+  .card-body { padding: 20px; }
+
+  .progress-track {
+    height: 8px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    position: relative;
+    margin: 8px 0 6px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-2));
+    width: 68%;
+    position: relative;
+  }
+  .progress-fill::after {
+    content: "";
+    position: absolute; right: -1px; top: -3px; bottom: -3px;
+    width: 3px; background: var(--accent);
+  }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--ink);
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    margin-top: 1px;
+  }
+  .check-box.done { background: var(--ink); }
+  .check-box.done::after {
+    content: "";
+    width: 5px; height: 9px;
+    border: solid var(--paper);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+  .checklist .item-text { flex: 1; }
+  .checklist .item-text small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .submit-card {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-card::before {
+    content: "";
+    position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(255,91,31,0.25), transparent 70%);
+  }
+  .submit-card h3 {
+    margin: 0 0 6px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+  .submit-card p {
+    margin: 0 0 20px;
+    font-size: 13px;
+    color: #b8b0a0;
+    position: relative;
+  }
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: var(--paper);
+    border: none;
+    padding: 16px;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all .15s;
+    position: relative;
+  }
+  .submit-btn:hover { background: var(--accent-2); color: var(--ink); }
+  .submit-btn svg { width: 18px; height: 18px; }
+  .submit-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #7a7364;
+    margin-top: 14px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+
+  .contact-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-avatar {
+    width: 36px; height: 36px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    display: grid; place-items: center;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .contact-info { flex: 1; }
+  .contact-info .name { font-weight: 700; font-size: 13px; }
+  .contact-info .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .contact-info .email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 2px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: #8a8272;
+    margin-top: 40px;
+    border-top: 3px solid var(--accent);
+  }
+  .footer-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 28px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-inner a { color: #b8b0a0; text-decoration: none; }
+  .footer-inner a:hover { color: var(--accent-2); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .main { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+  }
+  @media (max-width: 720px) {
+    .topbar-inner { padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
+    .topnav { display: none; }
+    .hero-inner { padding: 28px 16px 32px; }
+    .main { padding: 20px 16px; }
+    .panel { padding: 20px; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .doc-row { grid-template-columns: 40px 1fr; }
+    .doc-row .doc-size, .doc-row .doc-dl { grid-column: 2; justify-self: start; }
+    .sub-row { grid-template-columns: 44px 1fr; }
+    .sub-row .sub-bid, .sub-row .status-pill { grid-column: 2; justify-self: start; text-align: left; }
+    .footer-inner { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0e1116" stroke-width="2.5" stroke-linecap="square">
+          <path d="M3 21V8l9-5 9 5v13"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </div>
+      <span>Construction<span class="brand-slash">/</span>Bid<span class="brand-slash">/</span>Portal</span>
+      <span class="brand-sub">v4.2 · GC EDITION</span>
+    </div>
+    <nav class="topnav">
+      <a href="#" class="active">Active Bid</a>
+      <a href="#">Pipeline</a>
+      <a href="#">Awarded</a>
+      <a href="#">Directory</a>
+      <a href="#">Reports</a>
+    </nav>
+    <div class="user-chip">
+      <div class="user-avatar">MR</div>
+      <div>
+        <div style="color:#f2ede4; font-weight:600;">M. Reyes</div>
+        <div style="font-size:9px;">Estimator · Halden &amp; Co.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Bid Package #2024-118 · Open for Submission</div>
+      <h1>Riverside Logistics Hub — <em>Phase II</em> Core &amp; Shell</h1>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <div class="label">Location</div>
+          <div class="value">1420 Harbor Way<br><small>Portland, OR 97203</small></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Scope</div>
+          <div class="value">Core &amp; Shell<br><small>184,000 SF · 3 Buildings</small></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Owner</div>
+          <div class="value">Riverside Industrial LLC<br><small>Rep: K. Okafor</small></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Delivery</div>
+          <div class="value">Design-Bid-Build<br><small>GMP · 18 mo schedule</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deadline-card">
+      <div class="deadline-date">Fri, Nov 22</div>
+      <div class="deadline-time">2024 · 14:00 PST (UTC−8)</div>
+      <div class="countdown" id="countdown">
+        <div class="cd-cell"><div class="cd-num" id="cd-d">04</div><div class="cd-lbl">Days</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-h">11</div><div class="cd-lbl">Hrs</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-m">27</div><div class="cd-lbl">Min</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-s">42</div><div class="cd-lbl">Sec</div></div>
+      </div>
+      <div class="deadline-status">
+        <span class="pulse"></span>
+        <span>Accepting submissions · 6 of 9 trades bid</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAIN ============ -->
+<main class="main">
+
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="overview" role="tab">Overview</button>
+      <button class="tab" data-tab="documents" role="tab">Documents <span class="count">14</span></button>
+      <button class="tab" data-tab="cost" role="tab">Cost Summary</button>
+      <button class="tab" data-tab="subs" role="tab">Subcontractors <span class="count">9</span></button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section class="panel" id="panel-overview" role="tabpanel">
+      <h2>Project Overview</h2>
+      <div class="sub">Scope narrative · issued 2024-10-14</div>
+
+      <div class="overview-grid">
+        <div>
+          <p>The Riverside Logistics Hub Phase II expands the existing distribution campus with three tilt-up concrete buildings totaling 184,000 SF, plus a shared truck court, stormwater detention, and utility extensions along Harbor Way.</p>
+          <p>This bid package covers <strong>core &amp; shell</strong> only. Tenant improvements, racking, and MEP fit-out will be bid separately under Package #2024-119. The successful bidder will hold a GMP contract with Halden &amp; Co. as construction manager.</p>
+          <p>Site work is substantially complete. Foundations are poured and cured. Structural steel is on-site and staged in the laydown yard. The awarded contractor is expected to mobilize within 14 days of notice to proceed.</p>
+        </div>
+        <div>
+          <ul class="spec-list">
+            <li><span class="k">Building A</span><span class="v">72,400 SF</span></li>
+            <li><span class="k">Building B</span><span class="v">64,800 SF</span></li>
+            <li><span class="k">Building C</span><span class="v">46,800 SF</span></li>
+            <li><span class="k">Clear Height</span><span class="v">32 ft</span></li>
+            <li><span class="k">Dock Doors</span><span class="v">48 positions</span></li>
+            <li><span class="k">Structure</span><span class="v">Tilt-up + steel</span></li>
+            <li><span class="k">Roof</span><span class="v">TPO · 60 mil</span></li>
+            <li><span class="k">Certification</span><span class="v">LEED Silver target</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-diagram">
+        <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- ground -->
+          <rect x="0" y="0" width="640" height="260" fill="#e8e1d3"/>
+          <!-- grid -->
+          <g stroke="#c9c0ad" stroke-width="0.5">
+            <line x1="0" y1="65" x2="640" y2="65"/>
+            <line x1="0" y1="130" x2="640" y2="130"/>
+            <line x1="0" y1="195" x2="640" y2="195"/>
+            <line x1="160" y1="0" x2="160" y2="260"/>
+            <line x1="320" y1="0" x2="320" y2="260"/>
+            <line x1="480" y1="0" x2="480" y2="260"/>
+          </g>
+          <!-- truck court -->
+          <rect x="20" y="200" width="600" height="40" fill="#d8cfbc" stroke="#a89e88" stroke-width="1"/>
+          <text x="30" y="224" font-family="JetBrains Mono, monospace" font-size="9" fill="#6b6355">TRUCK COURT · 48 DOCK POSITIONS</text>
+          <!-- Building A -->
+          <rect x="40" y="40" width="180" height="140" fill="#0f5c5c" stroke="#0e1116" stroke-width="1.5"/>
+          <text x="130" y="105" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="800" font-size="16" fill="#f2ede4">A</text>
+          <text x="130" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ede4">72,400 SF</text>
+          <!-- Building B -->
+          <rect x="240" y="40" width="160" height="140" fill="#147a7a" stroke="#0e1116" stroke-width="1.5"/>
+          <text x="320" y="105" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="800" font-size="16" fill="#f2ede4">B</text>
+          <text x="320" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ede4">64,800 SF</text>
+          <!-- Building C -->
+          <rect x="420" y="40" width="180" height="140" fill="#ff5b1f" stroke="#0e1116" stroke-width="1.5"/>
+          <text x="510" y="105" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="800" font-size="16" fill="#f2ede4">C</text>
+          <text x="510" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#f2ede4">46,800 SF</text>
+          <!-- North arrow -->
+          <g transform="translate(600,20)">
+            <circle cx="0" cy="0" r="14" fill="#0e1116"/>
+            <path d="M0,-9 L4,4 L0,1 L-4,4 Z" fill="#ffb800"/>
+            <text x="0" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0e1116">N</text>
+          </g>
+        </svg>
+        <div class="caption">
+          <span>Site Plan · Rev 03 · 2024-10-14</span>
+          <span>Scale 1" = 100'</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTS -->
+    <section class="panel" id="panel-documents" role="tabpanel" hidden>
+      <h2>Bid Documents</h2>
+      <div class="sub">14 files · last updated 2024-11-08</div>
+
+      <ul class="doc-list">
+        <li class="doc-row">
+          <div class="doc-icon pdf">PDF</div>
+          <div>
+            <div class="doc-name">Bid Package Instructions &amp; General Conditions</div>
+            <div class="doc-meta">2024-10-14 · Rev 03 · 42 pages</div>
+          </div>
+          <div class="doc-size">2.4 MB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+        <li class="doc-row">
+          <div class="doc-icon dwg">DWG</div>
+          <div>
+            <div class="doc-name">Architectural — Core &amp; Shell Set</div>
+            <div class="doc-meta">2024-10-14 · Rev 03 · A0.0–A9.2</div>
+          </div>
+          <div class="doc-size">18.7 MB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+        <li class="doc-row">
+          <div class="doc-icon dwg">DWG</div>
+          <div>
+            <div class="doc-name">Structural — Tilt-Up &amp; Steel Framing</div>
+            <div class="doc-meta">2024-10-14 · Rev 02 · S0.0–S6.4</div>
+          </div>
+          <div class="doc-size">12.1 MB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+        <li class="doc-row">
+          <div class="doc-icon xls">XLS</div>
+          <div>
+            <div class="doc-name">Bid Form &amp; Schedule of Values</div>
+            <div class="doc-meta">2024-11-08 · Rev 04 · Required for submission</div>
+          </div>
+          <div class="doc-size">184 KB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+        <li class="doc-row">
+          <div class="doc-icon pdf">PDF</div>
+          <div>
+            <div class="doc-name">Geotechnical Report — Addendum 02</div>
+            <div class="doc-meta">2024-10-28 · Rev 01 · 68 pages</div>
+          </div>
+          <div class="doc-size">5.6 MB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+        <li class="doc-row">
+          <div class="doc-icon pdf">PDF</div>
+          <div>
+            <div class="doc-name">Specifications — Divisions 03, 05, 07, 09</div>
+            <div class="doc-meta">2024-10-14 · Rev 03 · 214 pages</div>
+          </div>
+          <div class="doc-size">8.9 MB</div>
+          <button class="doc-dl">Download</button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- COST SUMMARY -->
+    <section class="panel" id="panel-cost" role="tabpanel" hidden>
+      <h2>Cost Summary</h2>
+      <div class="sub">Preliminary estimate · not a commitment to award</div>
+
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Division / Scope</th>
+            <th class="num">Quantity</th>
+            <th class="num">Unit</th>
+            <th class="num">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Concrete — Foundations &amp; Slab-on-Grade<div class="desc">Div 03 · 184,000 SF slab, 4,200 CY</div></td>
+            <td class="num">184,000</td>
+            <td class="num">SF</td>
+            <td class="num">$2,148,000</td>
+          </tr>
+          <tr>
+            <td>Tilt-Up Concrete Panels<div class="desc">Div 03 · 96 panels, 42' tall</div></td>
+            <td class="num">96</td>
+            <td class="num">EA</td>
+            <td class="num">$3,864,000</td>
+          </tr>
+          <tr>
+            <td>Structural Steel &amp; Joists<div class="desc">Div 05 · 1,240 tons, erected</div></td>
+            <td class="num">1,240</td>
+            <td class="num">TON</td>
+            <td class="num">$2,976,000</td>
+          </tr>
+          <tr>
+            <td>Roofing — TPO Membrane<div class="desc">Div 07 · 60 mil, 184,000 SF</div></td>
+            <td class="num">184,000</td>
+            <td class="num">SF</td>
+            <td class="num">$1,472,000</td>
+          </tr>
+          <tr>
+            <td>Dock Equipment &amp; Doors<div class="desc">Div 11 · 48 positions, levelers</div></td>
+            <td class="num">48</td>
+            <td class="num">EA</td>
+            <td class="num">$864,000</td>
+          </tr>
+          <tr class="subtotal">
+            <td colspan="3">Subtotal — Direct Construction Cost</td>
+            <td class="num">$11,324,000</td>
+          </tr>
+          <tr>
+            <td>General Conditions<div class="desc">Supervision, temp facilities, 18 mo</div></td>
+            <td class="num">18</td>
+            <td class="num">MO</td>
+            <td class="num">$1,296,000</td>
+          </tr>
+          <tr>
+            <td>Builder's Risk &amp; GL Insurance<div class="desc">1.4% of direct cost</div></td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">$158,536</td>
+          </tr>
+          <tr>
+            <td>Fee &amp; Overhead<div class="desc">4.0% of direct cost</div></td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">$452,960</td>
+          </tr>
+          <tr>
+            <td>Contingency<div class="desc">5.0% of direct cost</div></td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">$566,200</td>
+          </tr>
+          <tr class="total">
+            <td colspan="3">Total Estimated Bid</td>
+            <td class="num">$13,797,696</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SUBCONTRACTORS -->
+    <section class="panel" id="panel-subs" role="tabpanel" hidden>
+      <h2>Subcontractor Bids</h2>
+      <div class="sub">9 trades · 6 confirmed · 3 pending review</div>
+
+      <ul class="sub-list">
+        <li class="sub-row">
+          <div class="sub-avatar">PW</div>
+          <div>
+            <div class="sub-name">Pacific West Concrete</div>
+            <div class="sub-trade">Div 03 · Foundations &amp; Slab</div>
+          </div>
+          <div class="sub-bid">$2,148,000<small>Low bid</small></div>
+          <span class="status-pill confirmed">Confirmed</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a2">TS</div>
+          <div>
+            <div class="sub-name">Tilt-Up Systems NW</div>
+            <div class="sub-trade">Div 03 · Tilt-Up Panels</div>
+          </div>
+          <div class="sub-bid">$3,864,000<small>Low bid</small></div>
+          <span class="status-pill confirmed">Confirmed</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a3">IS</div>
+          <div>
+            <div class="sub-name">Ironline Steel Erectors</div>
+            <div class="sub-trade">Div 05 · Structural Steel</div>
+          </div>
+          <div class="sub-bid">$2,976,000<small>Low bid</small></div>
+          <span class="status-pill confirmed">Confirmed</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a4">CR</div>
+          <div>
+            <div class="sub-name">Cascade Roofing Co.</div>
+            <div class="sub-trade">Div 07 · TPO Membrane</div>
+          </div>
+          <div class="sub-bid">$1,472,000<small>Low bid</small></div>
+          <span class="status-pill confirmed">Confirmed</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a5">DK</div>
+          <div>
+            <div class="sub-name">Dockline Equipment</div>
+            <div class="sub-trade">Div 11 · Dock Doors &amp; Levelers</div>
+          </div>
+          <div class="sub-bid">$864,000<small>Low bid</small></div>
+          <span class="status-pill confirmed">Confirmed</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar">HM</div>
+          <div>
+            <div class="sub-name">Harbor Mechanical</div>
+            <div class="sub-trade">Div 23 · HVAC (Shell Only)</div>
+          </div>
+          <div class="sub-bid">$1,240,000<small>Under review</small></div>
+          <span class="status-pill review">Review</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a2">NE</div>
+          <div>
+            <div class="sub-name">Northline Electric</div>
+            <div class="sub-trade">Div 26 · Electrical (Shell Only)</div>
+          </div>
+          <div class="sub-bid">$1,088,000<small>Under review</small></div>
+          <span class="status-pill review">Review</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a3">SP</div>
+          <div>
+            <div class="sub-name">SitePrep Excavation</div>
+            <div class="sub-trade">Div 31 · Site Utilities</div>
+          </div>
+          <div class="sub-bid">$412,000<small>Awaiting bid</small></div>
+          <span class="status-pill pending">Pending</span>
+        </li>
+        <li class="sub-row">
+          <div class="sub-avatar a4">GL</div>
+          <div>
+            <div class="sub-name">Glassline Facades</div>
+            <div class="sub-trade">Div 08 · Storefront &amp; Glazing</div>
+          </div>
+          <div class="sub-bid">$286,000<small>Awaiting bid</small></div>
+          <span class="status-pill pending">Pending</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Progress -->
+    <div class="card">
+      <div class="card-head">
+        <h3>Bid Progress</h3>
+        <span class="badge">68%</span>
+      </div>
+      <div class="card-body">
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <div class="progress-meta">
+          <span>6 of 9 trades</span>
+          <span>3 remaining</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="card">
+      <div class="card-head">
+        <h3>Submission Checklist</h3>
+        <span class="badge">4/6</span>
+      </div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li>
+            <div class="check-box done"></div>
+            <div class="item-text">Bid form completed<small>Schedule of Values · Rev 04</small></div>
+          </li>
+          <li>
+            <div class="check-box done"></div>
+            <div class="item-text">Subcontractor bids collected<small>6 of 9 trades confirmed</small></div>
+          </li>
+          <li>
+            <div class="check-box done"></div>
+            <div class="item-text">Bonding capacity verified<small>$25M single · $50M aggregate</small></div>
+          </li>
+          <li>
+            <div class="check-box done"></div>
+            <div class="item-text">Insurance certificates uploaded<small>GL · WC · Auto · Umbrella</small></div>
+          </li>
+          <li>
+            <div class="check-box"></div>
+            <div class="item-text">Safety plan submitted<small>Required before NTP</small></div>
+          </li>
+          <li>
+            <div class="check-box"></div>
+            <div class="item-text">Schedule narrative attached<small>18-month CPM required</small></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-card">
+      <h3>Ready to submit?</h3>
+      <p>Your bid will be sealed and time-stamped. You can revise until the deadline.</p>
+      <button class="submit-btn" id="submitBtn">
+        <span>Submit Bid</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </button>
+      <div class="submit-note">Encrypted · Audit-logged · Non-revocable after deadline</div>
+    </div>
+
+    <!-- Contacts -->
+    <div class="card">
+      <div class="card-head">
+        <h3>Bid Contacts</h3>
+      </div>
+      <div class="card-body" style="padding-top:6px; padding-bottom:6px;">
+        <div class="contact-row">
+          <div class="contact-avatar">KO</div>
+          <div class="contact-info">
+            <div class="name">K. Okafor</div>
+            <div class="role">Owner's Rep · Riverside Industrial</div>
+            <div class="email">k.okafor@riverside-ind.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-avatar">MR</div>
+          <div class="contact-info">
+            <div class="name">M. Reyes</div>
+            <div class="role">Estimator · Halden &amp; Co.</div>
+            <div class="email">m.reyes@haldenco.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-avatar">JT</div>
+          <div class="contact-info">
+            <div class="name">J. Tanaka</div>
+            <div class="role">Preconstruction Lead</div>
+            <div class="email">j.tanaka@haldenco.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div>© 2024 CONSTRUCTION / BID / PORTAL · Halden &amp; Co. CM</div>
+    <div style="display:flex; gap:24px;">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Support</a>
+      <a href="#">Status</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tabs
+  const tabs = document.querySelectorAll('.tab');
+  const panels = {
+    overview: document.getElementById('panel-overview'),
+    documents: document.getElementById('panel-documents'),
+    cost: document.getElementById('panel-cost'),
+    subs: document.getElementById('panel-subs'),
+  };
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      Object.values(panels).forEach(p => p.hidden = true);
+      panels[tab.dataset.tab].hidden = false;
+    });
+  });
+
+  // Countdown to Nov 22, 2024 14:00 PST (UTC-8) => 22:00 UTC
+  const deadline = new Date(Date.UTC(2024, 10, 22, 22, 0, 0)).getTime();
+  const cdD = document.getElementById('cd-d');
+  const cdH = document.getElementById('cd-h');
+  const cdM = document.getElementById('cd-m');
+  const cdS = document.getElementById('cd-s');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now = Date.now();
+    let diff = deadline - now;
+    if (diff < 0) diff = 0;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    cdD.textContent = pad(d);
+    cdH.textContent = pad(h);
+    cdM.textContent = pad(m);
+    cdS.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Submit button feedback
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.addEventListener('click', () => {
+    const original = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Bid Sealed ✓</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M5 12l5 5L20 7"/></svg>';
+    submitBtn.style.background = '#2f7d4f';
+    submitBtn.style.color = '#f2ede4';
+    setTimeout(() => {
+      submitBtn.innerHTML = original;
+      submitBtn.style.background = '';
+      submitBtn.style.color = '';
+    }, 2400);
+  });
+</script>
+
+</body>
+</html>

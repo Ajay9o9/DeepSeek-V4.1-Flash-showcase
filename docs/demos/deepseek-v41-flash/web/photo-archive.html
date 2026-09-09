@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHOTOGRAPHY / ARCHIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --surface-2: #1c1c1c;
+      --border: #2a2a2a;
+      --text: #e8e4dc;
+      --text-dim: #8a857c;
+      --text-faint: #5a5650;
+      --accent: #d4ff3a;
+      --accent-dim: #a8cc2e;
+      --warm: #e8d5b7;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-brand span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-index {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 64px;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 64px 80px 48px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(56px, 6.5vw, 96px);
+      line-height: 0.95;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 420px;
+      margin-bottom: 48px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-meta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .hero-meta-value {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--text);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    /* CSS-generated hero image — abstract landscape */
+    .hero-visual {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 70%, rgba(212,255,58,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 70% 30%, rgba(232,213,183,0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #1a1a1a 0%, #0e0e0e 100%);
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255,255,255,0.008) 2px,
+          rgba(255,255,255,0.008) 4px
+        );
+    }
+
+    /* Abstract SVG-like shapes via CSS */
+    .hero-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+
+    .hero-shape-1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(212,255,58,0.06);
+      top: 10%;
+      left: 20%;
+    }
+
+    .hero-shape-2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(232,213,183,0.05);
+      bottom: 20%;
+      right: 10%;
+    }
+
+    .hero-shape-3 {
+      width: 200px;
+      height: 200px;
+      background: rgba(212,255,58,0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-caption {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      right: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .hero-caption-text {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      line-height: 1.8;
+    }
+
+    .hero-caption-num {
+      font-family: var(--serif);
+      font-size: 48px;
+      color: var(--text-faint);
+      line-height: 1;
+    }
+
+    /* ── Section shared ── */
+    section {
+      padding: 120px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-top: 16px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-count {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Featured series ── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .featured-card {
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .featured-card:hover { background: var(--surface-2); }
+
+    .featured-card:first-child {
+      grid-row: span 2;
+    }
+
+    .featured-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-card:first-child .featured-visual {
+      aspect-ratio: 4/5;
+    }
+
+    .featured-card:not(:first-child) .featured-visual {
+      aspect-ratio: 16/9;
+    }
+
+    /* CSS-generated abstract visuals */
+    .fv-1 {
+      background:
+        radial-gradient(circle at 40% 60%, rgba(212,255,58,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(232,213,183,0.08) 0%, transparent 40%),
+        linear-gradient(135deg, #1a1a1a 0%, #0e0e0e 100%);
+    }
+
+    .fv-1::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(212,255,58,0.02) 40px,
+          rgba(212,255,58,0.02) 41px
+        );
+    }
+
+    .fv-2 {
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(232,213,183,0.1) 0%, transparent 60%),
+        linear-gradient(180deg, #1c1c1c 0%, #0e0e0e 100%);
+    }
+
+    .fv-2::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 60px,
+          rgba(255,255,255,0.015) 60px,
+          rgba(255,255,255,0.015) 61px
+        );
+    }
+
+    .fv-3 {
+      background:
+        radial-gradient(circle at 60% 40%, rgba(212,255,58,0.08) 0%, transparent 50%),
+        linear-gradient(225deg, #1a1a1a 0%, #0e0e0e 100%);
+    }
+
+    .fv-3::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 30px,
+          rgba(232,213,183,0.02) 30px,
+          rgba(232,213,183,0.02) 31px
+        );
+    }
+
+    .featured-info {
+      padding: 28px 32px 32px;
+    }
+
+    .featured-card:first-child .featured-info {
+      padding: 36px 40px 40px;
+    }
+
+    .featured-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .featured-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .featured-card:first-child .featured-name {
+      font-size: 36px;
+    }
+
+    .featured-desc {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .featured-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .featured-meta span {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    /* ── Archive grid ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-dim);
+      color: var(--text);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .archive-item {
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .archive-item.hidden {
+      display: none;
+    }
+
+    .archive-item:hover .archive-visual {
+      transform: scale(1.03);
+    }
+
+    .archive-visual {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Generated archive visuals — varied abstract compositions */
+    .av-1 { background: radial-gradient(circle at 30% 40%, rgba(212,255,58,0.1) 0%, transparent 50%), linear-gradient(135deg, #1a1a1a, #0e0e0e); }
+    .av-2 { background: radial-gradient(ellipse at 70% 60%, rgba(232,213,183,0.08) 0%, transparent 50%), linear-gradient(180deg, #1c1c1c, #0e0e0e); }
+    .av-3 { background: radial-gradient(circle at 50% 50%, rgba(212,255,58,0.06) 0%, transparent 60%), linear-gradient(225deg, #1a1a1a, #0e0e0e); }
+    .av-4 { background: radial-gradient(ellipse at 20% 80%, rgba(232,213,183,0.07) 0%, transparent 50%), linear-gradient(90deg, #1c1c1c, #0e0e0e); }
+    .av-5 { background: radial-gradient(circle at 80% 20%, rgba(212,255,58,0.08) 0%, transparent 50%), linear-gradient(135deg, #1a1a1a, #0e0e0e); }
+    .av-6 { background: radial-gradient(ellipse at 40% 30%, rgba(232,213,183,0.06) 0%, transparent 50%), linear-gradient(180deg, #1c1c1c, #0e0e0e); }
+    .av-7 { background: radial-gradient(circle at 60% 70%, rgba(212,255,58,0.07) 0%, transparent 50%), linear-gradient(225deg, #1a1a1a, #0e0e0e); }
+    .av-8 { background: radial-gradient(ellipse at 30% 50%, rgba(232,213,183,0.09) 0%, transparent 50%), linear-gradient(90deg, #1c1c1c, #0e0e0e); }
+
+    .archive-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(255,255,255,0.006) 3px,
+          rgba(255,255,255,0.006) 6px
+        );
+    }
+
+    .archive-info {
+      padding: 16px 20px 20px;
+    }
+
+    .archive-name {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .archive-year {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+    }
+
+    .archive-cat {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+
+    /* ── Photographer notes ── */
+    .notes-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .notes-portrait {
+      position: relative;
+      aspect-ratio: 3/4;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(212,255,58,0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #1a1a1a, #0e0e0e);
+      overflow: hidden;
+    }
+
+    .notes-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 20px,
+          rgba(255,255,255,0.01) 20px,
+          rgba(255,255,255,0.01) 21px
+        );
+    }
+
+    .notes-portrait-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .notes-content {
+      padding-top: 8px;
+    }
+
+    .notes-quote {
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.5vw, 34px);
+      line-height: 1.35;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 32px;
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .notes-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--accent);
+    }
+
+    .notes-body {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+
+    .notes-body:last-of-type {
+      margin-bottom: 40px;
+    }
+
+    .notes-signature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .notes-sig-name {
+      font-family: var(--serif);
+      font-size: 20px;
+    }
+
+    .notes-sig-role {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    /* ── Exhibition ── */
+    .exhibition {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .exhibition-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 480px;
+    }
+
+    .exhibition-visual {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 40% 50%, rgba(212,255,58,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(232,213,183,0.06) 0%, transparent 50%),
+        linear-gradient(135deg, #1a1a1a, #0e0e0e);
+    }
+
+    .exhibition-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 4px,
+          rgba(255,255,255,0.008) 4px,
+          rgba(255,255,255,0.008) 8px
+        );
+    }
+
+    .exhibition-visual-label {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .exhibition-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 64px 64px 80px;
+    }
+
+    .exhibition-date {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .exhibition-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .exhibition-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .exhibition-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+
+    .exhibition-details {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .exhibition-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .exhibition-detail-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .exhibition-detail-value {
+      font-family: var(--serif);
+      font-size: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 16px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn:hover {
+      background: var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    .btn-arrow {
+      font-size: 14px;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ── Contact ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 400px;
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .contact-link:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .contact-link-value {
+      font-family: var(--serif);
+      font-size: 20px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-faint);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .footer-brand span { color: var(--accent); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vh; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-card:first-child { grid-row: auto; }
+      .archive-grid { grid-template-columns: repeat(2, 1fr); }
+      .notes-layout { grid-template-columns: 1fr; gap: 48px; }
+      .exhibition-inner { grid-template-columns: 1fr; }
+      .exhibition-visual { min-height: 300px; }
+      .exhibition-content { padding: 48px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      .hero-left { padding: 60px 24px; }
+      .hero-meta { flex-wrap: wrap; gap: 24px; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; gap: 16px; }
+      .exhibition-content { padding: 32px 24px; }
+      .exhibition-details { flex-direction: column; gap: 20px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .hero-caption { flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 44px; }
+      .filter-bar { gap: 6px; }
+      .filter-btn { padding: 8px 14px; font-size: 10px; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-brand">PHOTOGRAPHY <span>/</span> ARCHIVE</a>
+    <ul class="nav-links">
+      <li><a href="#featured">Series</a></li>
+      <li><a href="#archive">Archive</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#exhibition">Exhibition</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <span class="nav-index">EST. 2019 — VOL. 07</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Independent Photography Archive</div>
+      <h1 class="hero-title">
+        Light,<br>
+        <em>memory</em><br>
+        &amp; the<br>
+        in-between.
+      </h1>
+      <p class="hero-desc">
+        A curated collection of photographic works exploring the quiet
+        intersections of landscape, memory, and the passage of time.
+        Selected from over 2,400 submissions across 38 countries.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Works</span>
+          <span class="hero-meta-value">1,247</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Photographers</span>
+          <span class="hero-meta-value">86</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Countries</span>
+          <span class="hero-meta-value">38</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+      </div>
+      <div class="hero-caption">
+        <div class="hero-caption-text">
+          Featured Series<br>
+          <span style="color: var(--text-dim);">"Coastal Light" — 2024</span>
+        </div>
+        <div class="hero-caption-num">01</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Series -->
+  <section id="featured">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Featured Series</div>
+        <h2 class="section-title">Selected <em>works</em></h2>
+      </div>
+      <span class="section-count">03 / 12</span>
+    </div>
+
+    <div class="featured-grid reveal">
+      <div class="featured-card">
+        <div class="featured-visual fv-1"></div>
+        <div class="featured-info">
+          <div class="featured-tag">Series 01 — Landscape</div>
+          <h3 class="featured-name">Coastal Light</h3>
+          <p class="featured-desc">
+            A three-year study of the Atlantic coastline, tracing the
+            shifting boundary between land and water through long exposures
+            and natural light. Shot on medium format film across 14 locations.
+          </p>
+          <div class="featured-meta">
+            <span>24 Works</span>
+            <span>2021–2024</span>
+            <span>Medium Format</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-card">
+        <div class="featured-visual fv-2"></div>
+        <div class="featured-info">
+          <div class="featured-tag">Series 02 — Portrait</div>
+          <h3 class="featured-name">The Quiet Hours</h3>
+          <p class="featured-desc">
+            Intimate portraits captured in the liminal space between
+            dusk and dawn, exploring solitude and introspection.
+          </p>
+          <div class="featured-meta">
+            <span>18 Works</span>
+            <span>2023</span>
+            <span>35mm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="featured-card">
+        <div class="featured-visual fv-3"></div>
+        <div class="featured-info">
+          <div class="featured-tag">Series 03 — Architecture</div>
+          <h3 class="featured-name">Concrete Poems</h3>
+          <p class="featured-desc">
+            Brutalist structures photographed as sculptural forms,
+            stripped of context and function.
+          </p>
+          <div class="featured-meta">
+            <span>32 Works</span>
+            <span>2022–2023</span>
+            <span>Digital</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Archive Grid -->
+  <section id="archive">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">The Archive</div>
+        <h2 class="section-title">Browse the <em>collection</em></h2>
+      </div>
+      <span class="section-count">1,247 Works</span>
+    </div>
+
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="landscape">Landscape</button>
+      <button class="filter-btn" data-filter="portrait">Portrait</button>
+      <button class="filter-btn" data-filter="architecture">Architecture</button>
+      <button class="filter-btn" data-filter="abstract">Abstract</button>
+      <button class="filter-btn" data-filter="documentary">Documentary</button>
+    </div>
+
+    <div class="archive-grid reveal">
+      <div class="archive-item" data-category="landscape">
+        <div class="archive-visual av-1"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Tidal Lines</h4>
+          <span class="archive-year">2024</span>
+          <div class="archive-cat">Landscape</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="portrait">
+        <div class="archive-visual av-2"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Elena, Morning</h4>
+          <span class="archive-year">2023</span>
+          <div class="archive-cat">Portrait</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="architecture">
+        <div class="archive-visual av-3"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Grid Study No. 4</h4>
+          <span class="archive-year">2023</span>
+          <div class="archive-cat">Architecture</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="abstract">
+        <div class="archive-visual av-4"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Interference</h4>
+          <span class="archive-year">2022</span>
+          <div class="archive-cat">Abstract</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="documentary">
+        <div class="archive-visual av-5"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Market Day</h4>
+          <span class="archive-year">2024</span>
+          <div class="archive-cat">Documentary</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="landscape">
+        <div class="archive-visual av-6"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Fog Over Ridge</h4>
+          <span class="archive-year">2023</span>
+          <div class="archive-cat">Landscape</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="portrait">
+        <div class="archive-visual av-7"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">The Dancer</h4>
+          <span class="archive-year">2022</span>
+          <div class="archive-cat">Portrait</div>
+        </div>
+      </div>
+
+      <div class="archive-item" data-category="abstract">
+        <div class="archive-visual av-8"></div>
+        <div class="archive-info">
+          <h4 class="archive-name">Light Leak 07</h4>
+          <span class="archive-year">2024</span>
+          <div class="archive-cat">Abstract</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photographer Notes -->
+  <section id="notes">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Photographer Notes</div>
+        <h2 class="section-title">On <em>process</em></h2>
+      </div>
+      <span class="section-count">Vol. 07</span>
+    </div>
+
+    <div class="notes-layout reveal">
+      <div class="notes-portrait">
+        <div class="notes-portrait-label">Mira Okonkwo — Lagos, 2024</div>
+      </div>
+      <div class="notes-content">
+        <blockquote class="notes-quote">
+          "I don't photograph what I see. I photograph what I remember
+          seeing, which is always something else entirely."
+        </blockquote>
+        <p class="notes-body">
+          When I began the Coastal Light series, I thought I was making
+          a document of place. Three years later, I understand it as a
+          document of attention — a record of the hours I spent waiting
+          for the light to do something I hadn't seen before.
+        </p>
+        <p class="notes-body">
+          The archive is not a container for images. It is a way of
+          thinking about how images accumulate meaning over time, how
+          a photograph taken in 2021 reads differently in 2024, how
+          context is not something we add but something that happens
+          to us.
+        </p>
+        <div class="notes-signature">
+          <div>
+            <div class="notes-sig-name">Mira Okonkwo</div>
+            <div class="notes-sig-role">Contributing Photographer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exhibition -->
+  <section id="exhibition" class="exhibition">
+    <div class="exhibition-inner">
+      <div class="exhibition-visual">
+        <div class="exhibition-visual-label">Upcoming Exhibition</div>
+      </div>
+      <div class="exhibition-content">
+        <div class="exhibition-date">14 March — 28 June 2025</div>
+        <h2 class="exhibition-title">
+          <em>Coastal Light</em><br>
+          &amp; Other Stories
+        </h2>
+        <p class="exhibition-desc">
+          A major survey of works from the archive, bringing together
+          landscape, portrait, and documentary series for the first time
+          in a single exhibition. Curated by the archive's editorial team.
+        </p>
+        <div class="exhibition-details">
+          <div class="exhibition-detail">
+            <span class="exhibition-detail-label">Venue</span>
+            <span class="exhibition-detail-value">The Warehouse, London</span>
+          </div>
+          <div class="exhibition-detail">
+            <span class="exhibition-detail-label">Works</span>
+            <span class="exhibition-detail-value">74 Photographs</span>
+          </div>
+        </div>
+        <a href="#contact" class="btn">
+          Reserve a Visit
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label">Contact</div>
+        <h2 class="section-title">Get in <em>touch</em></h2>
+      </div>
+      <span class="section-count">Response within 48h</span>
+    </div>
+
+    <div class="contact-layout reveal">
+      <div class="contact-left">
+        <p class="contact-desc">
+          For submissions, press enquiries, print sales, or exhibition
+          collaborations — we'd love to hear from you. The archive is
+          open to photographers at all stages of their practice.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:hello@photographyarchive.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">hello@photographyarchive.com</span>
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-link-label">Instagram</span>
+            <span class="contact-link-value">@photography.archive</span>
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-link-label">Submissions</span>
+            <span class="contact-link-value">Open until 30 April</span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent = 'Message Sent ✓';">
+        <div class="form-group">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-input" type="text" id="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject</label>
+          <input class="form-input" type="text" id="subject" placeholder="Submission, press, print sale...">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message</label>
+          <textarea class="form-textarea" id="message" placeholder="Tell us about your work or enquiry..." required></textarea>
+        </div>
+        <button type="submit" class="btn">
+          Send Message
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">PHOTOGRAPHY <span>/</span> ARCHIVE</div>
+    <div class="footer-copy">© 2025 — All works reproduced with permission of the photographers.</div>
+  </footer>
+
+  <script>
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const archiveItems = document.querySelectorAll('.archive-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        archiveItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

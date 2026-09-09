@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATELIER 09 — Collection No. 09</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f4f1ec;
+    --paper-warm: #ebe6de;
+    --accent: #8b2e2e;
+    --muted: #6b6660;
+    --line: #d6d0c6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'Playfair Display', serif; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    background: rgba(244, 241, 236, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s ease;
+  }
+  nav.scrolled { border-bottom-color: var(--line); }
+
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+  .brand span { font-style: italic; font-weight: 400; }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--ink);
+    transition: width 0.4s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-meta {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 48px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-left {
+    padding-top: 40px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(72px, 9vw, 148px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    max-width: 380px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+    transition: gap 0.4s ease;
+  }
+  .cta:hover { gap: 22px; }
+  .cta svg { width: 22px; height: 8px; }
+
+  /* Hero art — duotone crop */
+  .hero-right {
+    position: relative;
+    height: 78vh;
+    min-height: 560px;
+  }
+
+  .crop-frame {
+    position: absolute;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .crop-1 {
+    top: 0; right: 0;
+    width: 78%;
+    height: 68%;
+  }
+  .crop-2 {
+    bottom: 0; left: 0;
+    width: 62%;
+    height: 52%;
+    border: 12px solid var(--paper);
+  }
+
+  .duotone {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hero-caption {
+    position: absolute;
+    bottom: 8px;
+    right: 0;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--paper-warm);
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: scroll 40s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    margin: 0 40px;
+    color: var(--ink);
+  }
+  .marquee-track span::after {
+    content: '◆';
+    font-style: normal;
+    font-size: 10px;
+    margin-left: 40px;
+    vertical-align: middle;
+    color: var(--accent);
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- CAMPAIGN STATEMENT ---------- */
+  .statement {
+    padding: 160px 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .statement-label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 12px;
+  }
+
+  .statement-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 3.6vw, 56px);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+  }
+  .statement-text em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .statement-text .small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 480px;
+    margin-top: 48px;
+    letter-spacing: 0;
+  }
+
+  /* ---------- COLLECTION TEASER ---------- */
+  .collection {
+    padding: 0 48px 160px;
+  }
+
+  .collection-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--ink);
+    padding-top: 24px;
+    margin-bottom: 80px;
+  }
+  .collection-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .collection-head h2 em { font-style: italic; font-weight: 400; }
+  .collection-head .num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--muted);
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+
+  .piece {
+    position: relative;
+  }
+  .piece .frame {
+    overflow: hidden;
+    background: var(--ink);
+    position: relative;
+  }
+  .piece .frame svg { display: block; width: 100%; height: 100%; }
+
+  .piece-1 { grid-column: 1 / 6; }
+  .piece-1 .frame { aspect-ratio: 3/4; }
+
+  .piece-2 { grid-column: 7 / 13; margin-top: 120px; }
+  .piece-2 .frame { aspect-ratio: 4/5; }
+
+  .piece-3 { grid-column: 2 / 7; margin-top: 80px; }
+  .piece-3 .frame { aspect-ratio: 1/1; }
+
+  .piece-4 { grid-column: 8 / 12; margin-top: 40px; }
+  .piece-4 .frame { aspect-ratio: 3/4; }
+
+  .piece-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .piece-meta h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .piece-meta .price {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+  .piece-meta .idx {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ---------- PRODUCT HIGHLIGHTS ---------- */
+  .highlights {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 140px 48px;
+  }
+
+  .highlights-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 100px;
+    align-items: end;
+  }
+  .highlights-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .highlights-head h2 em { font-style: italic; color: #c9a86a; }
+  .highlights-head p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #a8a29a;
+    max-width: 420px;
+    justify-self: end;
+  }
+
+  .highlight-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .highlight {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 28px;
+  }
+  .highlight .num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #c9a86a;
+    margin-bottom: 24px;
+    display: block;
+  }
+  .highlight h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .highlight p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #a8a29a;
+    margin-bottom: 28px;
+  }
+  .highlight .tag {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #c9a86a;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 100px 48px 40px;
+    background: var(--paper);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .footer-brand h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .footer-brand h3 span { font-style: italic; font-weight: 400; }
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 320px;
+  }
+
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-bottom .socials {
+    display: flex;
+    gap: 28px;
+  }
+  .footer-bottom a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer-bottom a:hover { color: var(--ink); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
+    .hero-right { height: 60vh; min-height: 420px; }
+    .statement { grid-template-columns: 1fr; padding: 100px 24px; gap: 32px; }
+    .collection { padding: 0 24px 100px; }
+    .collection-grid { grid-template-columns: 1fr; }
+    .piece-1, .piece-2, .piece-3, .piece-4 { grid-column: 1 / -1; margin-top: 0; }
+    .highlights { padding: 100px 24px; }
+    .highlights-head { grid-template-columns: 1fr; gap: 32px; }
+    .highlights-head p { justify-self: start; }
+    .highlight-list { grid-template-columns: 1fr; gap: 48px; }
+    footer { padding: 80px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">ATELIER <span>09</span></div>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#campaign">Campaign</a></li>
+    <li><a href="#highlights">Atelier</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+  <div class="nav-meta">SS / 09</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Collection No. 09 — Spring / Summer</div>
+    <h1 class="hero-title">The<br>Quiet<br><em>Form.</em></h1>
+    <p class="hero-sub">A study in restraint. Nine silhouettes cut from a single cloth, drawn from the architecture of silence and the discipline of the hand.</p>
+    <a href="#collection" class="cta">
+      View the collection
+      <svg viewBox="0 0 22 8" fill="none"><path d="M0 4h20M16 1l4 3-4 3" stroke="currentColor" stroke-width="1"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-right">
+    <div class="crop-frame crop-1">
+      <svg class="duotone" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1a1a1a"/>
+            <stop offset="1" stop-color="#3a2a2a"/>
+          </linearGradient>
+          <linearGradient id="g1b" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8b2e2e" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#1a1a1a" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#g1)"/>
+        <!-- abstract figure -->
+        <path d="M200 60 C 160 60 140 100 140 140 C 140 180 150 200 150 220 L 130 260 L 120 380 L 150 500 L 250 500 L 280 380 L 270 260 L 250 220 C 250 200 260 180 260 140 C 260 100 240 60 200 60 Z" fill="url(#g1b)"/>
+        <ellipse cx="200" cy="120" rx="42" ry="55" fill="#0a0a0a" opacity="0.6"/>
+        <path d="M158 130 Q 200 90 242 130" stroke="#c9a86a" stroke-width="1" fill="none" opacity="0.5"/>
+        <line x1="0" y1="380" x2="400" y2="380" stroke="#c9a86a" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="crop-frame crop-2">
+      <svg class="duotone" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2a1a1a"/>
+            <stop offset="1" stop-color="#0a0a0a"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="400" fill="url(#g2)"/>
+        <circle cx="200" cy="200" r="140" fill="none" stroke="#8b2e2e" stroke-width="0.8" opacity="0.6"/>
+        <circle cx="200" cy="200" r="100" fill="none" stroke="#c9a86a" stroke-width="0.5" opacity="0.4"/>
+        <path d="M120 280 Q 200 180 280 280" stroke="#c9a86a" stroke-width="1" fill="none" opacity="0.7"/>
+        <path d="M140 300 Q 200 220 260 300" stroke="#8b2e2e" stroke-width="1" fill="none" opacity="0.5"/>
+        <rect x="180" y="120" width="40" height="160" fill="#0a0a0a" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="hero-caption">Fig. 01 — Silhouette</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Hand-finished</span><span>Made in Florence</span><span>Limited to 90 pieces</span><span>Natural fibres only</span>
+    <span>Hand-finished</span><span>Made in Florence</span><span>Limited to 90 pieces</span><span>Natural fibres only</span>
+  </div>
+</div>
+
+<!-- CAMPAIGN STATEMENT -->
+<section class="statement" id="campaign">
+  <div class="statement-label">Campaign — 09</div>
+  <div class="statement-text">
+    We do not chase the season. We <em>wait</em> for it — for the cloth to settle, for the seam to find its line, for the garment to become <em>inevitable.</em>
+    <span class="small">Photographed in the atelier over four mornings in March. Every piece in Collection No. 09 is cut, sewn and finished by hand in our Florence workshop, in editions of ninety.</span>
+  </div>
+</section>
+
+<!-- COLLECTION TEASER -->
+<section class="collection" id="collection">
+  <div class="collection-head">
+    <h2>Collection <em>No. 09</em></h2>
+    <div class="num">— Nine pieces</div>
+  </div>
+
+  <div class="collection-grid">
+    <article class="piece piece-1">
+      <div class="frame">
+        <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#1a1a1a"/>
+              <stop offset="1" stop-color="#4a2a2a"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="400" fill="url(#p1)"/>
+          <path d="M150 40 C 120 40 105 70 105 100 L 90 140 L 70 380 L 230 380 L 210 140 L 195 100 C 195 70 180 40 150 40 Z" fill="#0a0a0a" opacity="0.7"/>
+          <path d="M150 40 L 150 380" stroke="#c9a86a" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="150" cy="90" r="30" fill="#8b2e2e" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="piece-meta">
+        <div>
+          <h3>The Column Coat</h3>
+          <span class="idx">01 — Wool crepe</span>
+        </div>
+        <div class="price">€ 2,400</div>
+      </div>
+    </article>
+
+    <article class="piece piece-2">
+      <div class="frame">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2a1a1a"/>
+              <stop offset="1" stop-color="#0a0a0a"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#p2)"/>
+          <path d="M200 60 C 160 60 140 100 140 140 L 120 200 L 100 480 L 300 480 L 280 200 L 260 140 C 260 100 240 60 200 60 Z" fill="#8b2e2e" opacity="0.35"/>
+          <path d="M200 60 L 200 480" stroke="#c9a86a" stroke-width="0.6" opacity="0.5"/>
+          <path d="M140 200 Q 200 240 260 200" stroke="#c9a86a" stroke-width="0.8" fill="none" opacity="0.6"/>
+          <ellipse cx="200" cy="120" rx="35" ry="45" fill="#0a0a0a" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="piece-meta">
+        <div>
+          <h3>The Long Dress</h3>
+          <span class="idx">02 — Silk satin</span>
+        </div>
+        <div class="price">€ 1,850</div>
+      </div>
+    </article>
+
+    <article class="piece piece-3">
+      <div class="frame">
+        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0a0a0a"/>
+              <stop offset="1" stop-color="#3a2a2a"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="400" fill="url(#p3)"/>
+          <circle cx="200" cy="200" r="150" fill="none" stroke="#8b2e2e" stroke-width="0.8" opacity="0.5"/>
+          <circle cx="200" cy="200" r="110" fill="none" stroke="#c9a86a" stroke-width="0.5" opacity="0.4"/>
+          <path d="M100 200 Q 200 100 300 200 Q 200 300 100 200 Z" fill="#8b2e2e" opacity="0.25"/>
+          <line x1="200" y1="50" x2="200" y2="350" stroke="#c9a86a" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="piece-meta">
+        <div>
+          <h3>The Folded Blouse</h3>
+          <span class="idx">03 — Cotton poplin</span>
+        </div>
+        <div class="price">€ 680</div>
+      </div>
+    </article>
+
+    <article class="piece piece-4">
+      <div class="frame">
+        <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p4" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#2a1a1a"/>
+              <stop offset="1" stop-color="#0a0a0a"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="400" fill="url(#p4)"/>
+          <path d="M150 60 C 130 60 120 80 120 100 L 100 140 L 90 380 L 210 380 L 200 140 L 180 100 C 180 80 170 60 150 60 Z" fill="#8b2e2e" opacity="0.4"/>
+          <path d="M120 140 L 180 140" stroke="#c9a86a" stroke-width="0.8" opacity="0.6"/>
+          <path d="M150 60 L 150 380" stroke="#c9a86a" stroke-width="0.4" opacity="0.4"/>
+          <circle cx="150" cy="100" r="20" fill="#0a0a0a" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="piece-meta">
+        <div>
+          <h3>The Narrow Trouser</h3>
+          <span class="idx">04 — Wool twill</span>
+        </div>
+        <div class="price">€ 890</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PRODUCT HIGHLIGHTS -->
+<section class="highlights" id="highlights">
+  <div class="highlights-head">
+    <h2>Made by <em>hand,</em><br>in editions of ninety.</h2>
+    <p>Each piece in Collection No. 09 is cut, sewn and finished in our Florence atelier. We work in small runs — never more than ninety of any garment — so that every seam is given the time it deserves.</p>
+  </div>
+
+  <div class="highlight-list">
+    <div class="highlight">
+      <span class="num">— 01</span>
+      <h3>Natural fibres</h3>
+      <p>Wool crepe from Biella, silk satin from Como, cotton poplin from Albi. Nothing synthetic, nothing blended, nothing rushed.</p>
+      <div class="tag">Sourced in Italy</div>
+    </div>
+    <div class="highlight">
+      <span class="num">— 02</span>
+      <h3>Hand-finished</h3>
+      <p>Every hem, every buttonhole, every interior seam is finished by hand. The inside of a garment matters as much as the outside.</p>
+      <div class="tag">Atelier Florence</div>
+    </div>
+    <div class="highlight">
+      <span class="num">— 03</span>
+      <h3>Numbered</h3>
+      <p>Each piece carries a hand-stitched number and the initials of the maker. Ninety exist. When they are gone, they are gone.</p>
+      <div class="tag">Edition of 90</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>ATELIER <span>09</span></h3>
+      <p>A small house in Florence, making clothes the slow way. Founded in 2019. Collection No. 09 arrives in April.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Collection No. 09</a></li>
+        <li><a href="#">Outerwear</a></li>
+        <li><a href="#">Dresses</a></li>
+        <li><a href="#">Archive</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Atelier</h4>
+      <ul>
+        <li><a href="#">Our story</a></li>
+        <li><a href="#">The makers</a></li>
+        <li><a href="#">Materials</a></li>
+        <li><a href="#">Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Visit the atelier</a></li>
+        <li><a href="#">Appointments</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Stockists</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Atelier 09 — Firenze, Italia</div>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">Newsletter</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+</script>
+
+</body>
+</html>

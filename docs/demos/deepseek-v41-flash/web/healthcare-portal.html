@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northstar Health — Patient Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f9f8;
+    --surface: #ffffff;
+    --surface-2: #f2f6f4;
+    --ink: #1a2b2a;
+    --ink-2: #3d5250;
+    --ink-3: #6b7f7d;
+    --line: #e2e9e6;
+    --line-2: #d3ddd9;
+    --teal: #0f6b62;
+    --teal-2: #0a4f48;
+    --teal-soft: #e3f0ed;
+    --sage: #7ba39a;
+    --amber: #b06a1f;
+    --amber-soft: #fbf1e2;
+    --rose: #a63a4a;
+    --rose-soft: #fbeaec;
+    --blue: #2a5b8a;
+    --blue-soft: #e6eef7;
+    --shadow-sm: 0 1px 2px rgba(15, 60, 55, 0.04), 0 1px 3px rgba(15, 60, 55, 0.04);
+    --shadow-md: 0 2px 4px rgba(15, 60, 55, 0.04), 0 8px 24px rgba(15, 60, 55, 0.06);
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    font-size: 15px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-2) 100%);
+    display: grid; place-items: center;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .brand-mark svg { width: 18px; height: 18px; }
+  .brand-name { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-name small {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+
+  .nav {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+  }
+  .nav a {
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: var(--ink-2);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav a:hover { background: var(--surface-2); color: var(--ink); text-decoration: none; }
+  .nav a.active { background: var(--teal-soft); color: var(--teal-2); }
+
+  .topbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--ink-2);
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .icon-btn:hover { background: var(--surface-2); border-color: var(--line-2); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .icon-btn .dot {
+    position: absolute; top: 8px; right: 8px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 2px solid var(--surface);
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    transition: background 0.15s;
+  }
+  .user:hover { background: var(--surface-2); }
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #cfe3de, #a9c8c0);
+    color: var(--teal-2);
+    display: grid; place-items: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .user-meta { display: flex; flex-direction: column; line-height: 1.15; }
+  .user-meta strong { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .user-meta span { font-size: 11px; color: var(--ink-3); }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 28px;
+  }
+
+  /* ---------- Greeting ---------- */
+  .greeting {
+    margin-bottom: 24px;
+  }
+  .greeting h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .greeting p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .greeting .date {
+    color: var(--ink-3);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 18px 22px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-head h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-head h2 .ico {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: var(--teal-soft);
+    color: var(--teal-2);
+    display: grid; place-items: center;
+  }
+  .card-head h2 .ico svg { width: 14px; height: 14px; }
+  .card-head .link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal);
+  }
+  .card-body { padding: 0 22px 22px; }
+
+  /* ---------- Next appointment ---------- */
+  .appt {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 22px;
+    background: linear-gradient(180deg, #fbfdfc 0%, #f5faf8 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .appt-date {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px 0 12px;
+    box-shadow: var(--shadow-sm);
+  }
+  .appt-date .m {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--rose);
+    text-transform: uppercase;
+  }
+  .appt-date .d {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--ink);
+    margin: 4px 0 2px;
+  }
+  .appt-date .w {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .appt-info h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .appt-info .meta {
+    color: var(--ink-2);
+    font-size: 13.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin-bottom: 10px;
+  }
+  .appt-info .meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .appt-info .meta svg { width: 13px; height: 13px; color: var(--ink-3); }
+  .appt-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--teal-soft);
+    color: var(--teal-2);
+  }
+  .tag.amber { background: var(--amber-soft); color: var(--amber); }
+  .tag.blue { background: var(--blue-soft); color: var(--blue); }
+  .tag.rose { background: var(--rose-soft); color: var(--rose); }
+  .tag.neutral { background: var(--surface-2); color: var(--ink-2); }
+
+  .appt-actions { display: flex; flex-direction: column; gap: 8px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s, transform 0.05s;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-primary:hover { background: var(--teal-2); }
+  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line-2); }
+  .btn-ghost:hover { background: var(--surface-2); }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* ---------- Grid of cards ---------- */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* ---------- Care team ---------- */
+  .team-list { display: flex; flex-direction: column; }
+  .team-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .team-item:first-child { border-top: none; padding-top: 4px; }
+  .team-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--teal-2);
+    background: linear-gradient(135deg, #d8ebe6, #b6d4cc);
+    flex-shrink: 0;
+  }
+  .team-avatar.b { background: linear-gradient(135deg, #e6eef7, #c3d5e8); color: var(--blue); }
+  .team-avatar.c { background: linear-gradient(135deg, #fbeaec, #f0c9cf); color: var(--rose); }
+  .team-info { flex: 1; min-width: 0; }
+  .team-info strong { display: block; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .team-info span { font-size: 12.5px; color: var(--ink-3); }
+  .team-action {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: grid; place-items: center;
+    color: var(--ink-2);
+    transition: background 0.15s;
+  }
+  .team-action:hover { background: var(--surface-2); }
+  .team-action svg { width: 15px; height: 15px; }
+
+  /* ---------- Medications ---------- */
+  .med-list { display: flex; flex-direction: column; }
+  .med-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .med-item:first-child { border-top: none; padding-top: 4px; }
+  .med-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--teal-soft);
+    color: var(--teal-2);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .med-icon svg { width: 17px; height: 17px; }
+  .med-info { flex: 1; min-width: 0; }
+  .med-info strong { display: block; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .med-info .dose { font-size: 12.5px; color: var(--ink-3); margin-top: 1px; }
+  .med-info .refill { font-size: 12px; color: var(--amber); margin-top: 4px; font-weight: 500; }
+  .med-info .refill.ok { color: var(--teal); }
+
+  /* ---------- Labs ---------- */
+  .lab-list { display: flex; flex-direction: column; }
+  .lab-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .lab-item:first-child { border-top: none; padding-top: 4px; }
+  .lab-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .lab-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .lab-value { text-align: right; }
+  .lab-value strong { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .lab-value .unit { font-size: 11.5px; color: var(--ink-3); margin-left: 3px; }
+  .lab-value .status {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 4px;
+  }
+  .status.ok { background: var(--teal-soft); color: var(--teal-2); }
+  .status.watch { background: var(--amber-soft); color: var(--amber); }
+
+  /* ---------- Messages ---------- */
+  .msg-list { display: flex; flex-direction: column; }
+  .msg-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -8px;
+  }
+  .msg-item:first-child { border-top: none; padding-top: 4px; }
+  .msg-item:hover { background: var(--surface-2); }
+  .msg-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d8ebe6, #b6d4cc);
+    color: var(--teal-2);
+    display: grid; place-items: center;
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .msg-body { flex: 1; min-width: 0; }
+  .msg-top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .msg-top strong { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .msg-top .time { font-size: 11.5px; color: var(--ink-3); white-space: nowrap; }
+  .msg-subject { font-size: 13px; color: var(--ink-2); margin-top: 1px; }
+  .msg-preview {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .msg-unread {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+    margin-top: 14px;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+  .billing {
+    background: linear-gradient(160deg, #0f6b62 0%, #0a4f48 100%);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .billing::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .billing::before {
+    content: '';
+    position: absolute;
+    right: 20px; bottom: -60px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .billing .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+  .billing .amount {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .billing .due { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 18px; }
+  .billing .btn {
+    background: #fff;
+    color: var(--teal-2);
+    width: 100%;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+  .billing .btn:hover { background: #f0f7f5; }
+  .billing .btn-ghost-light {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    width: 100%;
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .billing .btn-ghost-light:hover { background: rgba(255,255,255,0.08); }
+
+  .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .qa {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .qa:hover { border-color: var(--sage); background: var(--surface-2); }
+  .qa .qa-ico {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: var(--teal-soft);
+    color: var(--teal-2);
+    display: grid; place-items: center;
+  }
+  .qa .qa-ico svg { width: 16px; height: 16px; }
+  .qa span { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  .care-note {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .care-note .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .care-note p {
+    margin: 0 0 14px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .care-note .author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .care-note .author .avatar { width: 30px; height: 30px; font-size: 12px; }
+  .care-note .author strong { font-size: 13px; display: block; color: var(--ink); }
+  .care-note .author span { font-size: 11.5px; color: var(--ink-3); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: var(--ink-3);
+    font-size: 12.5px;
+  }
+  footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
+  footer a { color: var(--ink-3); }
+  footer a:hover { color: var(--teal); }
+
+  /* ---------- Focus ---------- */
+  :focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .shell { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .topbar-inner { padding: 12px 20px; gap: 12px; }
+    .nav { display: none; }
+    .shell { padding: 20px; }
+    .appt { grid-template-columns: 1fr; }
+    .appt-date { width: 96px; }
+    .appt-actions { flex-direction: row; }
+    .appt-actions .btn { flex: 1; }
+    .user-meta { display: none; }
+    .greeting h1 { font-size: 24px; }
+  }
+
+  /* ---------- Skip link ---------- */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    background: var(--teal);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    z-index: 100;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .skip:focus { left: 16px; }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to main content</a>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#" class="brand" aria-label="Northstar Health home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M2 12h20"/>
+        </svg>
+      </span>
+      <span class="brand-name">
+        <small>Northstar</small>
+        <span>Health</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#" class="active" aria-current="page">Home</a>
+      <a href="#">Appointments</a>
+      <a href="#">Records</a>
+      <a href="#">Messages</a>
+      <a href="#">Billing</a>
+    </nav>
+
+    <div class="topbar-right">
+      <button class="icon-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="dot" aria-hidden="true"></span>
+      </button>
+      <button class="icon-btn" aria-label="Help and support">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+      <button class="user" aria-label="Account menu for Maya Chen">
+        <span class="avatar" aria-hidden="true">MC</span>
+        <span class="user-meta">
+          <strong>Maya Chen</strong>
+          <span>Patient ID · 4821-09</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MAIN ============ -->
+<main id="main" class="shell">
+
+  <!-- ===== LEFT COLUMN ===== -->
+  <div>
+
+    <!-- Greeting -->
+    <section class="greeting" aria-labelledby="greet-h">
+      <h1 id="greet-h">Good morning, Maya.</h1>
+      <p>Here's a calm overview of your care. Everything is up to date.</p>
+      <p class="date">Tuesday, March 12, 2025 · Last sign-in: March 8</p>
+    </section>
+
+    <!-- Next appointment -->
+    <section class="card" aria-labelledby="appt-h">
+      <div class="card-head">
+        <h2 id="appt-h">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </span>
+          Next appointment
+        </h2>
+        <a href="#" class="link">View all →</a>
+      </div>
+
+      <div class="appt">
+        <div class="appt-date" aria-hidden="true">
+          <div class="m">Mar</div>
+          <div class="d">21</div>
+          <div class="w">Friday</div>
+        </div>
+        <div class="appt-info">
+          <h3>Annual wellness visit</h3>
+          <div class="meta">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              10:30 AM – 11:15 AM
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Northstar Clinic · Suite 210
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Dr. Elena Reyes
+            </span>
+          </div>
+          <div class="appt-tags">
+            <span class="tag">In person</span>
+            <span class="tag neutral">45 minutes</span>
+            <span class="tag amber">Fasting required</span>
+          </div>
+        </div>
+        <div class="appt-actions">
+          <button class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Check in
+          </button>
+          <button class="btn btn-ghost">Reschedule</button>
+        </div>
+      </div>
+
+      <div class="card-body" style="padding-top: 16px;">
+        <p style="margin: 0; font-size: 13.5px; color: var(--ink-2);">
+          <strong style="color: var(--ink);">Before your visit:</strong> Please fast for 8 hours for your blood draw. Water and morning medications are fine. Arrive 10 minutes early for a smooth check-in.
+        </p>
+      </div>
+    </section>
+
+    <!-- Two-column grid -->
+    <div class="grid-2">
+
+      <!-- Care team -->
+      <section class="card" aria-labelledby="team-h">
+        <div class="card-head">
+          <h2 id="team-h">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            Your care team
+          </h2>
+          <a href="#" class="link">Manage →</a>
+        </div>
+        <div class="card-body">
+          <div class="team-list">
+            <div class="team-item">
+              <div class="team-avatar" aria-hidden="true">ER</div>
+              <div class="team-info">
+                <strong>Dr. Elena Reyes</strong>
+                <span>Primary care physician</span>
+              </div>
+              <button class="team-action" aria-label="Message Dr. Elena Reyes">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <div class="team-item">
+              <div class="team-avatar b" aria-hidden="true">JM</div>
+              <div class="team-info">
+                <strong>James Mitchell, RN</strong>
+                <span>Care coordinator</span>
+              </div>
+              <button class="team-action" aria-label="Message James Mitchell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <div class="team-item">
+              <div class="team-avatar c" aria-hidden="true">SP</div>
+              <div class="team-info">
+                <strong>Dr. Sofia Patel</strong>
+                <span>Cardiology · Consulting</span>
+              </div>
+              <button class="team-action" aria-label="Message Dr. Sofia Patel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Medications -->
+      <section class="card" aria-labelledby="med-h">
+        <div class="card-head">
+          <h2 id="med-h">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.5 20.5a7 7 0 0 1-9.9-9.9l9.9-9.9a7 7 0 0 1 9.9 9.9z"/>
+                <line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/>
+              </svg>
+            </span>
+            Medications
+          </h2>
+          <a href="#" class="link">All 4 →</a>
+        </div>
+        <div class="card-body">
+          <div class="med-list">
+            <div class="med-item">
+              <div class="med-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5a7 7 0 0 1-9.9-9.9l9.9-9.9a7 7 0 0 1 9.9 9.9z"/></svg>
+              </div>
+              <div class="med-info">
+                <strong>Lisinopril</strong>
+                <div class="dose">10 mg · Once daily, morning</div>
+                <div class="refill ok">2 refills remaining</div>
+              </div>
+            </div>
+            <div class="med-item">
+              <div class="med-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5a7 7 0 0 1-9.9-9.9l9.9-9.9a7 7 0 0 1 9.9 9.9z"/></svg>
+              </div>
+              <div class="med-info">
+                <strong>Atorvastatin</strong>
+                <div class="dose">20 mg · Once daily, evening</div>
+                <div class="refill">Refill needed by Mar 18</div>
+              </div>
+            </div>
+            <div class="med-item">
+              <div class="med-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5a7 7 0 0 1-9.9-9.9l9.9-9.9a7 7 0 0 1 9.9 9.9z"/></svg>
+              </div>
+              <div class="med-info">
+                <strong>Vitamin D3</strong>
+                <div class="dose">1000 IU · Once daily</div>
+                <div class="refill ok">3 refills remaining</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Labs -->
+    <section class="card" style="margin-top: 20px;" aria-labelledby="labs-h">
+      <div class="card-head">
+        <h2 id="labs-h">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3h6v5l4 9a2 2 0 0 1-1.8 3H6.8A2 2 0 0 1 5 17l4-9z"/>
+              <line x1="9" y1="3" x2="15" y2="3"/>
+            </svg>
+          </span>
+          Recent lab results
+        </h2>
+        <a href="#" class="link">Full history →</a>
+      </div>
+      <div class="card-body">
+        <div class="lab-list">
+          <div class="lab-item">
+            <div>
+              <div class="lab-name">Hemoglobin A1c</div>
+              <div class="lab-sub">Collected Mar 4 · Quest Diagnostics</div>
+            </div>
+            <div class="lab-value">
+              <strong>5.4</strong><span class="unit">%</span>
+              <div><span class="status ok">In range</span></div>
+            </div>
+          </div>
+          <div class="lab-item">
+            <div>
+              <div class="lab-name">LDL Cholesterol</div>
+              <div class="lab-sub">Collected Mar 4 · Quest Diagnostics</div>
+            </div>
+            <div class="lab-value">
+              <strong>118</strong><span class="unit">mg/dL</span>
+              <div><span class="status watch">Slightly high</span></div>
+            </div>
+          </div>
+          <div class="lab-item">
+            <div>
+              <div class="lab-name">Vitamin D, 25-OH</div>
+              <div class="lab-sub">Collected Mar 4 · Quest Diagnostics</div>
+            </div>
+            <div class="lab-value">
+              <strong>32</strong><span class="unit">ng/mL</span>
+              <div><span class="status ok">In range</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Messages -->
+    <section class="card" style="margin-top: 20px;" aria-labelledby="msg-h">
+      <div class="card-head">
+        <h2 id="msg-h">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </span>
+          Secure messages
+        </h2>
+        <a href="#" class="link">Inbox →</a>
+      </div>
+      <div class="card-body">
+        <div class="msg-list">
+          <div class="msg-item" role="button" tabindex="0">
+            <div class="msg-avatar" aria-hidden="true">ER</div>
+            <div class="msg-body">
+              <div class="msg-top">
+                <strong>Dr. Elena Reyes</strong>
+                <span class="time">2 days ago</span>
+              </div>
+              <div class="msg-subject">Your lab results look great</div>
+              <div class="msg-preview">Hi Maya — your A1c and vitamin D are both in a healthy range. Let's discuss the LDL at your visit…</div>
+            </div>
+            <span class="msg-unread" aria-label="Unread"></span>
+          </div>
+          <div class="msg-item" role="button" tabindex="0">
+            <div class="msg-avatar" aria-hidden="true">JM</div>
+            <div class="msg-body">
+              <div class="msg-top">
+                <strong>James Mitchell, RN</strong>
+                <span class="time">5 days ago</span>
+              </div>
+              <div class="msg-subject">Pre-visit checklist</div>
+              <div class="msg-preview">Just a friendly reminder to fast for 8 hours before your blood draw on the 21st…</div>
+            </div>
+          </div>
+          <div class="msg-item" role="button" tabindex="0">
+            <div class="msg-avatar" aria-hidden="true">SP</div>
+            <div class="msg-body">
+              <div class="msg-top">
+                <strong>Dr. Sofia Patel</strong>
+                <span class="time">1 week ago</span>
+              </div>
+              <div class="msg-subject">Cardiology follow-up</div>
+              <div class="msg-preview">Your recent ECG was normal. No changes needed — see you at the next check-in…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" aria-label="Quick actions and billing">
+
+    <!-- Billing shortcut -->
+    <section class="billing" aria-labelledby="bill-h">
+      <div class="label" id="bill-h">Balance due</div>
+      <div class="amount">$42.00</div>
+      <div class="due">Due April 2, 2025 · No late fees</div>
+      <button class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pay now
+      </button>
+      <button class="btn btn-ghost-light">View statement</button>
+    </section>
+
+    <!-- Quick actions -->
+    <section class="card" aria-labelledby="qa-h">
+      <div class="card-head">
+        <h2 id="qa-h">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </span>
+          Quick actions
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="quick-actions">
+          <button class="qa">
+            <span class="qa-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <span>Message care team</span>
+          </button>
+          <button class="qa">
+            <span class="qa-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5a7 7 0 0 1-9.9-9.9l9.9-9.9a7 7 0 0 1 9.9 9.9z"/></svg>
+            </span>
+            <span>Request refill</span>
+          </button>
+          <button class="qa">
+            <span class="qa-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span>Book visit</span>
+          </button>
+          <button class="qa">
+            <span class="qa-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </span>
+            <span>View records</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Care note -->
+    <section class="care-note" aria-labelledby="note-h">
+      <div class="label" id="note-h">A note from your care team</div>
+      <p>“Maya, your numbers are trending in a healthy direction. Keep up the good work with your daily walks — it's making a real difference.”</p>
+      <div class="author">
+        <span class="avatar" aria-hidden="true">ER</span>
+        <div>
+          <strong>Dr. Elena Reyes</strong>
+          <span>Primary care physician</span>
+        </div>
+      </div>
+    </section>
+
+  </aside>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div>© 2025 Northstar Health · Your privacy is protected</div>
+  <div class="links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Accessibility</a>
+    <a href="#">Contact support</a>
+  </div>
+</footer>
+
+<script>
+  // Keyboard support for message items
+  document.querySelectorAll('.msg-item').forEach(function (el) {
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+
+  // Subtle hover lift on cards
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.addEventListener('mouseenter', function () {
+      card.style.transition = 'box-shadow 0.2s ease';
+      card.style.boxShadow = '0 2px 4px rgba(15, 60, 55, 0.04), 0 12px 28px rgba(15, 60, 55, 0.08)';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.boxShadow = '';
+    });
+  });
+</script>
+
+</body>
+</html>

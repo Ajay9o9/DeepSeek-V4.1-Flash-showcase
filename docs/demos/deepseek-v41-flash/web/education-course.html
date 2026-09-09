@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Class — Learning Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #8a8a8a;
+    --line: #e6e3dc;
+    --line-soft: #efece5;
+    --paper: #faf8f3;
+    --paper-2: #f4f1ea;
+    --card: #ffffff;
+    --accent: #b8472a;
+    --accent-soft: #f4e4dd;
+    --green: #4a6b4a;
+    --green-soft: #e6ede4;
+    --gold: #b8892a;
+    --gold-soft: #f5ecd6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .serif { font-family: 'Newsreader', Georgia, serif; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    height: 60px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Newsreader', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: grid; place-items: center;
+    font-family: 'Newsreader', serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .brand small {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-left: 4px;
+    font-weight: 500;
+  }
+
+  .nav {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+  }
+  .nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .nav a.active { color: var(--ink); background: var(--paper-2); }
+  .nav a:hover { color: var(--ink); }
+
+  .topbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 10px;
+    width: 240px;
+    color: var(--ink-mute);
+    font-size: 13px;
+  }
+  .search svg { flex-shrink: 0; }
+  .search kbd {
+    margin-left: auto;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--ink-mute);
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    display: grid; place-items: center;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c98a6b, #8a4a2a);
+    color: #fff;
+    display: grid; place-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 0;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: calc(100vh - 60px);
+  }
+
+  .main {
+    padding: 32px 40px 60px 40px;
+    border-right: 1px solid var(--line);
+  }
+
+  .sidebar {
+    padding: 32px 28px 60px 28px;
+    background: var(--paper);
+  }
+
+  /* ---------- Breadcrumb ---------- */
+  .crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+  .crumb a { color: var(--ink-mute); text-decoration: none; }
+  .crumb a:hover { color: var(--ink); }
+  .crumb .sep { color: var(--line); }
+  .crumb .current { color: var(--ink-soft); }
+
+  /* ---------- Course header ---------- */
+  .course-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+  .course-title {
+    font-family: 'Newsreader', serif;
+    font-size: 38px;
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .course-title em { font-style: italic; color: var(--accent); }
+  .course-meta {
+    display: flex;
+    gap: 18px;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    align-items: center;
+  }
+  .course-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-mute); }
+
+  .progress-block {
+    min-width: 220px;
+    text-align: right;
+  }
+  .progress-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .progress-num {
+    font-family: 'Newsreader', serif;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .progress-num span { font-size: 16px; color: var(--ink-mute); }
+  .progress-bar {
+    height: 4px;
+    background: var(--line-soft);
+    border-radius: 2px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+  .progress-bar > div {
+    height: 100%;
+    background: var(--ink);
+    border-radius: 2px;
+  }
+  .progress-sub {
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    margin-top: 8px;
+  }
+
+  /* ---------- Next lesson card ---------- */
+  .next-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+  }
+  .next-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .next-eyebrow .pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .next-title {
+    font-family: 'Newsreader', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  .next-desc {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 20px;
+  }
+  .next-foot {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #000; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-ghost:hover { border-color: var(--ink-mute); color: var(--ink); }
+  .next-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    margin-left: auto;
+  }
+  .next-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* ---------- Section ---------- */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Newsreader', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .section-title small {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    margin-left: 8px;
+  }
+  .section-link {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .section-link:hover { color: var(--accent); }
+
+  /* ---------- Instructor ---------- */
+  .instructor {
+    display: flex;
+    gap: 18px;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .instructor-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6b7a8a, #3a4a5a);
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: 'Newsreader', serif;
+    font-size: 22px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .instructor-body { flex: 1; }
+  .instructor-name {
+    font-family: 'Newsreader', serif;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .instructor-role {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+  }
+  .instructor-bio {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .instructor-actions { display: flex; gap: 8px; }
+  .chip {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--paper-2);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .chip:hover { background: var(--card); }
+
+  /* ---------- Notes ---------- */
+  .notes {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .notes-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .notes-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--paper-2);
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .notes-tabs button {
+    background: transparent;
+    border: none;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .notes-tabs button.active {
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .notes-body {
+    font-family: 'Newsreader', serif;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .notes-body p { margin-bottom: 10px; }
+  .notes-body p:last-child { margin-bottom: 0; }
+  .notes-body mark {
+    background: var(--gold-soft);
+    color: var(--ink);
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
+  .notes-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .notes-foot .save {
+    color: var(--green);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+
+  /* ---------- Resources ---------- */
+  .resources {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .resource {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .resource:hover { border-color: var(--ink-mute); }
+  .resource-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--paper-2);
+    display: grid; place-items: center;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .resource-icon.pdf { background: var(--accent-soft); color: var(--accent); }
+  .resource-icon.vid { background: var(--green-soft); color: var(--green); }
+  .resource-icon.aud { background: var(--gold-soft); color: var(--gold); }
+  .resource-body { flex: 1; min-width: 0; }
+  .resource-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .resource-meta {
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* ---------- Discussion ---------- */
+  .discussion {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .disc-item {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line-soft);
+    display: flex;
+    gap: 14px;
+  }
+  .disc-item:last-child { border-bottom: none; }
+  .disc-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .disc-avatar.a1 { background: linear-gradient(135deg, #8a6b4a, #5a3a1a); }
+  .disc-avatar.a2 { background: linear-gradient(135deg, #6b8a7a, #3a5a4a); }
+  .disc-avatar.a3 { background: linear-gradient(135deg, #8a4a6b, #5a1a3a); }
+  .disc-body { flex: 1; min-width: 0; }
+  .disc-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .disc-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .disc-time { font-size: 11.5px; color: var(--ink-mute); }
+  .disc-tag {
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: var(--paper-2);
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-left: auto;
+  }
+  .disc-tag.instructor { background: var(--accent-soft); color: var(--accent); }
+  .disc-text {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .disc-foot {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .disc-foot span { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+  .disc-foot span:hover { color: var(--ink); }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .sidebar-title {
+    font-family: 'Newsreader', serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .sidebar-title small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+  .sidebar-count {
+    font-size: 11px;
+    color: var(--ink-mute);
+    background: var(--paper-2);
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .module {
+    margin-bottom: 22px;
+  }
+  .module-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+  .module-num {
+    font-family: 'Newsreader', serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+  .module-name {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .module-progress {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-mute);
+  }
+
+  .lesson {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.12s;
+  }
+  .lesson:hover { background: var(--paper-2); }
+  .lesson.active {
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .lesson.active::before {
+    content: "";
+    position: absolute;
+    left: -1px; top: 12px; bottom: 12px;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .lesson-status {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    background: var(--card);
+  }
+  .lesson-status.done {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .lesson-status.current {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .lesson-status.current::after {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .lesson-body { flex: 1; min-width: 0; }
+  .lesson-title {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lesson.active .lesson-title { font-weight: 600; }
+  .lesson-meta {
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+  .lesson-dur {
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Milestone ---------- */
+  .milestone {
+    margin-top: 28px;
+    padding: 20px;
+    background: linear-gradient(180deg, var(--gold-soft) 0%, #fbf6e8 100%);
+    border: 1px solid #e8d9b0;
+    border-radius: 12px;
+    position: relative;
+  }
+  .milestone-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .milestone-title {
+    font-family: 'Newsreader', serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .milestone-desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .milestone-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .milestone-meta strong { color: var(--ink); font-weight: 600; }
+  .milestone-bar {
+    height: 4px;
+    background: rgba(184, 137, 42, 0.18);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .milestone-bar > div {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .milestone-btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .milestone-btn:hover { background: #000; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .shell { grid-template-columns: 1fr; }
+    .main { border-right: none; border-bottom: 1px solid var(--line); }
+    .sidebar { padding: 32px 40px 60px; }
+  }
+  @media (max-width: 720px) {
+    .main, .sidebar { padding: 24px 20px 40px; }
+    .course-head { flex-direction: column; }
+    .progress-block { text-align: left; }
+    .resources { grid-template-columns: 1fr; }
+    .search { display: none; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">S</div>
+    Studio Class
+    <small>Learning</small>
+  </div>
+  <nav class="nav">
+    <a href="#" class="active">My Courses</a>
+    <a href="#">Library</a>
+    <a href="#">Cohorts</a>
+    <a href="#">Calendar</a>
+  </nav>
+  <div class="topbar-right">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      Search lessons, notes…
+      <kbd>⌘K</kbd>
+    </div>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+    </button>
+    <div class="avatar">EM</div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- Main column -->
+  <main class="main">
+
+    <div class="crumb">
+      <a href="#">My Courses</a>
+      <span class="sep">/</span>
+      <a href="#">Spring 2025</a>
+      <span class="sep">/</span>
+      <span class="current">Editorial Design Foundations</span>
+    </div>
+
+    <div class="course-head">
+      <div>
+        <h1 class="course-title">Editorial Design <em>Foundations</em></h1>
+        <div class="course-meta">
+          <span>12 lessons</span>
+          <span class="dot"></span>
+          <span>6 weeks</span>
+          <span class="dot"></span>
+          <span>Cohort 04 · 28 students</span>
+        </div>
+      </div>
+      <div class="progress-block">
+        <div class="progress-label">Course progress</div>
+        <div class="progress-num">42<span>%</span></div>
+        <div class="progress-bar"><div style="width: 42%"></div></div>
+        <div class="progress-sub">5 of 12 lessons complete</div>
+      </div>
+    </div>
+
+    <!-- Next lesson -->
+    <div class="next-card">
+      <div class="next-eyebrow">
+        <span class="pulse"></span>
+        Up next · Lesson 06
+      </div>
+      <h2 class="next-title">The Grid as a System of Decisions</h2>
+      <p class="next-desc">
+        We'll move past the twelve-column default and look at how grids are really a set of editorial choices — margins, rhythm, and the tension between structure and surprise.
+      </p>
+      <div class="next-foot">
+        <button class="btn-primary">
+          Resume lesson
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <button class="btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          View transcript
+        </button>
+        <div class="next-meta">
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            24 min
+          </span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            3 resources
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor -->
+    <section class="section">
+      <div class="section-head">
+        <h3 class="section-title">Instructor</h3>
+        <a href="#" class="section-link">View profile →</a>
+      </div>
+      <div class="instructor">
+        <div class="instructor-avatar">MR</div>
+        <div class="instructor-body">
+          <div class="instructor-name">Marguerite Reyes</div>
+          <div class="instructor-role">Design Director · Formerly at Pentagram &amp; AIGA</div>
+          <p class="instructor-bio">
+            Marguerite has spent two decades shaping editorial systems for independent magazines and cultural institutions. Her teaching focuses on the quiet decisions that make a page feel inevitable.
+          </p>
+          <div class="instructor-actions">
+            <button class="chip">Message</button>
+            <button class="chip">Office hours</button>
+            <button class="chip">Past cohorts</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="section">
+      <div class="section-head">
+        <h3 class="section-title">Your notes <small>Lesson 05 · Typographic Hierarchy</small></h3>
+        <a href="#" class="section-link">All notes →</a>
+      </div>
+      <div class="notes">
+        <div class="notes-head">
+          <div class="notes-tabs">
+            <button class="active">This lesson</button>
+            <button>Course</button>
+            <button>Highlights</button>
+          </div>
+          <span style="font-size: 11.5px; color: var(--ink-mute);">Edited 2 days ago</span>
+        </div>
+        <div class="notes-body">
+          <p>Hierarchy isn't about making things bigger — it's about deciding what the reader should notice <mark>first, second, third</mark>. Marguerite's point about "quiet contrast" landed: a 1.5× jump often reads more confidently than a 3× one.</p>
+          <p>Try the exercise again with a single typeface and only weight + size to differentiate. The restraint forces the composition to do the work.</p>
+        </div>
+        <div class="notes-foot">
+          <span class="save">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Saved automatically
+          </span>
+          <span>312 words</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="section">
+      <div class="section-head">
+        <h3 class="section-title">Resources <small>Lesson 06</small></h3>
+        <a href="#" class="section-link">Download all →</a>
+      </div>
+      <div class="resources">
+        <div class="resource">
+          <div class="resource-icon pdf">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          </div>
+          <div class="resource-body">
+            <div class="resource-name">Grid Systems — Reading Packet</div>
+            <div class="resource-meta">PDF · 2.4 MB · 18 pages</div>
+          </div>
+        </div>
+        <div class="resource">
+          <div class="resource-icon vid">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="resource-body">
+            <div class="resource-name">Studio walkthrough — Müller-Brockmann</div>
+            <div class="resource-meta">Video · 14 min</div>
+          </div>
+        </div>
+        <div class="resource">
+          <div class="resource-icon aud">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12v-2a2 2 0 0 1 2-2h1l4-4v16l-4-4H5a2 2 0 0 1-2-2z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>
+          </div>
+          <div class="resource-body">
+            <div class="resource-name">Critique session recording</div>
+            <div class="resource-meta">Audio · 42 min</div>
+          </div>
+        </div>
+        <div class="resource">
+          <div class="resource-icon pdf">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          </div>
+          <div class="resource-body">
+            <div class="resource-name">Exercise 06 — Grid worksheet</div>
+            <div class="resource-meta">PDF · 640 KB · 4 pages</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Discussion -->
+    <section class="section">
+      <div class="section-head">
+        <h3 class="section-title">Discussion <small>Lesson 05</small></h3>
+        <a href="#" class="section-link">Open thread →</a>
+      </div>
+      <div class="discussion">
+        <div class="disc-item">
+          <div class="disc-avatar a1">JL</div>
+          <div class="disc-body">
+            <div class="disc-head">
+              <span class="disc-name">Jonas Lindqvist</span>
+              <span class="disc-time">2 hours ago</span>
+              <span class="disc-tag">Question</span>
+            </div>
+            <p class="disc-text">
+              When you say "quiet contrast," are you thinking about it as a ratio or as a feeling? I keep landing on 1.4× but it feels arbitrary without a rule.
+            </p>
+            <div class="disc-foot">
+              <span>↩ Reply</span>
+              <span>♡ 4</span>
+            </div>
+          </div>
+        </div>
+        <div class="disc-item">
+          <div class="disc-avatar a2">MR</div>
+          <div class="disc-body">
+            <div class="disc-head">
+              <span class="disc-name">Marguerite Reyes</span>
+              <span class="disc-time">1 hour ago</span>
+              <span class="disc-tag instructor">Instructor</span>
+            </div>
+            <p class="disc-text">
+              Both, honestly. The ratio is a starting point — 1.4 to 1.6 is where most editorial work lives. But the feeling is what you're actually designing for. If the page reads as one voice with a clear lead, you've got it.
+            </p>
+            <div class="disc-foot">
+              <span>↩ Reply</span>
+              <span>♡ 12</span>
+            </div>
+          </div>
+        </div>
+        <div class="disc-item">
+          <div class="disc-avatar a3">SP</div>
+          <div class="disc-body">
+            <div class="disc-head">
+              <span class="disc-name">Sofia Park</span>
+              <span class="disc-time">45 min ago</span>
+              <span class="disc-tag">Share</span>
+            </div>
+            <p class="disc-text">
+              Posted my exercise 05 in the cohort folder — went with a single typeface and it changed everything. Feedback welcome.
+            </p>
+            <div class="disc-foot">
+              <span>↩ Reply</span>
+              <span>♡ 7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="sidebar-head">
+      <div class="sidebar-title">
+        Course outline
+        <small>Editorial Design Foundations</small>
+      </div>
+      <span class="sidebar-count">5 / 12</span>
+    </div>
+
+    <!-- Module 1 -->
+    <div class="module">
+      <div class="module-head">
+        <span class="module-num">01</span>
+        <span class="module-name">Foundations</span>
+        <span class="module-progress">3 / 3</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status done">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="lesson-body">
+          <div class="lesson-title">What editorial design is for</div>
+          <div class="lesson-meta">Introduction</div>
+        </div>
+        <span class="lesson-dur">18m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status done">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="lesson-body">
+          <div class="lesson-title">Reading the page</div>
+          <div class="lesson-meta">Visual literacy</div>
+        </div>
+        <span class="lesson-dur">22m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status done">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="lesson-body">
+          <div class="lesson-title">Type as material</div>
+          <div class="lesson-meta">Typeface selection</div>
+        </div>
+        <span class="lesson-dur">26m</span>
+      </div>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="module">
+      <div class="module-head">
+        <span class="module-num">02</span>
+        <span class="module-name">Structure</span>
+        <span class="module-progress">2 / 4</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status done">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="lesson-body">
+          <div class="lesson-title">Margins, columns, and rhythm</div>
+          <div class="lesson-meta">Layout basics</div>
+        </div>
+        <span class="lesson-dur">24m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status done">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="lesson-body">
+          <div class="lesson-title">Typographic hierarchy</div>
+          <div class="lesson-meta">Contrast &amp; scale</div>
+        </div>
+        <span class="lesson-dur">28m</span>
+      </div>
+
+      <div class="lesson active">
+        <div class="lesson-status current"></div>
+        <div class="lesson-body">
+          <div class="lesson-title">The grid as a system of decisions</div>
+          <div class="lesson-meta">In progress · 6 min left</div>
+        </div>
+        <span class="lesson-dur">24m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status"></div>
+        <div class="lesson-body">
+          <div class="lesson-title">Working with images</div>
+          <div class="lesson-meta">Cropping &amp; placement</div>
+        </div>
+        <span class="lesson-dur">22m</span>
+      </div>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="module">
+      <div class="module-head">
+        <span class="module-num">03</span>
+        <span class="module-name">Voice</span>
+        <span class="module-progress">0 / 5</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status"></div>
+        <div class="lesson-body">
+          <div class="lesson-title">Editorial voice &amp; tone</div>
+          <div class="lesson-meta">Locked · Module 02</div>
+        </div>
+        <span class="lesson-dur">26m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status"></div>
+        <div class="lesson-body">
+          <div class="lesson-title">Long-form reading</div>
+          <div class="lesson-meta">Locked · Module 02</div>
+        </div>
+        <span class="lesson-dur">30m</span>
+      </div>
+
+      <div class="lesson">
+        <div class="lesson-status"></div>
+        <div class="lesson-body">
+          <div class="lesson-title">Covers &amp; first impressions</div>
+          <div class="lesson-meta">Locked · Module 02</div>
+        </div>
+        <span class="lesson-dur">20m</span>
+      </div>
+    </div>
+
+    <!-- Milestone -->
+    <div class="milestone">
+      <div class="milestone-eyebrow">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        Assignment milestone
+      </div>
+      <div class="milestone-title">Editorial spread — first draft</div>
+      <p class="milestone-desc">
+        Submit a two-page spread applying the grid system from Lesson 06. Include a short rationale (150 words).
+      </p>
+      <div class="milestone-meta">
+        <span>Due <strong>Fri, Apr 18</strong></span>
+        <span>6 days left</span>
+      </div>
+      <div class="milestone-bar"><div style="width: 35%"></div></div>
+      <button class="milestone-btn">Open assignment</button>
+    </div>
+
+  </aside>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMMERSIVE / EXHIBITION — A Sensory Descent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --ink-2: #14141c;
+    --paper: #f2ede4;
+    --paper-2: #e8e0d2;
+    --accent: #ff5b2e;
+    --accent-2: #c9ff3d;
+    --accent-3: #6b4dff;
+    --muted: #6b6660;
+    --line: rgba(10,10,15,0.12);
+    --line-dark: rgba(242,237,228,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
+  .italic { font-style: italic; }
+
+  /* ---------- NAV ---------- */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 40px;
+    mix-blend-mode: difference;
+    color: #fff;
+  }
+  nav.top .brand {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  nav.top .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 12px var(--accent-2);
+  }
+  nav.top ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  nav.top a { color: inherit; text-decoration: none; opacity: 0.85; transition: opacity .2s; }
+  nav.top a:hover { opacity: 1; }
+  nav.top .cta {
+    border: 1px solid currentColor;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 120px 40px 40px;
+  }
+
+  /* Ambient installation canvas */
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(107,77,255,0.25), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(255,91,46,0.22), transparent 55%),
+      linear-gradient(180deg, rgba(10,10,15,0.2) 0%, rgba(10,10,15,0.7) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 32px; height: 1px;
+    background: var(--accent-2);
+  }
+
+  .hero-meta {
+    text-align: right;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.7);
+    line-height: 1.8;
+  }
+  .hero-meta strong { color: var(--paper); font-weight: 500; }
+
+  .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(64px, 12vw, 200px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    margin-top: 20px;
+  }
+  .hero-title .slash {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .hero-title .line2 {
+    display: block;
+    padding-left: 12%;
+    color: var(--paper);
+  }
+  .hero-title .line2 em {
+    font-style: italic;
+    color: var(--accent-2);
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+    padding-top: 40px;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .hero-bottom p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(242,237,228,0.8);
+    max-width: 42ch;
+  }
+
+  .hero-stat .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.55);
+    margin-top: 8px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .scroll-hint::after {
+    content: "";
+    width: 1px; height: 32px;
+    background: linear-gradient(180deg, rgba(242,237,228,0.6), transparent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section {
+    padding: 120px 40px;
+    position: relative;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+  .section-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    padding-top: 8px;
+  }
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ---------- INSTALLATION ---------- */
+  .installation {
+    background: var(--paper);
+  }
+  .install-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .install-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .install-visual svg { width: 100%; height: 100%; display: block; }
+  .install-visual .caption {
+    position: absolute;
+    bottom: 20px; left: 20px; right: 20px;
+    color: var(--paper);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .install-copy h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .install-copy p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2a2a30;
+    margin-bottom: 20px;
+    max-width: 52ch;
+  }
+  .install-copy .pull {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--accent-3);
+    border-left: 2px solid var(--accent-3);
+    padding-left: 20px;
+    margin: 32px 0;
+  }
+
+  /* ---------- ARTIST STATEMENT ---------- */
+  .statement {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .statement .section-num { color: rgba(242,237,228,0.5); }
+  .statement .section-title { color: var(--paper); }
+  .statement .section-title em { color: var(--accent-2); }
+
+  .statement-body {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .artist-card {
+    border: 1px solid var(--line-dark);
+    padding: 32px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.02);
+  }
+  .artist-portrait {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin-bottom: 24px;
+    background:
+      radial-gradient(circle at 35% 30%, var(--accent-2) 0%, transparent 40%),
+      radial-gradient(circle at 70% 70%, var(--accent) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, var(--accent-3) 0%, var(--ink-2) 70%);
+    position: relative;
+    overflow: hidden;
+  }
+  .artist-portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 6px, rgba(0,0,0,0.15) 6px 7px);
+    mix-blend-mode: overlay;
+  }
+  .artist-card .name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+  .artist-card .role {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 20px;
+  }
+  .artist-card .bio {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(242,237,228,0.75);
+  }
+
+  .statement-quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+  }
+  .statement-quote em { color: var(--accent-2); font-style: italic; }
+  .statement-text p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(242,237,228,0.8);
+    margin-bottom: 20px;
+    max-width: 60ch;
+  }
+  .statement-sign {
+    margin-top: 40px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent-2);
+  }
+
+  /* ---------- SCHEDULE ---------- */
+  .schedule { background: var(--paper-2); }
+  .schedule-list {
+    border-top: 1px solid var(--line);
+  }
+  .schedule-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr 140px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    transition: background .3s, padding .3s;
+    cursor: pointer;
+  }
+  .schedule-row:hover {
+    background: rgba(255,91,46,0.06);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .schedule-row .time {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+  }
+  .schedule-row .title {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .schedule-row .desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .schedule-row .tag {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: right;
+    color: var(--accent);
+  }
+  .schedule-row .tag.sold { color: var(--muted); }
+  .schedule-row .tag.free { color: var(--accent-3); }
+
+  /* ---------- SENSORY NOTES ---------- */
+  .sensory {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .sensory .section-num { color: rgba(242,237,228,0.5); }
+  .sensory .section-title { color: var(--paper); }
+  .sensory .section-title em { color: var(--accent); }
+
+  .sensory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .sensory-card {
+    border: 1px solid var(--line-dark);
+    padding: 28px 24px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.02);
+    transition: transform .3s, border-color .3s;
+  }
+  .sensory-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-2);
+  }
+  .sensory-icon {
+    width: 44px; height: 44px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sensory-card h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .sensory-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(242,237,228,0.7);
+  }
+  .sensory-card .level {
+    margin-top: 20px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .level-bar {
+    flex: 1;
+    height: 2px;
+    background: rgba(242,237,228,0.15);
+    position: relative;
+  }
+  .level-bar::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: var(--w, 50%);
+    background: var(--accent-2);
+  }
+
+  /* ---------- VENUE ---------- */
+  .venue { background: var(--paper); }
+  .venue-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .venue-map {
+    aspect-ratio: 1;
+    background: var(--ink);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .venue-map svg { width: 100%; height: 100%; display: block; }
+  .venue-info h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+  .venue-info .addr {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    color: #2a2a30;
+  }
+  .venue-detail {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .venue-detail .k {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+  .venue-detail .v { color: var(--ink); line-height: 1.6; }
+
+  /* ---------- BOOKING ---------- */
+  .booking {
+    background: var(--accent);
+    color: var(--ink);
+    padding: 100px 40px;
+  }
+  .booking-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .booking h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .booking h2 em { font-style: italic; }
+  .booking p {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 44ch;
+    margin-bottom: 32px;
+  }
+  .booking-form {
+    background: var(--paper);
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+  }
+  .booking-form h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+  .field {
+    margin-bottom: 20px;
+  }
+  .field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    border-radius: 2px;
+    transition: border-color .2s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 18px 24px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background .2s, transform .2s;
+    margin-top: 8px;
+  }
+  .btn:hover { background: var(--accent-3); transform: translateY(-2px); }
+  .btn .arrow { transition: transform .2s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .footer-brand {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .footer-brand em { color: var(--accent); font-style: italic; }
+  .footer-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.5);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+    transition: opacity .2s, color .2s;
+  }
+  .footer-col a:hover { opacity: 1; color: var(--accent-2); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.5);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    .hero-bottom { grid-template-columns: 1fr 1fr; }
+    .hero-bottom p { grid-column: 1 / -1; }
+    .install-grid, .statement-body, .venue-grid, .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+    .sensory-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .schedule-row { grid-template-columns: 100px 1fr 100px; }
+    .schedule-row .desc { display: none; }
+  }
+  @media (max-width: 640px) {
+    nav.top { padding: 16px 20px; }
+    nav.top ul { display: none; }
+    section { padding: 80px 20px; }
+    .hero { padding: 100px 20px 40px; }
+    .hero-bottom { grid-template-columns: 1fr; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 48px; }
+    .sensory-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .booking { padding: 60px 20px; }
+    .booking-form { padding: 24px; }
+    .schedule-row { grid-template-columns: 80px 1fr; gap: 16px; }
+    .schedule-row .tag { grid-column: 2; text-align: left; }
+    .venue-detail { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="brand"><span class="dot"></span>IMMERSIVE / EXHIBITION</div>
+  <ul>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#statement">Artist</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#venue">Venue</a></li>
+  </ul>
+  <a href="#booking" class="cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="eyebrow">A Sensory Descent · 2025</div>
+      <div class="hero-meta">
+        <div><strong>Oct 04 — Dec 21</strong></div>
+        <div>Warehouse 9, Rotterdam</div>
+        <div>Wed — Sun · 11:00 — 22:00</div>
+      </div>
+    </div>
+
+    <h1 class="hero-title">
+      IMMERSIVE<span class="slash">/</span>
+      <span class="line2">EXHIBITION <em>—</em></span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p>An eleven-room descent into light, sound and matter. Step through a threshold of fog and frequency, and let the architecture of the room rewrite your sense of time.</p>
+      <div class="hero-stat">
+        <div class="num">11</div>
+        <div class="lbl">Rooms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">90<span style="font-size:24px;">min</span></div>
+        <div class="lbl">Average journey</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</header>
+
+<!-- INSTALLATION -->
+<section class="installation" id="installation">
+  <div class="section-head">
+    <div class="section-num">01 / Installation</div>
+    <h2 class="section-title">A room that <em>listens</em> back.</h2>
+  </div>
+
+  <div class="install-grid">
+    <div class="install-visual">
+      <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="g1" cx="50%" cy="40%" r="70%">
+            <stop offset="0%" stop-color="#6b4dff"/>
+            <stop offset="45%" stop-color="#1a0f3d"/>
+            <stop offset="100%" stop-color="#0a0a0f"/>
+          </radialGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff5b2e" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#ff5b2e" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="blur"><feGaussianBlur stdDeviation="8"/></filter>
+        </defs>
+        <rect width="400" height="500" fill="url(#g1)"/>
+        <!-- concentric rings -->
+        <g transform="translate(200,220)" fill="none" stroke="#c9ff3d" stroke-opacity="0.5">
+          <circle r="30" stroke-width="0.5"/>
+          <circle r="60" stroke-width="0.5" stroke-opacity="0.4"/>
+          <circle r="90" stroke-width="0.5" stroke-opacity="0.3"/>
+          <circle r="120" stroke-width="0.5" stroke-opacity="0.2"/>
+          <circle r="150" stroke-width="0.5" stroke-opacity="0.15"/>
+          <circle r="180" stroke-width="0.5" stroke-opacity="0.1"/>
+        </g>
+        <!-- light beam -->
+        <ellipse cx="200" cy="220" rx="60" ry="60" fill="#c9ff3d" opacity="0.15" filter="url(#blur)"/>
+        <ellipse cx="200" cy="220" rx="20" ry="20" fill="#c9ff3d" opacity="0.6"/>
+        <!-- horizon line -->
+        <line x1="0" y1="380" x2="400" y2="380" stroke="#ff5b2e" stroke-width="0.5" opacity="0.6"/>
+        <rect x="0" y="380" width="400" height="120" fill="url(#g2)" opacity="0.3"/>
+        <!-- particles -->
+        <g fill="#f2ede4" opacity="0.7">
+          <circle cx="80" cy="120" r="1"/>
+          <circle cx="320" cy="90" r="1.2"/>
+          <circle cx="150" cy="60" r="0.8"/>
+          <circle cx="280" cy="180" r="1"/>
+          <circle cx="60" cy="300" r="1.1"/>
+          <circle cx="340" cy="320" r="0.9"/>
+          <circle cx="120" cy="420" r="1"/>
+          <circle cx="260" cy="440" r="1.2"/>
+        </g>
+      </svg>
+      <div class="caption">
+        <span>Room 04 — Threshold</span>
+        <span>Fig. 01</span>
+      </div>
+    </div>
+
+    <div class="install-copy">
+      <h3>Eleven rooms. One continuous breath.</h3>
+      <p>The exhibition unfolds as a single unbroken passage — no doors, no signage, no exit until the final chamber. Each room is tuned to a specific frequency, from the low hum of the entry corridor to the crystalline silence of the last.</p>
+      <p>Visitors move at their own pace. There is no correct route. The architecture responds to presence: light shifts, sound bends, fog thickens and thins around the body.</p>
+      <div class="pull">"You are not looking at the work. The work is looking at you."</div>
+      <p>Commissioned by the Rotterdam Light Biennale and produced over eighteen months with a team of twelve engineers, two composers and one perfumer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIST STATEMENT -->
+<section class="statement" id="statement">
+  <div class="section-head">
+    <div class="section-num">02 / Artist</div>
+    <h2 class="section-title">On making a room <em>remember</em>.</h2>
+  </div>
+
+  <div class="statement-body">
+    <div class="artist-card">
+      <div class="artist-portrait"></div>
+      <div class="name">Mira Halvorsen</div>
+      <div class="role">Lead Artist · b. 1987, Bergen</div>
+      <p class="bio">Mira Halvorsen works at the intersection of light, sound and architecture. Her installations have been shown at the Venice Biennale, Hamburger Bahnhof and the Mori Art Museum. She lives and works in Rotterdam.</p>
+    </div>
+
+    <div class="statement-text">
+      <p class="statement-quote">"I wanted to build a place where the visitor's own body becomes the <em>instrument</em> — where attention is the only material that matters."</p>
+      <p>I have spent the last decade making rooms that behave less like galleries and more like weather systems. The work is not an object to be seen; it is a condition to be entered. IMMERSIVE / EXHIBITION is the largest iteration of this idea I have attempted — eleven rooms, each tuned to a different register of perception.</p>
+      <p>The piece began with a simple question: what happens when we remove every cue that tells a visitor how to behave? No labels, no benches, no arrows. What remains is a body in space, listening. The rooms do the rest.</p>
+      <p>I am grateful to the engineers, composers and collaborators who built this with me. And to you, for walking in.</p>
+      <div class="statement-sign">— Mira Halvorsen, Rotterdam, 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="section-head">
+    <div class="section-num">03 / Schedule</div>
+    <h2 class="section-title">Programme &amp; <em>timings</em>.</h2>
+  </div>
+
+  <div class="schedule-list">
+    <div class="schedule-row">
+      <div class="time">11:00</div>
+      <div class="title">Morning Descent</div>
+      <div class="desc">A quieter, slower entry. Recommended for first-time visitors and those sensitive to sound.</div>
+      <div class="tag">Available</div>
+    </div>
+    <div class="schedule-row">
+      <div class="time">13:30</div>
+      <div class="title">Guided Walkthrough</div>
+      <div class="desc">A 90-minute journey led by a member of the artist's studio. Limited to 12 people.</div>
+      <div class="tag sold">Sold Out</div>
+    </div>
+    <div class="schedule-row">
+      <div class="time">16:00</div>
+      <div class="title">Afternoon Session</div>
+      <div class="desc">Full sensory programme. The exhibition at its most complete — light, sound and scent.</div>
+      <div class="tag">Available</div>
+    </div>
+    <div class="schedule-row">
+      <div class="time">18:30</div>
+      <div class="title">Twilight Descent</div>
+      <div class="desc">The rooms shift as the sun sets. A different exhibition entirely — darker, slower, more interior.</div>
+      <div class="tag">Available</div>
+    </div>
+    <div class="schedule-row">
+      <div class="time">20:30</div>
+      <div class="title">Late Session</div>
+      <div class="desc">Extended hours with a live ambient score performed in Room 09. Fridays and Saturdays only.</div>
+      <div class="tag free">Fri / Sat</div>
+    </div>
+    <div class="schedule-row">
+      <div class="time">22:00</div>
+      <div class="title">Closing</div>
+      <div class="desc">Last entry. The final room remains open for 30 minutes after the last visitor enters.</div>
+      <div class="tag">Daily</div>
+    </div>
+  </div>
+</section>
+
+<!-- SENSORY NOTES -->
+<section class="sensory" id="sensory">
+  <div class="section-head">
+    <div class="section-num">04 / Sensory Notes</div>
+    <h2 class="section-title">What to <em>expect</em>.</h2>
+  </div>
+
+  <div class="sensory-grid">
+    <div class="sensory-card">
+      <div class="sensory-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9ff3d" stroke-width="1.2">
+          <circle cx="16" cy="16" r="6"/>
+          <path d="M16 2v4M16 26v4M2 16h4M26 16h4M5.6 5.6l2.8 2.8M23.6 23.6l2.8 2.8M5.6 26.4l2.8-2.8M23.6 8.4l2.8-2.8"/>
+        </svg>
+      </div>
+      <h4>Light</h4>
+      <p>Stroboscopic sequences in Rooms 03 and 07. Flashing at 4–8 Hz. Not suitable for visitors with photosensitive epilepsy.</p>
+      <div class="level">Intensity <span class="level-bar" style="--w: 85%"></span></div>
+    </div>
+    <div class="sensory-card">
+      <div class="sensory-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9ff3d" stroke-width="1.2">
+          <path d="M4 16v-4a4 4 0 0 1 4-4h2l6-4v24l-6-4H8a4 4 0 0 1-4-4v-4z"/>
+          <path d="M22 10a8 8 0 0 1 0 12M26 6a14 14 0 0 1 0 20"/>
+        </svg>
+      </div>
+      <h4>Sound</h4>
+      <p>Continuous low-frequency tones (28–60 Hz) and sudden dynamic peaks up to 95 dB. Ear protection available at the entrance.</p>
+      <div class="level">Intensity <span class="level-bar" style="--w: 70%"></span></div>
+    </div>
+    <div class="sensory-card">
+      <div class="sensory-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9ff3d" stroke-width="1.2">
+          <path d="M16 4c-4 6-8 10-8 16a8 8 0 0 0 16 0c0-6-4-10-8-16z"/>
+        </svg>
+      </div>
+      <h4>Scent</h4>
+      <p>A bespoke fragrance diffused throughout — cedar, ozone and wet stone. Low-allergen, but present in every room.</p>
+      <div class="level">Intensity <span class="level-bar" style="--w: 45%"></span></div>
+    </div>
+    <div class="sensory-card">
+      <div class="sensory-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9ff3d" stroke-width="1.2">
+          <path d="M6 26V10l10-6 10 6v16"/>
+          <path d="M12 26v-8h8v8"/>
+        </svg>
+      </div>
+      <h4>Space</h4>
+      <p>Uneven floors, narrow passages and one room with a 4-metre drop. Step-free route available on request.</p>
+      <div class="level">Intensity <span class="level-bar" style="--w: 55%"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section class="venue" id="venue">
+  <div class="section-head">
+    <div class="section-num">05 / Venue</div>
+    <h2 class="section-title">Warehouse 9, <em>Rotterdam</em>.</h2>
+  </div>
+
+  <div class="venue-grid">
+    <div class="venue-map">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="400" fill="#0a0a0f"/>
+        <!-- grid -->
+        <g stroke="#f2ede4" stroke-opacity="0.08" stroke-width="0.5">
+          <line x1="0" y1="80" x2="400" y2="80"/>
+          <line x1="0" y1="160" x2="400" y2="160"/>
+          <line x1="0" y1="240" x2="400" y2="240"/>
+          <line x1="0" y1="320" x2="400" y2="320"/>
+          <line x1="80" y1="0" x2="80" y2="400"/>
+          <line x1="160" y1="0" x2="160" y2="400"/>
+          <line x1="240" y1="0" x2="240" y2="400"/>
+          <line x1="320" y1="0" x2="320" y2="400"/>
+        </g>
+        <!-- river -->
+        <path d="M0 280 Q100 260 200 290 T400 270 L400 400 L0 400 Z" fill="#6b4dff" opacity="0.25"/>
+        <path d="M0 280 Q100 260 200 290 T400 270" stroke="#6b4dff" stroke-width="1" fill="none" opacity="0.6"/>
+        <!-- streets -->
+        <g stroke="#f2ede4" stroke-opacity="0.3" stroke-width="1" fill="none">
+          <path d="M40 40 L360 40"/>
+          <path d="M40 40 L40 360"/>
+          <path d="M360 40 L360 360"/>
+          <path d="M40 200 L360 200"/>
+          <path d="M200 40 L200 360"/>
+        </g>
+        <!-- venue marker -->
+        <g transform="translate(200,200)">
+          <circle r="40" fill="#ff5b2e" opacity="0.15"/>
+          <circle r="20" fill="#ff5b2e" opacity="0.3"/>
+          <circle r="8" fill="#ff5b2e"/>
+          <circle r="8" fill="none" stroke="#ff5b2e" stroke-width="1">
+            <animate attributeName="r" values="8;30;8" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0;1" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- labels -->
+        <g fill="#f2ede4" font-family="Space Grotesk, sans-serif" font-size="9" letter-spacing="1.5" opacity="0.7">
+          <text x="210" y="195">WAREHOUSE 9</text>
+          <text x="210" y="208" fill="#c9ff3d">YOU ARE HERE</text>
+          <text x="60" y="380" opacity="0.5">MAAS RIVER</text>
+        </g>
+        <!-- compass -->
+        <g transform="translate(360,360)" stroke="#f2ede4" stroke-opacity="0.5" fill="none">
+          <circle r="14" stroke-width="0.5"/>
+          <path d="M0 -10 L3 0 L0 10 L-3 0 Z" fill="#f2ede4" fill-opacity="0.6" stroke="none"/>
+          <text x="-3" y="-16" fill="#f2ede4" font-size="8" font-family="Space Grotesk" stroke="none">N</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="venue-info">
+      <h3>Getting there</h3>
+      <p class="addr">Warehouse 9, Maashaven Zuidzijde 12<br>3081 Rotterdam, The Netherlands</p>
+
+      <div class="venue-detail">
+        <div class="k">Metro</div>
+        <div class="v">Maashaven (lines D &amp; E) — 4 min walk along the waterfront.</div>
+      </div>
+      <div class="venue-detail">
+        <div class="k">Tram</div>
+        <div class="v">Line 2 to Maashaven, then follow the orange light trail.</div>
+      </div>
+      <div class="venue-detail">
+        <div class="k">Parking</div>
+        <div class="v">Q-Park Maashaven, 200 spaces. Free for exhibition visitors after 18:00.</div>
+      </div>
+      <div class="venue-detail">
+        <div class="k">Access</div>
+        <div class="v">Step-free entry and accessible route available. Please notify us when booking.</div>
+      </div>
+      <div class="venue-detail">
+        <div class="k">Cloakroom</div>
+        <div class="v">Mandatory. Bags, phones and cameras must be left at the entrance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div>
+      <h2>Reserve your <em>descent</em>.</h2>
+      <p>Sessions are limited to 40 visitors per hour. We recommend booking at least two weeks in advance. Tickets are non-refundable but transferable.</p>
+      <p style="font-size:14px; opacity:0.7;">Concessions available for students, seniors and Rotterdam residents. Contact us for group bookings of 10 or more.</p>
+    </div>
+
+    <form class="booking-form" onsubmit="event.preventDefault(); this.querySelector('.btn').innerHTML='<span>Confirmed — check your inbox</span><span class="arrow">✓</span>';">
+      <h3>Book a session</h3>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" type="text" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" type="date" required>
+        </div>
+        <div class="field">
+          <label for="session">Session</label>
+          <select id="session">
+            <option>11:00 — Morning</option>
+            <option>16:00 — Afternoon</option>
+            <option>18:30 — Twilight</option>
+            <option>20:30 — Late</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="tickets">Tickets</label>
+        <select id="tickets">
+          <option>1 × Standard — €24</option>
+          <option>2 × Standard — €48</option>
+          <option>1 × Concession — €16</option>
+          <option>2 × Concession — €32</option>
+        </select>
+      </div>
+      <button class="btn" type="submit">
+        <span>Confirm booking</span>
+        <span class="arrow">→</span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">IMMERSIVE <em>/</em> EXHIBITION</div>
+      <p style="margin-top:20px; font-size:14px; color:rgba(242,237,228,0.6); max-width:36ch; line-height:1.6;">An eleven-room descent into light, sound and matter. Commissioned by the Rotterdam Light Biennale, 2025.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Visit</h5>
+      <ul>
+        <li><a href="#booking">Book tickets</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#venue">Getting here</a></li>
+        <li><a href="#sensory">Accessibility</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>About</h5>
+      <ul>
+        <li><a href="#statement">Artist</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#">Press kit</a></li>
+        <li><a href="#">Credits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:hello@immersive-exhibition.art">hello@immersive-exhibition.art</a></li>
+        <li><a href="#">+31 10 555 0199</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Immersive / Exhibition. All rights reserved.</div>
+    <div>Rotterdam · NL · 51.9187° N, 4.4884° E</div>
+  </div>
+</footer>
+
+<script>
+  // Ambient hero canvas — drifting particles + soft light
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [], t = 0;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor((w * h) / 14000);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.6 + 0.3,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          hue: Math.random() < 0.5 ? '201,255,61' : '255,91,46',
+          a: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    function draw() {
+      t += 0.005;
+      ctx.clearRect(0, 0, w, h);
+
+      // soft moving light blobs
+      const blobs = [
+        { x: w * (0.3 + Math.sin(t) * 0.05), y: h * (0.4 + Math.cos(t * 0.7) * 0.05), c: '107,77,255', r: Math.min(w, h) * 0.5 },
+        { x: w * (0.7 + Math.cos(t * 0.8) * 0.05), y: h * (0.6 + Math.sin(t * 0.6) * 0.05), c: '255,91,46', r: Math.min(w, h) * 0.45 },
+        { x: w * (0.5 + Math.sin(t * 1.2) * 0.08), y: h * (0.3 + Math.cos(t * 0.9) * 0.06), c: '201,255,61', r: Math.min(w, h) * 0.3 }
+      ];
+      blobs.forEach(b => {
+        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+        g.addColorStop(0, `rgba(${b.c},0.18)`);
+        g.addColorStop(1, `rgba(${b.c},0)`);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      });
+
+      // particles
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.hue},${p.a})`;
+        ctx.fill();
+      });
+
+      // subtle scan lines
+      ctx.fillStyle = 'rgba(255,255,255,0.015)';
+      for (let y = 0; y < h; y += 4) {
+        ctx.fillRect(0, y, w, 1);
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  })();
+
+  // Set min date to today
+  const dateInput = document.getElementById('date');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    dateInput.value = today;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FESTIVAL / MARKET — a gathering of makers, music & flavour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1e1c1a;
+      --paper: #f7f3ee;
+      --cream: #fcf9f5;
+      --terracotta: #c96b4b;
+      --terracotta-dark: #a84e32;
+      --sage: #7f9172;
+      --sage-light: #b7c2a8;
+      --mustard: #e3b448;
+      --plum: #5e3a4b;
+      --plum-light: #8b5e6f;
+      --border-light: rgba(30, 28, 26, 0.12);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+      --radius-card: 24px;
+      --radius-btn: 40px;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 2rem;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      line-height: 0.95;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .subhead {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    .text-muted {
+      color: rgba(30, 28, 26, 0.7);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    /* ---------- HEADER / NAV ---------- */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .logo span {
+      color: var(--terracotta);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--terracotta);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.8rem 2rem;
+      border-radius: var(--radius-btn);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--terracotta);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 3rem 0 5rem;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-content .subhead {
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-content h1 {
+      max-width: 10ch;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      max-width: 40ch;
+      color: rgba(30, 28, 26, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 420px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: linear-gradient(145deg, var(--sage-light) 0%, var(--sage) 100%);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* CSS illustration: market stalls */
+    .hero-visual .stall {
+      position: absolute;
+      bottom: 0;
+      width: 120px;
+      height: 180px;
+      background: var(--cream);
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    }
+
+    .hero-visual .stall::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      right: -10px;
+      height: 30px;
+      background: var(--terracotta);
+      border-radius: 8px 8px 0 0;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+    }
+
+    .hero-visual .stall::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      right: 15px;
+      height: 60px;
+      background: var(--mustard);
+      border-radius: 6px;
+      opacity: 0.6;
+    }
+
+    .hero-visual .stall:nth-child(1) {
+      left: 10%;
+      height: 160px;
+      width: 100px;
+    }
+
+    .hero-visual .stall:nth-child(2) {
+      left: 35%;
+      height: 200px;
+      width: 130px;
+      background: var(--plum-light);
+    }
+
+    .hero-visual .stall:nth-child(2)::before {
+      background: var(--plum);
+    }
+
+    .hero-visual .stall:nth-child(3) {
+      left: 65%;
+      height: 140px;
+      width: 90px;
+      background: var(--sage-light);
+    }
+
+    .hero-visual .stall:nth-child(3)::before {
+      background: var(--sage);
+    }
+
+    .hero-visual .stall:nth-child(4) {
+      left: 82%;
+      height: 180px;
+      width: 110px;
+      background: var(--cream);
+    }
+
+    .hero-visual .stall:nth-child(4)::before {
+      background: var(--mustard);
+    }
+
+    .hero-visual .awning {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: repeating-linear-gradient(90deg, var(--terracotta) 0px, var(--terracotta) 20px, var(--cream) 20px, var(--cream) 40px);
+      opacity: 0.9;
+      z-index: 2;
+    }
+
+    .hero-visual .sun {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--mustard);
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(227, 180, 72, 0.5);
+      z-index: 1;
+    }
+
+    /* ---------- VENDOR DIRECTORY ---------- */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-header p {
+      max-width: 50ch;
+      color: rgba(30, 28, 26, 0.7);
+    }
+
+    .vendor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .vendor-card {
+      background: var(--cream);
+      border-radius: var(--radius-card);
+      padding: 1.8rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .vendor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .vendor-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: var(--sage-light);
+      color: var(--ink);
+    }
+
+    .vendor-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0;
+    }
+
+    .vendor-card .category {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--terracotta);
+      font-weight: 600;
+    }
+
+    .vendor-card p {
+      font-size: 0.95rem;
+      color: rgba(30, 28, 26, 0.7);
+      line-height: 1.4;
+    }
+
+    /* ---------- SCHEDULE ---------- */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .schedule-day {
+      background: var(--cream);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .schedule-day h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .schedule-day .date {
+      font-size: 0.9rem;
+      color: var(--terracotta);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .schedule-item:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-time {
+      font-weight: 600;
+      font-size: 0.9rem;
+      min-width: 60px;
+      color: var(--plum);
+    }
+
+    .schedule-desc {
+      font-size: 0.95rem;
+    }
+
+    .schedule-desc strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    .schedule-desc span {
+      color: rgba(30, 28, 26, 0.6);
+      font-size: 0.85rem;
+    }
+
+    /* ---------- VENUE PLAN ---------- */
+    .venue-plan {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .venue-map {
+      background: var(--cream);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .venue-map svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .venue-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .venue-info h2 {
+      margin-bottom: 0;
+    }
+
+    .venue-info p {
+      color: rgba(30, 28, 26, 0.7);
+      max-width: 45ch;
+    }
+
+    .venue-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .venue-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .venue-list li::before {
+      content: '●';
+      color: var(--terracotta);
+      font-size: 0.8rem;
+    }
+
+    /* ---------- TICKET CTA ---------- */
+    .ticket-cta {
+      background: var(--plum);
+      color: var(--paper);
+      border-radius: var(--radius-card);
+      padding: 4rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .ticket-cta h2 {
+      color: var(--paper);
+      margin-bottom: 0.5rem;
+    }
+
+    .ticket-cta p {
+      color: rgba(247, 243, 238, 0.8);
+      max-width: 40ch;
+    }
+
+    .ticket-cta .btn {
+      background: var(--mustard);
+      color: var(--ink);
+      font-size: 1rem;
+      padding: 1rem 2.5rem;
+    }
+
+    .ticket-cta .btn:hover {
+      background: var(--cream);
+    }
+
+    /* ---------- FOOD & MUSIC HIGHLIGHTS ---------- */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .highlight-card {
+      background: var(--cream);
+      border-radius: var(--radius-card);
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .highlight-card .icon-large {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-card h3 {
+      font-size: 1.8rem;
+    }
+
+    .highlight-card p {
+      color: rgba(30, 28, 26, 0.7);
+      max-width: 40ch;
+    }
+
+    .highlight-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      background: var(--sage-light);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      border-top: 1px solid var(--border-light);
+      padding: 3rem 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: rgba(30, 28, 26, 0.6);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--terracotta);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero-visual {
+        height: 320px;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .venue-plan {
+        grid-template-columns: 1fr;
+      }
+
+      .venue-map {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 1.25rem;
+      }
+
+      .site-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 1.25rem;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-cta {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 1.5rem;
+      }
+
+      .ticket-cta p {
+        max-width: 100%;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-visual {
+        height: 260px;
+      }
+
+      .hero-visual .stall {
+        transform: scale(0.7);
+        transform-origin: bottom;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="site-header">
+      <a href="#" class="logo">FESTIVAL <span>/</span> MARKET</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#vendors">Vendors</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#venue">Venue</a></li>
+          <li><a href="#tickets" class="btn" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">Tickets</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="subhead">June 14–16, 2025 · Riverside Park</span>
+        <h1>Where makers, music & flavour meet.</h1>
+        <p>Three days of independent craft, live sets, and street food from 80+ vendors. A festival built for discovery.</p>
+        <div class="hero-actions">
+          <a href="#tickets" class="btn">Get tickets</a>
+          <a href="#vendors" class="btn btn-outline">Explore vendors</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="awning"></div>
+        <div class="sun"></div>
+        <div class="stall"></div>
+        <div class="stall"></div>
+        <div class="stall"></div>
+        <div class="stall"></div>
+      </div>
+    </section>
+
+    <!-- VENDOR DIRECTORY -->
+    <section id="vendors">
+      <div class="section-header">
+        <div>
+          <span class="subhead">Vendor directory</span>
+          <h2>Meet the makers</h2>
+        </div>
+        <p>From small-batch ceramics to slow-fermented hot sauce, every stall is hand-picked for craft and character.</p>
+      </div>
+      <div class="vendor-grid">
+        <div class="vendor-card">
+          <div class="vendor-icon">🏺</div>
+          <span class="category">Ceramics</span>
+          <h3>Clay & Co.</h3>
+          <p>Wheel-thrown stoneware and speckled glazes, made in a backyard studio in Portland.</p>
+        </div>
+        <div class="vendor-card">
+          <div class="vendor-icon">🌿</div>
+          <span class="category">Botanicals</span>
+          <h3>Wilder Herbs</h3>
+          <p>Small-batch tinctures, dried floral bundles, and seasonal teas foraged from the Pacific Northwest.</p>
+        </div>
+        <div class="vendor-card">
+          <div class="vendor-icon">🍞</div>
+          <span class="category">Bakery</span>
+          <h3>Mother Dough</h3>
+          <p>Naturally leavened sourdough, cardamom buns, and rye crackers baked fresh each morning.</p>
+        </div>
+        <div class="vendor-card">
+          <div class="vendor-icon">🧵</div>
+          <span class="category">Textiles</span>
+          <h3>Loom & Line</h3>
+          <p>Handwoven scarves, naturally dyed with indigo, madder root, and marigold.</p>
+        </div>
+        <div class="vendor-card">
+          <div class="vendor-icon">🌶️</div>
+          <span class="category">Condiments</span>
+          <h3>Slow Burn</h3>
+          <p>Fermented hot sauces and chili crisp made with locally grown peppers and zero additives.</p>
+        </div>
+        <div class="vendor-card">
+          <div class="vendor-icon">🪵</div>
+          <span class="category">Woodwork</span>
+          <h3>Grain & Knot</h3>
+          <p>Hand-carved spoons, serving boards, and small furniture from reclaimed urban timber.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule">
+      <div class="section-header">
+        <div>
+          <span class="subhead">Schedule</span>
+          <h2>Three days, endless discovery</h2>
+        </div>
+        <p>Music, workshops, and tastings — all included with your festival pass.</p>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-day">
+          <h3>Friday</h3>
+          <span class="date">June 14</span>
+          <div class="schedule-item">
+            <span class="schedule-time">12:00</span>
+            <div class="schedule-desc">
+              <strong>Market opens</strong>
+              <span>80+ vendors, all day</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">14:30</span>
+            <div class="schedule-desc">
+              <strong>Fermentation workshop</strong>
+              <span>with Slow Burn · Tent B</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">17:00</span>
+            <div class="schedule-desc">
+              <strong>Live: The Paper Kites</strong>
+              <span>Main stage</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">19:30</span>
+            <div class="schedule-desc">
+              <strong>Sunset DJ set</strong>
+              <span>River deck</span>
+            </div>
+          </div>
+        </div>
+        <div class="schedule-day">
+          <h3>Saturday</h3>
+          <span class="date">June 15</span>
+          <div class="schedule-item">
+            <span class="schedule-time">10:00</span>
+            <div class="schedule-desc">
+              <strong>Morning market</strong>
+              <span>Coffee & pastries</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">12:00</span>
+            <div class="schedule-desc">
+              <strong>Natural dye demo</strong>
+              <span>with Loom & Line · Tent A</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">15:00</span>
+            <div class="schedule-desc">
+              <strong>Chef tasting: Fire & Smoke</strong>
+              <span>Food court</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">18:00</span>
+            <div class="schedule-desc">
+              <strong>Live: Y La Bamba</strong>
+              <span>Main stage</span>
+            </div>
+          </div>
+        </div>
+        <div class="schedule-day">
+          <h3>Sunday</h3>
+          <span class="date">June 16</span>
+          <div class="schedule-item">
+            <span class="schedule-time">10:00</span>
+            <div class="schedule-desc">
+              <strong>Slow morning market</strong>
+              <span>Acoustic sets</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">13:00</span>
+            <div class="schedule-desc">
+              <strong>Pottery throw-down</strong>
+              <span>with Clay & Co. · Tent C</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">15:30</span>
+            <div class="schedule-desc">
+              <strong>Panel: The future of craft</strong>
+              <span>Speaker tent</span>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-time">17:00</span>
+            <div class="schedule-desc">
+              <strong>Closing: Hurray for the Riff Raff</strong>
+              <span>Main stage</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENUE PLAN -->
+    <section id="venue">
+      <div class="venue-plan">
+        <div class="venue-map">
+          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background -->
+            <rect width="400" height="400" fill="#fcf9f5" rx="16"/>
+            <!-- River -->
+            <path d="M 0 320 Q 100 300 200 320 T 400 310 L 400 400 L 0 400 Z" fill="#b7c2a8" opacity="0.5"/>
+            <text x="200" y="370" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12" fill="#5e3a4b" opacity="0.7">RIVER</text>
+            <!-- Main stage -->
+            <rect x="140" y="40" width="120" height="60" rx="8" fill="#c96b4b" opacity="0.9"/>
+            <text x="200" y="75" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" fill="#fcf9f5" font-weight="600">MAIN STAGE</text>
+            <!-- Food court -->
+            <rect x="40" y="140" width="100" height="80" rx="8" fill="#e3b448" opacity="0.8"/>
+            <text x="90" y="185" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="10" fill="#1e1c1a" font-weight="600">FOOD COURT</text>
+            <!-- Market stalls -->
+            <rect x="260" y="140" width="100" height="80" rx="8" fill="#7f9172" opacity="0.8"/>
+            <text x="310" y="185" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="10" fill="#fcf9f5" font-weight="600">MARKET STALLS</text>
+            <!-- Workshop tents -->
+            <rect x="40" y="250" width="80" height="50" rx="8" fill="#8b5e6f" opacity="0.8"/>
+            <text x="80" y="280" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" fill="#fcf9f5" font-weight="600">TENT A</text>
+            <rect x="140" y="250" width="80" height="50" rx="8" fill="#8b5e6f" opacity="0.8"/>
+            <text x="180" y="280" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" fill="#fcf9f5" font-weight="600">TENT B</text>
+            <rect x="240" y="250" width="80" height="50" rx="8" fill="#8b5e6f" opacity="0.8"/>
+            <text x="280" y="280" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" fill="#fcf9f5" font-weight="600">TENT C</text>
+            <!-- Entrance -->
+            <rect x="160" y="340" width="80" height="30" rx="6" fill="#1e1c1a" opacity="0.7"/>
+            <text x="200" y="360" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="9" fill="#fcf9f5" font-weight="600">ENTRANCE</text>
+            <!-- Paths -->
+            <line x1="200" y1="100" x2="200" y2="140" stroke="#1e1c1a" stroke-width="2" stroke-dasharray="4 4" opacity="0.3"/>
+            <line x1="140" y1="180" x2="260" y2="180" stroke="#1e1c1a" stroke-width="2" stroke-dasharray="4 4" opacity="0.3"/>
+            <line x1="200" y1="220" x2="200" y2="250" stroke="#1e1c1a" stroke-width="2" stroke-dasharray="4 4" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="venue-info">
+          <span class="subhead">Venue plan</span>
+          <h2>Riverside Park</h2>
+          <p>Nestled along the Willamette River, our open-air layout is designed for wandering. Every zone is a short stroll from the next.</p>
+          <ul class="venue-list">
+            <li>Main stage with river views</li>
+            <li>Dedicated food court & bar area</li>
+            <li>Three workshop tents with daily demos</li>
+            <li>Accessible pathways throughout</li>
+            <li>Bike parking & shuttle stop at entrance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKET CTA -->
+    <section id="tickets">
+      <div class="ticket-cta">
+        <div>
+          <h2>Ready to wander?</h2>
+          <p>Weekend passes include all music, workshops, and tastings. Day tickets available at the gate.</p>
+        </div>
+        <a href="#" class="btn">Buy weekend pass — $85</a>
+      </div>
+    </section>
+
+    <!-- FOOD & MUSIC HIGHLIGHTS -->
+    <section>
+      <div class="section-header">
+        <div>
+          <span class="subhead">Highlights</span>
+          <h2>What to taste & hear</h2>
+        </div>
+        <p>From smoky street corn to indie folk under the stars — here’s a taste of what’s waiting.</p>
+      </div>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="icon-large">🔥</div>
+          <h3>Food & drink</h3>
+          <p>Wood-fired pizza, Oaxacan street corn, natural wine, cold brew, and small-batch gelato. 20+ food vendors, all independent.</p>
+          <div class="highlight-tags">
+            <span class="tag">Wood-fired</span>
+            <span class="tag">Vegan options</span>
+            <span class="tag">Natural wine</span>
+            <span class="tag">Local coffee</span>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <div class="icon-large">🎶</div>
+          <h3>Music & performance</h3>
+          <p>Three stages featuring indie folk, cumbia, and late-night DJs. All sets are free with your festival pass.</p>
+          <div class="highlight-tags">
+            <span class="tag">Indie folk</span>
+            <span class="tag">Cumbia</span>
+            <span class="tag">DJ sets</span>
+            <span class="tag">Acoustic</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span>© 2025 FESTIVAL / MARKET. All rights reserved.</span>
+      <ul class="footer-links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Press kit</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </footer>
+  </div>
+</body>
+</html>

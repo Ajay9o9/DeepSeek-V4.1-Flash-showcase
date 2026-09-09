@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DESIGN / SYSTEM / DOCS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Palette — deep ink, warm coral, electric mint, soft cream */
+      --ink: #0f0e17;
+      --ink-soft: #1a1926;
+      --ink-muted: #2a2938;
+      --cream: #f5f0eb;
+      --cream-dim: #e8e0d8;
+      --coral: #ff6b6b;
+      --coral-glow: #ff8e8e;
+      --mint: #4ecdc4;
+      --mint-glow: #7eddd6;
+      --gold: #ffe66d;
+      --lavender: #a78bfa;
+      --sky: #7dd3fc;
+      --rose: #fda4af;
+
+      /* Typography */
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+
+      /* Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(15,14,23,0.12);
+      --shadow-md: 0 4px 16px rgba(15,14,23,0.16);
+      --shadow-lg: 0 12px 40px rgba(15,14,23,0.24);
+      --shadow-glow: 0 0 40px rgba(255,107,107,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--ink);
+      color: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Version Banner ───────────────────────────────────── */
+    .version-banner {
+      background: linear-gradient(90deg, var(--coral), var(--lavender), var(--mint));
+      background-size: 200% 100%;
+      animation: bannerShift 8s ease infinite;
+      padding: 0.5rem var(--space-xl);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      position: relative;
+      z-index: 100;
+    }
+    .version-banner a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 700;
+    }
+    .version-banner a:hover { opacity: 0.8; }
+
+    @keyframes bannerShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ── Header / Nav ─────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(15,14,23,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(245,240,235,0.08);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--space-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--coral), var(--lavender));
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .logo span { color: var(--coral); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(245,240,235,0.65);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cream); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--coral);
+      border-radius: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .search-btn {
+      background: rgba(245,240,235,0.06);
+      border: 1px solid rgba(245,240,235,0.1);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.75rem;
+      color: rgba(245,240,235,0.5);
+      font-size: 0.8rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: all 0.2s;
+    }
+    .search-btn:hover {
+      background: rgba(245,240,235,0.1);
+      border-color: rgba(245,240,235,0.2);
+    }
+    .search-btn kbd {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      background: rgba(245,240,235,0.08);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    .github-btn {
+      background: var(--cream);
+      color: var(--ink);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .github-btn:hover {
+      background: var(--coral);
+      color: var(--cream);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,107,107,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: rgba(255,107,107,0.12);
+      border: 1px solid rgba(255,107,107,0.25);
+      border-radius: 100px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--coral-glow);
+      letter-spacing: 0.03em;
+      margin-bottom: var(--space-lg);
+    }
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--coral);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-lg);
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--coral), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(245,240,235,0.6);
+      max-width: 480px;
+      margin-bottom: var(--space-xl);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--coral);
+      color: var(--cream);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      background: var(--coral-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,107,107,0.3);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(245,240,235,0.2);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover {
+      border-color: var(--mint);
+      color: var(--mint);
+      transform: translateY(-2px);
+    }
+
+    /* ── Hero Visual (CSS Art) ────────────────────────────── */
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .visual-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,235,0.08);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .visual-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--coral), var(--lavender), var(--mint));
+    }
+
+    .visual-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .visual-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .visual-dot:nth-child(1) { background: var(--coral); }
+    .visual-dot:nth-child(2) { background: var(--gold); }
+    .visual-dot:nth-child(3) { background: var(--mint); }
+    .visual-title {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: rgba(245,240,235,0.35);
+    }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(245,240,235,0.05);
+    }
+    .token-row:last-child { border-bottom: none; }
+    .token-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      border: 1px solid rgba(245,240,235,0.1);
+    }
+    .token-info { flex: 1; }
+    .token-name {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+    .token-value {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: rgba(245,240,235,0.4);
+    }
+    .token-usage {
+      font-size: 0.65rem;
+      color: rgba(245,240,235,0.3);
+      text-align: right;
+    }
+
+    /* ── Section Shared ───────────────────────────────────── */
+    .section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-xl);
+    }
+    .section-header {
+      margin-bottom: var(--space-2xl);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--coral);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--coral);
+      border-radius: 2px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .section-desc {
+      color: rgba(245,240,235,0.5);
+      max-width: 560px;
+      margin-top: var(--space-sm);
+      font-size: 1rem;
+    }
+
+    /* ── Component Navigation ─────────────────────────────── */
+    .component-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+    .component-card {
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,235,0.06);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .component-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent, var(--coral));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .component-card:hover {
+      border-color: rgba(245,240,235,0.15);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .component-card:hover::before { transform: scaleX(1); }
+
+    .component-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: rgba(245,240,235,0.06);
+      display: grid;
+      place-items: center;
+      margin-bottom: var(--space-md);
+      font-size: 1.1rem;
+    }
+    .component-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+    .component-card p {
+      font-size: 0.8rem;
+      color: rgba(245,240,235,0.4);
+      line-height: 1.5;
+    }
+    .component-count {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: rgba(245,240,235,0.25);
+      margin-top: var(--space-sm);
+    }
+
+    /* ── Color Tokens ─────────────────────────────────────── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-md);
+    }
+    .color-token {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(245,240,235,0.06);
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .color-token:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .color-swatch {
+      height: 100px;
+      position: relative;
+    }
+    .color-swatch::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(15,14,23,0.3));
+    }
+    .color-meta {
+      background: var(--ink-soft);
+      padding: var(--space-md);
+    }
+    .color-name {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+    .color-hex {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: rgba(245,240,235,0.4);
+      margin-top: 2px;
+    }
+    .color-usage {
+      font-size: 0.65rem;
+      color: rgba(245,240,235,0.3);
+      margin-top: var(--space-xs);
+    }
+
+    /* ── Typography Samples ───────────────────────────────── */
+    .type-samples {
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .type-sample {
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,235,0.06);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      transition: border-color 0.25s;
+    }
+    .type-sample:hover { border-color: rgba(245,240,235,0.12); }
+
+    .type-meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: rgba(245,240,235,0.35);
+      line-height: 1.8;
+    }
+    .type-meta strong {
+      color: var(--mint);
+      font-weight: 600;
+    }
+    .type-preview {
+      color: var(--cream);
+    }
+    .type-preview.display {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .type-preview.heading {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .type-preview.body {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: rgba(245,240,235,0.7);
+    }
+    .type-preview.mono {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--mint);
+    }
+
+    /* ── Code Snippets ────────────────────────────────────── */
+    .code-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    .code-block {
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,235,0.06);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid rgba(245,240,235,0.06);
+      background: rgba(245,240,235,0.02);
+    }
+    .code-lang {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--coral);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .code-copy {
+      background: rgba(245,240,235,0.06);
+      border: 1px solid rgba(245,240,235,0.1);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      color: rgba(245,240,235,0.5);
+      font-size: 0.7rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .code-copy:hover {
+      background: rgba(245,240,235,0.12);
+      color: var(--cream);
+    }
+    .code-body {
+      padding: var(--space-lg);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      color: rgba(245,240,235,0.7);
+    }
+    .code-body .kw { color: var(--lavender); }
+    .code-body .str { color: var(--mint); }
+    .code-body .fn { color: var(--sky); }
+    .code-body .cm { color: rgba(245,240,235,0.3); font-style: italic; }
+    .code-body .num { color: var(--gold); }
+    .code-body .prop { color: var(--rose); }
+
+    /* ── Contribution CTA ─────────────────────────────────── */
+    .cta-section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--space-3xl) var(--space-xl);
+    }
+    .cta-card {
+      background: linear-gradient(135deg, var(--ink-soft) 0%, var(--ink-muted) 100%);
+      border: 1px solid rgba(245,240,235,0.08);
+      border-radius: var(--radius-xl);
+      padding: var(--space-3xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,107,107,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      right: 10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(78,205,196,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card > * { position: relative; z-index: 1; }
+
+    .cta-card h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+    }
+    .cta-card p {
+      color: rgba(245,240,235,0.5);
+      max-width: 520px;
+      margin: 0 auto var(--space-xl);
+      font-size: 1rem;
+    }
+    .cta-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid rgba(245,240,235,0.06);
+      padding: var(--space-2xl) var(--space-xl);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.85rem;
+      color: rgba(245,240,235,0.4);
+    }
+    .footer-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+    .footer-links a {
+      color: rgba(245,240,235,0.4);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+        text-align: center;
+      }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .visual-card { max-width: 420px; }
+      .code-section { grid-template-columns: 1fr; }
+      .type-sample { grid-template-columns: 1fr; gap: var(--space-md); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .search-btn { display: none; }
+      .header-inner { padding: 0 var(--space-md); }
+      .section { padding: var(--space-2xl) var(--space-md); }
+      .hero { padding: var(--space-2xl) var(--space-md); }
+      .cta-section { padding: var(--space-2xl) var(--space-md); }
+      .cta-card { padding: var(--space-xl); }
+      .component-nav { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      .color-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+      .cta-actions { flex-direction: column; align-items: stretch; }
+      .cta-actions .btn-primary,
+      .cta-actions .btn-secondary { justify-content: center; }
+    }
+
+    /* ── Scrollbar ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--ink); }
+    ::-webkit-scrollbar-thumb { background: var(--ink-muted); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(245,240,235,0.2); }
+
+    /* ── Selection ────────────────────────────────────────── */
+    ::selection { background: var(--coral); color: var(--cream); }
+
+    /* ── Focus ────────────────────────────────────────────── */
+    :focus-visible {
+      outline: 2px solid var(--coral);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Version Banner -->
+  <div class="version-banner">
+    v3.2.0 is now available — <a href="#">Read the migration guide →</a>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">DS</div>
+        DESIGN<span>/</span>SYSTEM<span>/</span>DOCS
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#" class="active">Components</a></li>
+          <li><a href="#">Tokens</a></li>
+          <li><a href="#">Patterns</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="search-btn" aria-label="Search documentation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          Search
+          <kbd>⌘K</kbd>
+        </button>
+        <button class="github-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        v3.2.0 — Stable Release
+      </div>
+      <h1>
+        Build consistent<br>
+        interfaces with<br>
+        <span class="highlight">confidence.</span>
+      </h1>
+      <p>
+        A living design system that bridges design and engineering. 
+        Tokens, components, and patterns — all in one place, 
+        always in sync.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">
+          Get Started
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <button class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Read the Docs
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="visual-header">
+          <div class="visual-dot"></div>
+          <div class="visual-dot"></div>
+          <div class="visual-dot"></div>
+          <span class="visual-title">tokens/colors.json</span>
+        </div>
+        <div class="token-row">
+          <div class="token-swatch" style="background: var(--coral);"></div>
+          <div class="token-info">
+            <div class="token-name">color.primary</div>
+            <div class="token-value">#FF6B6B</div>
+          </div>
+          <div class="token-usage">Actions</div>
+        </div>
+        <div class="token-row">
+          <div class="token-swatch" style="background: var(--mint);"></div>
+          <div class="token-info">
+            <div class="token-name">color.accent</div>
+            <div class="token-value">#4ECDC4</div>
+          </div>
+          <div class="token-usage">Success</div>
+        </div>
+        <div class="token-row">
+          <div class="token-swatch" style="background: var(--lavender);"></div>
+          <div class="token-info">
+            <div class="token-name">color.secondary</div>
+            <div class="token-value">#A78BFA</div>
+          </div>
+          <div class="token-usage">Links</div>
+        </div>
+        <div class="token-row">
+          <div class="token-swatch" style="background: var(--gold);"></div>
+          <div class="token-info">
+            <div class="token-name">color.warning</div>
+            <div class="token-value">#FFE66D</div>
+          </div>
+          <div class="token-usage">Alerts</div>
+        </div>
+        <div class="token-row">
+          <div class="token-swatch" style="background: var(--cream);"></div>
+          <div class="token-info">
+            <div class="token-name">color.surface</div>
+            <div class="token-value">#F5F0EB</div>
+          </div>
+          <div class="token-usage">Backgrounds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Component Navigation -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">Components</div>
+      <h2 class="section-title">Browse the library</h2>
+      <p class="section-desc">
+        Every component is built with accessibility, responsiveness, and 
+        composability in mind. Explore by category.
+      </p>
+    </div>
+    <div class="component-nav">
+      <div class="component-card" style="--accent: var(--coral);">
+        <div class="component-icon">🔘</div>
+        <h3>Buttons</h3>
+        <p>Primary, secondary, ghost, and destructive variants with loading states.</p>
+        <div class="component-count">12 variants</div>
+      </div>
+      <div class="component-card" style="--accent: var(--mint);">
+        <div class="component-icon">📝</div>
+        <h3>Forms</h3>
+        <p>Inputs, selects, checkboxes, radios, and validation patterns.</p>
+        <div class="component-count">18 variants</div>
+      </div>
+      <div class="component-card" style="--accent: var(--lavender);">
+        <div class="component-icon">🧭</div>
+        <h3>Navigation</h3>
+        <p>Headers, sidebars, tabs, breadcrumbs, and pagination.</p>
+        <div class="component-count">9 variants</div>
+      </div>
+      <div class="component-card" style="--accent: var(--gold);">
+        <div class="component-icon">💬</div>
+        <h3>Feedback</h3>
+        <p>Toasts, modals, alerts, and progress indicators.</p>
+        <div class="component-count">14 variants</div>
+      </div>
+      <div class="component-card" style="--accent: var(--sky);">
+        <div class="component-icon">📊</div>
+        <h3>Data Display</h3>
+        <p>Tables, cards, badges, and avatar groups.</p>
+        <div class="component-count">11 variants</div>
+      </div>
+      <div class="component-card" style="--accent: var(--rose);">
+        <div class="component-icon">🎨</div>
+        <h3>Layout</h3>
+        <p>Grids, stacks, containers, and responsive utilities.</p>
+        <div class="component-count">7 variants</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Tokens -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">Design Tokens</div>
+      <h2 class="section-title">Live color palette</h2>
+      <p class="section-desc">
+        Semantic tokens that adapt to light and dark themes. 
+        Click any swatch to copy its value.
+      </p>
+    </div>
+    <div class="color-grid">
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--coral);"></div>
+        <div class="color-meta">
+          <div class="color-name">primary</div>
+          <div class="color-hex">#FF6B6B</div>
+          <div class="color-usage">Actions, CTAs</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--mint);"></div>
+        <div class="color-meta">
+          <div class="color-name">accent</div>
+          <div class="color-hex">#4ECDC4</div>
+          <div class="color-usage">Success, links</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--lavender);"></div>
+        <div class="color-meta">
+          <div class="color-name">secondary</div>
+          <div class="color-hex">#A78BFA</div>
+          <div class="color-usage">Highlights</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--gold);"></div>
+        <div class="color-meta">
+          <div class="color-name">warning</div>
+          <div class="color-hex">#FFE66D</div>
+          <div class="color-usage">Alerts, badges</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--sky);"></div>
+        <div class="color-meta">
+          <div class="color-name">info</div>
+          <div class="color-hex">#7DD3FC</div>
+          <div class="color-usage">Info states</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--rose);"></div>
+        <div class="color-meta">
+          <div class="color-name">danger</div>
+          <div class="color-hex">#FDA4AF</div>
+          <div class="color-usage">Errors, delete</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--cream);"></div>
+        <div class="color-meta">
+          <div class="color-name">surface</div>
+          <div class="color-hex">#F5F0EB</div>
+          <div class="color-usage">Backgrounds</div>
+        </div>
+      </div>
+      <div class="color-token">
+        <div class="color-swatch" style="background: var(--ink-soft);"></div>
+        <div class="color-meta">
+          <div class="color-name">elevated</div>
+          <div class="color-hex">#1A1926</div>
+          <div class="color-usage">Cards, modals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography Samples -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">Typography</div>
+      <h2 class="section-title">Type scale & rhythm</h2>
+      <p class="section-desc">
+        A carefully tuned type system using Inter for UI and JetBrains Mono for code.
+      </p>
+    </div>
+    <div class="type-samples">
+      <div class="type-sample">
+        <div class="type-meta">
+          <strong>Display</strong><br>
+          Inter Bold · 40px<br>
+          Line height 1.1<br>
+          Letter spacing -0.03em
+        </div>
+        <div class="type-preview display">Design with clarity.</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">
+          <strong>Heading</strong><br>
+          Inter Semibold · 24px<br>
+          Line height 1.3<br>
+          Letter spacing -0.02em
+        </div>
+        <div class="type-preview heading">Component architecture that scales.</div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">
+          <strong>Body</strong><br>
+          Inter Regular · 16px<br>
+          Line height 1.7<br>
+          Letter spacing 0
+        </div>
+        <div class="type-preview body">
+          Every token, component, and pattern is documented with real-world examples, 
+          accessibility notes, and implementation guidance. No guesswork — just clarity.
+        </div>
+      </div>
+      <div class="type-sample">
+        <div class="type-meta">
+          <strong>Code</strong><br>
+          JetBrains Mono · 14px<br>
+          Line height 1.8<br>
+          Letter spacing 0
+        </div>
+        <div class="type-preview mono">const theme = createTheme({ colors, spacing, radii });</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Snippets -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">Implementation</div>
+      <h2 class="section-title">Copy, paste, ship</h2>
+      <p class="section-desc">
+        Framework-agnostic tokens with first-class support for React, Vue, and vanilla CSS.
+      </p>
+    </div>
+    <div class="code-section">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">CSS</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body">
+          <span class="cm">/* Import the design tokens */</span><br>
+          <span class="kw">@import</span> <span class="str">'@ds/tokens/css'</span>;<br><br>
+          <span class="cm">/* Use semantic tokens */</span><br>
+          <span class="prop">.button</span> {<br>
+          &nbsp;&nbsp;<span class="prop">background</span>: <span class="fn">var</span>(<span class="str">--color-primary</span>);<br>
+          &nbsp;&nbsp;<span class="prop">color</span>: <span class="fn">var</span>(<span class="str">--color-on-primary</span>);<br>
+          &nbsp;&nbsp;<span class="prop">border-radius</span>: <span class="fn">var</span>(<span class="str">--radius-md</span>);<br>
+          &nbsp;&nbsp;<span class="prop">padding</span>: <span class="fn">var</span>(<span class="str">--space-sm</span>) <span class="fn">var</span>(<span class="str">--space-lg</span>);<br>
+          }
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">React</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <div class="code-body">
+          <span class="kw">import</span> { Button, Stack } <span class="kw">from</span> <span class="str">'@ds/react'</span>;<br><br>
+          <span class="kw">export function</span> <span class="fn">Actions</span>() {<br>
+          &nbsp;&nbsp;<span class="kw">return</span> (<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Stack</span> <span class="prop">direction</span>=<span class="str">"row"</span> <span class="prop">gap</span>=<span class="str">"md"</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Button</span> <span class="prop">variant</span>=<span class="str">"primary"</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get Started<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="fn">Button</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Button</span> <span class="prop">variant</span>=<span class="str">"ghost"</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Learn More<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="fn">Button</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="fn">Stack</span>&gt;<br>
+          &nbsp;&nbsp;);<br>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribution CTA -->
+  <section class="cta-section">
+    <div class="cta-card">
+      <h2>Built by the community,<br>for the community.</h2>
+      <p>
+        DESIGN / SYSTEM / DOCS is open source. Whether you're fixing a typo, 
+        adding a component, or proposing a new pattern — every contribution matters.
+      </p>
+      <div class="cta-actions">
+        <button class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Contribute on GitHub
+        </button>
+        <button class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Read Contribution Guide
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-mark" style="width: 22px; height: 22px; font-size: 0.55rem;">DS</div>
+        DESIGN / SYSTEM / DOCS · v3.2.0
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">Figma</a></li>
+        <li><a href="#">Changelog</a></li>
+        <li><a href="#">License</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Copy code snippet functionality
+    document.querySelectorAll('.code-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const codeBody = btn.closest('.code-block').querySelector('.code-body');
+        const text = codeBody.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.color = 'var(--mint)';
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.style.color = '';
+          }, 2000);
+        });
+      });
+    });
+
+    // Copy color token on click
+    document.querySelectorAll('.color-token').forEach(token => {
+      token.addEventListener('click', () => {
+        const hex = token.querySelector('.color-hex').textContent;
+        navigator.clipboard.writeText(hex).then(() => {
+          const nameEl = token.querySelector('.color-name');
+          const original = nameEl.textContent;
+          nameEl.textContent = 'Copied!';
+          nameEl.style.color = 'var(--mint)';
+          setTimeout(() => {
+            nameEl.textContent = original;
+            nameEl.style.color = '';
+          }, 1500);
+        });
+      });
+    });
+
+    // Search button keyboard shortcut
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.querySelector('.search-btn').focus();
+      }
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

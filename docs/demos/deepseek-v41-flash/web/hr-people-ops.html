@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>People / Operations / App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1e;
+      --ink-soft: #4a4a52;
+      --ink-muted: #7a7a84;
+      --paper: #f5f2ed;
+      --paper-warm: #edeae3;
+      --card: #ffffff;
+      --accent: #e85d3a;
+      --accent-soft: #fdf0ec;
+      --accent-deep: #c94a2a;
+      --teal: #2a7d6e;
+      --teal-soft: #e8f4f1;
+      --gold: #d4a843;
+      --gold-soft: #fdf8ed;
+      --lavender: #7c6baa;
+      --lavender-soft: #f2eff8;
+      --border: #e0dcd4;
+      --border-light: #ece9e2;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(26,26,30,0.06);
+      --shadow-md: 0 4px 16px rgba(26,26,30,0.08);
+      --shadow-lg: 0 8px 32px rgba(26,26,30,0.10);
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'DM Mono', 'SF Mono', monospace;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Layout Shell ─────────────────────────────────────── */
+    .app {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      grid-template-rows: 64px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ──────────────────────────────────────────── */
+    .topbar {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      top: 4px;
+      right: 4px;
+    }
+
+    .brand-mark::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      bottom: 5px;
+      left: 5px;
+    }
+
+    .brand-text {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      width: 240px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search-box svg { flex-shrink: 0; opacity: 0.4; }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--ink);
+      outline: none;
+      width: 100%;
+    }
+
+    .search-box input::placeholder { color: var(--ink-muted); }
+
+    .topbar-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      position: relative;
+    }
+
+    .topbar-btn:hover { background: var(--paper); border-color: var(--ink-muted); }
+
+    .topbar-btn .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--card);
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--lavender));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Sidebar ──────────────────────────────────────────── */
+    .sidebar {
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: 8px;
+    }
+
+    .nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding: 8px 12px 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item:hover { background: var(--paper); color: var(--ink); }
+
+    .nav-item.active {
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-weight: 500;
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      border-radius: 0 3px 3px 0;
+      background: var(--accent);
+    }
+
+    .nav-item svg { flex-shrink: 0; opacity: 0.6; }
+    .nav-item.active svg { opacity: 1; }
+
+    .nav-item .count {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      background: var(--paper-warm);
+      padding: 1px 7px;
+      border-radius: 10px;
+      color: var(--ink-muted);
+    }
+
+    .nav-item.active .count {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Main Content ─────────────────────────────────────── */
+    .main {
+      padding: 28px 32px 48px;
+      overflow-y: auto;
+      max-height: calc(100vh - 64px);
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .page-header h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .page-header .subtitle {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #2a2a30; }
+
+    .btn-outline {
+      background: var(--card);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover { border-color: var(--ink-muted); background: var(--paper); }
+
+    /* ── Grid ─────────────────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ── Cards ────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: var(--shadow-md); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+    }
+
+    .card-link {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .card-link:hover { text-decoration: underline; }
+
+    /* ── Pulse Card ───────────────────────────────────────── */
+    .pulse-score {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .pulse-score .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--teal);
+    }
+
+    .pulse-score .delta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--teal);
+      background: var(--teal-soft);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .pulse-label {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .pulse-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pulse-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pulse-bar-label {
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .pulse-bar-track {
+      flex: 1;
+      height: 6px;
+      background: var(--paper-warm);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .pulse-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+
+    .pulse-bar-fill.teal { background: var(--teal); }
+    .pulse-bar-fill.gold { background: var(--gold); }
+    .pulse-bar-fill.accent { background: var(--accent); }
+    .pulse-bar-fill.lavender { background: var(--lavender); }
+
+    .pulse-bar-value {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      width: 32px;
+      text-align: right;
+    }
+
+    /* ── Onboarding Card ──────────────────────────────────── */
+    .onboarding-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .onboarding-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--paper);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .onboarding-item:hover { background: var(--paper-warm); }
+
+    .onboarding-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .onboarding-check.done {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .onboarding-check.done svg { display: block; }
+    .onboarding-check svg { display: none; }
+
+    .onboarding-info { flex: 1; min-width: 0; }
+
+    .onboarding-name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .onboarding-task {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .onboarding-progress {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+
+    /* ── Leave Calendar ───────────────────────────────────── */
+    .leave-calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .cal-day:hover { background: var(--paper); }
+
+    .cal-day.today {
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .cal-day.has-leave::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .cal-day.today.has-leave::after { background: var(--gold); }
+
+    .cal-day.other-month { color: var(--border); }
+
+    .leave-legend {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ── Open Roles ───────────────────────────────────────── */
+    .role-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .role-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .role-item:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .role-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .role-icon.eng { background: var(--teal-soft); color: var(--teal); }
+    .role-icon.design { background: var(--lavender-soft); color: var(--lavender); }
+    .role-icon.ops { background: var(--gold-soft); color: var(--gold); }
+
+    .role-info { flex: 1; min-width: 0; }
+
+    .role-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .role-meta {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+    }
+
+    .role-applicants {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      background: var(--paper);
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ── Announcements ────────────────────────────────────── */
+    .announcement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .announcement-item {
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .announcement-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .announcement-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .announcement-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .announcement-tag.policy { background: var(--accent-soft); color: var(--accent-deep); }
+    .announcement-tag.event { background: var(--teal-soft); color: var(--teal); }
+    .announcement-tag.culture { background: var(--lavender-soft); color: var(--lavender); }
+
+    .announcement-date {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+    }
+
+    .announcement-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .announcement-excerpt {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Manager Actions ──────────────────────────────────── */
+    .action-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .action-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--paper);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .action-item:hover {
+      background: var(--paper-warm);
+      transform: translateX(2px);
+    }
+
+    .action-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .action-icon.approve { background: var(--teal-soft); color: var(--teal); }
+    .action-icon.review { background: var(--gold-soft); color: var(--gold); }
+    .action-icon.schedule { background: var(--lavender-soft); color: var(--lavender); }
+    .action-icon.flag { background: var(--accent-soft); color: var(--accent); }
+
+    .action-info { flex: 1; min-width: 0; }
+
+    .action-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .action-desc {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+    }
+
+    .action-arrow {
+      color: var(--ink-muted);
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+
+    .action-item:hover .action-arrow { transform: translateX(3px); }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .span-3 { grid-column: span 2; }
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      .span-2, .span-3 { grid-column: span 1; }
+      .search-box { width: 160px; }
+      .main { padding: 20px 16px 40px; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 0 16px; }
+      .search-box { display: none; }
+      .page-header h1 { font-size: 1.4rem; }
+    }
+
+    /* ── Animations ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.30s; }
+
+    /* ── Scrollbar ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ── Top Bar ─────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-mark"></div>
+      <div class="brand-text">
+        People / Operations / App
+        <span>Acme Corp · 248 employees</span>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="search-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search people, docs, policies…">
+      </div>
+
+      <button class="topbar-btn" aria-label="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="badge">3</span>
+      </button>
+
+      <button class="topbar-btn" aria-label="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+
+      <div class="avatar">MK</div>
+    </div>
+  </header>
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <a class="nav-item active" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        People
+        <span class="count">248</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Leave
+        <span class="count">12</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Hiring</div>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Open Roles
+        <span class="count">7</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Onboarding
+        <span class="count">4</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Engage</div>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Announcements
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        Pulse Surveys
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Manager Actions
+        <span class="count">5</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ────────────────────────────────────── -->
+  <main class="main">
+
+    <div class="page-header">
+      <div>
+        <h1>Good morning, <em>Maya</em></h1>
+        <p class="subtitle">Here's what's happening across the team today.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <button class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Announcement
+        </button>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- ── Employee Pulse ──────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Employee Pulse</span>
+          <a class="card-link" href="#">View report</a>
+        </div>
+        <div class="pulse-score">
+          <span class="number">8.2</span>
+          <span class="delta">↑ 0.4</span>
+        </div>
+        <p class="pulse-label">Overall engagement · Q3 2025</p>
+        <div class="pulse-bars">
+          <div class="pulse-bar-row">
+            <span class="pulse-bar-label">Purpose</span>
+            <div class="pulse-bar-track"><div class="pulse-bar-fill teal" style="width: 88%"></div></div>
+            <span class="pulse-bar-value">8.8</span>
+          </div>
+          <div class="pulse-bar-row">
+            <span class="pulse-bar-label">Growth</span>
+            <div class="pulse-bar-track"><div class="pulse-bar-fill gold" style="width: 72%"></div></div>
+            <span class="pulse-bar-value">7.2</span>
+          </div>
+          <div class="pulse-bar-row">
+            <span class="pulse-bar-label">Belonging</span>
+            <div class="pulse-bar-track"><div class="pulse-bar-fill accent" style="width: 84%"></div></div>
+            <span class="pulse-bar-value">8.4</span>
+          </div>
+          <div class="pulse-bar-row">
+            <span class="pulse-bar-label">Workload</span>
+            <div class="pulse-bar-track"><div class="pulse-bar-fill lavender" style="width: 65%"></div></div>
+            <span class="pulse-bar-value">6.5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Onboarding Tasks ────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Onboarding</span>
+          <a class="card-link" href="#">All tasks</a>
+        </div>
+        <div class="onboarding-list">
+          <div class="onboarding-item">
+            <div class="onboarding-check done">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="onboarding-info">
+              <div class="onboarding-name">Priya Sharma</div>
+              <div class="onboarding-task">Sign offer letter & NDA</div>
+            </div>
+            <span class="onboarding-progress">3/8</span>
+          </div>
+          <div class="onboarding-item">
+            <div class="onboarding-check done">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="onboarding-info">
+              <div class="onboarding-name">James Okafor</div>
+              <div class="onboarding-task">Complete security training</div>
+            </div>
+            <span class="onboarding-progress">5/8</span>
+          </div>
+          <div class="onboarding-item">
+            <div class="onboarding-check"></div>
+            <div class="onboarding-info">
+              <div class="onboarding-name">Lena Fischer</div>
+              <div class="onboarding-task">Set up payroll & benefits</div>
+            </div>
+            <span class="onboarding-progress">2/8</span>
+          </div>
+          <div class="onboarding-item">
+            <div class="onboarding-check"></div>
+            <div class="onboarding-info">
+              <div class="onboarding-name">Tomás Rivera</div>
+              <div class="onboarding-task">Meet your onboarding buddy</div>
+            </div>
+            <span class="onboarding-progress">1/8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Leave Calendar ──────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Leave Calendar</span>
+          <a class="card-link" href="#">Full calendar</a>
+        </div>
+        <div class="leave-calendar">
+          <div class="cal-day-label">M</div>
+          <div class="cal-day-label">T</div>
+          <div class="cal-day-label">W</div>
+          <div class="cal-day-label">T</div>
+          <div class="cal-day-label">F</div>
+          <div class="cal-day-label">S</div>
+          <div class="cal-day-label">S</div>
+
+          <div class="cal-day other-month">29</div>
+          <div class="cal-day other-month">30</div>
+          <div class="cal-day">1</div>
+          <div class="cal-day">2</div>
+          <div class="cal-day has-leave">3</div>
+          <div class="cal-day">4</div>
+          <div class="cal-day">5</div>
+
+          <div class="cal-day">6</div>
+          <div class="cal-day has-leave">7</div>
+          <div class="cal-day">8</div>
+          <div class="cal-day">9</div>
+          <div class="cal-day has-leave">10</div>
+          <div class="cal-day">11</div>
+          <div class="cal-day">12</div>
+
+          <div class="cal-day">13</div>
+          <div class="cal-day">14</div>
+          <div class="cal-day today has-leave">15</div>
+          <div class="cal-day">16</div>
+          <div class="cal-day has-leave">17</div>
+          <div class="cal-day">18</div>
+          <div class="cal-day">19</div>
+
+          <div class="cal-day">20</div>
+          <div class="cal-day has-leave">21</div>
+          <div class="cal-day">22</div>
+          <div class="cal-day">23</div>
+          <div class="cal-day">24</div>
+          <div class="cal-day">25</div>
+          <div class="cal-day">26</div>
+
+          <div class="cal-day">27</div>
+          <div class="cal-day">28</div>
+          <div class="cal-day has-leave">29</div>
+          <div class="cal-day">30</div>
+          <div class="cal-day">31</div>
+          <div class="cal-day other-month">1</div>
+          <div class="cal-day other-month">2</div>
+        </div>
+        <div class="leave-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--accent);"></span>
+            Approved leave
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--gold);"></span>
+            Today
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Open Roles ──────────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Open Roles</span>
+          <a class="card-link" href="#">View all 7</a>
+        </div>
+        <div class="role-list">
+          <div class="role-item">
+            <div class="role-icon eng">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="role-info">
+              <div class="role-title">Senior Frontend Engineer</div>
+              <div class="role-meta">Engineering · Remote (EU)</div>
+            </div>
+            <span class="role-applicants">24</span>
+          </div>
+          <div class="role-item">
+            <div class="role-icon design">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+            </div>
+            <div class="role-info">
+              <div class="role-title">Product Designer</div>
+              <div class="role-meta">Design · London (Hybrid)</div>
+            </div>
+            <span class="role-applicants">18</span>
+          </div>
+          <div class="role-item">
+            <div class="role-icon ops">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+            </div>
+            <div class="role-info">
+              <div class="role-title">People Operations Lead</div>
+              <div class="role-meta">People · New York (On-site)</div>
+            </div>
+            <span class="role-applicants">31</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Announcements ───────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Announcements</span>
+          <a class="card-link" href="#">View all</a>
+        </div>
+        <div class="announcement-list">
+          <div class="announcement-item">
+            <div class="announcement-meta">
+              <span class="announcement-tag policy">Policy</span>
+              <span class="announcement-date">2 hours ago</span>
+            </div>
+            <div class="announcement-title">Updated remote work policy for 2026</div>
+            <div class="announcement-excerpt">Starting January, all employees will have the option to work remotely up to 3 days per week. Managers will receive updated guidelines for team scheduling.</div>
+          </div>
+          <div class="announcement-item">
+            <div class="announcement-meta">
+              <span class="announcement-tag event">Event</span>
+              <span class="announcement-date">Yesterday</span>
+            </div>
+            <div class="announcement-title">Q3 All-Hands: Thursday, Oct 16</div>
+            <div class="announcement-excerpt">Join us for the quarterly all-hands where we'll share company updates, celebrate wins, and hear from the leadership team. Calendar invite to follow.</div>
+          </div>
+          <div class="announcement-item">
+            <div class="announcement-meta">
+              <span class="announcement-tag culture">Culture</span>
+              <span class="announcement-date">3 days ago</span>
+            </div>
+            <div class="announcement-title">Welcome our new Head of Design, Sofia Chen</div>
+            <div class="announcement-excerpt">Sofia joins us from Figma where she led the design systems team. She'll be based in our London office and will oversee all product design initiatives.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Manager Actions ─────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Manager Actions</span>
+          <a class="card-link" href="#">View all 5</a>
+        </div>
+        <div class="action-list">
+          <div class="action-item">
+            <div class="action-icon approve">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="action-info">
+              <div class="action-title">Approve leave request</div>
+              <div class="action-desc">James Okafor · Oct 20–24</div>
+            </div>
+            <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="action-item">
+            <div class="action-icon review">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="action-info">
+              <div class="action-title">Complete performance review</div>
+              <div class="action-desc">Priya Sharma · Due Oct 18</div>
+            </div>
+            <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="action-item">
+            <div class="action-icon schedule">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="action-info">
+              <div class="action-title">Schedule 1:1 with Lena</div>
+              <div class="action-desc">No meeting scheduled this week</div>
+            </div>
+            <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="action-item">
+            <div class="action-icon flag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <div class="action-info">
+              <div class="action-title">Review pulse survey feedback</div>
+              <div class="action-desc">3 comments need your attention</div>
+            </div>
+            <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  // ── Interactive onboarding checkboxes ──────────────────
+  document.querySelectorAll('.onboarding-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const check = item.querySelector('.onboarding-check');
+      check.classList.toggle('done');
+    });
+  });
+
+  // ── Calendar day click ─────────────────────────────────
+  document.querySelectorAll('.cal-day:not(.other-month)').forEach(day => {
+    day.addEventListener('click', () => {
+      document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('today'));
+      day.classList.add('today');
+    });
+  });
+
+  // ── Animate pulse bars on load ─────────────────────────
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.pulse-bar-fill').forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          bar.style.width = width;
+        });
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

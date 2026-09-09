@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUXTRACE — Distributed Tracing at the Speed of Thought</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b0e;
+    --bg-elev: #0f1115;
+    --bg-elev-2: #14171d;
+    --border: #1e222a;
+    --border-strong: #2a2f3a;
+    --text: #e6e8ec;
+    --text-dim: #8b93a1;
+    --text-mute: #5a6273;
+    --accent: #7dd3fc;
+    --accent-2: #a78bfa;
+    --accent-3: #34d399;
+    --warn: #fbbf24;
+    --err: #f87171;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(125, 211, 252, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125, 211, 252, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(16px);
+    background: rgba(10, 11, 14, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 22px;
+    height: 22px;
+    position: relative;
+  }
+
+  .logo-mark svg { width: 100%; height: 100%; display: block; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-cta .ghost {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .nav-cta .ghost:hover { color: var(--text); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    border-color: var(--border-strong);
+    color: var(--text);
+    background: transparent;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text-dim);
+    background: var(--bg-elev);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 0 80px;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px 5px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    background: var(--bg-elev);
+    margin-bottom: 28px;
+  }
+
+  .hero-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-3);
+    box-shadow: 0 0 8px var(--accent-3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-badge .sep { color: var(--text-mute); }
+
+  h1 {
+    font-size: clamp(40px, 5.5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
+
+  h1 .accent {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 620px;
+    line-height: 1.55;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .hero-actions .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+    display: flex;
+    gap: 20px;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  .hero-meta svg { width: 12px; height: 12px; }
+
+  /* TERMINAL / TRACE VISUAL */
+  .trace-window {
+    margin-top: 64px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-elev);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.02),
+      0 30px 80px -20px rgba(0,0,0,0.6),
+      0 0 100px -40px rgba(125, 211, 252, 0.15);
+    position: relative;
+  }
+
+  .trace-window::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.4), transparent);
+  }
+
+  .window-bar {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elev-2);
+    gap: 12px;
+  }
+
+  .window-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .window-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+
+  .window-dots span:nth-child(1) { background: #3a3f4a; }
+  .window-dots span:nth-child(2) { background: #3a3f4a; }
+  .window-dots span:nth-child(3) { background: #3a3f4a; }
+
+  .window-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+    flex: 1;
+    text-align: center;
+  }
+
+  .window-tabs {
+    display: flex;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .window-tabs span {
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: var(--text-mute);
+  }
+
+  .window-tabs span.active {
+    background: var(--bg);
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  .trace-body {
+    padding: 20px 24px 24px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+
+  .trace-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .trace-id {
+    color: var(--text-dim);
+    font-size: 11.5px;
+  }
+
+  .trace-id strong { color: var(--text); font-weight: 500; }
+
+  .trace-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 11.5px;
+  }
+
+  .trace-stats div { display: flex; gap: 6px; align-items: center; }
+  .trace-stats .label { color: var(--text-mute); }
+  .trace-stats .val { color: var(--text); }
+  .trace-stats .val.ok { color: var(--accent-3); }
+  .trace-stats .val.warn { color: var(--warn); }
+
+  .span-row {
+    display: grid;
+    grid-template-columns: 260px 1fr 70px;
+    gap: 16px;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    position: relative;
+  }
+
+  .span-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .span-name .indent {
+    display: inline-block;
+    width: 12px;
+    height: 1px;
+    background: var(--border-strong);
+    flex-shrink: 0;
+  }
+
+  .span-name .svc {
+    color: var(--text-mute);
+    font-size: 11px;
+  }
+
+  .span-bar-track {
+    position: relative;
+    height: 18px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .span-bar {
+    position: absolute;
+    top: 3px;
+    height: 12px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    opacity: 0.85;
+    animation: grow 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .span-bar.slow {
+    background: linear-gradient(90deg, var(--warn), #f59e0b);
+  }
+
+  .span-bar.err {
+    background: linear-gradient(90deg, var(--err), #dc2626);
+  }
+
+  .span-bar.ok {
+    background: linear-gradient(90deg, var(--accent-3), #10b981);
+  }
+
+  @keyframes grow {
+    from { transform: scaleX(0); transform-origin: left; }
+    to { transform: scaleX(1); transform-origin: left; }
+  }
+
+  .span-dur {
+    text-align: right;
+    color: var(--text-dim);
+    font-size: 11.5px;
+  }
+
+  .span-dur.slow { color: var(--warn); }
+  .span-dur.err { color: var(--err); }
+
+  .trace-footer {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+
+  .trace-footer .live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-3);
+  }
+
+  .trace-footer .live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-3);
+    box-shadow: 0 0 6px var(--accent-3);
+    animation: pulse 1.5s infinite;
+  }
+
+  /* METRICS */
+  .metrics {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .metric {
+    padding: 0 32px;
+    border-right: 1px solid var(--border);
+  }
+
+  .metric:first-child { padding-left: 0; }
+  .metric:last-child { border-right: none; padding-right: 0; }
+
+  .metric-value {
+    font-family: var(--mono);
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .metric-value .unit {
+    font-size: 20px;
+    color: var(--text-dim);
+    margin-left: 2px;
+  }
+
+  .metric-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .metric-label strong {
+    color: var(--text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
+
+  .section-head {
+    max-width: 720px;
+    margin-bottom: 64px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-size: clamp(28px, 3.5vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .section-head p {
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .feature {
+    background: var(--bg-elev);
+    padding: 32px 28px;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .feature:hover { background: var(--bg-elev-2); }
+
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .feature-icon svg { width: 18px; height: 18px; }
+
+  .feature h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .feature .code-hint {
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-mute);
+    padding: 8px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .feature .code-hint .k { color: var(--accent-2); }
+  .feature .code-hint .s { color: var(--accent-3); }
+  .feature .code-hint .c { color: var(--text-mute); }
+
+  /* ARCHITECTURE */
+  .arch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .arch-diagram {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-elev);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .arch-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(125, 211, 252, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .arch-diagram svg { width: 100%; height: auto; display: block; position: relative; }
+
+  .arch-content h2 { margin-bottom: 20px; }
+
+  .arch-content p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 24px;
+    line-height: 1.65;
+  }
+
+  .arch-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .arch-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .arch-list li svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent-3);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .arch-list li span {
+    color: var(--text-dim);
+    font-size: 13px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* CODE BLOCK */
+  .code-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .code-block {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-elev);
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .code-block .window-bar { padding: 10px 14px; }
+
+  .code-content {
+    padding: 20px 22px;
+    overflow-x: auto;
+  }
+
+  .code-content .line {
+    display: flex;
+    gap: 20px;
+    white-space: pre;
+  }
+
+  .code-content .ln {
+    color: var(--text-mute);
+    user-select: none;
+    min-width: 20px;
+    text-align: right;
+  }
+
+  .code-content .code { color: var(--text); }
+
+  .tok-kw { color: var(--accent-2); }
+  .tok-str { color: var(--accent-3); }
+  .tok-fn { color: var(--accent); }
+  .tok-com { color: var(--text-mute); font-style: italic; }
+  .tok-num { color: var(--warn); }
+
+  /* CTA */
+  .cta {
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse at center, rgba(125, 211, 252, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    max-width: 720px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
+  .cta p {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 520px;
+    margin: 0 auto 36px;
+    position: relative;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .cta-actions .btn {
+    padding: 13px 22px;
+    font-size: 14px;
+  }
+
+  .cta-note {
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+    position: relative;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0 40px;
+    background: var(--bg-elev);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+    .metric { padding: 0 24px; }
+    .metric:nth-child(2) { border-right: none; }
+    .metric:nth-child(3) { padding-left: 0; }
+    .features-grid { grid-template-columns: 1fr; }
+    .arch, .code-section { grid-template-columns: 1fr; gap: 40px; }
+    .span-row { grid-template-columns: 180px 1fr 60px; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 64px 0 48px; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .metric { padding: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .metric:last-child { border-bottom: none; }
+    .span-row { grid-template-columns: 1fr; gap: 4px; }
+    .span-dur { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 12 L9 12 L11 6 L13 18 L15 12 L21 12" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="3" cy="12" r="1.5" fill="#7dd3fc"/>
+          <circle cx="21" cy="12" r="1.5" fill="#a78bfa"/>
+        </svg>
+      </span>
+      FLUXTRACE
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#sdk">SDKs</a></li>
+      <li><a href="#">Docs</a></li>
+      <li><a href="#">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Start free</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      v2.4 released
+      <span class="sep">·</span>
+      OTel-native
+    </div>
+    <h1>Distributed tracing that keeps up with <span class="accent">your production</span>.</h1>
+    <p class="hero-sub">
+      FLUXTRACE ingests billions of spans per day with sub-second query latency. Trace every request across services, queues, and databases — without sampling away the bugs you actually need to find.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">
+        Start tracing free
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor"/></svg>
+        Watch 2-min demo
+      </a>
+    </div>
+    <div class="hero-meta">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        No credit card
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        10M spans / month free
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Deploy in 4 minutes
+      </span>
+    </div>
+
+    <!-- TRACE VISUAL -->
+    <div class="trace-window">
+      <div class="window-bar">
+        <div class="window-dots"><span></span><span></span><span></span></div>
+        <div class="window-title">trace · checkout-service · prod-us-east-1</div>
+        <div class="window-tabs">
+          <span class="active">waterfall</span>
+          <span>flame</span>
+          <span>logs</span>
+        </div>
+      </div>
+      <div class="trace-body">
+        <div class="trace-header">
+          <div class="trace-id">
+            trace_id <strong>4f8a2c9e1b7d3a6f</strong> · POST /api/v1/checkout · 200 OK
+          </div>
+          <div class="trace-stats">
+            <div><span class="label">duration</span><span class="val">842ms</span></div>
+            <div><span class="label">spans</span><span class="val">14</span></div>
+            <div><span class="label">errors</span><span class="val ok">0</span></div>
+          </div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="svc">[api]</span> POST /checkout</div>
+          <div class="span-bar-track"><div class="span-bar" style="left:0%; width:100%; animation-delay:0.05s"></div></div>
+          <div class="span-dur">842ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[auth]</span> verify_token</div>
+          <div class="span-bar-track"><div class="span-bar ok" style="left:1%; width:6%; animation-delay:0.15s"></div></div>
+          <div class="span-dur">48ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[cart]</span> load_cart</div>
+          <div class="span-bar-track"><div class="span-bar" style="left:8%; width:9%; animation-delay:0.25s"></div></div>
+          <div class="span-dur">76ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="indent"></span><span class="svc">[postgres]</span> SELECT cart_items</div>
+          <div class="span-bar-track"><div class="span-bar ok" style="left:9%; width:7%; animation-delay:0.35s"></div></div>
+          <div class="span-dur">58ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[inventory]</span> reserve_stock</div>
+          <div class="span-bar-track"><div class="span-bar slow" style="left:18%; width:34%; animation-delay:0.45s"></div></div>
+          <div class="span-dur slow">286ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="indent"></span><span class="svc">[redis]</span> GET stock:sku:*</div>
+          <div class="span-bar-track"><div class="span-bar ok" style="left:19%; width:3%; animation-delay:0.55s"></div></div>
+          <div class="span-dur">24ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="indent"></span><span class="svc">[grpc]</span> warehouse.Reserve</div>
+          <div class="span-bar-track"><div class="span-bar slow" style="left:23%; width:28%; animation-delay:0.65s"></div></div>
+          <div class="span-dur slow">238ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[payments]</span> charge_card</div>
+          <div class="span-bar-track"><div class="span-bar" style="left:53%; width:22%; animation-delay:0.75s"></div></div>
+          <div class="span-dur">184ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="indent"></span><span class="svc">[stripe]</span> POST /v1/payment_intents</div>
+          <div class="span-bar-track"><div class="span-bar" style="left:54%; width:20%; animation-delay:0.85s"></div></div>
+          <div class="span-dur">168ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[events]</span> publish order.created</div>
+          <div class="span-bar-track"><div class="span-bar ok" style="left:76%; width:5%; animation-delay:0.95s"></div></div>
+          <div class="span-dur">42ms</div>
+        </div>
+
+        <div class="span-row">
+          <div class="span-name"><span class="indent"></span><span class="svc">[notify]</span> send_confirmation</div>
+          <div class="span-bar-track"><div class="span-bar ok" style="left:82%; width:17%; animation-delay:1.05s"></div></div>
+          <div class="span-dur">142ms</div>
+        </div>
+
+        <div class="trace-footer">
+          <div class="live">streaming · 14 spans captured · 0 dropped</div>
+          <div>p99 842ms · p50 312ms · sampled 100%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- METRICS -->
+<section class="metrics">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-value">2.4<span class="unit">B</span></div>
+        <div class="metric-label"><strong>Spans / day</strong>Ingested across all tenants</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">180<span class="unit">ms</span></div>
+        <div class="metric-label"><strong>p95 query latency</strong>Across 30-day retention</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">99.99<span class="unit">%</span></div>
+        <div class="metric-label"><strong>Ingest uptime</strong>Multi-region, active-active</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">100<span class="unit">%</span></div>
+        <div class="metric-label"><strong>Trace fidelity</strong>Tail-based, no blind spots</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Capabilities</div>
+      <h2>Everything you need to debug distributed systems.</h2>
+      <p>Built from the ground up for high-cardinality, high-throughput workloads. No sampling compromises, no query timeouts, no vendor lock-in.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Sub-second queries</h3>
+        <p>Columnar storage with vectorized execution. Query 30 days of traces across billions of spans in under 200ms — even with high-cardinality attributes.</p>
+        <div class="code-hint"><span class="c">// query</span> <span class="k">service</span>=<span class="s">"checkout"</span> <span class="k">duration</span>&gt;<span class="num">500ms</span></div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <h3>Tail-based sampling</h3>
+        <p>Keep every error, every slow request, every trace that matters. Drop the noise at the collector — not at the SDK — so you never lose the signal.</p>
+        <div class="code-hint"><span class="c">// policy</span> <span class="k">keep_if</span>: <span class="s">error || duration &gt; 500ms</span></div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h3>OTel-native</h3>
+        <p>Drop-in compatible with OpenTelemetry. Send spans via OTLP/gRPC or HTTP. No proprietary agents, no code changes, no lock-in.</p>
+        <div class="code-hint"><span class="c">// endpoint</span> <span class="s">otlp.fluxtrace.dev:4317</span></div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+        </div>
+        <h3>Service map</h3>
+        <p>Auto-generated dependency graph with live latency, error rates, and throughput per edge. Spot the bottleneck in seconds, not hours.</p>
+        <div class="code-hint"><span class="c">// edges</span> <span class="num">47</span> services · <span class="num">312</span> connections</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Correlated logs</h3>
+        <p>Every span carries its trace context. Jump from a slow span to the exact log lines, metrics, and deploy that caused it — in one click.</p>
+        <div class="code-hint"><span class="c">// context</span> <span class="k">trace_id</span>=<span class="s">"4f8a2c9e..."</span></div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Enterprise-grade</h3>
+        <p>SOC 2 Type II, HIPAA, and GDPR compliant. SSO, RBAC, audit logs, and private VPC deployment available on every paid plan.</p>
+        <div class="code-hint"><span class="c">// compliance</span> <span class="s">SOC2 · HIPAA · GDPR</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <div class="arch">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 480 360" fill="none">
+          <!-- Grid -->
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e222a" stroke-width="0.5"/>
+            </pattern>
+            <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#7dd3fc" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect width="480" height="360" fill="url(#grid)"/>
+
+          <!-- Services column -->
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8b93a1">
+            <rect x="20" y="40" width="90" height="34" rx="6" fill="#14171d" stroke="#2a2f3a"/>
+            <text x="65" y="61" text-anchor="middle" fill="#e6e8ec">api-gateway</text>
+
+            <rect x="20" y="100" width="90" height="34" rx="6" fill="#14171d" stroke="#2a2f3a"/>
+            <text x="65" y="121" text-anchor="middle" fill="#e6e8ec">checkout</text>
+
+            <rect x="20" y="160" width="90" height="34" rx="6" fill="#14171d" stroke="#2a2f3a"/>
+            <text x="65" y="181" text-anchor="middle" fill="#e6e8ec">payments</text>
+
+            <rect x="20" y="220" width="90" height="34" rx="6" fill="#14171d" stroke="#2a2f3a"/>
+            <text x="65" y="241" text-anchor="middle" fill="#e6e8ec">inventory</text>
+
+            <rect x="20" y="280" width="90" height="34" rx="6" fill="#14171d" stroke="#2a2f3a"/>
+            <text x="65" y="301" text-anchor="middle" fill="#e6e8ec">notify</text>
+          </g>
+
+          <!-- Collector -->
+          <g>
+            <rect x="180" y="140" width="120" height="80" rx="8" fill="#0f1115" stroke="#7dd3fc" stroke-opacity="0.5"/>
+            <text x="240" y="170" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#7dd3fc">OTel Collector</text>
+            <text x="240" y="188" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8b93a1">tail-sampling</text>
+            <text x="240" y="202" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8b93a1">batching</text>
+          </g>
+
+          <!-- Storage -->
+          <g>
+            <rect x="360" y="60" width="100" height="60" rx="8" fill="#0f1115" stroke="#a78bfa" stroke-opacity="0.5"/>
+            <text x="410" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#a78bfa">Columnar</text>
+            <text x="410" y="102" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8b93a1">hot · 30d</text>
+          </g>
+
+          <g>
+            <rect x="360" y="150" width="100" height="60" rx="8" fill="#0f1115" stroke="#a78bfa" stroke-opacity="0.5"/>
+            <text x="410" y="176" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#a78bfa">Object Store</text>
+            <text x="410" y="192" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8b93a1">cold · 13mo</text>
+          </g>
+
+          <g>
+            <rect x="360" y="240" width="100" height="60" rx="8" fill="#0f1115" stroke="#34d399" stroke-opacity="0.5"/>
+            <text x="410" y="266" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#34d399">Query Engine</text>
+            <text x="410" y="282" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#8b93a1">vectorized</text>
+          </g>
+
+          <!-- Connections -->
+          <g stroke="#2a2f3a" stroke-width="1" fill="none">
+            <path d="M110 57 C 145 57, 145 160, 180 160"/>
+            <path d="M110 117 C 145 117, 145 170, 180 170"/>
+            <path d="M110 177 C 145 177, 145 180, 180 180"/>
+            <path d="M110 237 C 145 237, 145 190, 180 190"/>
+            <path d="M110 297 C 145 297, 145 200, 180 200"/>
+          </g>
+
+          <g stroke="#2a2f3a" stroke-width="1" fill="none">
+            <path d="M300 160 C 330 160, 330 90, 360 90"/>
+            <path d="M300 180 C 330 180, 330 180, 360 180"/>
+            <path d="M300 200 C 330 200, 330 270, 360 270"/>
+          </g>
+
+          <!-- Animated flow dots -->
+          <circle r="2.5" fill="#7dd3fc">
+            <animateMotion dur="2.5s" repeatCount="indefinite" path="M110 57 C 145 57, 145 160, 180 160"/>
+          </circle>
+          <circle r="2.5" fill="#7dd3fc">
+            <animateMotion dur="2.5s" begin="0.5s" repeatCount="indefinite" path="M110 117 C 145 117, 145 170, 180 170"/>
+          </circle>
+          <circle r="2.5" fill="#7dd3fc">
+            <animateMotion dur="2.5s" begin="1s" repeatCount="indefinite" path="M110 177 C 145 177, 145 180, 180 180"/>
+          </circle>
+          <circle r="2.5" fill="#a78bfa">
+            <animateMotion dur="2s" begin="0.3s" repeatCount="indefinite" path="M300 160 C 330 160, 330 90, 360 90"/>
+          </circle>
+          <circle r="2.5" fill="#a78bfa">
+            <animateMotion dur="2s" begin="0.8s" repeatCount="indefinite" path="M300 180 C 330 180, 330 180, 360 180"/>
+          </circle>
+          <circle r="2.5" fill="#34d399">
+            <animateMotion dur="2s" begin="1.2s" repeatCount="indefinite" path="M300 200 C 330 200, 330 270, 360 270"/>
+          </circle>
+        </svg>
+      </div>
+
+      <div class="arch-content">
+        <div class="eyebrow">Architecture</div>
+        <h2>Built for the scale of modern production.</h2>
+        <p>FLUXTRACE separates ingest from query. Spans land in a write-optimized columnar store, then get compacted into a read-optimized format for fast analytical queries. No shared bottleneck, no query timeouts.</p>
+        <ul class="arch-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>Active-active multi-region</strong>
+              <span>Ingest and query from any region with automatic failover.</span>
+            </div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>Zero-copy compaction</strong>
+              <span>Spans are compacted in the background without blocking queries.</span>
+            </div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>Cost-optimized retention</strong>
+              <span>Hot data in NVMe, cold data in object storage. Query both transparently.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SDK / CODE -->
+<section id="sdk">
+  <div class="container">
+    <div class="code-section">
+      <div>
+        <div class="eyebrow">SDKs</div>
+        <h2>Instrument in minutes, not sprints.</h2>
+        <p style="color: var(--text-dim); font-size: 15px; margin-bottom: 24px; line-height: 1.65;">
+          First-class SDKs for Go, Rust, Python, Node.js, Java, and Ruby. Or use any OpenTelemetry-compatible library — FLUXTRACE speaks OTLP natively.
+        </p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Go</span>
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Rust</span>
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Python</span>
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Node.js</span>
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Java</span>
+          <span style="font-family: var(--mono); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border-strong); border-radius: 5px; color: var(--text-dim);">Ruby</span>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="window-bar">
+          <div class="window-dots"><span></span><span></span><span></span></div>
+          <div class="window-title">main.go</div>
+        </div>
+        <div class="code-content">
+          <div class="line"><span class="ln">1</span><span class="code"><span class="tok-kw">package</span> main</span></div>
+          <div class="line"><span class="ln">2</span><span class="code"></span></div>
+          <div class="line"><span class="ln">3</span><span class="code"><span class="tok-kw">import</span> (</span></div>
+          <div class="line"><span class="ln">4</span><span class="code">    <span class="tok-str">"context"</span></span></div>
+          <div class="line"><span class="ln">5</span><span class="code">    <span class="tok-str">"github.com/fluxtrace/sdk-go"</span></span></div>
+          <div class="line"><span class="ln">6</span><span class="code">)</span></div>
+          <div class="line"><span class="ln">7</span><span class="code"></span></div>
+          <div class="line"><span class="ln">8</span><span class="code"><span class="tok-kw">func</span> <span class="tok-fn">main</span>() {</span></div>
+          <div class="line"><span class="ln">9</span><span class="code">    tp := fluxtrace.<span class="tok-fn">NewTracerProvider</span>(</span></div>
+          <div class="line"><span class="ln">10</span><span class="code">        fluxtrace.<span class="tok-fn">WithEndpoint</span>(<span class="tok-str">"otlp.fluxtrace.dev:4317"</span>),</span></div>
+          <div class="line"><span class="ln">11</span><span class="code">        fluxtrace.<span class="tok-fn">WithServiceName</span>(<span class="tok-str">"checkout"</span>),</span></div>
+          <div class="line"><span class="ln">12</span><span class="code">    )</span></div>
+          <div class="line"><span class="ln">13</span><span class="code">    <span class="tok-kw">defer</span> tp.<span class="tok-fn">Shutdown</span>(context.<span class="tok-fn">Background</span>())</span></div>
+          <div class="line"><span class="ln">14</span><span class="code"></span></div>
+          <div class="line"><span class="ln">15</span><span class="code">    <span class="tok-com">// That's it. Spans flow automatically.</span></span></div>
+          <div class="line"><span class="ln">16</span><span class="code">}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <h2>Stop guessing. Start tracing.</h2>
+    <p>Join 4,000+ engineering teams who ship faster with FLUXTRACE. Free for the first 10 million spans every month.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-primary">
+        Start free
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#" class="btn btn-outline">Talk to engineering</a>
+    </div>
+    <div class="cta-note">No credit card · 4-minute setup · Cancel anytime</div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 12 L9 12 L11 6 L13 18 L15 12 L21 12" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="3" cy="12" r="1.5" fill="#7dd3fc"/>
+          <circle cx="21" cy="12" r="1.5" fill="#a78bfa"/>
+        </svg>
+      </span>
+      FLUXTRACE
+    </a>
+    <ul class="footer-links">
+      <li><a href="#">Docs</a></li>
+      <li><a href="#">Status</a></li>
+      <li><a href="#">Security</a></li>
+      <li><a href="#">Changelog</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Fluxtrace Labs, Inc.</div>
+  </div>
+</footer>
+
+</body>
+</html>

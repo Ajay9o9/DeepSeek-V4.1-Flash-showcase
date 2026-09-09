@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKINCARE / BRAND — ritual, reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1e1c1a;
+      --paper: #f7f4f0;
+      --sand: #e8e0d7;
+      --clay: #c17b5e;
+      --moss: #5f6b5c;
+      --gold: #b89b7b;
+      --mist: #d9d2c8;
+      --white: #ffffff;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius: 24px;
+      --shadow: 0 20px 40px -12px rgba(30, 28, 26, 0.12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--serif);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 5.6rem);
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+    }
+
+    h3 {
+      font-size: 1.6rem;
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .body-large {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: #3d3a36;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(247, 244, 240, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(30, 28, 26, 0.06);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--clay);
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--clay);
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--clay) !important;
+      color: var(--paper) !important;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 3rem 0 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-content h1 {
+      max-width: 12ch;
+    }
+
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--clay);
+    }
+
+    .hero-content .body-large {
+      max-width: 40ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--clay);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -8px rgba(193, 123, 94, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-2px);
+    }
+
+    /* ---------- HERO VISUAL (CSS/SVG) ---------- */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 520px;
+    }
+
+    .hero-blob {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle at 30% 30%, var(--sand), var(--mist));
+      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+      animation: morph 12s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes morph {
+      0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+      50% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+    }
+
+    .hero-bottle {
+      position: relative;
+      z-index: 2;
+      width: 180px;
+      height: 340px;
+      background: linear-gradient(145deg, #f0ebe4, #d9d2c8);
+      border-radius: 40px 40px 30px 30px;
+      box-shadow: 
+        0 30px 60px -20px rgba(30, 28, 26, 0.25),
+        inset 0 -4px 8px rgba(255, 255, 255, 0.6),
+        inset 0 4px 8px rgba(30, 28, 26, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transform: rotate(-4deg);
+      transition: transform 0.4s ease;
+    }
+
+    .hero-bottle:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .hero-bottle::before {
+      content: '';
+      position: absolute;
+      top: -18px;
+      width: 60px;
+      height: 24px;
+      background: linear-gradient(145deg, #c9bfb3, #b0a598);
+      border-radius: 12px 12px 4px 4px;
+      box-shadow: 0 4px 8px rgba(30, 28, 26, 0.1);
+    }
+
+    .hero-bottle::after {
+      content: '';
+      position: absolute;
+      top: 40px;
+      width: 100px;
+      height: 1px;
+      background: rgba(30, 28, 26, 0.08);
+    }
+
+    .bottle-label {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .bottle-label small {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-top: 0.3rem;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 20px;
+      background: var(--white);
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      z-index: 3;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--moss);
+      border-radius: 50%;
+    }
+
+    /* ---------- SECTION SHARED ---------- */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+
+    .section-header h2 {
+      max-width: 16ch;
+    }
+
+    /* ---------- INGREDIENTS ---------- */
+    .ingredients {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin: 0 2rem;
+      padding: 5rem 0;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .ingredient-card {
+      background: var(--paper);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ingredient-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .ingredient-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ingredient-card:nth-child(1) .ingredient-icon {
+      background: #e8d5c4;
+      color: #a0613e;
+    }
+
+    .ingredient-card:nth-child(2) .ingredient-icon {
+      background: #d4d9d0;
+      color: #4a5a47;
+    }
+
+    .ingredient-card:nth-child(3) .ingredient-icon {
+      background: #e0d4c8;
+      color: #8b6b4a;
+    }
+
+    .ingredient-card h3 {
+      font-size: 1.4rem;
+    }
+
+    .ingredient-card p {
+      font-size: 0.95rem;
+      color: #5a5650;
+      line-height: 1.6;
+    }
+
+    .ingredient-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    /* ---------- ROUTINE ---------- */
+    .routine {
+      padding: 6rem 0;
+    }
+
+    .routine-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 2rem 1.5rem;
+      background: var(--white);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(30, 28, 26, 0.04);
+    }
+
+    .step:hover {
+      transform: translateY(-4px);
+    }
+
+    .step-number {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      color: var(--mist);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .step h3 {
+      font-size: 1.2rem;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: #5a5650;
+      line-height: 1.5;
+    }
+
+    .step-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    /* ---------- PRODUCTS ---------- */
+    .products {
+      background: var(--white);
+      border-radius: var(--radius);
+      margin: 0 2rem;
+      padding: 5rem 0;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--paper);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-visual {
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:nth-child(1) .product-visual {
+      background: linear-gradient(145deg, #f0e6dc, #e0d0c0);
+    }
+
+    .product-card:nth-child(2) .product-visual {
+      background: linear-gradient(145deg, #e4e8e0, #d0d8cc);
+    }
+
+    .product-card:nth-child(3) .product-visual {
+      background: linear-gradient(145deg, #ece4dc, #d8ccc0);
+    }
+
+    .product-bottle {
+      width: 100px;
+      height: 180px;
+      background: linear-gradient(145deg, #faf8f5, #e8e2da);
+      border-radius: 24px 24px 16px 16px;
+      box-shadow: 
+        0 20px 40px -12px rgba(30, 28, 26, 0.2),
+        inset 0 -3px 6px rgba(255, 255, 255, 0.5);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-bottle {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    .product-bottle::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      width: 40px;
+      height: 16px;
+      background: linear-gradient(145deg, #d4c8bc, #c0b4a8);
+      border-radius: 8px 8px 3px 3px;
+    }
+
+    .product-bottle span {
+      font-family: var(--serif);
+      font-size: 0.7rem;
+      color: var(--ink);
+      text-align: center;
+      line-height: 1.3;
+      padding: 0 0.5rem;
+    }
+
+    .product-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .product-info h3 {
+      font-size: 1.3rem;
+    }
+
+    .product-info p {
+      font-size: 0.9rem;
+      color: #5a5650;
+      line-height: 1.5;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    .product-price {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--ink);
+    }
+
+    .product-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--moss);
+      background: rgba(95, 107, 92, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+    }
+
+    /* ---------- PHILOSOPHY ---------- */
+    .philosophy {
+      padding: 6rem 0;
+    }
+
+    .philosophy-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .philosophy-visual {
+      position: relative;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .philosophy-circle {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--sand), var(--mist));
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .philosophy-circle::before {
+      content: '';
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 1px solid rgba(30, 28, 26, 0.08);
+    }
+
+    .philosophy-circle::after {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 1px solid rgba(30, 28, 26, 0.06);
+    }
+
+    .philosophy-quote {
+      position: relative;
+      z-index: 2;
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--ink);
+      max-width: 200px;
+      line-height: 1.3;
+    }
+
+    .philosophy-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .philosophy-content h2 {
+      max-width: 14ch;
+    }
+
+    .philosophy-content .body-large {
+      max-width: 44ch;
+    }
+
+    .philosophy-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .philosophy-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: #3d3a36;
+    }
+
+    .philosophy-list li::before {
+      content: '—';
+      color: var(--clay);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    /* ---------- SUBSCRIPTION CTA ---------- */
+    .subscription {
+      padding: 0 2rem 6rem;
+    }
+
+    .subscription-inner {
+      background: var(--ink);
+      border-radius: var(--radius);
+      padding: 5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscription-inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(193, 123, 94, 0.15), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .subscription-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .subscription-content .eyebrow {
+      color: var(--gold);
+    }
+
+    .subscription-content h2 {
+      color: var(--paper);
+      max-width: 14ch;
+    }
+
+    .subscription-content p {
+      color: rgba(247, 244, 240, 0.7);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 40ch;
+    }
+
+    .subscription-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-light {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-light:hover {
+      background: var(--clay);
+      color: var(--paper);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--paper);
+      border-color: rgba(247, 244, 240, 0.3);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--paper);
+      background: rgba(247, 244, 240, 0.05);
+    }
+
+    .subscription-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .subscription-box {
+      width: 280px;
+      height: 280px;
+      background: linear-gradient(145deg, #2a2724, #1e1c1a);
+      border-radius: 24px;
+      border: 1px solid rgba(247, 244, 240, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      position: relative;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+    }
+
+    .subscription-box::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: rgba(247, 244, 240, 0.06);
+    }
+
+    .subscription-box .box-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(193, 123, 94, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .subscription-box .box-label {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--paper);
+      text-align: center;
+    }
+
+    .subscription-box .box-sub {
+      font-size: 0.75rem;
+      color: rgba(247, 244, 240, 0.5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(30, 28, 26, 0.06);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-inner p {
+      font-size: 0.85rem;
+      color: #7a756e;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      color: #7a756e;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--clay);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        min-height: auto;
+        padding: 2rem 0 4rem;
+      }
+
+      .hero-visual {
+        height: 400px;
+      }
+
+      .hero-blob {
+        width: 320px;
+        height: 320px;
+      }
+
+      .hero-bottle {
+        width: 150px;
+        height: 280px;
+      }
+
+      .ingredients-grid,
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .routine-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .philosophy-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .philosophy-visual {
+        height: 320px;
+      }
+
+      .philosophy-circle {
+        width: 260px;
+        height: 260px;
+      }
+
+      .subscription-inner {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        gap: 3rem;
+      }
+
+      .subscription-visual {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.6rem, 10vw, 3.6rem);
+      }
+
+      .ingredients,
+      .products {
+        margin: 0 1rem;
+        padding: 3rem 0;
+      }
+
+      .ingredients-grid,
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .routine-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .subscription {
+        padding: 0 1rem 4rem;
+      }
+
+      .subscription-inner {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .subscription-box {
+        width: 220px;
+        height: 220px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+
+      .hero-badge {
+        bottom: 20px;
+        right: 10px;
+        font-size: 0.7rem;
+        padding: 0.6rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">SKINCARE <span>/</span> BRAND</a>
+      <nav>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#routine">Routine</a>
+        <a href="#products">Shop</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#subscribe" class="nav-cta">Subscribe</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero container">
+    <div class="hero-content">
+      <span class="eyebrow">New — The Renewal Collection</span>
+      <h1>Skin that feels <em>like itself</em> again.</h1>
+      <p class="body-large">A minimal ritual of high-performance botanicals and clinical actives. No noise, no fillers — just what your skin actually needs.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">Shop the collection</a>
+        <a href="#routine" class="btn btn-outline">Build your routine</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-blob"></div>
+      <div class="hero-bottle">
+        <div class="bottle-label">
+          Renewal<br>Serum
+          <small>30 ml</small>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Dermatologist tested
+      </div>
+    </div>
+  </section>
+
+  <!-- INGREDIENTS -->
+  <section class="ingredients" id="ingredients">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What's inside</span>
+        <h2>Three ingredients. Zero compromise.</h2>
+      </div>
+      <div class="ingredients-grid">
+        <div class="ingredient-card">
+          <div class="ingredient-icon">✦</div>
+          <h3>Bakuchiol</h3>
+          <p>A plant-derived retinol alternative that smooths fine lines and evens tone — without the irritation. Gentle enough for daily use.</p>
+          <span class="ingredient-tag">Renewing</span>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">◈</div>
+          <h3>Squalane</h3>
+          <p>Olive-derived, lightweight, and deeply hydrating. It mimics your skin's natural lipids to lock in moisture without clogging pores.</p>
+          <span class="ingredient-tag">Hydrating</span>
+        </div>
+        <div class="ingredient-card">
+          <div class="ingredient-icon">◇</div>
+          <h3>Niacinamide</h3>
+          <p>Vitamin B3 that strengthens the barrier, minimizes pores, and calms redness. The quiet workhorse your routine has been missing.</p>
+          <span class="ingredient-tag">Balancing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTINE -->
+  <section class="routine" id="routine">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">The ritual</span>
+        <h2>Four steps. Two minutes. Every day.</h2>
+      </div>
+      <div class="routine-steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>Cleanse</h3>
+          <p>Massage a small amount onto damp skin. Rinse with lukewarm water and pat dry.</p>
+          <span class="step-time">30 seconds</span>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>Treat</h3>
+          <p>Press 3–4 drops of serum into skin. Let it absorb before moving on.</p>
+          <span class="step-time">30 seconds</span>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>Hydrate</h3>
+          <p>Apply moisturizer in upward strokes. This seals in everything beneath it.</p>
+          <span class="step-time">30 seconds</span>
+        </div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3>Protect</h3>
+          <p>Finish with SPF every morning. It's the single best thing you can do for your skin.</p>
+          <span class="step-time">30 seconds</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">The collection</span>
+        <h2>Everything you need. Nothing you don't.</h2>
+      </div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-visual">
+            <div class="product-bottle">
+              <span>Renewal<br>Serum</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <h3>Renewal Serum</h3>
+            <p>Bakuchiol + Niacinamide. Smooths texture and evens tone overnight.</p>
+            <div class="product-meta">
+              <span class="product-price">$68</span>
+              <span class="product-tag">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-visual">
+            <div class="product-bottle">
+              <span>Barrier<br>Cream</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <h3>Barrier Cream</h3>
+            <p>Squalane + Ceramides. A rich, restorative moisturizer for night.</p>
+            <div class="product-meta">
+              <span class="product-price">$54</span>
+              <span class="product-tag">New</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-visual">
+            <div class="product-bottle">
+              <span>Gentle<br>Cleanser</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <h3>Gentle Cleanser</h3>
+            <p>A pH-balanced gel that removes makeup without stripping.</p>
+            <div class="product-meta">
+              <span class="product-price">$38</span>
+              <span class="product-tag">Essential</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy" id="philosophy">
+    <div class="container">
+      <div class="philosophy-inner">
+        <div class="philosophy-visual">
+          <div class="philosophy-circle">
+            <div class="philosophy-quote">"Less, but better — for your skin and the planet."</div>
+          </div>
+        </div>
+        <div class="philosophy-content">
+          <span class="eyebrow">Our philosophy</span>
+          <h2>We believe in the power of restraint.</h2>
+          <p class="body-large">The skincare industry thrives on complexity. We built SKINCARE / BRAND on the opposite idea: that a few exceptional ingredients, used consistently, can transform your skin.</p>
+          <ul class="philosophy-list">
+            <li>Every formula is fragrance-free and non-comedogenic.</li>
+            <li>We use recyclable glass and post-consumer packaging.</li>
+            <li>No animal testing — ever, anywhere.</li>
+            <li>Clinically proven actives at effective concentrations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBSCRIPTION CTA -->
+  <section class="subscription" id="subscribe">
+    <div class="container">
+      <div class="subscription-inner">
+        <div class="subscription-content">
+          <span class="eyebrow">The ritual box</span>
+          <h2>Your routine, delivered.</h2>
+          <p>Get the full four-step system every 8 weeks — plus early access to new launches and 15% off everything, always.</p>
+          <div class="subscription-actions">
+            <a href="#" class="btn btn-light">Start subscription — $120/box</a>
+            <a href="#" class="btn btn-ghost">Learn more</a>
+          </div>
+        </div>
+        <div class="subscription-visual">
+          <div class="subscription-box">
+            <div class="box-icon">✦</div>
+            <div class="box-label">The Ritual Box</div>
+            <div class="box-sub">4 full-size products</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2025 SKINCARE / BRAND. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Journal</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

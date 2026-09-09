@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LATTICE BIO — Molecular Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F7F4EC;
+    --ivory-warm: #EFEAD9;
+    --green: #0F3D2E;
+    --green-deep: #082A1F;
+    --green-mid: #1B5A44;
+    --lilac: #B48CFF;
+    --lilac-bright: #C9A8FF;
+    --lilac-deep: #7B4FE0;
+    --ink: #0A1F17;
+    --line: rgba(15, 61, 46, 0.14);
+    --line-strong: rgba(15, 61, 46, 0.28);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--ivory);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(247, 244, 236, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    color: var(--green);
+  }
+
+  .logo-mark {
+    width: 28px; height: 28px;
+    position: relative;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--lilac-deep); }
+
+  .nav-cta {
+    padding: 10px 20px;
+    background: var(--green);
+    color: var(--ivory);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--lilac-deep); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 40%, rgba(180, 140, 255, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    background: var(--lilac-deep);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(123, 79, 224, 0.15);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(123, 79, 224, 0.15); }
+    50% { box-shadow: 0 0 0 8px rgba(123, 79, 224, 0.05); }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 5.4vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--green);
+    margin-bottom: 28px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--lilac-deep);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(10, 31, 23, 0.72);
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 16px 28px;
+    background: var(--green);
+    color: var(--ivory);
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.25s;
+  }
+
+  .btn-primary:hover {
+    background: var(--lilac-deep);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary svg { transition: transform 0.25s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+
+  .btn-ghost {
+    padding: 16px 28px;
+    color: var(--green);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    transition: all 0.25s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--green);
+    background: rgba(15, 61, 46, 0.04);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(10, 31, 23, 0.55);
+  }
+
+  /* ---------- MOLECULE CANVAS ---------- */
+  .hero-right {
+    position: relative;
+    height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #molecule {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .molecule-label {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--green-mid);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .label-1 { top: 12%; left: 8%; }
+  .label-2 { bottom: 18%; right: 6%; }
+  .label-3 { top: 48%; right: 2%; }
+
+  /* ---------- SECTION BASE ---------- */
+  section {
+    padding: 120px 48px;
+    position: relative;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 72px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lilac-deep);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--green);
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: rgba(10, 31, 23, 0.7);
+    max-width: 480px;
+    justify-self: end;
+  }
+
+  /* ---------- PROGRAMS ---------- */
+  .programs {
+    background: var(--ivory);
+  }
+
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .program-card {
+    padding: 40px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+
+  .program-card:hover {
+    background: rgba(180, 140, 255, 0.06);
+  }
+
+  .program-card:hover .program-arrow {
+    transform: translate(4px, -4px);
+    color: var(--lilac-deep);
+  }
+
+  .program-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--lilac-deep);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .program-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 28px;
+  }
+
+  .program-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: var(--green);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .program-desc {
+    font-size: 14px;
+    color: rgba(10, 31, 23, 0.68);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .program-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10, 31, 23, 0.5);
+  }
+
+  .program-arrow {
+    transition: all 0.3s;
+    color: var(--green);
+  }
+
+  /* ---------- PIPELINE ---------- */
+  .pipeline {
+    background: var(--green);
+    color: var(--ivory);
+  }
+
+  .pipeline .section-tag { color: var(--lilac-bright); }
+  .pipeline h2 { color: var(--ivory); }
+  .pipeline .section-desc { color: rgba(247, 244, 236, 0.7); }
+  .pipeline .section-head { border-bottom-color: rgba(247, 244, 236, 0.15); }
+
+  .timeline {
+    position: relative;
+    padding: 40px 0;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 88px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(247, 244, 236, 0.15);
+  }
+
+  .timeline-progress {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 62%;
+    background: linear-gradient(90deg, var(--lilac-bright), var(--lilac));
+    box-shadow: 0 0 20px rgba(180, 140, 255, 0.5);
+  }
+
+  .timeline-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  .stage {
+    position: relative;
+  }
+
+  .stage-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid rgba(247, 244, 236, 0.3);
+    margin: 82px 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .stage.active .stage-dot {
+    background: var(--lilac-bright);
+    border-color: var(--lilac-bright);
+    box-shadow: 0 0 0 6px rgba(180, 140, 255, 0.2);
+  }
+
+  .stage.complete .stage-dot {
+    background: var(--lilac);
+    border-color: var(--lilac);
+  }
+
+  .stage-phase {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lilac-bright);
+    margin-bottom: 8px;
+  }
+
+  .stage-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--ivory);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .stage-desc {
+    font-size: 13px;
+    color: rgba(247, 244, 236, 0.6);
+    line-height: 1.55;
+  }
+
+  .stage-status {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    background: rgba(247, 244, 236, 0.08);
+    color: rgba(247, 244, 236, 0.7);
+  }
+
+  .stage.active .stage-status {
+    background: rgba(180, 140, 255, 0.2);
+    color: var(--lilac-bright);
+  }
+
+  .stage.complete .stage-status {
+    background: rgba(180, 140, 255, 0.15);
+    color: var(--lilac-bright);
+  }
+
+  /* ---------- FINDINGS ---------- */
+  .findings {
+    background: var(--ivory-warm);
+  }
+
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .finding-feature {
+    background: var(--ivory);
+    padding: 48px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .finding-feature::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--lilac-deep), var(--green));
+  }
+
+  .finding-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lilac-deep);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .finding-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1.15;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+
+  .finding-body {
+    font-size: 15px;
+    color: rgba(10, 31, 23, 0.72);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .finding-data {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .data-item .data-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--lilac-deep);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .data-item .data-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10, 31, 23, 0.55);
+  }
+
+  .findings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .finding-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+    transition: padding 0.3s;
+  }
+
+  .finding-item:hover {
+    padding-left: 8px;
+  }
+
+  .finding-item:hover .finding-item-title {
+    color: var(--lilac-deep);
+  }
+
+  .finding-item-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--lilac-deep);
+    letter-spacing: 0.1em;
+  }
+
+  .finding-item-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--green);
+    line-height: 1.3;
+    transition: color 0.2s;
+  }
+
+  .finding-item-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(10, 31, 23, 0.5);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- PUBLICATIONS ---------- */
+  .publications {
+    background: var(--ivory);
+  }
+
+  .pub-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .pub-item {
+    display: grid;
+    grid-template-columns: 100px 1fr 200px 120px;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .pub-item:hover {
+    background: rgba(180, 140, 255, 0.05);
+  }
+
+  .pub-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--lilac-deep);
+    letter-spacing: 0.08em;
+  }
+
+  .pub-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--green);
+    line-height: 1.3;
+  }
+
+  .pub-journal {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(10, 31, 23, 0.6);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pub-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: end;
+  }
+
+  .pub-link:hover { color: var(--lilac-deep); }
+
+  /* ---------- LEADERSHIP ---------- */
+  .leadership {
+    background: var(--ivory-warm);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  .team-card {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    padding: 32px 24px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .team-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--lilac-deep);
+    box-shadow: 0 20px 40px -20px rgba(15, 61, 46, 0.15);
+  }
+
+  .team-portrait {
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 24px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  .team-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lilac-deep);
+    margin-bottom: 16px;
+  }
+
+  .team-bio {
+    font-size: 13px;
+    color: rgba(10, 31, 23, 0.65);
+    line-height: 1.55;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    background: var(--green-deep);
+    color: var(--ivory);
+    padding: 140px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(180, 140, 255, 0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta .section-tag { color: var(--lilac-bright); }
+
+  .cta h2 {
+    color: var(--ivory);
+    font-size: clamp(40px, 5vw, 68px);
+    margin-bottom: 24px;
+  }
+
+  .cta h2 em {
+    font-style: italic;
+    color: var(--lilac-bright);
+  }
+
+  .cta p {
+    font-size: 17px;
+    color: rgba(247, 244, 236, 0.7);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.65;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta .btn-primary {
+    background: var(--lilac-bright);
+    color: var(--green-deep);
+  }
+
+  .cta .btn-primary:hover {
+    background: var(--ivory);
+  }
+
+  .cta .btn-ghost {
+    color: var(--ivory);
+    border-color: rgba(247, 244, 236, 0.3);
+  }
+
+  .cta .btn-ghost:hover {
+    border-color: var(--ivory);
+    background: rgba(247, 244, 236, 0.05);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--green-deep);
+    color: rgba(247, 244, 236, 0.6);
+    padding: 48px;
+    border-top: 1px solid rgba(247, 244, 236, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: rgba(247, 244, 236, 0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--lilac-bright); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; padding: 120px 32px 60px; }
+    .hero-right { height: 400px; }
+    .section-head { grid-template-columns: 1fr; gap: 24px; }
+    .section-desc { justify-self: start; }
+    .program-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-stages { grid-template-columns: repeat(2, 1fr); }
+    .timeline-track { display: none; }
+    .stage-dot { margin: 0 0 20px; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .pub-item { grid-template-columns: 80px 1fr; gap: 16px; }
+    .pub-journal, .pub-link { grid-column: 2; justify-self: start; }
+    section { padding: 80px 32px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .program-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="3" fill="#0F3D2E"/>
+      <circle cx="14" cy="4" r="2" fill="#7B4FE0"/>
+      <circle cx="23" cy="9" r="2" fill="#0F3D2E"/>
+      <circle cx="23" cy="19" r="2" fill="#7B4FE0"/>
+      <circle cx="14" cy="24" r="2" fill="#0F3D2E"/>
+      <circle cx="5" cy="19" r="2" fill="#7B4FE0"/>
+      <circle cx="5" cy="9" r="2" fill="#0F3D2E"/>
+      <line x1="14" y1="14" x2="14" y2="4" stroke="#0F3D2E" stroke-width="0.8"/>
+      <line x1="14" y1="14" x2="23" y2="9" stroke="#0F3D2E" stroke-width="0.8"/>
+      <line x1="14" y1="14" x2="23" y2="19" stroke="#0F3D2E" stroke-width="0.8"/>
+      <line x1="14" y1="14" x2="14" y2="24" stroke="#0F3D2E" stroke-width="0.8"/>
+      <line x1="14" y1="14" x2="5" y2="19" stroke="#0F3D2E" stroke-width="0.8"/>
+      <line x1="14" y1="14" x2="5" y2="9" stroke="#0F3D2E" stroke-width="0.8"/>
+    </svg>
+    LATTICE BIO
+  </div>
+  <ul class="nav-links">
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="#collaborate" class="nav-cta">Collaborate</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Series B · $84M raised · 2024
+    </div>
+    <h1>Engineering <em>molecular</em> precision at the lattice scale.</h1>
+    <p class="hero-sub">
+      LATTICE BIO designs programmable protein therapeutics using computational lattice modeling and high-throughput structural biology. We turn atomic-level insight into clinical candidates.
+    </p>
+    <div class="hero-actions">
+      <a href="#pipeline" class="btn-primary">
+        View Pipeline
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#publications" class="btn-ghost">Read Research</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">14</div>
+        <div class="stat-label">Active Programs</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Clinical Stage</div>
+      </div>
+      <div>
+        <div class="stat-num">62</div>
+        <div class="stat-label">Peer-Reviewed Papers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <canvas id="molecule"></canvas>
+    <div class="molecule-label label-1">Lattice Node · α-7</div>
+    <div class="molecule-label label-2">Binding Affinity · 0.42 nM</div>
+    <div class="molecule-label label-3">Cryo-EM · 1.8 Å</div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="section-head">
+    <div>
+      <span class="section-tag">01 — Research Programs</span>
+      <h2>Four platforms.<br>One molecular language.</h2>
+    </div>
+    <p class="section-desc">
+      Each program is built on our proprietary lattice framework — a computational substrate that predicts protein folding, binding, and stability before a single assay is run.
+    </p>
+  </div>
+
+  <div class="program-grid">
+    <div class="program-card">
+      <span class="program-num">PRG-01</span>
+      <svg class="program-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="20" stroke="#0F3D2E" stroke-width="1.2"/>
+        <circle cx="28" cy="28" r="12" stroke="#7B4FE0" stroke-width="1.2"/>
+        <circle cx="28" cy="28" r="4" fill="#7B4FE0"/>
+        <circle cx="28" cy="8" r="2.5" fill="#0F3D2E"/>
+        <circle cx="48" cy="28" r="2.5" fill="#0F3D2E"/>
+        <circle cx="28" cy="48" r="2.5" fill="#0F3D2E"/>
+        <circle cx="8" cy="28" r="2.5" fill="#0F3D2E"/>
+      </svg>
+      <h3 class="program-title">LatticeFold™</h3>
+      <p class="program-desc">
+        De novo protein design using geometric deep learning. Predicts tertiary structure with sub-angstrom accuracy across 40+ fold families.
+      </p>
+      <div class="program-meta">
+        <span>Preclinical</span>
+        <svg class="program-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="program-card">
+      <span class="program-num">PRG-02</span>
+      <svg class="program-icon" viewBox="0 0 56 56" fill="none">
+        <path d="M14 14 L28 28 L42 14 M14 42 L28 28 L42 42" stroke="#0F3D2E" stroke-width="1.2" fill="none"/>
+        <circle cx="14" cy="14" r="3" fill="#7B4FE0"/>
+        <circle cx="42" cy="14" r="3" fill="#0F3D2E"/>
+        <circle cx="14" cy="42" r="3" fill="#0F3D2E"/>
+        <circle cx="42" cy="42" r="3" fill="#7B4FE0"/>
+        <circle cx="28" cy="28" r="4" fill="#0F3D2E"/>
+      </svg>
+      <h3 class="program-title">BindWeave</h3>
+      <p class="program-desc">
+        Antibody and nanobody engineering with programmable binding specificity. Targets previously undruggable epitopes with picomolar affinity.
+      </p>
+      <div class="program-meta">
+        <span>Phase I</span>
+        <svg class="program-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="program-card">
+      <span class="program-num">PRG-03</span>
+      <svg class="program-icon" viewBox="0 0 56 56" fill="none">
+        <path d="M8 28 Q20 8 28 28 T48 28" stroke="#0F3D2E" stroke-width="1.2" fill="none"/>
+        <path d="M8 28 Q20 48 28 28 T48 28" stroke="#7B4FE0" stroke-width="1.2" fill="none"/>
+        <circle cx="28" cy="28" r="3" fill="#0F3D2E"/>
+      </svg>
+      <h3 class="program-title">HelixCore</h3>
+      <p class="program-desc">
+        Stabilized alpha-helical peptides for intracellular targets. Cell-penetrating scaffolds with extended serum half-life.
+      </p>
+      <div class="program-meta">
+        <span>Lead Opt.</span>
+        <svg class="program-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="program-card">
+      <span class="program-num">PRG-04</span>
+      <svg class="program-icon" viewBox="0 0 56 56" fill="none">
+        <rect x="14" y="14" width="28" height="28" stroke="#0F3D2E" stroke-width="1.2" fill="none"/>
+        <rect x="22" y="22" width="12" height="12" fill="#7B4FE0"/>
+        <circle cx="14" cy="14" r="2" fill="#0F3D2E"/>
+        <circle cx="42" cy="14" r="2" fill="#0F3D2E"/>
+        <circle cx="14" cy="42" r="2" fill="#0F3D2E"/>
+        <circle cx="42" cy="42" r="2" fill="#0F3D2E"/>
+      </svg>
+      <h3 class="program-title">CrystalMap</h3>
+      <p class="program-desc">
+        Cryo-EM guided structure determination at scale. Automated pipeline from grid prep to atomic model in under 72 hours.
+      </p>
+      <div class="program-meta">
+        <span>Platform</span>
+        <svg class="program-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="pipeline" id="pipeline">
+  <div class="section-head">
+    <div>
+      <span class="section-tag">02 — Pipeline</span>
+      <h2>From lattice to clinic.</h2>
+    </div>
+    <p class="section-desc">
+      Our pipeline moves candidates through five defined stages. Each stage has quantitative go/no-go criteria — no candidate advances on narrative alone.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-track">
+      <div class="timeline-progress"></div>
+    </div>
+    <div class="timeline-stages">
+      <div class="stage complete">
+        <div class="stage-dot"></div>
+        <div class="stage-phase">Stage 01</div>
+        <h3 class="stage-title">Target ID</h3>
+        <p class="stage-desc">Lattice modeling identifies druggable pockets across 200+ target families.</p>
+        <span class="stage-status">Complete</span>
+      </div>
+      <div class="stage complete">
+        <div class="stage-dot"></div>
+        <div class="stage-phase">Stage 02</div>
+        <h3 class="stage-title">Design</h3>
+        <p class="stage-desc">De novo scaffolds generated and ranked by predicted binding energy.</p>
+        <span class="stage-status">Complete</span>
+      </div>
+      <div class="stage active">
+        <div class="stage-dot"></div>
+        <div class="stage-phase">Stage 03</div>
+        <h3 class="stage-title">Validation</h3>
+        <p class="stage-desc">Cryo-EM and SPR confirm structure and affinity in vitro.</p>
+        <span class="stage-status">Active</span>
+      </div>
+      <div class="stage">
+        <div class="stage-dot"></div>
+        <div class="stage-phase">Stage 04</div>
+        <h3 class="stage-title">Preclinical</h3>
+        <p class="stage-desc">PK/PD, toxicology, and CMC development in IND-enabling studies.</p>
+        <span class="stage-status">Q3 2025</span>
+      </div>
+      <div class="stage">
+        <div class="stage-dot"></div>
+        <div class="stage-phase">Stage 05</div>
+        <h3 class="stage-title">Clinical</h3>
+        <p class="stage-desc">Phase I dose escalation in oncology and autoimmune indications.</p>
+        <span class="stage-status">2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINDINGS -->
+<section class="findings" id="findings">
+  <div class="section-head">
+    <div>
+      <span class="section-tag">03 — Key Findings</span>
+      <h2>What the lattice reveals.</h2>
+    </div>
+    <p class="section-desc">
+      Selected results from our internal research program. Full datasets and methods are available to academic collaborators on request.
+    </p>
+  </div>
+
+  <div class="findings-grid">
+    <div class="finding-feature">
+      <span class="finding-tag">Featured Finding · Nature Biotech 2024</span>
+      <h3 class="finding-title">A generalizable lattice framework for de novo cytokine mimetics.</h3>
+      <p class="finding-body">
+        We demonstrate that a geometric deep learning model trained on 180,000 protein structures can design functional IL-2 mimetics with tunable receptor selectivity. The resulting candidates show 40-fold bias toward the βγ receptor over the α subunit, reducing vascular leak toxicity in murine models while preserving anti-tumor immunity.
+      </p>
+      <div class="finding-data">
+        <div class="data-item">
+          <div class="data-num">40×</div>
+          <div class="data-label">Receptor Bias</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">1.8 Å</div>
+          <div class="data-label">Cryo-EM Resolution</div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">0.42 nM</div>
+          <div class="data-label">Binding Affinity</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="findings-list">
+      <div class="finding-item">
+        <span class="finding-item-num">F-01</span>
+        <div class="finding-item-title">LatticeFold predicts loop conformations with 0.9 Å RMSD</div>
+        <span class="finding-item-meta">2024</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-item-num">F-02</span>
+        <div class="finding-item-title">Stabilized helices penetrate intracellular targets in vivo</div>
+        <span class="finding-item-meta">2024</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-item-num">F-03</span>
+        <div class="finding-item-title">Nanobody scaffolds show 12-day serum half-life in NHP</div>
+        <span class="finding-item-meta">2023</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-item-num">F-04</span>
+        <div class="finding-item-title">Cryo-EM pipeline resolves 1.6 Å structures in 48 hours</div>
+        <span class="finding-item-meta">2023</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-item-num">F-05</span>
+        <div class="finding-item-title">Lattice model generalizes to 40+ fold families</div>
+        <span class="finding-item-meta">2023</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="publications" id="publications">
+  <div class="section-head">
+    <div>
+      <span class="section-tag">04 — Publications</span>
+      <h2>Peer-reviewed research.</h2>
+    </div>
+    <p class="section-desc">
+      Our science is published openly. We believe molecular design should advance the field, not just the company.
+    </p>
+  </div>
+
+  <div class="pub-list">
+    <div class="pub-item">
+      <span class="pub-year">2024</span>
+      <span class="pub-title">LatticeFold: geometric deep learning for de novo protein design</span>
+      <span class="pub-journal">Nature Biotechnology</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2024</span>
+      <span class="pub-title">Tunable receptor selectivity in engineered IL-2 mimetics</span>
+      <span class="pub-journal">Science Immunology</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2023</span>
+      <span class="pub-title">Cell-penetrating alpha-helical peptides for intracellular targets</span>
+      <span class="pub-journal">Cell Chemical Biology</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2023</span>
+      <span class="pub-title">Automated cryo-EM pipeline for high-throughput structure determination</span>
+      <span class="pub-journal">Nature Methods</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2023</span>
+      <span class="pub-title">Nanobody engineering with programmable serum half-life</span>
+      <span class="pub-journal">mAbs</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2022</span>
+      <span class="pub-title">A lattice framework for protein-protein interaction prediction</span>
+      <span class="pub-journal">Nature</span>
+      <a href="#" class="pub-link">Read →</a>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership" id="team">
+  <div class="section-head">
+    <div>
+      <span class="section-tag">05 — Leadership</span>
+      <h2>Built by scientists,<br>for scientists.</h2>
+    </div>
+    <p class="section-desc">
+      Our leadership team combines decades of structural biology, computational chemistry, and clinical development experience.
+    </p>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-portrait">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect width="200" height="200" fill="#EFEAD9"/>
+          <circle cx="100" cy="80" r="32" fill="#0F3D2E"/>
+          <path d="M40 200 Q100 130 160 200 Z" fill="#0F3D2E"/>
+          <circle cx="100" cy="80" r="32" fill="none" stroke="#7B4FE0" stroke-width="1.5"/>
+          <circle cx="100" cy="80" r="40" fill="none" stroke="#7B4FE0" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+      <h3 class="team-name">Dr. Elena Vasquez</h3>
+      <div class="team-role">CEO & Co-Founder</div>
+      <p class="team-bio">Former Professor of Structural Biology at MIT. 80+ publications on protein folding and design.</p>
+    </div>
+
+    <div class="team-card">
+      <div class="team-portrait">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect width="200" height="200" fill="#EFEAD9"/>
+          <circle cx="100" cy="80" r="32" fill="#1B5A44"/>
+          <path d="M40 200 Q100 130 160 200 Z" fill="#1B5A44"/>
+          <circle cx="100" cy="80" r="32" fill="none" stroke="#7B4FE0" stroke-width="1.5"/>
+          <circle cx="100" cy="80" r="40" fill="none" stroke="#7B4FE0" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+      <h3 class="team-name">Dr. Marcus Chen</h3>
+      <div class="team-role">CSO & Co-Founder</div>
+      <p class="team-bio">Pioneer in geometric deep learning for molecular design. Previously led AI research at Genentech.</p>
+    </div>
+
+    <div class="team-card">
+      <div class="team-portrait">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect width="200" height="200" fill="#EFEAD9"/>
+          <circle cx="100" cy="80" r="32" fill="#0F3D2E"/>
+          <path d="M40 200 Q100 130 160 200 Z" fill="#0F3D2E"/>
+          <circle cx="100" cy="80" r="32" fill="none" stroke="#7B4FE0" stroke-width="1.5"/>
+          <circle cx="100" cy="80" r="40" fill="none" stroke="#7B4FE0" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+      <h3 class="team-name">Dr. Priya Ramanathan</h3>
+      <div class="team-role">Head of Clinical</div>
+      <p class="team-bio">20 years in oncology drug development. Led 6 INDs and 3 Phase I programs to readout.</p>
+    </div>
+
+    <div class="team-card">
+      <div class="team-portrait">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <rect width="200" height="200" fill="#EFEAD9"/>
+          <circle cx="100" cy="80" r="32" fill="#1B5A44"/>
+          <path d="M40 200 Q100 130 160 200 Z" fill="#1B5A44"/>
+          <circle cx="100" cy="80" r="32" fill="none" stroke="#7B4FE0" stroke-width="1.5"/>
+          <circle cx="100" cy="80" r="40" fill="none" stroke="#7B4FE0" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+      </div>
+      <h3 class="team-name">Dr. James Okafor</h3>
+      <div class="team-role">Head of Platform</div>
+      <p class="team-bio">Built cryo-EM pipelines at Janelia and Broad. Expert in high-throughput structural biology.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="collaborate">
+  <div class="cta-inner">
+    <span class="section-tag">06 — Collaborate</span>
+    <h2>Let's build the next <em>lattice</em> together.</h2>
+    <p>
+      We partner with academic labs, biotech companies, and pharmaceutical partners on target validation, co-development, and platform licensing. If you're working on a problem that needs molecular precision, we want to hear from you.
+    </p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary">
+        Start a Conversation
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#" class="btn-ghost">Download Capabilities Deck</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2024 LATTICE BIO · Cambridge, MA</div>
+  <ul class="footer-links">
+    <li><a href="#">Careers</a></li>
+    <li><a href="#">Press</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+</footer>
+
+<script>
+  // ---------- MOLECULE CANVAS ----------
+  const canvas = document.getElementById('molecule');
+  const ctx = canvas.getContext('2d');
+  let W, H, dpr;
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // Node structure: a central lattice with orbiting atoms
+  const nodes = [];
+  const edges = [];
+
+  function buildLattice() {
+    nodes.length = 0;
+    edges.length = 0;
+
+    const cx = W / 2;
+    const cy = H / 2;
+    const scale = Math.min(W, H) * 0.32;
+
+    // Central core
+    nodes.push({ x: cx, y: cy, r: 6, type: 'core', phase: 0 });
+
+    // Ring 1: 6 nodes
+    const ring1 = 6;
+    for (let i = 0; i < ring1; i++) {
+      const angle = (i / ring1) * Math.PI * 2 - Math.PI / 2;
+      nodes.push({
+        x: cx + Math.cos(angle) * scale * 0.55,
+        y: cy + Math.sin(angle) * scale * 0.55,
+        r: 4,
+        type: i % 2 === 0 ? 'lilac' : 'green',
+        phase: i * 0.5,
+        baseAngle: angle,
+        radius: scale * 0.55
+      });
+      edges.push({ from: 0, to: nodes.length - 1 });
+    }
+
+    // Ring 2: 12 nodes
+    const ring2 = 12;
+    for (let i = 0; i < ring2; i++) {
+      const angle = (i / ring2) * Math.PI * 2;
+      nodes.push({
+        x: cx + Math.cos(angle) * scale,
+        y: cy + Math.sin(angle) * scale,
+        r: 3,
+        type: i % 3 === 0 ? 'lilac' : 'green',
+        phase: i * 0.3,
+        baseAngle: angle,
+        radius: scale
+      });
+      // Connect to nearest ring1 node
+      const ring1Idx = 1 + Math.floor((i / ring2) * ring1) % ring1;
+      edges.push({ from: ring1Idx, to: nodes.length - 1 });
+      // Connect to adjacent ring2
+      if (i > 0) {
+        edges.push({ from: nodes.length - 2, to: nodes.length - 1 });
+      }
+    }
+    // Close ring2
+    edges.push({ from: nodes.length - 1, to: 1 + ring1 });
+
+    // Ring 3: 6 outer nodes
+    const ring3 = 6;
+    for (let i = 0; i < ring3; i++) {
+      const angle = (i / ring3) * Math.PI * 2 + Math.PI / 6;
+      nodes.push({
+        x: cx + Math.cos(angle) * scale * 1.45,
+        y: cy + Math.sin(angle) * scale * 1.45,
+        r: 2.5,
+        type: 'lilac',
+        phase: i * 0.7,
+        baseAngle: angle,
+        radius: scale * 1.45
+      });
+      const ring2Idx = 1 + ring1 + Math.floor((i / ring3) * ring2) % ring2;
+      edges.push({ from: ring2Idx, to: nodes.length - 1 });
+    }
+  }
+
+  let t = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W / 2;
+    const cy = H / 2;
+
+    // Update node positions with subtle orbital motion
+    nodes.forEach((n, i) => {
+      if (n.radius) {
+        const wobble = Math.sin(t * 0.5 + n.phase) * 0.04;
+        const angle = n.baseAngle + wobble;
+        n.x = cx + Math.cos(angle) * n.radius;
+        n.y = cy + Math.sin(angle) * n.radius;
+      }
+    });
+
+    // Draw edges
+    edges.forEach(e => {
+      const a = nodes[e.from];
+      const b = nodes[e.to];
+      if (!a || !b) return;
+      const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+      grad.addColorStop(0, 'rgba(15, 61, 46, 0.35)');
+      grad.addColorStop(1, 'rgba(123, 79, 224, 0.35)');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    });
+
+    // Draw nodes
+    nodes.forEach((n, i) => {
+      // Glow
+      if (n.type === 'lilac' || n.type === 'core') {
+        const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
+        glow.addColorStop(0, 'rgba(180, 140, 255, 0.4)');
+        glow.addColorStop(1, 'rgba(180, 140, 255, 0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Node fill
+      if (n.type === 'core') {
+        ctx.fillStyle = '#0F3D2E';
+      } else if (n.type === 'lilac') {
+        ctx.fillStyle = '#7B4FE0';
+      } else {
+        ctx.fillStyle = '#0F3D2E';
+      }
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ring outline
+      ctx.strokeStyle = 'rgba(247, 244, 236, 0.6)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    // Orbiting electron
+    const orbitAngle = t * 0.8;
+    const orbitR = Math.min(W, H) * 0.42;
+    const ex = cx + Math.cos(orbitAngle) * orbitR;
+    const ey = cy + Math.sin(orbitAngle) * orbitR * 0.6;
+    const eGlow = ctx.createRadialGradient(ex, ey, 0, ex, ey, 20);
+    eGlow.addColorStop(0, 'rgba(180, 140, 255, 0.8)');
+    eGlow.addColorStop(1, 'rgba(180, 140, 255, 0)');
+    ctx.fillStyle = eGlow;
+    ctx.beginPath();
+    ctx.arc(ex, ey, 20, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#C9A8FF';
+    ctx.beginPath();
+    ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Second orbiting electron
+    const orbitAngle2 = -t * 0.6 + Math.PI;
+    const ex2 = cx + Math.cos(orbitAngle2) * orbitR * 0.7;
+    const ey2 = cy + Math.sin(orbitAngle2) * orbitR * 0.7;
+    const eGlow2 = ctx.createRadialGradient(ex2, ey2, 0, ex2, ey2, 16);
+    eGlow2.addColorStop(0, 'rgba(15, 61, 46, 0.6)');
+    eGlow2.addColorStop(1, 'rgba(15, 61, 46, 0)');
+    ctx.fillStyle = eGlow2;
+    ctx.beginPath();
+    ctx.arc(ex2, ey2, 16, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#0F3D2E';
+    ctx.beginPath();
+    ctx.arc(ex2, ey2, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+
+  function init() {
+    resize();
+    buildLattice();
+    draw();
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    buildLattice();
+  });
+
+  init();
+
+  // ---------- SCROLL REVEAL ----------
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.program-card, .stage, .finding-item, .pub-item, .team-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

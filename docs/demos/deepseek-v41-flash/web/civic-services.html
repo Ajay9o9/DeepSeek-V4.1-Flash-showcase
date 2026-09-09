@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMEN CITY · City services, permits & transit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- design tokens ---------- */
+    :root {
+      --civic-blue: #1a3a6b;
+      --civic-blue-light: #2b5a9e;
+      --civic-blue-soft: #e7edf6;
+      --warm-paper: #faf7f2;
+      --warm-paper-dark: #f2ede4;
+      --warm-paper-deep: #e8e0d3;
+      --ink: #1e1e1e;
+      --ink-soft: #3d3d3d;
+      --ink-muted: #6b6b6b;
+      --accent-gold: #c49a3c;
+      --accent-gold-soft: #f5edd8;
+      --alert-red: #b13e3e;
+      --alert-red-soft: #f9e9e9;
+      --success-green: #2e7d5e;
+      --success-green-soft: #e2f0ea;
+      --border-light: #d9d2c5;
+      --border-blue: #c0cfe0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --max-width: 1280px;
+      --gutter: 2rem;
+    }
+
+    /* ---------- reset & base ---------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--warm-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: var(--civic-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, select, textarea { font-family: inherit; font-size: inherit; }
+    ul { list-style: none; }
+
+    /* ---------- utility ---------- */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--civic-blue-light);
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    /* ---------- header ---------- */
+    .site-header {
+      background: var(--civic-blue);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 1.5rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-gold);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--civic-blue);
+      letter-spacing: -0.02em;
+    }
+    .brand-text {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+    .brand-text span { color: var(--accent-gold); }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .header-nav a {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .header-nav a:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-decoration: none;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      color: rgba(255,255,255,0.9);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+    .btn-primary {
+      background: var(--accent-gold);
+      color: var(--civic-blue);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #d4a94a; }
+    .btn-primary:active { transform: scale(0.97); }
+
+    /* ---------- hero / search ---------- */
+    .hero {
+      background: linear-gradient(180deg, var(--civic-blue) 0%, var(--civic-blue) 55%, var(--warm-paper) 55%);
+      padding: 3.5rem 0 0;
+      position: relative;
+    }
+    .hero-content {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+      padding-bottom: 2.5rem;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      background: rgba(255,255,255,0.08);
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: 2.75rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrap {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .search-bar:focus-within { border-color: var(--accent-gold); }
+    .search-bar svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 1.1rem;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 1rem 0.75rem;
+      font-size: 1rem;
+      color: var(--ink);
+      background: transparent;
+    }
+    .search-bar input::placeholder { color: #9a9a9a; }
+    .search-bar button {
+      background: var(--civic-blue);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      margin: 0.35rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .search-bar button:hover { background: var(--civic-blue-light); }
+    .search-hints {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .search-hints span {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .search-hints a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.1);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .search-hints a:hover { background: rgba(255,255,255,0.2); text-decoration: none; }
+
+    /* ---------- alert banner ---------- */
+    .alert-banner {
+      background: var(--alert-red-soft);
+      border-left: 4px solid var(--alert-red);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .alert-banner svg { width: 20px; height: 20px; color: var(--alert-red); flex-shrink: 0; }
+    .alert-banner p { font-size: 0.9rem; color: var(--ink-soft); }
+    .alert-banner strong { color: var(--alert-red); }
+    .alert-banner a { font-weight: 600; margin-left: auto; white-space: nowrap; font-size: 0.85rem; }
+
+    /* ---------- service finder ---------- */
+    .service-finder {
+      padding: 3rem 0 2rem;
+    }
+    .finder-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .finder-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .finder-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--border-blue);
+      text-decoration: none;
+    }
+    .finder-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--civic-blue-soft);
+      color: var(--civic-blue);
+    }
+    .finder-icon svg { width: 22px; height: 22px; }
+    .finder-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+    }
+    .finder-card p {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+    .finder-card .arrow {
+      margin-top: auto;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--civic-blue-light);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .finder-card .arrow svg { width: 14px; height: 14px; }
+
+    /* ---------- quick actions row ---------- */
+    .quick-actions {
+      padding: 1rem 0 3rem;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .quick-card {
+      background: var(--warm-paper-dark);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .quick-card:hover {
+      background: #fff;
+      border-color: var(--border-blue);
+      text-decoration: none;
+    }
+    .quick-card .icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--civic-blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .quick-card .icon-circle svg { width: 18px; height: 18px; }
+    .quick-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--civic-blue); }
+    .quick-card p { font-size: 0.8rem; color: var(--ink-muted); }
+
+    /* ---------- two-column layout ---------- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem 0 3rem;
+    }
+
+    /* ---------- transit card ---------- */
+    .transit-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .transit-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .transit-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+    }
+    .transit-header .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--success-green-soft);
+      color: var(--success-green);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+    }
+    .transit-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .transit-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      background: var(--warm-paper);
+      transition: background 0.15s;
+    }
+    .transit-item:hover { background: var(--warm-paper-dark); }
+    .transit-line {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .line-a { background: #2b5a9e; }
+    .line-b { background: #c49a3c; }
+    .line-c { background: #2e7d5e; }
+    .transit-info { flex: 1; }
+    .transit-info .name { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .transit-info .detail { font-size: 0.8rem; color: var(--ink-muted); }
+    .transit-time {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+      white-space: nowrap;
+    }
+    .transit-time.soon { color: var(--alert-red); }
+
+    /* ---------- waste card ---------- */
+    .waste-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .waste-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .waste-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+    }
+    .waste-header .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--accent-gold-soft);
+      color: #8a6d2b;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+    }
+    .waste-schedule { display: flex; flex-direction: column; gap: 0.75rem; }
+    .waste-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      background: var(--warm-paper);
+    }
+    .waste-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green { background: var(--success-green); }
+    .dot-blue { background: var(--civic-blue-light); }
+    .dot-gold { background: var(--accent-gold); }
+    .waste-info { flex: 1; }
+    .waste-info .name { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .waste-info .detail { font-size: 0.8rem; color: var(--ink-muted); }
+    .waste-date {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+      white-space: nowrap;
+    }
+    .waste-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .waste-note svg { width: 14px; height: 14px; color: var(--accent-gold); }
+
+    /* ---------- permits & payments ---------- */
+    .permits-payments {
+      padding: 2rem 0 3rem;
+    }
+    .pp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .pp-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .pp-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--civic-blue);
+      margin-bottom: 0.25rem;
+    }
+    .pp-card .pp-sub {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-bottom: 1.25rem;
+    }
+    .pp-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .pp-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: var(--warm-paper);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .pp-item:hover { background: var(--warm-paper-dark); text-decoration: none; }
+    .pp-item .pp-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--civic-blue-soft);
+      color: var(--civic-blue);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .pp-item .pp-icon svg { width: 16px; height: 16px; }
+    .pp-item .pp-text { flex: 1; }
+    .pp-item .pp-text .name { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .pp-item .pp-text .detail { font-size: 0.78rem; color: var(--ink-muted); }
+    .pp-item .pp-arrow { color: var(--ink-muted); }
+    .pp-item .pp-arrow svg { width: 16px; height: 16px; }
+
+    /* ---------- events ---------- */
+    .events {
+      padding: 2rem 0 3rem;
+    }
+    .events-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .events-header a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .events-header a svg { width: 14px; height: 14px; }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .event-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .event-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .event-visual {
+      height: 120px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-visual svg { width: 48px; height: 48px; opacity: 0.9; }
+    .ev-1 { background: linear-gradient(135deg, #2b5a9e, #1a3a6b); }
+    .ev-2 { background: linear-gradient(135deg, #c49a3c, #a07d2e); }
+    .ev-3 { background: linear-gradient(135deg, #2e7d5e, #1f5c44); }
+    .event-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+    .event-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--civic-blue-light);
+    }
+    .event-body h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .event-body p {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+    .event-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+    }
+    .event-meta svg { width: 14px; height: 14px; }
+
+    /* ---------- footer ---------- */
+    .site-footer {
+      background: var(--civic-blue);
+      color: rgba(255,255,255,0.8);
+      padding: 3rem 0 2rem;
+      margin-top: 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .footer-brand .brand { margin-bottom: 1rem; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      max-width: 320px;
+      color: rgba(255,255,255,0.65);
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      transition: color 0.15s;
+      text-decoration: none;
+    }
+    .footer-col a:hover { color: #fff; text-decoration: none; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-legal a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+    .footer-legal a:hover { color: #fff; text-decoration: none; }
+    .accessibility-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.08);
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+    }
+    .accessibility-badge svg { width: 14px; height: 14px; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+      .finder-grid { grid-template-columns: repeat(2, 1fr); }
+      .events-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      :root { --gutter: 1.25rem; }
+      .header-nav { display: none; }
+      .hero h1 { font-size: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .pp-grid { grid-template-columns: 1fr; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .events-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .alert-banner { flex-wrap: wrap; }
+      .alert-banner a { margin-left: 0; }
+    }
+    @media (max-width: 480px) {
+      .finder-grid { grid-template-columns: 1fr; }
+      .search-bar { flex-direction: column; }
+      .search-bar svg { display: none; }
+      .search-bar input { width: 100%; text-align: center; }
+      .search-bar button { width: calc(100% - 0.7rem); margin: 0.35rem; }
+    }
+
+    /* focus styles for accessibility */
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--accent-gold);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="#" class="brand" aria-label="LUMEN CITY home">
+        <div class="brand-mark" aria-hidden="true">L</div>
+        <div class="brand-text">LUMEN<span>CITY</span></div>
+      </a>
+      <nav class="header-nav" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#permits">Permits</a>
+        <a href="#transit">Transit</a>
+        <a href="#waste">Waste</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-ghost" aria-label="Language selector">EN</button>
+        <a href="#payments" class="btn-primary">Pay a bill</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ========== HERO / SEARCH ========== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-eyebrow">Official city services portal</span>
+          <h1 id="hero-title">How can we help you today?</h1>
+          <p>Search for services, permits, transit schedules, waste collection and more — all in one place.</p>
+
+          <div class="search-wrap">
+            <form class="search-bar" role="search" aria-label="Search city services">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <label for="site-search" class="sr-only">Search city services</label>
+              <input type="search" id="site-search" placeholder="Search services, permits, transit…" autocomplete="off">
+              <button type="submit">Search</button>
+            </form>
+            <div class="search-hints">
+              <span>Popular:</span>
+              <a href="#">Property tax</a>
+              <a href="#">Building permit</a>
+              <a href="#">Garbage schedule</a>
+              <a href="#">Parking</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert banner -->
+        <div class="alert-banner" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <p><strong>Road closure:</strong> Riverside Drive between 4th &amp; 7th Ave is closed for emergency water main repair until Friday 6 PM.</p>
+          <a href="#">View all alerts →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SERVICE FINDER ========== -->
+    <section class="service-finder" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <p class="section-label">Service finder</p>
+        <h2 class="section-title" id="services-title">What do you need to do?</h2>
+        <p class="section-sub">Browse the most requested city services. Each card links directly to the right department.</p>
+
+        <div class="finder-grid">
+          <a href="#" class="finder-card">
+            <div class="finder-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Permits &amp; licences</h3>
+            <p>Apply for building, business, and event permits online.</p>
+            <span class="arrow">Apply now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+
+          <a href="#" class="finder-card">
+            <div class="finder-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <h3>Transit &amp; parking</h3>
+            <p>Bus routes, schedules, parking permits, and bike lanes.</p>
+            <span class="arrow">Plan a trip <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+
+          <a href="#" class="finder-card">
+            <div class="finder-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <h3>Waste &amp; recycling</h3>
+            <p>Collection schedules, bin requests, and drop-off centres.</p>
+            <span class="arrow">Check schedule <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+
+          <a href="#" class="finder-card">
+            <div class="finder-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <h3>Payments &amp; taxes</h3>
+            <p>Property tax, utility bills, parking tickets, and fees.</p>
+            <span class="arrow">Pay online <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== QUICK ACTIONS ========== -->
+    <section class="quick-actions" aria-label="Quick actions">
+      <div class="container">
+        <div class="quick-grid">
+          <a href="#" class="quick-card">
+            <div class="icon-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h4>Report an issue</h4>
+              <p>Potholes, graffiti, streetlights, and more.</p>
+            </div>
+          </a>
+          <a href="#" class="quick-card">
+            <div class="icon-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h4>Book an appointment</h4>
+              <p>In-person services at City Hall and district offices.</p>
+            </div>
+          </a>
+          <a href="#" class="quick-card">
+            <div class="icon-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h4>Find a facility</h4>
+              <p>Libraries, pools, community centres, and parks.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TRANSIT & WASTE ========== -->
+    <section class="two-col container" aria-label="Transit and waste information">
+      <!-- Transit -->
+      <div class="transit-card" id="transit">
+        <div class="transit-header">
+          <h3>Next departures</h3>
+          <span class="badge">Live</span>
+        </div>
+        <div class="transit-list">
+          <div class="transit-item">
+            <div class="transit-line line-a" aria-hidden="true">A</div>
+            <div class="transit-info">
+              <div class="name">Riverside – Downtown</div>
+              <div class="detail">Stop: 4th &amp; Main · Platform 2</div>
+            </div>
+            <div class="transit-time soon">2 min</div>
+          </div>
+          <div class="transit-item">
+            <div class="transit-line line-b" aria-hidden="true">B</div>
+            <div class="transit-info">
+              <div class="name">Northgate – University</div>
+              <div class="detail">Stop: 4th &amp; Main · Platform 1</div>
+            </div>
+            <div class="transit-time">7 min</div>
+          </div>
+          <div class="transit-item">
+            <div class="transit-line line-c" aria-hidden="true">C</div>
+            <div class="transit-info">
+              <div class="name">Harbourfront – West End</div>
+              <div class="detail">Stop: 4th &amp; Main · Platform 3</div>
+            </div>
+            <div class="transit-time">12 min</div>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem;">
+          <a href="#" style="font-size:0.85rem;font-weight:600;display:inline-flex;align-items:center;gap:0.3rem;">
+            View full schedule
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Waste -->
+      <div class="waste-card" id="waste">
+        <div class="waste-header">
+          <h3>Waste collection</h3>
+          <span class="badge">This week</span>
+        </div>
+        <div class="waste-schedule">
+          <div class="waste-item">
+            <div class="waste-dot dot-green" aria-hidden="true"></div>
+            <div class="waste-info">
+              <div class="name">Green bin (organics)</div>
+              <div class="detail">Weekly · Set out by 7 AM</div>
+            </div>
+            <div class="waste-date">Tue, Mar 18</div>
+          </div>
+          <div class="waste-item">
+            <div class="waste-dot dot-blue" aria-hidden="true"></div>
+            <div class="waste-info">
+              <div class="name">Blue bin (recycling)</div>
+              <div class="detail">Every other week · Set out by 7 AM</div>
+            </div>
+            <div class="waste-date">Wed, Mar 19</div>
+          </div>
+          <div class="waste-item">
+            <div class="waste-dot dot-gold" aria-hidden="true"></div>
+            <div class="waste-info">
+              <div class="name">Garbage</div>
+              <div class="detail">Every other week · Set out by 7 AM</div>
+            </div>
+            <div class="waste-date">Wed, Mar 19</div>
+          </div>
+        </div>
+        <div class="waste-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Missed collection? Report it within 24 hours.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PERMITS & PAYMENTS ========== -->
+    <section class="permits-payments container" id="permits" aria-labelledby="permits-title">
+      <p class="section-label">Permits &amp; payments</p>
+      <h2 class="section-title" id="permits-title">Apply, pay, and manage</h2>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Secure online services for residents and businesses.</p>
+
+      <div class="pp-grid">
+        <!-- Permits -->
+        <div class="pp-card">
+          <h3>Permits &amp; applications</h3>
+          <p class="pp-sub">Submit and track your applications online.</p>
+          <div class="pp-list">
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Building permit</div>
+                <div class="detail">Renovations, additions, and new construction</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Business licence</div>
+                <div class="detail">New applications and annual renewals</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Special event permit</div>
+                <div class="detail">Street festivals, block parties, and markets</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Payments -->
+        <div class="pp-card" id="payments">
+          <h3>Payments &amp; billing</h3>
+          <p class="pp-sub">Pay bills, taxes, and fees securely online.</p>
+          <div class="pp-list">
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Property tax</div>
+                <div class="detail">View balance, pay, and set up pre-authorized debit</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Utility bill</div>
+                <div class="detail">Water, wastewater, and stormwater charges</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+            <a href="#" class="pp-item">
+              <div class="pp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div class="pp-text">
+                <div class="name">Parking ticket</div>
+                <div class="detail">Pay or dispute a parking violation notice</div>
+              </div>
+              <div class="pp-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EVENTS ========== -->
+    <section class="events container" id="events" aria-labelledby="events-title">
+      <div class="events-header">
+        <div>
+          <p class="section-label">Community</p>
+          <h2 class="section-title" id="events-title">Upcoming events</h2>
+        </div>
+        <a href="#">View all events <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="events-grid">
+        <a href="#" class="event-card">
+          <div class="event-visual ev-1" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="event-body">
+            <span class="event-date">Sat, Mar 22 · 10 AM</span>
+            <h4>Riverside Park clean-up</h4>
+            <p>Join neighbours and city staff to keep our waterfront beautiful. Tools and refreshments provided.</p>
+            <div class="event-meta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Riverside Park, South Entrance
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="event-card">
+          <div class="event-visual ev-2" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="event-body">
+            <span class="event-date">Tue, Mar 25 · 7 PM</span>
+            <h4>City Council public meeting</h4>
+            <p>Budget consultation and open forum. Register to speak or watch the livestream online.</p>
+            <div class="event-meta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              City Hall, Council Chamber
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="event-card">
+          <div class="event-visual ev-3" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="event-body">
+            <span class="event-date">Sat, Mar 29 · 9 AM</span>
+            <h4>Spring compost giveaway</h4>
+            <p>Free compost for Lumen City residents. Bring your own containers and a proof of address.</p>
+            <div class="event-meta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Northgate Depot, Bay 4
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer" id="contact" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand" aria-label="LUMEN CITY home">
+            <div class="brand-mark" aria-hidden="true">L</div>
+            <div class="brand-text">LUMEN<span>CITY</span></div>
+          </a>
+          <p>Lumen City is committed to transparent, accessible, and responsive municipal services for all residents.</p>
+          <div style="margin-top:1.25rem;">
+            <span class="accessibility-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+              WCAG 2.1 AA compliant
+            </span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Permits &amp; licences</a></li>
+            <li><a href="#">Waste &amp; recycling</a></li>
+            <li><a href="#">Transit &amp; parking</a></li>
+            <li><a href="#">Payments &amp; taxes</a></li>
+            <li><a href="#">Report an issue</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>City Hall</h4>
+          <ul>
+            <li><a href="#">Mayor &amp; Council</a></li>
+            <li><a href="#">Departments</a></li>
+            <li><a href="#">Budget &amp; finances</a></li>
+            <li><a href="#">Jobs at the City</a></li>
+            <li><a href="#">News &amp; updates</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:311">311 (within city)</a></li>
+            <li><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+            <li><a href="mailto:hello@lumencity.gov">hello@lumencity.gov</a></li>
+            <li><a href="#">City Hall, 100 Civic Plaza</a></li>
+            <li><a href="#">Mon–Fri, 8:30 AM – 4:30 PM</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Lumen City. All rights reserved. This is a demonstration page.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Accessibility statement</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple search interaction: prevent default and show a friendly message
+    document.querySelector('.search-bar').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = this.querySelector('input');
+      const query = input.value.trim();
+      if (query) {
+        // In a real app, this would navigate to search results.
+        // For this demo, we'll show a subtle inline confirmation.
+        const existing = document.querySelector('.search-feedback');
+        if (existing) existing.remove();
+        const feedback = document.createElement('p');
+        feedback.className = 'search-feedback';
+        feedback.style.cssText = 'margin-top:0.75rem;font-size:0.85rem;color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.1);padding:0.5rem 1rem;border-radius:6px;display:inline-block;';
+        feedback.textContent = 'Searching for “' + query + '”… (demo only)';
+        this.parentNode.appendChild(feedback);
+        setTimeout(() => feedback.remove(), 3000);
+      }
+    });
+
+    // Smooth scroll for anchor links (already handled by CSS scroll-behavior)
+    // Add a small active state to nav links on scroll (optional, lightweight)
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.header-nav a');
+
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.style.background = 'transparent';
+        link.style.color = 'rgba(255,255,255,0.85)';
+        if (link.getAttribute('href') === '#' + current) {
+          link.style.background = 'rgba(255,255,255,0.12)';
+          link.style.color = '#fff';
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('load', updateActiveNav);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORTHLINE FC — Women's Football</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1a3a;
+    --navy-deep: #06122a;
+    --navy-mid: #122a52;
+    --cream: #f4ecd8;
+    --cream-warm: #ede2c4;
+    --red: #e63946;
+    --red-deep: #c1121f;
+    --ink: #0a1a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Archivo Black', sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    color: var(--cream);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    background: var(--red);
+    display: grid;
+    place-items: center;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    color: var(--cream);
+    font-size: 16px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--cream);
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--red-deep); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    background: var(--navy);
+    color: var(--cream);
+    padding: 80px 40px 100px;
+    overflow: hidden;
+    min-height: 620px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(230,57,70,0.15), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(230,57,70,0.08), transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Stadium motif - pitch lines */
+  .pitch-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 24px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 32px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 6vw, 88px);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .accent {
+    color: var(--red);
+    display: block;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: rgba(244,236,216,0.75);
+    max-width: 480px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--cream);
+  }
+
+  .btn-primary:hover { background: var(--red-deep); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 2px solid rgba(244,236,216,0.3);
+  }
+
+  .btn-ghost:hover { border-color: var(--cream); }
+
+  /* Next match card */
+  .match-card {
+    background: var(--cream);
+    color: var(--navy);
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  }
+
+  .match-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--red);
+  }
+
+  .match-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .match-label .comp {
+    color: var(--navy);
+    opacity: 0.5;
+  }
+
+  .match-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .team {
+    text-align: center;
+  }
+
+  .team-crest {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    color: var(--cream);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+
+  .team-crest.home { background: var(--navy); }
+  .team-crest.away { background: var(--red); }
+
+  .team-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .vs {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    color: var(--red);
+  }
+
+  .match-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(10,26,58,0.1);
+    margin-bottom: 20px;
+  }
+
+  .meta-item {
+    font-size: 12px;
+  }
+
+  .meta-item .label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--navy);
+    opacity: 0.5;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .meta-item .value {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .match-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ============ SECTION BASE ============ */
+  section {
+    padding: 80px 40px;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    font-size: clamp(32px, 4vw, 52px);
+  }
+
+  .section-head .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-head .link {
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 4px;
+  }
+
+  /* ============ RESULTS & TABLE ============ */
+  .results-section {
+    background: var(--cream);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+  }
+
+  .results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .result-row {
+    background: white;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    border-left: 4px solid var(--navy);
+    transition: transform 0.2s;
+  }
+
+  .result-row.win { border-left-color: var(--red); }
+  .result-row:hover { transform: translateX(4px); }
+
+  .result-date {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    opacity: 0.5;
+    min-width: 60px;
+  }
+
+  .result-teams {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .result-teams .opponent {
+    color: var(--navy);
+    opacity: 0.6;
+    font-weight: 400;
+  }
+
+  .result-score {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .result-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--red);
+    color: var(--cream);
+  }
+
+  .result-badge.draw { background: var(--navy); opacity: 0.6; }
+
+  /* Table */
+  .table-card {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 32px;
+  }
+
+  .table-card h3 {
+    font-size: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .table-card h3 span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(244,236,216,0.5);
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(244,236,216,0.15);
+  }
+
+  th:not(:first-child), td:not(:first-child) { text-align: center; }
+
+  td {
+    padding: 12px 6px;
+    border-bottom: 1px solid rgba(244,236,216,0.08);
+  }
+
+  tr.highlight td {
+    background: rgba(230,57,70,0.15);
+    font-weight: 700;
+  }
+
+  tr.highlight td:first-child {
+    border-left: 3px solid var(--red);
+  }
+
+  .pos {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+  }
+
+  .team-cell {
+    text-align: left !important;
+    font-weight: 600;
+  }
+
+  /* ============ PLAYER SPOTLIGHTS ============ */
+  .players-section {
+    background: var(--navy);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .players-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(230,57,70,0.2), transparent 70%);
+  }
+
+  .players-section .section-head h2 { color: var(--cream); }
+
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  .player-card {
+    background: var(--navy-mid);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .player-card:hover { transform: translateY(-6px); }
+
+  .player-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .player-card:hover::after { transform: scaleX(1); }
+
+  .player-number {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 72px;
+    color: rgba(244,236,216,0.06);
+    line-height: 1;
+  }
+
+  .player-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--red-deep));
+    display: grid;
+    place-items: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    color: var(--cream);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .player-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .player-role {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .player-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(244,236,216,0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat .num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    color: var(--cream);
+  }
+
+  .stat .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(244,236,216,0.5);
+    margin-top: 2px;
+  }
+
+  /* ============ TICKETS & MEMBERSHIP ============ */
+  .tickets-section {
+    background: var(--cream-warm);
+  }
+
+  .tickets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .ticket-card {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ticket-card.membership {
+    background: var(--red);
+  }
+
+  .ticket-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at top right, rgba(244,236,216,0.1), transparent 70%);
+  }
+
+  .ticket-card h3 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .ticket-card .desc {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 28px;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .ticket-features {
+    list-style: none;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .ticket-features li {
+    padding: 10px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(244,236,216,0.15);
+  }
+
+  .ticket-features li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .ticket-card.membership .ticket-features li::before {
+    background: var(--cream);
+  }
+
+  .ticket-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .ticket-price .amount {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 48px;
+  }
+
+  .ticket-price .period {
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  .ticket-card .btn {
+    width: 100%;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ticket-card.membership .btn {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  .ticket-card.membership .btn:hover { background: var(--navy-deep); }
+
+  /* ============ NEWS ============ */
+  .news-section {
+    background: var(--cream);
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .news-card {
+    background: white;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .news-card:hover { transform: translateY(-4px); }
+
+  .news-image {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .news-card.featured .news-image { height: 320px; }
+
+  .news-image-1 {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  }
+
+  .news-image-2 {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+  }
+
+  .news-image-3 {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--red) 100%);
+  }
+
+  .news-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(244,236,216,0.05) 40px, rgba(244,236,216,0.05) 41px),
+      radial-gradient(circle at 30% 50%, rgba(244,236,216,0.15), transparent 60%);
+  }
+
+  .news-image .tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--cream);
+    color: var(--navy);
+    padding: 6px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    z-index: 2;
+  }
+
+  .news-body {
+    padding: 24px;
+  }
+
+  .news-date {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+
+  .news-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+
+  .news-card.featured .news-title { font-size: 26px; }
+
+  .news-excerpt {
+    font-size: 13px;
+    color: var(--navy);
+    opacity: 0.65;
+    line-height: 1.6;
+  }
+
+  /* ============ STORE ============ */
+  .store-section {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  .store-section .section-head h2 { color: var(--cream); }
+
+  .store-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    background: var(--navy-mid);
+    padding: 24px;
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .product-card:hover { transform: translateY(-4px); }
+
+  .product-visual {
+    height: 180px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .product-visual svg { max-width: 100%; height: auto; }
+
+  .product-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .product-price {
+    font-size: 14px;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--navy-deep);
+    color: var(--cream);
+    padding: 60px 40px 30px;
+    border-top: 4px solid var(--red);
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(244,236,216,0.1);
+  }
+
+  .footer-brand .logo { margin-bottom: 16px; }
+
+  .footer-brand p {
+    font-size: 13px;
+    opacity: 0.6;
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  .footer-col h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    color: var(--red);
+  }
+
+  .footer-col ul {
+    list-style: none;
+  }
+
+  .footer-col li {
+    margin-bottom: 10px;
+  }
+
+  .footer-col a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 13px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .footer-col a:hover { opacity: 1; color: var(--red); }
+
+  .footer-bottom {
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    opacity: 0.5;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .players-grid { grid-template-columns: 1fr 1fr; }
+    .tickets-grid { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: 1fr 1fr; }
+    .news-card.featured { grid-column: span 2; }
+    .store-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .hero { padding: 60px 20px 80px; }
+    .players-grid, .news-grid, .store-grid { grid-template-columns: 1fr; }
+    .news-card.featured { grid-column: span 1; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">N</div>
+    NORTHLINE FC
+  </div>
+  <ul class="nav-links">
+    <li><a href="#fixtures">Fixtures</a></li>
+    <li><a href="#squad">Squad</a></li>
+    <li><a href="#tickets">Tickets</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#store">Store</a></li>
+  </ul>
+  <a href="#tickets" class="nav-cta">Buy Tickets</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="pitch-lines" viewBox="0 0 1440 620" preserveAspectRatio="none">
+    <circle cx="720" cy="310" r="120" fill="none" stroke="#f4ecd8" stroke-width="2"/>
+    <line x1="720" y1="0" x2="720" y2="620" stroke="#f4ecd8" stroke-width="2"/>
+    <rect x="0" y="180" width="180" height="260" fill="none" stroke="#f4ecd8" stroke-width="2"/>
+    <rect x="1260" y="180" width="180" height="260" fill="none" stroke="#f4ecd8" stroke-width="2"/>
+    <circle cx="720" cy="310" r="6" fill="#f4ecd8"/>
+  </svg>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Season 2025/26 · Matchday 14</div>
+      <h1>Built on<br>grit.<span class="accent">Played with heart.</span></h1>
+      <p>Northline FC is a women's football club forged in the north — where every tackle, every sprint, and every goal is earned. Join us at Northgate Park this Saturday.</p>
+      <div class="hero-actions">
+        <a href="#tickets" class="btn btn-primary">Get Matchday Tickets →</a>
+        <a href="#squad" class="btn btn-ghost">Meet the Squad</a>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-label">
+        <span>Next Match</span>
+        <span class="comp">League · MD 14</span>
+      </div>
+      <div class="match-teams">
+        <div class="team">
+          <div class="team-crest home">N</div>
+          <div class="team-name">NORTHLINE</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="team">
+          <div class="team-crest away">H</div>
+          <div class="team-name">HARBOUR CITY</div>
+        </div>
+      </div>
+      <div class="match-meta">
+        <div class="meta-item">
+          <div class="label">Kick-off</div>
+          <div class="value">Sat 15:00</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Venue</div>
+          <div class="value">Northgate Park</div>
+        </div>
+      </div>
+      <a href="#tickets" class="btn btn-primary">Buy Tickets</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS & TABLE -->
+<section class="results-section" id="fixtures">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Form & Standings</span>
+        <h2>Recent Results</h2>
+      </div>
+      <a href="#" class="link">All Fixtures →</a>
+    </div>
+
+    <div class="results-grid">
+      <div class="results-list">
+        <div class="result-row win">
+          <div class="result-date">Nov 23</div>
+          <div class="result-teams">Northline <span class="opponent">vs Westbrook United</span></div>
+          <div class="result-score">3 – 1 <span class="result-badge">W</span></div>
+        </div>
+        <div class="result-row win">
+          <div class="result-date">Nov 16</div>
+          <div class="result-teams">Northline <span class="opponent">vs Ashford Rovers</span></div>
+          <div class="result-score">2 – 0 <span class="result-badge">W</span></div>
+        </div>
+        <div class="result-row">
+          <div class="result-date">Nov 09</div>
+          <div class="result-teams">Northline <span class="opponent">vs Kingsbridge FC</span></div>
+          <div class="result-score">1 – 1 <span class="result-badge draw">D</span></div>
+        </div>
+        <div class="result-row win">
+          <div class="result-date">Nov 02</div>
+          <div class="result-teams">Northline <span class="opponent">vs Vale Athletic</span></div>
+          <div class="result-score">4 – 2 <span class="result-badge">W</span></div>
+        </div>
+        <div class="result-row">
+          <div class="result-date">Oct 26</div>
+          <div class="result-teams">Northline <span class="opponent">vs Meridian Ladies</span></div>
+          <div class="result-score">0 – 2 <span class="result-badge draw">L</span></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <h3>League Table <span>Matchday 13</span></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th style="text-align:left">Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>Pts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pos">1</td>
+              <td class="team-cell">Meridian Ladies</td>
+              <td>13</td><td>10</td><td>2</td><td>1</td><td><strong>32</strong></td>
+            </tr>
+            <tr class="highlight">
+              <td class="pos">2</td>
+              <td class="team-cell">Northline FC</td>
+              <td>13</td><td>9</td><td>2</td><td>2</td><td><strong>29</strong></td>
+            </tr>
+            <tr>
+              <td class="pos">3</td>
+              <td class="team-cell">Harbour City</td>
+              <td>13</td><td>8</td><td>3</td><td>2</td><td><strong>27</strong></td>
+            </tr>
+            <tr>
+              <td class="pos">4</td>
+              <td class="team-cell">Kingsbridge FC</td>
+              <td>13</td><td>7</td><td>3</td><td>3</td><td><strong>24</strong></td>
+            </tr>
+            <tr>
+              <td class="pos">5</td>
+              <td class="team-cell">Westbrook United</td>
+              <td>13</td><td>6</td><td>4</td><td>3</td><td><strong>22</strong></td>
+            </tr>
+            <tr>
+              <td class="pos">6</td>
+              <td class="team-cell">Ashford Rovers</td>
+              <td>13</td><td>5</td><td>3</td><td>5</td><td><strong>18</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYER SPOTLIGHTS -->
+<section class="players-section" id="squad">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Squad Spotlight</span>
+        <h2>Players to Watch</h2>
+      </div>
+      <a href="#" class="link" style="color:var(--cream)">Full Squad →</a>
+    </div>
+
+    <div class="players-grid">
+      <div class="player-card">
+        <div class="player-number">09</div>
+        <div class="player-avatar">EM</div>
+        <div class="player-name">Elena Marsh</div>
+        <div class="player-role">Striker · Captain</div>
+        <div class="player-stats">
+          <div class="stat"><div class="num">14</div><div class="lbl">Goals</div></div>
+          <div class="stat"><div class="num">6</div><div class="lbl">Assists</div></div>
+          <div class="stat"><div class="num">13</div><div class="lbl">Apps</div></div>
+        </div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-number">07</div>
+        <div class="player-avatar">SA</div>
+        <div class="player-name">Sofia Adeyemi</div>
+        <div class="player-role">Winger</div>
+        <div class="player-stats">
+          <div class="stat"><div class="num">8</div><div class="lbl">Goals</div></div>
+          <div class="stat"><div class="num">11</div><div class="lbl">Assists</div></div>
+          <div class="stat"><div class="num">13</div><div class="lbl">Apps</div></div>
+        </div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-number">01</div>
+        <div class="player-avatar">RK</div>
+        <div class="player-name">Rhea Kaur</div>
+        <div class="player-role">Goalkeeper</div>
+        <div class="player-stats">
+          <div class="stat"><div class="num">7</div><div class="lbl">Clean</div></div>
+          <div class="stat"><div class="num">42</div><div class="lbl">Saves</div></div>
+          <div class="stat"><div class="num">13</div><div class="lbl">Apps</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKETS & MEMBERSHIP -->
+<section class="tickets-section" id="tickets">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Join the Northline</span>
+        <h2>Tickets & Membership</h2>
+      </div>
+    </div>
+
+    <div class="tickets-grid">
+      <div class="ticket-card">
+        <h3>Matchday Tickets</h3>
+        <p class="desc">Secure your seat at Northgate Park. Every ticket supports the club and the community.</p>
+        <ul class="ticket-features">
+          <li>Adult — £14 · Concession — £8</li>
+          <li>Under-12s go free with a paying adult</li>
+          <li>Family bundle (2+2) — £32</li>
+          <li>Accessible seating available on request</li>
+        </ul>
+        <div class="ticket-price">
+          <span class="amount">£14</span>
+          <span class="period">/ adult ticket</span>
+        </div>
+        <a href="#" class="btn btn-primary">Buy Tickets</a>
+      </div>
+
+      <div class="ticket-card membership">
+        <h3>Season Membership</h3>
+        <p class="desc">Become a Northline member and get closer to the club — priority access, exclusive perks, and a real stake in our story.</p>
+        <ul class="ticket-features">
+          <li>All 11 home league matches included</li>
+          <li>Priority away ticket allocation</li>
+          <li>10% off in the supporter store</li>
+          <li>Members-only events & training days</li>
+        </ul>
+        <div class="ticket-price">
+          <span class="amount">£95</span>
+          <span class="period">/ season</span>
+        </div>
+        <a href="#" class="btn">Become a Member</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-section" id="news">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">From the Club</span>
+        <h2>Latest News</h2>
+      </div>
+      <a href="#" class="link">All News →</a>
+    </div>
+
+    <div class="news-grid">
+      <div class="news-card featured">
+        <div class="news-image news-image-1">
+          <span class="tag">Match Report</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date">24 November 2025</div>
+          <div class="news-title">Marsh hat-trick sinks Westbrook as Northline climb to second</div>
+          <div class="news-excerpt">A ruthless second-half display at Northgate Park saw the captain net three and Sofia Adeyemi add a fourth as Northline extended their unbeaten home run to nine matches.</div>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-image news-image-2">
+          <span class="tag">Club</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date">20 November 2025</div>
+          <div class="news-title">Northline launch girls' academy for 2026</div>
+          <div class="news-excerpt">A new pathway for young players across the region.</div>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-image news-image-3">
+          <span class="tag">Interview</span>
+        </div>
+        <div class="news-body">
+          <div class="news-date">17 November 2025</div>
+          <div class="news-title">Rhea Kaur on clean sheets and consistency</div>
+          <div class="news-excerpt">Our number one reflects on a standout season between the posts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORE -->
+<section class="store-section" id="store">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Supporter Store</span>
+        <h2>Wear the Colours</h2>
+      </div>
+      <a href="#" class="link" style="color:var(--cream)">Shop All →</a>
+    </div>
+
+    <div class="store-grid">
+      <div class="product-card">
+        <div class="product-visual">
+          <svg viewBox="0 0 120 140" width="120" height="140">
+            <path d="M30 20 L20 30 L10 25 L15 45 L25 42 L25 120 L95 120 L95 42 L105 45 L110 25 L100 30 L90 20 L75 15 L60 25 L45 15 Z" fill="#f4ecd8"/>
+            <path d="M45 15 L60 25 L75 15 L70 12 L60 18 L50 12 Z" fill="#e63946"/>
+            <rect x="55" y="55" width="10" height="10" fill="#0a1a3a"/>
+            <text x="60" y="90" text-anchor="middle" font-family="Archivo Black" font-size="14" fill="#0a1a3a">N</text>
+          </svg>
+        </div>
+        <div class="product-name">Home Shirt 25/26</div>
+        <div class="product-price">£55.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-visual">
+          <svg viewBox="0 0 120 140" width="120" height="140">
+            <path d="M30 20 L20 30 L10 25 L15 45 L25 42 L25 120 L95 120 L95 42 L105 45 L110 25 L100 30 L90 20 L75 15 L60 25 L45 15 Z" fill="#0a1a3a"/>
+            <path d="M45 15 L60 25 L75 15 L70 12 L60 18 L50 12 Z" fill="#e63946"/>
+            <text x="60" y="90" text-anchor="middle" font-family="Archivo Black" font-size="14" fill="#f4ecd8">N</text>
+          </svg>
+        </div>
+        <div class="product-name">Away Shirt 25/26</div>
+        <div class="product-price">£55.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-visual">
+          <svg viewBox="0 0 120 140" width="120" height="140">
+            <path d="M20 40 Q60 20 100 40 L100 60 Q60 40 20 60 Z" fill="#e63946"/>
+            <rect x="20" y="60" width="80" height="50" fill="#0a1a3a"/>
+            <text x="60" y="92" text-anchor="middle" font-family="Archivo Black" font-size="12" fill="#f4ecd8">NORTHLINE</text>
+          </svg>
+        </div>
+        <div class="product-name">Matchday Scarf</div>
+        <div class="product-price">£18.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-visual">
+          <svg viewBox="0 0 120 140" width="120" height="140">
+            <ellipse cx="60" cy="70" rx="45" ry="50" fill="#0a1a3a"/>
+            <ellipse cx="60" cy="70" rx="45" ry="50" fill="none" stroke="#e63946" stroke-width="3"/>
+            <path d="M60 30 L65 45 L80 45 L68 55 L73 70 L60 60 L47 70 L52 55 L40 45 L55 45 Z" fill="#f4ecd8"/>
+            <text x="60" y="100" text-anchor="middle" font-family="Archivo Black" font-size="10" fill="#f4ecd8">NORTHLINE</text>
+          </svg>
+        </div>
+        <div class="product-name">Supporters Cap</div>
+        <div class="product-price">£22.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">N</div>
+          NORTHLINE FC
+        </div>
+        <p>Founded 2011. A women's football club built on community, courage, and the belief that the north deserves the best of the game.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Club</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Squad</a></li>
+          <li><a href="#">Coaching Staff</a></li>
+          <li><a href="#">Academy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Matchday</h4>
+        <ul>
+          <li><a href="#">Fixtures</a></li>
+          <li><a href="#">Tickets</a></li>
+          <li><a href="#">Getting Here</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Northline FC. All rights reserved.</div>
+      <div>Northgate Park · Northline · NL1 4FC</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

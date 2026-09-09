@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBSERVATORY / WEBSITE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0b0e1a;
+      --bg-mid: #141a2b;
+      --bg-surface: #1c2438;
+      --bg-elevated: #232d45;
+      --text-primary: #eef2ff;
+      --text-secondary: #a8b4d4;
+      --text-muted: #6b7a9e;
+      --accent-cyan: #5eead4;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --accent-violet: #a78bfa;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.1);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-width: 1280px;
+      --gutter: 2rem;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 500;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet), var(--accent-rose));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(11, 14, 26, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      position: relative;
+    }
+
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(94, 234, 212, 0.25);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(167, 139, 250, 0.15), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(94, 234, 212, 0.1), transparent),
+        radial-gradient(ellipse 50% 40% at 90% 70%, rgba(251, 113, 133, 0.08), transparent);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(94, 234, 212, 0.1);
+      border: 1px solid rgba(94, 234, 212, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent-cyan);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(94, 234, 212, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border-medium);
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ---------- SKY CONDITIONS PANEL ---------- */
+    .sky-panel {
+      background: rgba(28, 36, 56, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sky-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-rose));
+    }
+
+    .sky-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .sky-panel-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .sky-status {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .sky-status .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }
+
+    .sky-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .sky-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+
+    .sky-item-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+
+    .sky-item-value {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .sky-item-value small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-left: 0.2rem;
+    }
+
+    .sky-bar {
+      margin-top: 0.5rem;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .sky-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 1s ease;
+    }
+
+    .sky-bar-fill.cyan { background: var(--accent-cyan); }
+    .sky-bar-fill.amber { background: var(--accent-amber); }
+    .sky-bar-fill.violet { background: var(--accent-violet); }
+    .sky-bar-fill.rose { background: var(--accent-rose); }
+
+    .sky-footer {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .sky-footer strong {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-header .label {
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .section-header h2 {
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      max-width: 560px;
+      font-size: 1rem;
+    }
+
+    /* ---------- TELESCOPE SCHEDULE ---------- */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .schedule-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-medium);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .schedule-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-accent, var(--accent-cyan));
+      opacity: 0.8;
+    }
+
+    .schedule-card .telescope-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .schedule-card .telescope-type {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+    }
+
+    .schedule-card .time-slot {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .schedule-card .time-slot svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.6;
+    }
+
+    .schedule-card .target {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .schedule-card .target-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .schedule-card .target-name {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .schedule-card .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+
+    .status-badge.active {
+      background: rgba(94, 234, 212, 0.15);
+      color: var(--accent-cyan);
+    }
+
+    .status-badge.scheduled {
+      background: rgba(167, 139, 250, 0.15);
+      color: var(--accent-violet);
+    }
+
+    .status-badge.maintenance {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-amber);
+    }
+
+    /* ---------- RESEARCH NOTES ---------- */
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+
+    .research-featured {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-featured::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .research-featured .label {
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .research-featured h3 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .research-featured p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .research-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .research-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .research-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .research-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+
+    .research-item:hover {
+      border-color: var(--border-medium);
+      transform: translateX(4px);
+    }
+
+    .research-item .label {
+      font-size: 0.6rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .research-item h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .research-item .date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ---------- VISITOR BOOKING ---------- */
+    .booking-section {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .booking-info h2 {
+      margin-bottom: 1rem;
+    }
+
+    .booking-info p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .booking-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .booking-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .booking-features li svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--accent-cyan);
+    }
+
+    .booking-form {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+
+    .booking-form h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.1);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7a9e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+      border: none;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(94, 234, 212, 0.3);
+    }
+
+    /* ---------- EDUCATION ---------- */
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .edu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-medium);
+    }
+
+    .edu-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.25rem;
+    }
+
+    .edu-icon.cyan { background: rgba(94, 234, 212, 0.12); color: var(--accent-cyan); }
+    .edu-icon.violet { background: rgba(167, 139, 250, 0.12); color: var(--accent-violet); }
+    .edu-icon.amber { background: rgba(251, 191, 36, 0.12); color: var(--accent-amber); }
+
+    .edu-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .edu-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .edu-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+
+    .edu-link:hover {
+      gap: 0.6rem;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-col a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--text-secondary);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-text {
+        max-width: 100%;
+      }
+
+      .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .research-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .education-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --gutter: 1.25rem;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .education-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sky-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 7rem 0 4rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sky-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- STARFIELD CANVAS ---------- */
+    #starfield {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAV ========== -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#5eead4" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="16" cy="16" r="8" stroke="#5eead4" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="16" cy="16" r="3" fill="#5eead4"/>
+            <line x1="16" y1="2" x2="16" y2="8" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="16" y1="24" x2="16" y2="30" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="2" y1="16" x2="8" y2="16" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="24" y1="16" x2="30" y2="16" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+          </svg>
+        </div>
+        OBSERVATORY
+      </a>
+      <ul class="nav-links">
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a href="#education">Education</a></li>
+      </ul>
+      <a href="#visit" class="nav-cta">Book a Session</a>
+      <button class="mobile-toggle" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg">
+      <canvas id="starfield"></canvas>
+    </div>
+    <div class="hero-gradient"></div>
+    <div class="container hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Live · Clear skies over Mauna Kea
+        </div>
+        <h1>
+          Where the <span class="text-gradient">universe</span> meets the mountain
+        </h1>
+        <p class="hero-sub">
+          At 4,205 meters above the Pacific, our observatory captures light that has traveled billions of years. Join us for a night under the most pristine skies on Earth.
+        </p>
+        <div class="hero-actions">
+          <a href="#visit" class="btn-primary">
+            Reserve Your Night
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#schedule" class="btn-secondary">
+            View Telescope Schedule
+          </a>
+        </div>
+      </div>
+
+      <!-- Sky Conditions Panel -->
+      <div class="sky-panel">
+        <div class="sky-panel-header">
+          <h3>Sky Conditions</h3>
+          <div class="sky-status">
+            <span class="dot"></span>
+            Live
+          </div>
+        </div>
+        <div class="sky-grid">
+          <div class="sky-item">
+            <div class="sky-item-label">Seeing</div>
+            <div class="sky-item-value">0.65<small>arcsec</small></div>
+            <div class="sky-bar"><div class="sky-bar-fill cyan" style="width: 85%"></div></div>
+          </div>
+          <div class="sky-item">
+            <div class="sky-item-label">Transparency</div>
+            <div class="sky-item-value">92<small>%</small></div>
+            <div class="sky-bar"><div class="sky-bar-fill violet" style="width: 92%"></div></div>
+          </div>
+          <div class="sky-item">
+            <div class="sky-item-label">Moon Phase</div>
+            <div class="sky-item-value">Waxing<small>Gibbous</small></div>
+            <div class="sky-bar"><div class="sky-bar-fill amber" style="width: 68%"></div></div>
+          </div>
+          <div class="sky-item">
+            <div class="sky-item-label">Cloud Cover</div>
+            <div class="sky-item-value">4<small>%</small></div>
+            <div class="sky-bar"><div class="sky-bar-fill rose" style="width: 4%"></div></div>
+          </div>
+        </div>
+        <div class="sky-footer">
+          <span>Updated <strong>2 min ago</strong></span>
+          <span>Sunset <strong>18:42 HST</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TELESCOPE SCHEDULE ========== -->
+  <section id="schedule">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">Tonight's Program</span>
+        <h2>Telescope Schedule</h2>
+        <p>Three instruments, one night, and a sky full of targets. Here's what's observing right now.</p>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-card reveal" style="--card-accent: var(--accent-cyan);">
+          <div class="telescope-name">Kepler Array</div>
+          <div class="telescope-type">3.6m Optical · Cassegrain</div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            20:00 – 02:30 HST
+          </div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Principal Investigator: Dr. Elena Vasquez
+          </div>
+          <div class="target">
+            <div class="target-label">Primary Target</div>
+            <div class="target-name">NGC 1365 · Great Barred Spiral</div>
+          </div>
+          <span class="status-badge active">Observing</span>
+        </div>
+
+        <div class="schedule-card reveal" style="--card-accent: var(--accent-violet);">
+          <div class="telescope-name">Hoku Infrared</div>
+          <div class="telescope-type">2.2m IR · Nasmyth</div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            21:15 – 04:00 HST
+          </div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Principal Investigator: Dr. Marcus Chen
+          </div>
+          <div class="target">
+            <div class="target-label">Primary Target</div>
+            <div class="target-name">TRAPPIST-1e · Atmospheric Survey</div>
+          </div>
+          <span class="status-badge scheduled">Scheduled</span>
+        </div>
+
+        <div class="schedule-card reveal" style="--card-accent: var(--accent-amber);">
+          <div class="telescope-name">Solaris Coronagraph</div>
+          <div class="telescope-type">1.5m Solar · Off-axis</div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            06:00 – 11:30 HST
+          </div>
+          <div class="time-slot">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Principal Investigator: Dr. Aisha Okafor
+          </div>
+          <div class="target">
+            <div class="target-label">Primary Target</div>
+            <div class="target-name">Solar Corona · Cycle 25 Max</div>
+          </div>
+          <span class="status-badge maintenance">Maintenance</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RESEARCH NOTES ========== -->
+  <section id="research">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">From the Archive</span>
+        <h2>Research Notes</h2>
+        <p>Dispatches from the edge of what we know — written by the astronomers who were there.</p>
+      </div>
+      <div class="research-grid">
+        <div class="research-featured reveal">
+          <span class="label">Featured Study</span>
+          <h3>A New Class of Pulsating White Dwarfs in the Kepler Field</h3>
+          <p>
+            Using 18 months of continuous photometry from the Kepler Array, our team has identified a previously unknown class of variable white dwarfs with pulsation periods between 200 and 400 seconds. These objects may represent a missing link in stellar evolution.
+          </p>
+          <div class="research-meta">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4v4l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              14 min read
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 3h12v10H2z" stroke="currentColor" stroke-width="1.2"/><path d="M2 6h12" stroke="currentColor" stroke-width="1.2"/></svg>
+              March 2025
+            </span>
+          </div>
+        </div>
+        <div class="research-list">
+          <div class="research-item reveal">
+            <span class="label">Astrochemistry</span>
+            <h4>Complex Organic Molecules in the Coma of 67P</h4>
+            <div class="date">February 2025 · 8 min read</div>
+          </div>
+          <div class="research-item reveal">
+            <span class="label">Exoplanets</span>
+            <h4>Transit Timing Variations in the TOI-178 System</h4>
+            <div class="date">January 2025 · 12 min read</div>
+          </div>
+          <div class="research-item reveal">
+            <span class="label">Instrumentation</span>
+            <h4>Adaptive Optics Upgrade Delivers 0.4" Seeing</h4>
+            <div class="date">December 2024 · 6 min read</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VISITOR BOOKING ========== -->
+  <section id="visit" class="booking-section">
+    <div class="container">
+      <div class="booking-grid">
+        <div class="booking-info reveal">
+          <span class="label">Visitor Program</span>
+          <h2>Book a night at the summit</h2>
+          <p>
+            Our visitor program runs year-round, weather permitting. Sessions include a guided tour of the control room, hands-on time with our outreach telescopes, and a hot meal at the mid-level station.
+          </p>
+          <ul class="booking-features">
+            <li>
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Small groups of 12 or fewer
+            </li>
+            <li>
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Professional astronomer guides
+            </li>
+            <li>
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              All-weather gear provided
+            </li>
+            <li>
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Complimentary astrophotography
+            </li>
+          </ul>
+        </div>
+        <div class="booking-form reveal">
+          <h3>Reserve your session</h3>
+          <form onsubmit="event.preventDefault(); alert('Thank you — our visitor coordinator will be in touch within 24 hours.');">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" placeholder="Dr. Jane Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" required>
+              </div>
+              <div class="form-group">
+                <label for="guests">Guests</label>
+                <select id="guests">
+                  <option>1 person</option>
+                  <option>2 people</option>
+                  <option>3–4 people</option>
+                  <option>5–8 people</option>
+                  <option>9–12 people</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="experience">Experience Level</label>
+              <select id="experience">
+                <option>First-time visitor</option>
+                <option>Amateur astronomer</option>
+                <option>Experienced observer</option>
+                <option>Professional researcher</option>
+              </select>
+            </div>
+            <button type="submit" class="form-submit">Request Booking</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EDUCATION ========== -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">Learn With Us</span>
+        <h2>Education & Outreach</h2>
+        <p>From school field trips to graduate seminars, we're committed to sharing the sky with everyone.</p>
+      </div>
+      <div class="education-grid">
+        <div class="edu-card reveal">
+          <div class="edu-icon cyan">✦</div>
+          <h3>School Programs</h3>
+          <p>
+            Curriculum-aligned workshops for K–12 students, including live telescope feeds and hands-on spectroscopy labs. Available in English and Hawaiian.
+          </p>
+          <a href="#" class="edu-link">
+            Explore programs
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="edu-card reveal">
+          <div class="edu-icon violet">◈</div>
+          <h3>Public Lectures</h3>
+          <p>
+            Monthly talks from visiting researchers, streamed live and archived for free. Past topics include black hole imaging and the search for life on Europa.
+          </p>
+          <a href="#" class="edu-link">
+            View lecture series
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="edu-card reveal">
+          <div class="edu-icon amber">◇</div>
+          <h3>Citizen Science</h3>
+          <p>
+            Contribute to real research through our Zooniverse projects. Classify galaxies, spot exoplanets, and help train our machine learning models.
+          </p>
+          <a href="#" class="edu-link">
+            Join a project
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="14" stroke="#5eead4" stroke-width="1.5" opacity="0.4"/>
+                <circle cx="16" cy="16" r="8" stroke="#5eead4" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="16" cy="16" r="3" fill="#5eead4"/>
+                <line x1="16" y1="2" x2="16" y2="8" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+                <line x1="16" y1="24" x2="16" y2="30" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+                <line x1="2" y1="16" x2="8" y2="16" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+                <line x1="24" y1="16" x2="30" y2="16" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+              </svg>
+            </div>
+            OBSERVATORY
+          </a>
+          <p>
+            A world-class astronomical research facility located at 4,205 meters on the summit of Mauna Kea, Hawai'i.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <ul>
+            <li><a href="#">Book a Session</a></li>
+            <li><a href="#">Directions</a></li>
+            <li><a href="#">Accessibility</a></li>
+            <li><a href="#">Weather Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Research</h4>
+          <ul>
+            <li><a href="#">Publications</a></li>
+            <li><a href="#">Data Archive</a></li>
+            <li><a href="#">Proposal Calls</a></li>
+            <li><a href="#">Instrumentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">Mastodon</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 OBSERVATORY / WEBSITE. All rights reserved.</span>
+        <span>
+          <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Credits</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // ---------- STARFIELD CANVAS ----------
+    (function() {
+      const canvas = document.getElementById('starfield');
+      const ctx = canvas.getContext('2d');
+      let width, height, stars = [], shootingStars = [];
+
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        createStars();
+      }
+
+      function createStars() {
+        stars = [];
+        const count = Math.floor((width * height) / 4000);
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 1.4 + 0.3,
+            opacity: Math.random() * 0.7 + 0.3,
+            twinkleSpeed: Math.random() * 0.02 + 0.005,
+            twinklePhase: Math.random() * Math.PI * 2
+          });
+        }
+      }
+
+      function createShootingStar() {
+        if (Math.random() < 0.008 && shootingStars.length < 2) {
+          shootingStars.push({
+            x: Math.random() * width * 0.8,
+            y: Math.random() * height * 0.4,
+            vx: (Math.random() * 3 + 2) * (Math.random() > 0.5 ? 1 : -1),
+            vy: Math.random() * 2 + 1,
+            life: 1,
+            decay: Math.random() * 0.015 + 0.01,
+            length: Math.random() * 80 + 40
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw stars
+        stars.forEach(star => {
+          star.twinklePhase += star.twinkleSpeed;
+          const twinkle = Math.sin(star.twinklePhase) * 0.3 + 0.7;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(238, 242, 255, ${star.opacity * twinkle})`;
+          ctx.fill();
+        });
+
+        // Draw shooting stars
+        shootingStars.forEach((s, i) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          s.life -= s.decay;
+
+          if (s.life <= 0) {
+            shootingStars.splice(i, 1);
+            return;
+          }
+
+          const gradient = ctx.createLinearGradient(
+            s.x, s.y,
+            s.x - s.vx * s.length * 0.1, s.y - s.vy * s.length * 0.1
+          );
+          gradient.addColorStop(0, `rgba(94, 234, 212, ${s.life})`);
+          gradient.addColorStop(1, 'rgba(94, 234, 212, 0)');
+
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(s.x - s.vx * s.length * 0.1, s.y - s.vy * s.length * 0.1);
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        });
+
+        createShootingStar();
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+
+    // ---------- SCROLL REVEAL ----------
+    (function() {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      reveals.forEach(el => observer.observe(el));
+    })();
+
+    // ---------- SKY BAR ANIMATION ----------
+    (function() {
+      const bars = document.querySelectorAll('.sky-bar-fill');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const width = entry.target.style.width;
+            entry.target.style.width = '0%';
+            setTimeout(() => {
+              entry.target.style.width = width;
+            }, 200);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      bars.forEach(bar => observer.observe(bar));
+    })();
+
+    // ---------- MOBILE MENU ----------
+    (function() {
+      const toggle = document.querySelector('.mobile-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const isOpen = navLinks.style.display === 'flex';
+          navLinks.style.display = isOpen ? 'none' : 'flex';
+          navLinks.style.position = 'absolute';
+          navLinks.style.top = '100%';
+          navLinks.style.left = '0';
+          navLinks.style.right = '0';
+          navLinks.style.flexDirection = 'column';
+          navLinks.style.background = 'rgba(11, 14, 26, 0.95)';
+          navLinks.style.padding = '1.5rem';
+          navLinks.style.gap = '1.25rem';
+          navLinks.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

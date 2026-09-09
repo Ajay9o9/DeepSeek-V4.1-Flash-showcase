@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMMUNITY / CENTER — A place to gather, learn, and grow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f5f2ed;
+      --cream: #ede9e1;
+      --accent: #e85d3a;
+      --accent-soft: #f4a58a;
+      --sage: #7a8b6f;
+      --sage-light: #b8c4a8;
+      --gold: #d4a843;
+      --blue: #3d5a80;
+      --blue-light: #98b3d4;
+      --border: #d4cfc5;
+      --shadow: rgba(26, 26, 26, 0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Typography ── */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── Header ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 242, 237, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      position: relative;
+    }
+
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .logo-text span {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover { color: var(--accent); }
+    nav a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav-cta::after { display: none; }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .hero-label .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #d14a2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 93, 58, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── Hero Visual ── */
+    .hero-visual {
+      position: relative;
+      height: 420px;
+    }
+
+    .hero-canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 40%, var(--gold) 100%);
+    }
+
+    .hero-canvas canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(245, 242, 237, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 16px 24px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-badge-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .hero-badge-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .hero-badge-text span {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    /* ── Today's Activities ── */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    .section-header .mono {
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .section-link:hover { color: var(--accent); }
+
+    .section-link svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
+    }
+
+    .section-link:hover svg { transform: translateX(4px); }
+
+    /* ── Activity Cards ── */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .activity-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .activity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--shadow);
+    }
+
+    .activity-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .activity-time {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .activity-time .mono {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .activity-time .divider {
+      width: 20px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .activity-time .mono:last-child {
+      color: #999;
+    }
+
+    .activity-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .activity-card p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .activity-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .activity-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .activity-spots {
+      font-size: 0.8rem;
+      color: var(--sage);
+      font-weight: 600;
+    }
+
+    .activity-spots.low { color: var(--accent); }
+
+    /* ── Calendar ── */
+    .calendar-section {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 32px;
+      padding: 64px;
+      margin: 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calendar-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 93, 58, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .calendar-section .section-header h2 {
+      color: var(--paper);
+    }
+
+    .calendar-section .section-header .mono {
+      color: var(--accent-soft);
+    }
+
+    .calendar-section .section-link {
+      color: var(--paper);
+    }
+
+    .calendar-section .section-link:hover {
+      color: var(--accent-soft);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .calendar-day-header {
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 237, 0.4);
+      padding: 12px 0;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      border: 1px solid transparent;
+    }
+
+    .calendar-day:hover {
+      background: rgba(245, 242, 237, 0.08);
+      border-color: rgba(245, 242, 237, 0.15);
+    }
+
+    .calendar-day.today {
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+    }
+
+    .calendar-day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+    }
+
+    .calendar-day.today::after {
+      background: white;
+    }
+
+    .calendar-day.other-month {
+      color: rgba(245, 242, 237, 0.2);
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: rgba(245, 242, 237, 0.6);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.accent { background: var(--accent); }
+    .legend-dot.soft { background: var(--accent-soft); }
+
+    /* ── Volunteer CTA ── */
+    .volunteer-section {
+      padding: 80px 0;
+    }
+
+    .volunteer-card {
+      background: linear-gradient(135deg, var(--sage) 0%, #5a6b4f 100%);
+      border-radius: 32px;
+      padding: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .volunteer-card::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+
+    .volunteer-card::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -50px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      pointer-events: none;
+    }
+
+    .volunteer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .volunteer-content .mono {
+      color: var(--sage-light);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .volunteer-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .volunteer-content p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      margin-bottom: 32px;
+      line-height: 1.7;
+      max-width: 440px;
+    }
+
+    .volunteer-stats {
+      display: flex;
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .volunteer-stat {
+      text-align: center;
+    }
+
+    .volunteer-stat .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .volunteer-stat .label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--ink);
+    }
+
+    .btn-light:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ── Room Booking ── */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .room-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--shadow);
+    }
+
+    .room-visual {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room-visual canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .room-info {
+      padding: 24px;
+    }
+
+    .room-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .room-info .capacity {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .room-feature {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--cream);
+      color: #666;
+      font-weight: 500;
+    }
+
+    .room-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .room-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .room-price span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #999;
+    }
+
+    .room-book {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+
+    .room-book:hover { gap: 8px; }
+
+    .room-book svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ── Announcements ── */
+    .announcements-section {
+      padding: 80px 0;
+    }
+
+    .announcements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .announcement-item {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .announcement-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .announcement-item:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .announcement-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    .announcement-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .announcement-item:hover .announcement-content h3 {
+      color: var(--accent);
+    }
+
+    .announcement-content p {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    .announcement-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--cream);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .announcement-tag.urgent {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* ── Location ── */
+    .location-section {
+      padding: 80px 0;
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .location-map {
+      border-radius: 24px;
+      overflow: hidden;
+      height: 400px;
+      position: relative;
+      background: var(--cream);
+    }
+
+    .location-map canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .location-info h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-bottom: 24px;
+    }
+
+    .location-details {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .location-detail {
+      display: flex;
+      gap: 16px;
+    }
+
+    .location-detail-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .location-detail-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .location-detail-text h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .location-detail-text p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .location-detail-text a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .location-detail-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 64px 0 32px;
+      margin-top: 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-text {
+      color: var(--paper);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: rgba(245, 242, 237, 0.6);
+      max-width: 320px;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 237, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: rgba(245, 242, 237, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent-soft);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid rgba(245, 242, 237, 0.1);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(245, 242, 237, 0.4);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 242, 237, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(245, 242, 237, 0.6);
+      transition: all 0.2s;
+    }
+
+    .footer-social a:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .footer-social svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .container { padding: 0 32px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { height: 320px; }
+      .activities-grid { grid-template-columns: repeat(2, 1fr); }
+      .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+      .volunteer-card { grid-template-columns: 1fr; padding: 48px; }
+      .location-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .calendar-section { margin: 0 32px; padding: 48px; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      nav { display: none; }
+      .mobile-toggle { display: block; }
+      .hero { padding: 48px 0 40px; }
+      .hero h1 { font-size: 2.2rem; }
+      .activities-grid { grid-template-columns: 1fr; }
+      .rooms-grid { grid-template-columns: 1fr; }
+      .calendar-section { margin: 0 20px; padding: 32px 24px; }
+      .calendar-grid { gap: 4px; }
+      .calendar-day { font-size: 0.75rem; border-radius: 8px; }
+      .volunteer-card { padding: 32px 24px; }
+      .volunteer-stats { flex-direction: column; gap: 24px; }
+      .announcement-item { grid-template-columns: 1fr; gap: 8px; }
+      .announcement-tag { justify-self: start; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .section { padding: 56px 0; }
+      .section-header { margin-bottom: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; }
+      .btn { justify-content: center; }
+      .hero-badge { left: 12px; bottom: 12px; padding: 12px 16px; }
+    }
+
+    /* ── Animations ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Mobile Menu ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 8px 0;
+    }
+
+    .mobile-menu .nav-cta {
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#1a1a1a" stroke-width="2"/>
+            <circle cx="18" cy="18" r="6" fill="#e85d3a"/>
+            <line x1="18" y1="2" x2="18" y2="12" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="18" y1="24" x2="18" y2="34" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="2" y1="18" x2="12" y2="18" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="24" y1="18" x2="34" y2="18" stroke="#1a1a1a" stroke-width="2"/>
+          </svg>
+        </div>
+        <span class="logo-text">COMMUNITY <span>/</span> CENTER</span>
+      </a>
+      <nav>
+        <a href="#activities">Activities</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#announcements">News</a>
+        <a href="#location">Visit</a>
+        <a href="#volunteer" class="nav-cta">Volunteer</a>
+      </nav>
+      <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#activities" onclick="toggleMenu()">Activities</a>
+    <a href="#calendar" onclick="toggleMenu()">Calendar</a>
+    <a href="#rooms" onclick="toggleMenu()">Rooms</a>
+    <a href="#announcements" onclick="toggleMenu()">News</a>
+    <a href="#location" onclick="toggleMenu()">Visit</a>
+    <a href="#volunteer" class="nav-cta" onclick="toggleMenu()">Volunteer</a>
+  </div>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content fade-in">
+          <div class="hero-label">
+            <span class="dot"></span>
+            <span class="mono">Open today · 8am – 10pm</span>
+          </div>
+          <h1>A place to <em>gather</em>, learn, and grow together.</h1>
+          <p>COMMUNITY / CENTER is your neighborhood hub for classes, workshops, events, and connection. Everyone is welcome — no membership required.</p>
+          <div class="hero-actions">
+            <a href="#activities" class="btn btn-primary">
+              See today's activities
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+            <a href="#rooms" class="btn btn-outline">Book a room</a>
+          </div>
+        </div>
+        <div class="hero-visual fade-in">
+          <div class="hero-canvas">
+            <canvas id="heroCanvas"></canvas>
+          </div>
+          <div class="hero-badge">
+            <div class="hero-badge-icon">✦</div>
+            <div class="hero-badge-text">
+              <strong>42 events this week</strong>
+              <span>From yoga to coding to community dinners</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Today's Activities ── -->
+  <section class="section" id="activities">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <span class="mono">Today · Thursday, March 14</span>
+          <h2>What's happening today</h2>
+        </div>
+        <a href="#" class="section-link">
+          Full schedule
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="activities-grid">
+        <div class="activity-card fade-in">
+          <div class="activity-time">
+            <span class="mono">9:00 AM</span>
+            <span class="divider"></span>
+            <span class="mono">10:30 AM</span>
+          </div>
+          <h3>Morning Flow Yoga</h3>
+          <p>Start your day with gentle movement and breathwork. All levels welcome — mats provided.</p>
+          <div class="activity-meta">
+            <span class="activity-tag">Wellness</span>
+            <span class="activity-spots">12 spots left</span>
+          </div>
+        </div>
+        <div class="activity-card fade-in">
+          <div class="activity-time">
+            <span class="mono">12:00 PM</span>
+            <span class="divider"></span>
+            <span class="mono">1:30 PM</span>
+          </div>
+          <h3>Community Lunch</h3>
+          <p>Share a meal with neighbors. This week: seasonal vegetable curry, fresh bread, and conversation.</p>
+          <div class="activity-meta">
+            <span class="activity-tag">Food</span>
+            <span class="activity-spots low">3 spots left</span>
+          </div>
+        </div>
+        <div class="activity-card fade-in">
+          <div class="activity-time">
+            <span class="mono">6:30 PM</span>
+            <span class="divider"></span>
+            <span class="mono">8:00 PM</span>
+          </div>
+          <h3>Intro to Coding</h3>
+          <p>Learn the basics of HTML, CSS, and JavaScript in a friendly, hands-on workshop. Laptops available.</p>
+          <div class="activity-meta">
+            <span class="activity-tag">Education</span>
+            <span class="activity-spots">8 spots left</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Calendar ── -->
+  <section class="calendar-section fade-in" id="calendar">
+    <div class="section-header">
+      <div>
+        <span class="mono">March 2025</span>
+        <h2>Class calendar</h2>
+      </div>
+      <a href="#" class="section-link">
+        Download PDF
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="calendar-grid" id="calendarGrid">
+      <!-- Generated by JS -->
+    </div>
+    <div class="calendar-legend">
+      <div class="legend-item">
+        <span class="legend-dot accent"></span>
+        Today
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot soft"></span>
+        Has events
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Volunteer CTA ── -->
+  <section class="volunteer-section" id="volunteer">
+    <div class="container">
+      <div class="volunteer-card fade-in">
+        <div class="volunteer-content">
+          <span class="mono">Get involved</span>
+          <h2>Volunteer with us</h2>
+          <p>Our center runs on the energy and generosity of neighbors like you. Whether you have an hour a week or a day a month, there's a place for you here.</p>
+          <a href="#" class="btn btn-light">
+            Sign up to volunteer
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+        <div class="volunteer-stats">
+          <div class="volunteer-stat">
+            <div class="number">240+</div>
+            <div class="label">Active volunteers</div>
+          </div>
+          <div class="volunteer-stat">
+            <div class="number">1,800</div>
+            <div class="label">Hours given monthly</div>
+          </div>
+          <div class="volunteer-stat">
+            <div class="number">12</div>
+            <div class="label">Programs supported</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Room Booking ── -->
+  <section class="section" id="rooms">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <span class="mono">Spaces for hire</span>
+          <h2>Book a room</h2>
+        </div>
+        <a href="#" class="section-link">
+          View all spaces
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="rooms-grid">
+        <div class="room-card fade-in">
+          <div class="room-visual">
+            <canvas class="room-canvas" data-room="1"></canvas>
+          </div>
+          <div class="room-info">
+            <h3>The Garden Room</h3>
+            <div class="capacity">Up to 30 people · Ground floor</div>
+            <div class="room-features">
+              <span class="room-feature">Projector</span>
+              <span class="room-feature">Natural light</span>
+              <span class="room-feature">Kitchenette</span>
+            </div>
+            <div class="room-footer">
+              <div class="room-price">£28 <span>/ hour</span></div>
+              <a href="#" class="room-book">
+                Book now
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="room-card fade-in">
+          <div class="room-visual">
+            <canvas class="room-canvas" data-room="2"></canvas>
+          </div>
+          <div class="room-info">
+            <h3>The Workshop</h3>
+            <div class="capacity">Up to 16 people · First floor</div>
+            <div class="room-features">
+              <span class="room-feature">Whiteboard</span>
+              <span class="room-feature">Tools</span>
+              <span class="room-feature">Sink</span>
+            </div>
+            <div class="room-footer">
+              <div class="room-price">£18 <span>/ hour</span></div>
+              <a href="#" class="room-book">
+                Book now
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="room-card fade-in">
+          <div class="room-visual">
+            <canvas class="room-canvas" data-room="3"></canvas>
+          </div>
+          <div class="room-info">
+            <h3>The Studio</h3>
+            <div class="capacity">Up to 50 people · Second floor</div>
+            <div class="room-features">
+              <span class="room-feature">Sound system</span>
+              <span class="room-feature">Stage</span>
+              <span class="room-feature">Dimmable lights</span>
+            </div>
+            <div class="room-footer">
+              <div class="room-price">£45 <span>/ hour</span></div>
+              <a href="#" class="room-book">
+                Book now
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Announcements ── -->
+  <section class="announcements-section" id="announcements">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <span class="mono">Latest updates</span>
+          <h2>Announcements</h2>
+        </div>
+        <a href="#" class="section-link">
+          All news
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="announcements-list">
+        <div class="announcement-item fade-in">
+          <div class="announcement-date">14 MAR 2025</div>
+          <div class="announcement-content">
+            <h3>Spring programme now live</h3>
+            <p>Browse 60+ new classes and workshops starting in April — from pottery to Portuguese.</p>
+          </div>
+          <span class="announcement-tag">Programme</span>
+        </div>
+        <div class="announcement-item fade-in">
+          <div class="announcement-date">12 MAR 2025</div>
+          <div class="announcement-content">
+            <h3>New accessible entrance open</h3>
+            <p>Our side entrance on Mill Lane now has step-free access and automatic doors.</p>
+          </div>
+          <span class="announcement-tag">Facilities</span>
+        </div>
+        <div class="announcement-item fade-in">
+          <div class="announcement-date">10 MAR 2025</div>
+          <div class="announcement-content">
+            <h3>Community garden volunteer day</h3>
+            <p>Join us Saturday 22 March, 10am–1pm. Tools and lunch provided. All ages welcome.</p>
+          </div>
+          <span class="announcement-tag urgent">Volunteer</span>
+        </div>
+        <div class="announcement-item fade-in">
+          <div class="announcement-date">08 MAR 2025</div>
+          <div class="announcement-content">
+            <h3>Easter closure dates</h3>
+            <p>The center will be closed 18–21 April. Some online classes will still run.</p>
+          </div>
+          <span class="announcement-tag">Notice</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Location ── -->
+  <section class="location-section" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-map fade-in">
+          <canvas id="mapCanvas"></canvas>
+        </div>
+        <div class="location-info fade-in">
+          <span class="mono" style="color: var(--accent); display: block; margin-bottom: 8px;">Find us</span>
+          <h2>Visit the center</h2>
+          <div class="location-details">
+            <div class="location-detail">
+              <div class="location-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              </div>
+              <div class="location-detail-text">
+                <h4>Address</h4>
+                <p>42 Mill Lane, Riverside<br>Bristol BS1 4TR</p>
+              </div>
+            </div>
+            <div class="location-detail">
+              <div class="location-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div class="location-detail-text">
+                <h4>Opening hours</h4>
+                <p>Monday–Friday: 8am – 10pm<br>Saturday: 9am – 6pm<br>Sunday: 10am – 4pm</p>
+              </div>
+            </div>
+            <div class="location-detail">
+              <div class="location-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </div>
+              <div class="location-detail-text">
+                <h4>Contact</h4>
+                <p><a href="tel:+441179460000">0117 946 0000</a><br><a href="mailto:hello@communitycenter.org">hello@communitycenter.org</a></p>
+              </div>
+            </div>
+            <div class="location-detail">
+              <div class="location-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              </div>
+              <div class="location-detail-text">
+                <h4>Getting here</h4>
+                <p>5 min walk from Riverside bus stop. Bike racks available. Limited parking on Mill Lane.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">COMMUNITY <span style="color: var(--accent);">/</span> CENTER</span>
+          <p>A welcoming space for everyone in Riverside. Run by the community, for the community.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#activities">Activities</a>
+          <a href="#calendar">Calendar</a>
+          <a href="#rooms">Room hire</a>
+          <a href="#announcements">News</a>
+        </div>
+        <div class="footer-col">
+          <h4>Get involved</h4>
+          <a href="#volunteer">Volunteer</a>
+          <a href="#">Donate</a>
+          <a href="#">Partner with us</a>
+          <a href="#">Work here</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Safeguarding</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 COMMUNITY / CENTER. Registered charity no. 1234567.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile Menu ──
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // ── Hero Canvas ──
+    function drawHeroCanvas() {
+      const canvas = document.getElementById('heroCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      const w = rect.width;
+      const h = rect.height;
+
+      // Background gradient
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#7a8b6f');
+      grad.addColorStop(0.5, '#b8c4a8');
+      grad.addColorStop(1, '#d4a843');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Abstract shapes
+      ctx.globalAlpha = 0.15;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(w * 0.7, h * 0.3, w * 0.25, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 0.1;
+      ctx.fillStyle = '#1a1a1a';
+      ctx.beginPath();
+      ctx.arc(w * 0.2, h * 0.8, w * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Grid lines
+      ctx.globalAlpha = 0.08;
+      ctx.strokeStyle = '#1a1a1a';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, h * i / 8);
+        ctx.lineTo(w, h * i / 8);
+        ctx.stroke();
+      }
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(w * i / 8, 0);
+        ctx.lineTo(w * i / 8, h);
+        ctx.stroke();
+      }
+
+      // Circles
+      ctx.globalAlpha = 0.2;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.5, w * 0.15, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.15;
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.5, w * 0.25, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.1;
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.5, w * 0.35, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Dots
+      ctx.globalAlpha = 0.3;
+      ctx.fillStyle = '#ffffff';
+      for (let i = 0; i < 20; i++) {
+        const x = Math.random() * w;
+        const y = Math.random() * h;
+        const r = Math.random() * 3 + 1;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    // ── Room Canvases ──
+    function drawRoomCanvas(canvas, roomId) {
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      const w = rect.width;
+      const h = rect.height;
+
+      const palettes = {
+        1: ['#7a8b6f', '#b8c4a8', '#d4a843'],
+        2: ['#3d5a80', '#98b3d4', '#e85d3a'],
+        3: ['#e85d3a', '#f4a58a', '#d4a843']
+      };
+      const colors = palettes[roomId] || palettes[1];
+
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, colors[0]);
+      grad.addColorStop(0.5, colors[1]);
+      grad.addColorStop(1, colors[2]);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Abstract room shapes
+      ctx.globalAlpha = 0.12;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      ctx.lineTo(w * 0.3, h * 0.4);
+      ctx.lineTo(w * 0.6, h * 0.7);
+      ctx.lineTo(w, h * 0.2);
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.globalAlpha = 0.08;
+      ctx.fillStyle = '#1a1a1a';
+      ctx.beginPath();
+      ctx.arc(w * 0.8, h * 0.3, w * 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Lines
+      ctx.globalAlpha = 0.1;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, h * (i + 1) / 6);
+        ctx.lineTo(w, h * (i + 1) / 6);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    // ── Map Canvas ──
+    function drawMapCanvas() {
+      const canvas = document.getElementById('mapCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      const w = rect.width;
+      const h = rect.height;
+
+      // Background
+      ctx.fillStyle = '#ede9e1';
+      ctx.fillRect(0, 0, w, h);
+
+      // Roads
+      ctx.strokeStyle = '#d4cfc5';
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+
+      // Horizontal roads
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.3);
+      ctx.lineTo(w, h * 0.3);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.7);
+      ctx.lineTo(w, h * 0.7);
+      ctx.stroke();
+
+      // Vertical roads
+      ctx.beginPath();
+      ctx.moveTo(w * 0.25, 0);
+      ctx.lineTo(w * 0.25, h);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(w * 0.75, 0);
+      ctx.lineTo(w * 0.75, h);
+      ctx.stroke();
+
+      // Diagonal road
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.5);
+      ctx.lineTo(w, h * 0.5);
+      ctx.stroke();
+
+      // Buildings
+      ctx.fillStyle = '#d4cfc5';
+      const buildings = [
+        [w * 0.05, h * 0.05, w * 0.15, h * 0.2],
+        [w * 0.3, h * 0.05, w * 0.15, h * 0.2],
+        [w * 0.55, h * 0.05, w * 0.15, h * 0.2],
+        [w * 0.8, h * 0.05, w * 0.15, h * 0.2],
+        [w * 0.05, h * 0.35, w * 0.15, h * 0.3],
+        [w * 0.3, h * 0.35, w * 0.15, h * 0.3],
+        [w * 0.55, h * 0.35, w * 0.15, h * 0.3],
+        [w * 0.8, h * 0.35, w * 0.15, h * 0.3],
+        [w * 0.05, h * 0.75, w * 0.15, h * 0.2],
+        [w * 0.3, h * 0.75, w * 0.15, h * 0.2],
+        [w * 0.55, h * 0.75, w * 0.15, h * 0.2],
+        [w * 0.8, h * 0.75, w * 0.15, h * 0.2],
+      ];
+      buildings.forEach(([x, y, bw, bh]) => {
+        ctx.fillRect(x, y, bw, bh);
+      });
+
+      // Park
+      ctx.fillStyle = '#b8c4a8';
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.5, w * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Center marker
+      const cx = w * 0.5;
+      const cy = h * 0.5;
+      ctx.fillStyle = '#e85d3a';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 12, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Pulse ring
+      ctx.strokeStyle = '#e85d3a';
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.4;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 36, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = 1;
+
+      // Label
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = '600 12px "DM Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('COMMUNITY / CENTER', cx, cy + 50);
+    }
+
+    // ── Calendar ──
+    function buildCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const today = 14; // March 14, 2025
+      const daysInMonth = 31;
+      const startDay = 5; // March 1, 2025 is a Saturday (index 5 if Mon=0)
+
+      // Headers
+      days.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'calendar-day-header';
+        el.textContent = d;
+        grid.appendChild(el);
+      });
+
+      // Empty cells before start
+      for (let i = 0; i < startDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'calendar-day other-month';
+        grid.appendChild(el);
+      }
+
+      // Days
+      const eventDays = [3, 5, 7, 10, 12, 14, 17, 19, 21, 24, 26, 28, 31];
+      for (let d = 1; d <= daysInMonth; d++) {
+        const el = document.createElement('div');
+        el.className = 'calendar-day';
+        if (d === today) el.classList.add('today');
+        if (eventDays.includes(d)) el.classList.add('has-event');
+        el.textContent = d;
+        grid.appendChild(el);
+      }
+    }
+
+    // ── Fade In Observer ──
+    function setupFadeIn() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    // ── Init ──
+    function init() {
+      drawHeroCanvas();
+      drawMapCanvas();
+      buildCalendar();
+      setupFadeIn();
+
+      document.querySelectorAll('.room-canvas').forEach(canvas => {
+        const roomId = canvas.dataset.room;
+        drawRoomCanvas(canvas, roomId);
+      });
+    }
+
+    // ── Resize ──
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        drawHeroCanvas();
+        drawMapCanvas();
+        document.querySelectorAll('.room-canvas').forEach(canvas => {
+          const roomId = canvas.dataset.room;
+          drawRoomCanvas(canvas, roomId);
+        });
+      }, 200);
+    });
+
+    // ── Run ──
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>

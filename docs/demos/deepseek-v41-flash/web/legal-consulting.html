@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VANTAGE LAW — Strategic Legal Counsel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1a1e24;
+      --ink-light: #2c313a;
+      --parchment: #f7f3ed;
+      --parchment-dark: #eae4db;
+      --copper: #b87c4b;
+      --copper-light: #d9a77b;
+      --copper-dark: #8f5e36;
+      --white: #ffffff;
+      --border-light: rgba(26, 30, 36, 0.08);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --max-width: 1280px;
+      --gutter: 2rem;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--parchment);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---------- typography ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 6vw, 4.75rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .text-copper {
+      color: var(--copper);
+    }
+
+    .text-ink-light {
+      color: var(--ink-light);
+    }
+
+    /* ---------- layout ---------- */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* ---------- header ---------- */
+    .site-header {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-light);
+      background-color: var(--parchment);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      background-color: rgba(247, 243, 237, 0.92);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-mark {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      background: var(--copper);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 2px solid var(--parchment);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--copper);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 0;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--ink);
+      color: var(--parchment);
+      border-color: var(--ink);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--copper);
+      border-color: var(--copper);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--ink);
+      color: var(--parchment);
+    }
+
+    .btn-copper {
+      background-color: var(--copper);
+      color: var(--white);
+      border-color: var(--copper);
+    }
+
+    .btn-copper:hover {
+      background-color: var(--copper-dark);
+      border-color: var(--copper-dark);
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      padding: 5rem 0 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 36rem;
+    }
+
+    .hero-content h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      margin-bottom: 2.5rem;
+      max-width: 32rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 28rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: 100%;
+      max-width: 32rem;
+    }
+
+    /* ---------- practice areas ---------- */
+    .practice-areas {
+      background-color: var(--white);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .section-header h2 {
+      max-width: 20ch;
+    }
+
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .practice-card {
+      background-color: var(--parchment);
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .practice-card:hover {
+      border-color: var(--copper);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .practice-card .icon {
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--copper);
+    }
+
+    .practice-card h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    .practice-card p {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .practice-card .link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--copper);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+
+    .practice-card .link:hover {
+      gap: 0.75rem;
+    }
+
+    /* ---------- featured insight ---------- */
+    .featured-insight {
+      background-color: var(--ink);
+      color: var(--parchment);
+    }
+
+    .featured-insight .eyebrow {
+      color: var(--copper-light);
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .insight-content h2 {
+      color: var(--parchment);
+      margin-bottom: 1.5rem;
+    }
+
+    .insight-content p {
+      color: rgba(247, 243, 237, 0.75);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .insight-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      font-size: 0.85rem;
+      color: rgba(247, 243, 237, 0.6);
+    }
+
+    .insight-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .insight-visual {
+      position: relative;
+      height: 24rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insight-visual svg {
+      width: 100%;
+      height: 100%;
+      max-width: 28rem;
+    }
+
+    /* ---------- metrics ---------- */
+    .metrics {
+      background-color: var(--parchment-dark);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .metric-item {
+      padding: 2rem 1rem;
+    }
+
+    .metric-number {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--copper);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ---------- partners ---------- */
+    .partners {
+      background-color: var(--white);
+    }
+
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .partner-card {
+      text-align: center;
+    }
+
+    .partner-avatar {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, var(--parchment-dark), var(--parchment));
+      border: 3px solid var(--copper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .partner-avatar svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .partner-card h3 {
+      margin-bottom: 0.25rem;
+    }
+
+    .partner-card .role {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1rem;
+    }
+
+    .partner-card p {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      max-width: 28ch;
+      margin: 0 auto;
+    }
+
+    /* ---------- offices ---------- */
+    .offices {
+      background-color: var(--parchment);
+    }
+
+    .offices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .office-card {
+      background-color: var(--white);
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .office-card:hover {
+      border-color: var(--copper);
+      box-shadow: var(--shadow-md);
+    }
+
+    .office-card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .office-card .city {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1.5rem;
+    }
+
+    .office-card address {
+      font-style: normal;
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .office-card .contact {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+    }
+
+    .office-card .contact a {
+      color: var(--copper);
+      text-decoration: none;
+    }
+
+    .office-card .contact a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- footer ---------- */
+    .site-footer {
+      background-color: var(--ink);
+      color: var(--parchment);
+      padding: 5rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand .logo {
+      color: var(--parchment);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      color: rgba(247, 243, 237, 0.6);
+      max-width: 32ch;
+      margin-bottom: 2rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid rgba(247, 243, 237, 0.2);
+      color: var(--parchment);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--copper);
+      color: var(--copper);
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--copper-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col ul a {
+      color: rgba(247, 243, 237, 0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--copper-light);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(247, 243, 237, 0.1);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: rgba(247, 243, 237, 0.4);
+    }
+
+    .footer-bottom a {
+      color: rgba(247, 243, 237, 0.4);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--copper-light);
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .insight-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-visual,
+      .insight-visual {
+        height: 20rem;
+      }
+
+      .practice-grid,
+      .partners-grid,
+      .offices-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .practice-grid,
+      .partners-grid,
+      .offices-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-cta-group {
+        flex-direction: column;
+      }
+
+      .hero-cta-group .btn {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-number {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark"></span>
+        VANTAGE LAW
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#practice">Practice Areas</a></li>
+          <li><a href="#insight">Insights</a></li>
+          <li><a href="#partners">Partners</a></li>
+          <li><a href="#offices">Offices</a></li>
+          <li><a href="#consultation" class="btn btn-primary">Consultation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="eyebrow">Strategic Legal Counsel</span>
+        <h1>Where precision meets <em>perspective</em>.</h1>
+        <p>VANTAGE LAW delivers sophisticated legal advisory to corporations, institutions, and individuals navigating complex regulatory landscapes. We combine rigorous analysis with commercial pragmatism.</p>
+        <div class="hero-cta-group">
+          <a href="#consultation" class="btn btn-copper">Request Consultation</a>
+          <a href="#practice" class="btn btn-outline">Our Expertise</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- abstract scales of justice / geometric composition -->
+          <circle cx="200" cy="200" r="160" stroke="#b87c4b" stroke-width="1.5" opacity="0.3"/>
+          <circle cx="200" cy="200" r="120" stroke="#b87c4b" stroke-width="1" opacity="0.2"/>
+          <line x1="200" y1="40" x2="200" y2="360" stroke="#1a1e24" stroke-width="2"/>
+          <line x1="80" y1="200" x2="320" y2="200" stroke="#1a1e24" stroke-width="2"/>
+          <circle cx="200" cy="200" r="8" fill="#b87c4b"/>
+          <circle cx="80" cy="200" r="6" fill="#1a1e24"/>
+          <circle cx="320" cy="200" r="6" fill="#1a1e24"/>
+          <path d="M60 200 L100 200 L100 240 L60 240 Z" fill="#b87c4b" opacity="0.15"/>
+          <path d="M300 200 L340 200 L340 240 L300 240 Z" fill="#b87c4b" opacity="0.15"/>
+          <line x1="200" y1="40" x2="200" y2="80" stroke="#b87c4b" stroke-width="3"/>
+          <circle cx="200" cy="40" r="10" fill="#b87c4b"/>
+          <path d="M140 320 L260 320" stroke="#1a1e24" stroke-width="2"/>
+          <path d="M160 340 L240 340" stroke="#1a1e24" stroke-width="1.5" opacity="0.5"/>
+          <path d="M180 360 L220 360" stroke="#1a1e24" stroke-width="1" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRACTICE AREAS ========== -->
+  <section class="practice-areas" id="practice">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Practice Areas</span>
+          <h2>Comprehensive legal expertise across disciplines.</h2>
+        </div>
+        <a href="#" class="btn btn-outline">View All Practices</a>
+      </div>
+      <div class="practice-grid">
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="8" width="32" height="32" rx="2"/>
+              <line x1="16" y1="20" x2="32" y2="20"/>
+              <line x1="16" y1="28" x2="28" y2="28"/>
+              <line x1="16" y1="36" x2="24" y2="36"/>
+            </svg>
+          </div>
+          <h3>Corporate & M&A</h3>
+          <p>End-to-end transaction support, from due diligence and structuring to post-merger integration and governance.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="24" r="16"/>
+              <path d="M24 8 L24 40"/>
+              <path d="M8 24 L40 24"/>
+              <path d="M14 14 L34 34"/>
+              <path d="M34 14 L14 34"/>
+            </svg>
+          </div>
+          <h3>Regulatory & Compliance</h3>
+          <p>Proactive counsel on cross-border regulatory frameworks, data privacy, anti-corruption, and industry-specific compliance.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 40 L24 8 L40 40 Z"/>
+              <line x1="16" y1="28" x2="32" y2="28"/>
+              <line x1="20" y1="20" x2="28" y2="20"/>
+            </svg>
+          </div>
+          <h3>Dispute Resolution</h3>
+          <p>Strategic advocacy in complex commercial litigation, international arbitration, and mediation proceedings.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="12" width="32" height="24" rx="2"/>
+              <line x1="8" y1="20" x2="40" y2="20"/>
+              <circle cx="16" cy="28" r="2"/>
+              <circle cx="24" cy="28" r="2"/>
+              <circle cx="32" cy="28" r="2"/>
+            </svg>
+          </div>
+          <h3>Intellectual Property</h3>
+          <p>Protection and monetization of patents, trademarks, copyrights, and trade secrets in the digital economy.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M24 8 L24 40"/>
+              <path d="M12 16 L36 16"/>
+              <path d="M12 32 L36 32"/>
+              <circle cx="24" cy="24" r="4"/>
+            </svg>
+          </div>
+          <h3>Tax & Private Wealth</h3>
+          <p>Sophisticated tax planning, estate structuring, and wealth preservation for high-net-worth individuals and families.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+        <div class="practice-card">
+          <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 36 L24 12 L40 36 Z"/>
+              <line x1="24" y1="12" x2="24" y2="36"/>
+              <line x1="16" y1="28" x2="32" y2="28"/>
+            </svg>
+          </div>
+          <h3>Real Estate & Infrastructure</h3>
+          <p>Advisory on acquisitions, development, financing, and public-private partnerships for major projects.</p>
+          <a href="#" class="link">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURED INSIGHT ========== -->
+  <section class="featured-insight" id="insight">
+    <div class="container insight-grid">
+      <div class="insight-content">
+        <span class="eyebrow">Featured Insight</span>
+        <h2>The New Era of Cross-Border Data Governance</h2>
+        <p>As regulators worldwide tighten data protection frameworks, multinational corporations face an increasingly fragmented compliance landscape. Our latest analysis examines the practical implications of the EU's Data Governance Act and its intersection with emerging APAC regulations.</p>
+        <div class="insight-meta">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="8" cy="8" r="6"/>
+              <path d="M8 4 L8 8 L11 10"/>
+            </svg>
+            12 min read
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="12" height="11" rx="1"/>
+              <line x1="2" y1="7" x2="14" y2="7"/>
+              <line x1="5" y1="1" x2="5" y2="5"/>
+              <line x1="11" y1="1" x2="11" y2="5"/>
+            </svg>
+            March 2025
+          </span>
+        </div>
+        <a href="#" class="btn btn-copper">Read Full Analysis</a>
+      </div>
+      <div class="insight-visual">
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- abstract data governance visual -->
+          <circle cx="200" cy="200" r="140" stroke="#d9a77b" stroke-width="1" opacity="0.4"/>
+          <circle cx="200" cy="200" r="100" stroke="#d9a77b" stroke-width="1" opacity="0.3"/>
+          <circle cx="200" cy="200" r="60" stroke="#d9a77b" stroke-width="1" opacity="0.2"/>
+          <line x1="60" y1="200" x2="340" y2="200" stroke="#d9a77b" stroke-width="1" opacity="0.3"/>
+          <line x1="200" y1="60" x2="200" y2="340" stroke="#d9a77b" stroke-width="1" opacity="0.3"/>
+          <circle cx="200" cy="200" r="12" fill="#b87c4b"/>
+          <circle cx="200" cy="100" r="6" fill="#d9a77b"/>
+          <circle cx="300" cy="200" r="6" fill="#d9a77b"/>
+          <circle cx="200" cy="300" r="6" fill="#d9a77b"/>
+          <circle cx="100" cy="200" r="6" fill="#d9a77b"/>
+          <circle cx="270" cy="130" r="4" fill="#d9a77b" opacity="0.6"/>
+          <circle cx="130" cy="270" r="4" fill="#d9a77b" opacity="0.6"/>
+          <circle cx="270" cy="270" r="4" fill="#d9a77b" opacity="0.6"/>
+          <circle cx="130" cy="130" r="4" fill="#d9a77b" opacity="0.6"/>
+          <path d="M200 200 L200 100" stroke="#b87c4b" stroke-width="1.5" opacity="0.5"/>
+          <path d="M200 200 L300 200" stroke="#b87c4b" stroke-width="1.5" opacity="0.5"/>
+          <path d="M200 200 L200 300" stroke="#b87c4b" stroke-width="1.5" opacity="0.5"/>
+          <path d="M200 200 L100 200" stroke="#b87c4b" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== METRICS ========== -->
+  <section class="metrics">
+    <div class="container">
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <div class="metric-number">$14B+</div>
+          <div class="metric-label">Transaction Value Advised</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-number">98%</div>
+          <div class="metric-label">Client Retention Rate</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-number">32</div>
+          <div class="metric-label">Jurisdictions Covered</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-number">45</div>
+          <div class="metric-label">Years of Combined Experience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARTNERS ========== -->
+  <section class="partners" id="partners">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Our Partners</span>
+          <h2>Leadership defined by experience and integrity.</h2>
+        </div>
+        <a href="#" class="btn btn-outline">Meet the Team</a>
+      </div>
+      <div class="partners-grid">
+        <div class="partner-card">
+          <div class="partner-avatar">
+            <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="60" r="28" fill="#b87c4b" opacity="0.3"/>
+              <circle cx="80" cy="60" r="28" stroke="#b87c4b" stroke-width="1.5"/>
+              <path d="M40 140 Q80 100 120 140" stroke="#b87c4b" stroke-width="1.5" fill="none"/>
+              <circle cx="80" cy="60" r="12" fill="#b87c4b" opacity="0.5"/>
+            </svg>
+          </div>
+          <h3>Eleanor Voss</h3>
+          <div class="role">Managing Partner</div>
+          <p>Corporate governance and cross-border M&A specialist with over two decades of advisory experience.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-avatar">
+            <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="60" r="28" fill="#b87c4b" opacity="0.3"/>
+              <circle cx="80" cy="60" r="28" stroke="#b87c4b" stroke-width="1.5"/>
+              <path d="M40 140 Q80 100 120 140" stroke="#b87c4b" stroke-width="1.5" fill="none"/>
+              <circle cx="80" cy="60" r="12" fill="#b87c4b" opacity="0.5"/>
+            </svg>
+          </div>
+          <h3>Marcus Chen</h3>
+          <div class="role">Partner, Dispute Resolution</div>
+          <p>International arbitration authority, regularly appearing before major arbitral tribunals and courts.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-avatar">
+            <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="60" r="28" fill="#b87c4b" opacity="0.3"/>
+              <circle cx="80" cy="60" r="28" stroke="#b87c4b" stroke-width="1.5"/>
+              <path d="M40 140 Q80 100 120 140" stroke="#b87c4b" stroke-width="1.5" fill="none"/>
+              <circle cx="80" cy="60" r="12" fill="#b87c4b" opacity="0.5"/>
+            </svg>
+          </div>
+          <h3>Isabelle Laurent</h3>
+          <div class="role">Partner, Regulatory & Tax</div>
+          <p>Advises multinationals on complex regulatory frameworks and cross-border tax structuring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== OFFICES ========== -->
+  <section class="offices" id="offices">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Global Offices</span>
+          <h2>Local insight, international reach.</h2>
+        </div>
+        <a href="#" class="btn btn-outline">All Locations</a>
+      </div>
+      <div class="offices-grid">
+        <div class="office-card">
+          <h3>London</h3>
+          <div class="city">United Kingdom</div>
+          <address>
+            12 Old Bailey<br>
+            London EC4M 7AQ<br>
+            United Kingdom
+          </address>
+          <div class="contact">
+            <a href="tel:+442071234567">+44 20 7123 4567</a><br>
+            <a href="mailto:london@vantagelaw.com">london@vantagelaw.com</a>
+          </div>
+        </div>
+        <div class="office-card">
+          <h3>New York</h3>
+          <div class="city">United States</div>
+          <address>
+            450 Park Avenue, 28th Floor<br>
+            New York, NY 10022<br>
+            United States
+          </address>
+          <div class="contact">
+            <a href="tel:+12125550123">+1 212 555 0123</a><br>
+            <a href="mailto:newyork@vantagelaw.com">newyork@vantagelaw.com</a>
+          </div>
+        </div>
+        <div class="office-card">
+          <h3>Singapore</h3>
+          <div class="city">Singapore</div>
+          <address>
+            8 Marina Boulevard<br>
+            #34-02 Marina Bay Financial Centre<br>
+            Singapore 018981
+          </address>
+          <div class="contact">
+            <a href="tel:+6567890123">+65 6789 0123</a><br>
+            <a href="mailto:singapore@vantagelaw.com">singapore@vantagelaw.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONSULTATION CTA ========== -->
+  <section class="featured-insight" id="consultation" style="padding: 5rem 0;">
+    <div class="container" style="text-align: center; max-width: 48rem;">
+      <span class="eyebrow" style="color: var(--copper-light);">Begin the Conversation</span>
+      <h2 style="color: var(--parchment); margin-bottom: 1.5rem;">Request a confidential consultation.</h2>
+      <p style="color: rgba(247, 243, 237, 0.75); font-size: 1.1rem; margin-bottom: 2.5rem;">Our partners are available to discuss your legal needs with discretion and urgency. Schedule a private consultation at your convenience.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="#" class="btn btn-copper">Schedule Consultation</a>
+        <a href="#" class="btn btn-outline" style="color: var(--parchment); border-color: var(--parchment);">Call +44 20 7123 4567</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-mark"></span>
+            VANTAGE LAW
+          </a>
+          <p>Strategic legal counsel for a complex world. We advise corporations, institutions, and individuals on their most critical legal matters.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M2 7 L12 13 L22 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Practice Areas</h4>
+          <ul>
+            <li><a href="#">Corporate & M&A</a></li>
+            <li><a href="#">Regulatory & Compliance</a></li>
+            <li><a href="#">Dispute Resolution</a></li>
+            <li><a href="#">Intellectual Property</a></li>
+            <li><a href="#">Tax & Private Wealth</a></li>
+            <li><a href="#">Real Estate & Infrastructure</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Firm</h4>
+          <ul>
+            <li><a href="#">About VANTAGE</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Pro Bono</a></li>
+            <li><a href="#">Insights</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Offices</h4>
+          <ul>
+            <li><a href="#">London</a></li>
+            <li><a href="#">New York</a></li>
+            <li><a href="#">Singapore</a></li>
+            <li><a href="#">Dubai</a></li>
+            <li><a href="#">Hong Kong</a></li>
+            <li><a href="#">Frankfurt</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 VANTAGE LAW LLP. All rights reserved.</div>
+        <div style="display: flex; gap: 2rem;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Legal Notices</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

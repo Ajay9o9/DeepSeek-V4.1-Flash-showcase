@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLEARWATER CAPITAL — Private Wealth Advisory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0f1a1e;
+      --ink-soft: #1a2a30;
+      --ink-muted: #2a3a42;
+      --parchment: #f5f0e8;
+      --parchment-warm: #ede6da;
+      --parchment-deep: #e3dbcd;
+      --green: #2e7d5e;
+      --green-light: #3a9e76;
+      --green-glow: rgba(46, 125, 94, 0.12);
+      --text-on-ink: #e8e2d8;
+      --text-on-parchment: #1a2a30;
+      --text-muted: #6b7a80;
+      --border-light: rgba(15, 26, 30, 0.08);
+      --border-ink: rgba(232, 226, 216, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow-soft: 0 4px 24px rgba(15, 26, 30, 0.06);
+      --shadow-card: 0 8px 40px rgba(15, 26, 30, 0.08);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --max-width: 1200px;
+      --nav-height: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--parchment);
+      color: var(--text-on-parchment);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Typography ── */
+    .display-xl {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .display-lg {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+    }
+
+    .display-md {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .heading-sm {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .body-lg {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .body-md {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 100;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(15, 26, 30, 0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .nav-logo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: var(--ink-muted);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--green);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 24px;
+      background: var(--ink);
+      color: var(--parchment);
+      border-radius: var(--radius-sm);
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--green);
+      transform: translateY(-1px);
+    }
+
+    .nav-mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .nav-mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--ink);
+      overflow: hidden;
+      padding-top: var(--nav-height);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 70%;
+      height: 140%;
+      background: radial-gradient(ellipse at 60% 40%, rgba(46, 125, 94, 0.08) 0%, transparent 70%);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -10%;
+      width: 50%;
+      height: 80%;
+      background: radial-gradient(ellipse at 40% 60%, rgba(46, 125, 94, 0.05) 0%, transparent 70%);
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        linear-gradient(rgba(232, 226, 216, 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 226, 216, 0.5) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+      padding: 80px 0;
+    }
+
+    .hero-text {
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 28px;
+      padding: 6px 14px;
+      border: 1px solid rgba(58, 158, 118, 0.25);
+      border-radius: 100px;
+      background: rgba(46, 125, 94, 0.08);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-light);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-title {
+      color: var(--text-on-ink);
+      margin-bottom: 24px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--green-light);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: rgba(232, 226, 216, 0.65);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      border-radius: var(--radius-sm);
+      transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(46, 125, 94, 0.3);
+    }
+
+    .btn-primary svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.25s ease;
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(3px);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(232, 226, 216, 0.7);
+      border: 1px solid rgba(232, 226, 216, 0.15);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(232, 226, 216, 0.4);
+      color: var(--text-on-ink);
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-ink);
+    }
+
+    .hero-trust-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-trust-number {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-on-ink);
+      line-height: 1.2;
+    }
+
+    .hero-trust-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(232, 226, 216, 0.45);
+    }
+
+    /* Hero visual — abstract composition */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-visual-inner {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1;
+    }
+
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(232, 226, 216, 0.08);
+    }
+
+    .hero-ring:nth-child(1) {
+      inset: 0;
+      animation: rotate-slow 60s linear infinite;
+    }
+
+    .hero-ring:nth-child(2) {
+      inset: 12%;
+      border-color: rgba(46, 125, 94, 0.15);
+      animation: rotate-slow 45s linear infinite reverse;
+    }
+
+    .hero-ring:nth-child(3) {
+      inset: 24%;
+      border-color: rgba(232, 226, 216, 0.06);
+      animation: rotate-slow 30s linear infinite;
+    }
+
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-ring-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-light);
+      box-shadow: 0 0 16px rgba(58, 158, 118, 0.5);
+    }
+
+    .hero-ring:nth-child(1) .hero-ring-dot {
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero-ring:nth-child(2) .hero-ring-dot {
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(232, 226, 216, 0.3);
+      box-shadow: none;
+    }
+
+    .hero-center-mark {
+      position: absolute;
+      inset: 36%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, rgba(46, 125, 94, 0.15), transparent 70%);
+      border: 1px solid rgba(46, 125, 94, 0.2);
+    }
+
+    .hero-center-mark svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.6;
+    }
+
+    /* ── Section shared ── */
+    .section {
+      padding: 120px 0;
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin-bottom: 64px;
+    }
+
+    .section-header .heading-sm {
+      margin-bottom: 16px;
+    }
+
+    .section-header .display-lg {
+      margin-bottom: 20px;
+    }
+
+    .section-header .body-lg {
+      max-width: 520px;
+    }
+
+    /* ── Services ── */
+    .services {
+      background: var(--parchment);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(46, 125, 94, 0.15);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--green-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .service-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      transition: gap 0.25s ease;
+    }
+
+    .service-link:hover { gap: 10px; }
+
+    .service-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Market Perspective ── */
+    .market {
+      background: var(--ink);
+      color: var(--text-on-ink);
+    }
+
+    .market .section-header .display-lg {
+      color: var(--text-on-ink);
+    }
+
+    .market .section-header .body-lg {
+      color: rgba(232, 226, 216, 0.55);
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .market-card {
+      background: rgba(232, 226, 216, 0.04);
+      border: 1px solid var(--border-ink);
+      border-radius: var(--radius-md);
+      padding: 36px 28px;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .market-card:hover {
+      background: rgba(232, 226, 216, 0.07);
+      border-color: rgba(46, 125, 94, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .market-card-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 20px;
+      padding: 4px 10px;
+      border: 1px solid rgba(58, 158, 118, 0.2);
+      border-radius: 100px;
+    }
+
+    .market-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--text-on-ink);
+      line-height: 1.3;
+    }
+
+    .market-card p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(232, 226, 216, 0.5);
+      margin-bottom: 24px;
+    }
+
+    .market-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-ink);
+    }
+
+    .market-card-date {
+      font-size: 0.75rem;
+      color: rgba(232, 226, 216, 0.35);
+      letter-spacing: 0.02em;
+    }
+
+    .market-card-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .market-card:hover .market-card-arrow {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .market-card-arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: rgba(232, 226, 216, 0.6);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.25s ease;
+    }
+
+    .market-card:hover .market-card-arrow svg {
+      stroke: #fff;
+    }
+
+    /* ── Client Journey ── */
+    .journey {
+      background: var(--parchment-warm);
+    }
+
+    .journey-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .journey-step {
+      position: relative;
+      padding: 0 24px;
+    }
+
+    .journey-step:first-child { padding-left: 0; }
+    .journey-step:last-child { padding-right: 0; }
+
+    .journey-step-number {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      font-weight: 400;
+      color: var(--parchment-deep);
+      line-height: 1;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .journey-step:hover .journey-step-number {
+      color: var(--green);
+    }
+
+    .journey-step h3 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .journey-step p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .journey-connector {
+      position: absolute;
+      top: 28px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--parchment-deep);
+      z-index: 0;
+    }
+
+    .journey-step {
+      position: relative;
+      z-index: 1;
+    }
+
+    .journey-step::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--parchment-deep);
+      border: 2px solid var(--parchment-warm);
+      transition: background 0.3s ease;
+    }
+
+    .journey-step:first-child::before { left: 0; }
+
+    .journey-step:hover::before {
+      background: var(--green);
+    }
+
+    /* ── Team ── */
+    .team {
+      background: var(--parchment);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .team-card {
+      text-align: center;
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      background: var(--parchment-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .team-card:hover .team-avatar {
+      transform: scale(1.04);
+    }
+
+    .team-avatar svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 1.2;
+      opacity: 0.5;
+    }
+
+    .team-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .team-card .role {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .team-card p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(46, 125, 94, 0.08) 0%, transparent 70%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .cta-text .display-lg {
+      color: var(--text-on-ink);
+      margin-bottom: 20px;
+    }
+
+    .cta-text .body-lg {
+      color: rgba(232, 226, 216, 0.55);
+      margin-bottom: 36px;
+    }
+
+    .cta-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cta-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .cta-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(232, 226, 216, 0.06);
+      border: 1px solid var(--border-ink);
+      border-radius: var(--radius-sm);
+      color: var(--text-on-ink);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .cta-input::placeholder {
+      color: rgba(232, 226, 216, 0.3);
+    }
+
+    .cta-input:focus {
+      border-color: var(--green);
+      background: rgba(232, 226, 216, 0.08);
+    }
+
+    .cta-submit {
+      padding: 16px 32px;
+      background: var(--green);
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      border-radius: var(--radius-sm);
+      transition: background 0.25s ease, transform 0.2s ease;
+      margin-top: 4px;
+    }
+
+    .cta-submit:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .cta-note {
+      font-size: 0.75rem;
+      color: rgba(232, 226, 216, 0.3);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--ink-soft);
+      color: var(--text-on-ink);
+      padding: 80px 0 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    .footer-brand .nav-logo {
+      color: var(--text-on-ink);
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: rgba(232, 226, 216, 0.45);
+      max-width: 300px;
+      margin-bottom: 24px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .footer-social a:hover {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .footer-social svg {
+      width: 16px;
+      height: 16px;
+      stroke: rgba(232, 226, 216, 0.5);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.25s ease;
+    }
+
+    .footer-social a:hover svg {
+      stroke: #fff;
+    }
+
+    .footer-col h4 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232, 226, 216, 0.35);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      font-size: 0.85rem;
+      color: rgba(232, 226, 216, 0.55);
+      transition: color 0.2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--green-light);
+    }
+
+    .footer-compliance {
+      padding-top: 32px;
+      border-top: 1px solid var(--border-ink);
+    }
+
+    .footer-compliance p {
+      font-size: 0.72rem;
+      line-height: 1.8;
+      color: rgba(232, 226, 216, 0.3);
+      max-width: 900px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-ink);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom p {
+      font-size: 0.75rem;
+      color: rgba(232, 226, 216, 0.3);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-bottom-links a {
+      font-size: 0.75rem;
+      color: rgba(232, 226, 216, 0.35);
+      transition: color 0.2s ease;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--green-light);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .hero-text {
+        max-width: 100%;
+      }
+
+      .services-grid,
+      .market-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .journey-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+
+      .journey-connector { display: none; }
+
+      .journey-step::before { display: none; }
+
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-mobile-toggle { display: flex; }
+
+      .section { padding: 80px 0; }
+
+      .services-grid,
+      .market-grid,
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-steps {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-trust {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .cta-form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" stroke="#2e7d5e" stroke-width="1.5"/>
+          <path d="M10 20c2-6 4-8 6-8s4 2 6 8" stroke="#2e7d5e" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="16" cy="12" r="2" fill="#2e7d5e"/>
+        </svg>
+        CLEARWATER
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#market">Perspective</a></li>
+        <li><a href="#journey">Process</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+      <a href="#consultation" class="nav-cta">Book Consultation</a>
+      <button class="nav-mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid-lines"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">Fiduciary · Fee-Only · Since 2009</div>
+          <h1 class="display-xl hero-title">
+            Wealth management<br>
+            built on <em>clarity</em>,<br>
+            not complexity.
+          </h1>
+          <p class="hero-subtitle">
+            We serve a select group of families and individuals who value independent, 
+            evidence-based advice — free from commissions, product quotas, and 
+            institutional conflicts.
+          </p>
+          <div class="hero-actions">
+            <a href="#consultation" class="btn-primary">
+              Schedule a Conversation
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8h10M9 4l4 4-4 4"/>
+              </svg>
+            </a>
+            <a href="#services" class="btn-ghost">Explore Services</a>
+          </div>
+          <div class="hero-trust">
+            <div class="hero-trust-item">
+              <span class="hero-trust-number">$2.4B</span>
+              <span class="hero-trust-label">Assets Advised</span>
+            </div>
+            <div class="hero-trust-item">
+              <span class="hero-trust-number">340+</span>
+              <span class="hero-trust-label">Client Families</span>
+            </div>
+            <div class="hero-trust-item">
+              <span class="hero-trust-number">15</span>
+              <span class="hero-trust-label">Years Independent</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-inner">
+            <div class="hero-ring">
+              <div class="hero-ring-dot"></div>
+            </div>
+            <div class="hero-ring">
+              <div class="hero-ring-dot"></div>
+            </div>
+            <div class="hero-ring"></div>
+            <div class="hero-center-mark">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="20" stroke="#3a9e76" stroke-width="1.5"/>
+                <path d="M14 30c3-9 6-12 10-12s7 3 10 12" stroke="#3a9e76" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="24" cy="18" r="3" fill="#3a9e76"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Services ── -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="heading-sm">What We Do</div>
+        <h2 class="display-lg">Advice that serves<br>your interests alone.</h2>
+        <p class="body-lg">
+          Every engagement begins with understanding what matters most — then building 
+          a plan that aligns your capital with your life.
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3>Wealth Planning</h3>
+          <p>
+            A comprehensive, living plan that integrates investments, tax strategy, 
+            estate structure, and charitable intent into a single coherent framework.
+          </p>
+          <a href="#" class="service-link">
+            Learn more
+            <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+          </a>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <h3>Investment Management</h3>
+          <p>
+            Evidence-based portfolios built on academic research, not market forecasts. 
+            Low-cost, tax-efficient, and transparent at every level.
+          </p>
+          <a href="#" class="service-link">
+            Learn more
+            <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+          </a>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Retirement & Legacy</h3>
+          <p>
+            Thoughtful sequencing of income, Roth conversions, and gifting strategies 
+            designed to preserve wealth across generations.
+          </p>
+          <a href="#" class="service-link">
+            Learn more
+            <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Market Perspective ── -->
+  <section class="section market" id="market">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="heading-sm">Market Perspective</div>
+        <h2 class="display-lg">Clarity in volatile<br>markets.</h2>
+        <p class="body-lg">
+          We publish regular commentary to help clients separate signal from noise — 
+          and stay focused on what they can control.
+        </p>
+      </div>
+      <div class="market-grid">
+        <div class="market-card reveal reveal-delay-1">
+          <div class="market-card-tag">Quarterly Outlook</div>
+          <h3>Rates, Recession, and the Long View</h3>
+          <p>
+            Why the bond market's message deserves more attention than equity 
+            headlines — and how we're positioning portfolios for a higher-for-longer 
+            environment.
+          </p>
+          <div class="market-card-meta">
+            <span class="market-card-date">March 2025</span>
+            <div class="market-card-arrow">
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="market-card reveal reveal-delay-2">
+          <div class="market-card-tag">Research Note</div>
+          <h3>The Case Against Market Timing</h3>
+          <p>
+            A review of the evidence — and a reminder that time in the market 
+            consistently outperforms timing the market for long-term investors.
+          </p>
+          <div class="market-card-meta">
+            <span class="market-card-date">February 2025</span>
+            <div class="market-card-arrow">
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="market-card reveal reveal-delay-3">
+          <div class="market-card-tag">Client Letter</div>
+          <h3>What We're Watching in 2025</h3>
+          <p>
+            Three structural shifts — demographics, energy transition, and 
+            deglobalization — that will shape investment outcomes over the next decade.
+          </p>
+          <div class="market-card-meta">
+            <span class="market-card-date">January 2025</span>
+            <div class="market-card-arrow">
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Client Journey ── -->
+  <section class="section journey" id="journey">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="heading-sm">The Client Journey</div>
+        <h2 class="display-lg">A deliberate process,<br>not a sales pitch.</h2>
+        <p class="body-lg">
+          We take the time to understand your full financial life before recommending 
+          a single investment.
+        </p>
+      </div>
+      <div class="journey-steps">
+        <div class="journey-connector"></div>
+        <div class="journey-step reveal reveal-delay-1">
+          <div class="journey-step-number">01</div>
+          <h3>Discovery</h3>
+          <p>
+            A complimentary, no-obligation conversation to understand your goals, 
+            concerns, and what you value most.
+          </p>
+        </div>
+        <div class="journey-step reveal reveal-delay-2">
+          <div class="journey-step-number">02</div>
+          <h3>Analysis</h3>
+          <p>
+            We review your current position — investments, taxes, estate, insurance — 
+            and identify gaps and opportunities.
+          </p>
+        </div>
+        <div class="journey-step reveal reveal-delay-3">
+          <div class="journey-step-number">03</div>
+          <h3>Plan</h3>
+          <p>
+            A written, plain-English plan that outlines our recommendations and the 
+            rationale behind each one.
+          </p>
+        </div>
+        <div class="journey-step reveal reveal-delay-3">
+          <div class="journey-step-number">04</div>
+          <h3>Partnership</h3>
+          <p>
+            Ongoing guidance, regular reviews, and a team that's always available 
+            when life changes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Team ── -->
+  <section class="section team" id="team">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="heading-sm">Our Team</div>
+        <h2 class="display-lg">Experienced, independent,<br>and accountable.</h2>
+        <p class="body-lg">
+          Our advisors hold the CFP® designation and are compensated solely by client 
+          fees — never by commissions or product sales.
+        </p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal reveal-delay-1">
+          <div class="team-avatar">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="18" r="8"/>
+              <path d="M8 42c0-8 7-14 16-14s16 6 16 14"/>
+            </svg>
+          </div>
+          <h3>Margaret Chen, CFP®</h3>
+          <div class="role">Founding Principal</div>
+          <p>
+            Former institutional portfolio manager with 22 years of experience. 
+            Leads the firm's investment committee and client advisory practice.
+          </p>
+        </div>
+        <div class="team-card reveal reveal-delay-2">
+          <div class="team-avatar">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="18" r="8"/>
+              <path d="M8 42c0-8 7-14 16-14s16 6 16 14"/>
+            </svg>
+          </div>
+          <h3>David Okafor, CFA</h3>
+          <div class="role">Director of Research</div>
+          <p>
+            Oversees portfolio construction and manager due diligence. Previously 
+            at a global asset manager with $40B under management.
+          </p>
+        </div>
+        <div class="team-card reveal reveal-delay-3">
+          <div class="team-avatar">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="18" r="8"/>
+              <path d="M8 42c0-8 7-14 16-14s16 6 16 14"/>
+            </svg>
+          </div>
+          <h3>Sarah Whitfield, CFP®</h3>
+          <div class="role">Senior Wealth Advisor</div>
+          <p>
+            Specializes in retirement transitions and multi-generational planning. 
+            Joined Clearwater after a decade in private banking.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="section cta-section" id="consultation">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-text reveal">
+          <div class="heading-sm" style="color: var(--green-light); margin-bottom: 16px;">Begin the Conversation</div>
+          <h2 class="display-lg">Let's talk about<br>what matters to you.</h2>
+          <p class="body-lg">
+            Schedule a complimentary, 30-minute introductory call. No pitch, no 
+            pressure — just a candid conversation about whether we're the right fit.
+          </p>
+        </div>
+        <form class="cta-form reveal reveal-delay-1" onsubmit="event.preventDefault(); this.querySelector('.cta-submit').textContent = 'Thank you — we\'ll be in touch.'; this.querySelector('.cta-submit').style.background = '#2e7d5e';">
+          <div class="cta-form-row">
+            <input type="text" class="cta-input" placeholder="First name" required>
+            <input type="text" class="cta-input" placeholder="Last name" required>
+          </div>
+          <input type="email" class="cta-input" placeholder="Email address" required>
+          <input type="tel" class="cta-input" placeholder="Phone number (optional)">
+          <button type="submit" class="cta-submit">Request Consultation</button>
+          <p class="cta-note">
+            By submitting, you agree to our privacy policy. We will never share your 
+            information with third parties.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="14" stroke="#3a9e76" stroke-width="1.5"/>
+              <path d="M10 20c2-6 4-8 6-8s4 2 6 8" stroke="#3a9e76" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="16" cy="12" r="2" fill="#3a9e76"/>
+            </svg>
+            CLEARWATER
+          </a>
+          <p>
+            Independent, fee-only wealth advisory for individuals and families 
+            who value clarity, evidence, and a fiduciary standard.
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            </a>
+            <a href="#" aria-label="Email">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Wealth Planning</a></li>
+            <li><a href="#">Investment Management</a></li>
+            <li><a href="#">Retirement & Legacy</a></li>
+            <li><a href="#">Tax Strategy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Market Perspective</a></li>
+            <li><a href="#">Client Portal</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-compliance">
+        <p>
+          Clearwater Capital LLC is an investment adviser registered with the Securities and Exchange Commission. 
+          Registration does not imply a certain level of skill or training. All investment strategies have the 
+          potential for profit or loss. Past performance is not indicative of future results. This website is for 
+          informational purposes only and does not constitute investment advice or an offer to buy or sell any 
+          security. Please consult your own legal, tax, or accounting professional before making any financial 
+          decisions. Advisory services are only offered to clients or prospective clients where Clearwater Capital 
+          and its representatives are properly licensed or exempt from licensure.
+        </p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Clearwater Capital LLC. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Form ADV</a>
+          <a href="#">Disclosures</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav scroll effect ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── Scroll reveal ──
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ── Smooth anchor offset for fixed nav ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

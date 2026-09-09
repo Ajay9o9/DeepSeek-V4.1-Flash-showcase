@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPACE / MISSION — Ares Reach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0a0c0f;
+      --bg-panel: #11161c;
+      --bg-elevated: #1a2129;
+      --border-subtle: #2a333d;
+      --text-primary: #eef2f6;
+      --text-secondary: #9aa8b9;
+      --text-muted: #5f6f80;
+      --accent-cyan: #5ee0d0;
+      --accent-amber: #f5b041;
+      --accent-coral: #e86b5e;
+      --accent-violet: #a78bfa;
+      --glow-cyan: rgba(94, 224, 208, 0.15);
+      --glow-amber: rgba(245, 176, 65, 0.12);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- SCROLLBAR ---------- */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent-cyan);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ---------- HEADER / NAV ---------- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(10, 12, 15, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(42, 51, 61, 0.5);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--accent-cyan), var(--accent-violet), var(--accent-amber), var(--accent-cyan));
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      background: var(--bg-deep);
+    }
+
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      z-index: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent-cyan);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bg-deep);
+      background: var(--accent-cyan);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .header-cta:hover {
+      background: #7ee8da;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-bg .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+    }
+
+    .hero-bg .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: var(--accent-cyan);
+      top: -10%;
+      right: -5%;
+      opacity: 0.12;
+    }
+
+    .hero-bg .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent-violet);
+      bottom: -15%;
+      left: -8%;
+      opacity: 0.1;
+    }
+
+    .hero-bg .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: var(--accent-amber);
+      top: 40%;
+      left: 50%;
+      opacity: 0.06;
+    }
+
+    .hero-bg .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(42, 51, 61, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42, 51, 61, 0.15) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-left {
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      background: rgba(245, 176, 65, 0.08);
+      border: 1px solid rgba(245, 176, 65, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--bg-deep);
+      background: var(--accent-cyan);
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 24px var(--glow-cyan);
+    }
+
+    .btn-primary:hover {
+      background: #7ee8da;
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px var(--glow-cyan);
+    }
+
+    .btn-secondary {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ---------- COUNTDOWN ---------- */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .countdown-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-amber));
+    }
+
+    .countdown-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .countdown-unit {
+      text-align: center;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      padding: 1rem 0.5rem;
+      position: relative;
+    }
+
+    .countdown-unit .value {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown-unit .label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    .countdown-unit .value.flash {
+      animation: flash 0.3s ease;
+    }
+
+    @keyframes flash {
+      0% { color: var(--accent-cyan); }
+      100% { color: var(--text-primary); }
+    }
+
+    .countdown-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .countdown-meta .meta-item {
+      text-align: center;
+    }
+
+    .countdown-meta .meta-item .meta-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .countdown-meta .meta-item .meta-value {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 0.15rem;
+    }
+
+    .countdown-meta .meta-item .meta-value.cyan {
+      color: var(--accent-cyan);
+    }
+
+    .countdown-meta .meta-item .meta-value.amber {
+      color: var(--accent-amber);
+    }
+
+    /* ---------- SECTION SHARED ---------- */
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 560px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ---------- MISSION OBJECTIVE ---------- */
+    .objective-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .objective-text p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .objective-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .objective-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
+    }
+
+    .stat-card .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ---------- SPACECRAFT DIAGRAM ---------- */
+    .spacecraft-section {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .spacecraft-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .spacecraft-diagram {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .spacecraft-diagram svg {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      filter: drop-shadow(0 0 40px rgba(94, 224, 208, 0.08));
+    }
+
+    .spacecraft-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .spacecraft-info p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+    }
+
+    .spec-list li .spec-key {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .spec-list li .spec-val {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-violet), var(--accent-amber), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.35rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--bg-deep);
+      border: 2px solid var(--accent-cyan);
+      transform: translateX(-5px);
+      z-index: 1;
+    }
+
+    .timeline-item:nth-child(2)::before {
+      border-color: var(--accent-violet);
+    }
+
+    .timeline-item:nth-child(3)::before {
+      border-color: var(--accent-amber);
+    }
+
+    .timeline-item:nth-child(4)::before {
+      border-color: var(--accent-coral);
+    }
+
+    .timeline-item:nth-child(5)::before {
+      border-color: var(--text-muted);
+    }
+
+    .timeline-time {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-item:nth-child(2) .timeline-time {
+      color: var(--accent-violet);
+    }
+
+    .timeline-item:nth-child(3) .timeline-time {
+      color: var(--accent-amber);
+    }
+
+    .timeline-item:nth-child(4) .timeline-time {
+      color: var(--accent-coral);
+    }
+
+    .timeline-item:nth-child(5) .timeline-time {
+      color: var(--text-muted);
+    }
+
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* ---------- CREW ---------- */
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .crew-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .crew-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+    }
+
+    .crew-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--bg-deep);
+      position: relative;
+    }
+
+    .crew-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .crew-avatar.a1 { background: linear-gradient(135deg, var(--accent-cyan), #3ab8a8); }
+    .crew-avatar.a2 { background: linear-gradient(135deg, var(--accent-violet), #7c5ce0); }
+    .crew-avatar.a3 { background: linear-gradient(135deg, var(--accent-amber), #d4942a); }
+    .crew-avatar.a4 { background: linear-gradient(135deg, var(--accent-coral), #c44a3e); }
+
+    .crew-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .crew-role {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .crew-bio {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---------- LIVE UPDATES ---------- */
+    .updates-section {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .updates-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .updates-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .update-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.25s;
+    }
+
+    .update-item:hover {
+      border-color: var(--accent-cyan);
+    }
+
+    .update-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .update-tag {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    .update-tag.telemetry {
+      background: rgba(94, 224, 208, 0.12);
+      color: var(--accent-cyan);
+    }
+
+    .update-tag.crew {
+      background: rgba(167, 139, 250, 0.12);
+      color: var(--accent-violet);
+    }
+
+    .update-tag.system {
+      background: rgba(245, 176, 65, 0.12);
+      color: var(--accent-amber);
+    }
+
+    .update-time {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .update-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .updates-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .status-panel {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+
+    .status-panel h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(42, 51, 61, 0.5);
+      font-size: 0.85rem;
+    }
+
+    .status-row:last-child {
+      border-bottom: none;
+    }
+
+    .status-row .status-name {
+      color: var(--text-secondary);
+    }
+
+    .status-row .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-indicator .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-indicator .dot.green {
+      background: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .status-indicator .dot.amber {
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    .status-indicator .dot.green-text {
+      color: var(--accent-cyan);
+    }
+
+    .status-indicator .dot.amber-text {
+      color: var(--accent-amber);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-left {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .objective-grid,
+      .spacecraft-layout,
+      .updates-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .crew-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 2.4rem;
+      }
+
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .countdown-unit .value {
+        font-size: 1.8rem;
+      }
+
+      .crew-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .objective-stats {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .countdown-card {
+        padding: 1.5rem 1rem;
+      }
+
+      .countdown-unit .value {
+        font-size: 1.5rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- SVG ANIMATIONS ---------- */
+    @keyframes orbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-20px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(20px); opacity: 0; }
+    }
+
+    .orbit-ring {
+      animation: orbit 20s linear infinite;
+      transform-origin: center;
+    }
+
+    .orbit-ring-2 {
+      animation: orbit 30s linear infinite reverse;
+      transform-origin: center;
+    }
+
+    .spacecraft-body {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .scan-line {
+      animation: scan 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark"></span>
+        SPACE / MISSION
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#objective">Objective</a></li>
+          <li><a href="#spacecraft">Spacecraft</a></li>
+          <li><a href="#timeline">Timeline</a></li>
+          <li><a href="#crew">Crew</a></li>
+          <li><a href="#updates">Updates</a></li>
+        </ul>
+      </nav>
+      <button class="header-cta">Watch Live</button>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Mission Ares Reach — Active
+        </div>
+        <h1 class="hero-title">
+          Humanity's next<br>
+          <span class="highlight">giant leap</span>
+        </h1>
+        <p class="hero-subtitle">
+          Ares Reach is a crewed deep-space mission to establish the first permanent research outpost in Mars orbit. Launching from Kennedy Space Center, the crew will spend 18 months in transit and orbit, conducting groundbreaking science.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary">Mission Briefing</button>
+          <button class="btn-secondary">Watch Launch</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="countdown-card">
+          <div class="countdown-label">Launch Countdown — T-Minus</div>
+          <div class="countdown-grid" id="countdown">
+            <div class="countdown-unit">
+              <div class="value" id="days">14</div>
+              <div class="label">Days</div>
+            </div>
+            <div class="countdown-unit">
+              <div class="value" id="hours">08</div>
+              <div class="label">Hours</div>
+            </div>
+            <div class="countdown-unit">
+              <div class="value" id="minutes">42</div>
+              <div class="label">Minutes</div>
+            </div>
+            <div class="countdown-unit">
+              <div class="value" id="seconds">17</div>
+              <div class="label">Seconds</div>
+            </div>
+          </div>
+          <div class="countdown-meta">
+            <div class="meta-item">
+              <div class="meta-label">Launch Window</div>
+              <div class="meta-value cyan">Apr 22, 2026</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Vehicle</div>
+              <div class="meta-value">Falcon Heavy</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Pad</div>
+              <div class="meta-value amber">LC-39A</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MISSION OBJECTIVE ========== -->
+  <section id="objective">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Mission Objective</div>
+        <h2 class="section-title">Why we go</h2>
+        <p class="section-desc">
+          Ares Reach is not just a mission — it's a statement. We're pushing the boundaries of human endurance and robotic capability to establish a sustainable presence beyond Earth orbit.
+        </p>
+      </div>
+      <div class="objective-grid">
+        <div class="objective-text fade-in">
+          <p>
+            The primary objective of Ares Reach is to deploy the <strong>Olympus Habitat</strong>, a modular research station designed to support a crew of four for up to 18 months in Mars orbit. The station will serve as a proving ground for technologies critical to future surface missions.
+          </p>
+          <p>
+            The crew will conduct over 120 scientific experiments spanning astrobiology, materials science, human physiology, and planetary geology. Data collected will inform the design of the first crewed Mars surface mission, currently planned for the 2030s.
+          </p>
+          <p>
+            This mission represents a collaboration between NASA, ESA, JAXA, and commercial partners, with contributions from 14 nations. It is the most complex international space endeavor since the International Space Station.
+          </p>
+        </div>
+        <div class="objective-stats fade-in">
+          <div class="stat-card">
+            <div class="stat-value">18</div>
+            <div class="stat-label">Months in orbit</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">120+</div>
+            <div class="stat-label">Scientific experiments</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Crew members</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">14</div>
+            <div class="stat-label">Partner nations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SPACECRAFT DIAGRAM ========== -->
+  <section id="spacecraft" class="spacecraft-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Spacecraft</div>
+        <h2 class="section-title">Olympus Habitat</h2>
+        <p class="section-desc">
+          A next-generation deep-space habitat designed for long-duration missions. The Olympus combines proven life-support systems with advanced radiation shielding and autonomous navigation.
+        </p>
+      </div>
+      <div class="spacecraft-layout">
+        <div class="spacecraft-diagram fade-in">
+          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Olympus Habitat spacecraft diagram">
+            <defs>
+              <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1a2129;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2a333d;stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#5ee0d0;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.15" />
+              </linearGradient>
+              <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#5ee0d0;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.2" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Orbit rings -->
+            <g class="orbit-ring">
+              <ellipse cx="200" cy="200" rx="170" ry="60" fill="none" stroke="#2a333d" stroke-width="0.8" stroke-dasharray="4 6" opacity="0.5"/>
+            </g>
+            <g class="orbit-ring-2">
+              <ellipse cx="200" cy="200" rx="60" ry="170" fill="none" stroke="#2a333d" stroke-width="0.8" stroke-dasharray="4 6" opacity="0.3"/>
+            </g>
+
+            <!-- Solar panels -->
+            <g class="spacecraft-body">
+              <!-- Left panel -->
+              <rect x="40" y="175" width="80" height="50" rx="4" fill="url(#panelGrad)" stroke="#5ee0d0" stroke-width="0.8" opacity="0.8"/>
+              <line x1="60" y1="175" x2="60" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+              <line x1="80" y1="175" x2="80" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+              <line x1="100" y1="175" x2="100" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+
+              <!-- Right panel -->
+              <rect x="280" y="175" width="80" height="50" rx="4" fill="url(#panelGrad)" stroke="#5ee0d0" stroke-width="0.8" opacity="0.8"/>
+              <line x1="300" y1="175" x2="300" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+              <line x1="320" y1="175" x2="320" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+              <line x1="340" y1="175" x2="340" y2="225" stroke="#5ee0d0" stroke-width="0.4" opacity="0.4"/>
+
+              <!-- Connector arms -->
+              <line x1="120" y1="200" x2="155" y2="200" stroke="#5ee0d0" stroke-width="1.5" opacity="0.6"/>
+              <line x1="245" y1="200" x2="280" y2="200" stroke="#5ee0d0" stroke-width="1.5" opacity="0.6"/>
+
+              <!-- Main body -->
+              <rect x="155" y="140" width="90" height="120" rx="8" fill="url(#bodyGrad)" stroke="#5ee0d0" stroke-width="1.2" filter="url(#glow)"/>
+
+              <!-- Body details -->
+              <rect x="165" y="150" width="70" height="30" rx="3" fill="#0a0c0f" stroke="#2a333d" stroke-width="0.6"/>
+              <circle cx="180" cy="165" r="4" fill="#5ee0d0" opacity="0.8"/>
+              <circle cx="195" cy="165" r="4" fill="#5ee0d0" opacity="0.5"/>
+              <circle cx="210" cy="165" r="4" fill="#5ee0d0" opacity="0.3"/>
+
+              <rect x="165" y="190" width="70" height="20" rx="3" fill="#0a0c0f" stroke="#2a333d" stroke-width="0.6"/>
+              <line x1="175" y1="200" x2="225" y2="200" stroke="#5ee0d0" stroke-width="0.5" opacity="0.4"/>
+
+              <rect x="165" y="220" width="70" height="25" rx="3" fill="#0a0c0f" stroke="#2a333d" stroke-width="0.6"/>
+              <rect x="175" y="228" width="20" height="8" rx="2" fill="#f5b041" opacity="0.6"/>
+              <rect x="200" y="228" width="20" height="8" rx="2" fill="#5ee0d0" opacity="0.4"/>
+
+              <!-- Antenna -->
+              <line x1="200" y1="140" x2="200" y2="110" stroke="#5ee0d0" stroke-width="1" opacity="0.6"/>
+              <circle cx="200" cy="108" r="3" fill="#5ee0d0" opacity="0.8" filter="url(#glow)"/>
+
+              <!-- Thruster -->
+              <rect x="185" y="260" width="30" height="15" rx="3" fill="#1a2129" stroke="#2a333d" stroke-width="0.8"/>
+              <polygon points="190,275 200,290 210,275" fill="#5ee0d0" opacity="0.3"/>
+              <polygon points="193,275 200,285 207,275" fill="#5ee0d0" opacity="0.5"/>
+            </g>
+
+            <!-- Scan line -->
+            <line class="scan-line" x1="155" y1="200" x2="245" y2="200" stroke="#5ee0d0" stroke-width="0.5" opacity="0.3"/>
+
+            <!-- Labels -->
+            <text x="200" y="320" text-anchor="middle" fill="#5f6f80" font-family="Space Grotesk, sans-serif" font-size="9" letter-spacing="2">OLYMPUS HABITAT</text>
+            <text x="200" y="335" text-anchor="middle" fill="#2a333d" font-family="Space Grotesk, sans-serif" font-size="7" letter-spacing="1">DEEP SPACE RESEARCH STATION</text>
+          </svg>
+        </div>
+        <div class="spacecraft-info fade-in">
+          <h3>Built for the long haul</h3>
+          <p>
+            The Olympus Habitat is a 12-meter-long, 8-meter-diameter cylindrical module with a pressurized volume of 320 cubic meters. It features a dual-layer radiation shield, regenerative life-support systems, and a docking port compatible with both Orion and Starship vehicles.
+          </p>
+          <ul class="spec-list">
+            <li>
+              <span class="spec-key">Length</span>
+              <span class="spec-val">12.4 m</span>
+            </li>
+            <li>
+              <span class="spec-key">Diameter</span>
+              <span class="spec-val">8.2 m</span>
+            </li>
+            <li>
+              <span class="spec-key">Pressurized Volume</span>
+              <span class="spec-val">320 m³</span>
+            </li>
+            <li>
+              <span class="spec-key">Solar Array Output</span>
+              <span class="spec-val">45 kW</span>
+            </li>
+            <li>
+              <span class="spec-key">Radiation Shielding</span>
+              <span class="spec-val">20 g/cm²</span>
+            </li>
+            <li>
+              <span class="spec-key">Crew Capacity</span>
+              <span class="spec-val">4 (nominal)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TIMELINE ========== -->
+  <section id="timeline">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Mission Timeline</div>
+        <h2 class="section-title">From launch to landing</h2>
+        <p class="section-desc">
+          Every phase of Ares Reach is meticulously planned. Here's how the mission unfolds over its 18-month duration.
+        </p>
+      </div>
+      <div class="timeline fade-in">
+        <div class="timeline-item">
+          <div class="timeline-time">T-00:00:00 — Launch</div>
+          <div class="timeline-title">Liftoff from LC-39A</div>
+          <div class="timeline-desc">
+            Falcon Heavy lifts off from Kennedy Space Center, carrying the Olympus Habitat and the Ares Reach crew. Max Q at T+72 seconds, booster separation at T+2:30.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">T+00:08:30 — Orbit Insertion</div>
+          <div class="timeline-title">Low Earth Orbit Checkout</div>
+          <div class="timeline-desc">
+            The spacecraft enters a 400 km parking orbit. Systems are checked, solar arrays deploy, and the crew performs a 24-hour systems validation before the trans-Mars injection burn.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">T+00:36:00 — Trans-Mars Injection</div>
+          <div class="timeline-title">Departure Burn</div>
+          <div class="timeline-desc">
+            A 22-minute burn of the main engine sends the spacecraft on a 7-month trajectory to Mars. The crew begins their long-duration spaceflight protocol.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">T+07:12:00 — Mars Orbit Insertion</div>
+          <div class="timeline-title">Arrival at Mars</div>
+          <div class="timeline-desc">
+            The spacecraft performs a critical orbit insertion burn, placing the Olympus Habitat into a 400 km circular Mars orbit. The crew begins their 18-month research mission.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">T+25:00:00 — Return to Earth</div>
+          <div class="timeline-title">Mission Complete</div>
+          <div class="timeline-desc">
+            After 18 months of groundbreaking science, the crew departs Mars orbit for the 7-month journey home. Splashdown in the Pacific Ocean, completing the most ambitious deep-space mission in history.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CREW ========== -->
+  <section id="crew">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">The Crew</div>
+        <h2 class="section-title">Four pioneers</h2>
+        <p class="section-desc">
+          Selected from over 18,000 applicants, the Ares Reach crew represents the best of humanity's spirit of exploration.
+        </p>
+      </div>
+      <div class="crew-grid fade-in">
+        <div class="crew-card">
+          <div class="crew-avatar a1">CM</div>
+          <div class="crew-name">Cmdr. Maya Chen</div>
+          <div class="crew-role">Mission Commander</div>
+          <div class="crew-bio">
+            Veteran of three ISS expeditions and former Navy test pilot. 2,400+ hours in space.
+          </div>
+        </div>
+        <div class="crew-card">
+          <div class="crew-avatar a2">DR</div>
+          <div class="crew-name">Dr. Elias Voss</div>
+          <div class="crew-role">Flight Engineer</div>
+          <div class="crew-bio">
+            Aerospace engineer and EVA specialist. Led the development of the Olympus life-support system.
+          </div>
+        </div>
+        <div class="crew-card">
+          <div class="crew-avatar a3">SA</div>
+          <div class="crew-name">Dr. Sarah Okafor</div>
+          <div class="crew-role">Mission Specialist</div>
+          <div class="crew-bio">
+            Astrobiologist and geologist. Her research focuses on the search for past life on Mars.
+          </div>
+        </div>
+        <div class="crew-card">
+          <div class="crew-avatar a4">JT</div>
+          <div class="crew-name">James Torres</div>
+          <div class="crew-role">Pilot</div>
+          <div class="crew-bio">
+            Former SpaceX test pilot and robotics expert. Responsible for spacecraft navigation and docking.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LIVE UPDATES ========== -->
+  <section id="updates" class="updates-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Live Updates</div>
+        <h2 class="section-title">Mission control feed</h2>
+        <p class="section-desc">
+          Real-time updates from the Ares Reach mission control center at Johnson Space Center.
+        </p>
+      </div>
+      <div class="updates-layout">
+        <div class="updates-feed fade-in">
+          <div class="update-item">
+            <div class="update-header">
+              <span class="update-tag telemetry">Telemetry</span>
+              <span class="update-time">T-14d 08:42:17</span>
+            </div>
+            <div class="update-text">
+              All systems nominal. The Olympus Habitat has completed its final integrated systems test. Solar array deployment sequence verified at 100% efficiency.
+            </div>
+          </div>
+          <div class="update-item">
+            <div class="update-header">
+              <span class="update-tag crew">Crew</span>
+              <span class="update-time">T-14d 06:15:03</span>
+            </div>
+            <div class="update-text">
+              The crew has entered their pre-launch quarantine protocol. Final medical checks completed — all four members cleared for flight.
+            </div>
+          </div>
+          <div class="update-item">
+            <div class="update-header">
+              <span class="update-tag system">System</span>
+              <span class="update-time">T-15d 22:30:45</span>
+            </div>
+            <div class="update-text">
+              Falcon Heavy has been rolled out to Pad 39A. Static fire test scheduled for tomorrow at 14:00 UTC. Weather forecast: 90% favorable.
+            </div>
+          </div>
+          <div class="update-item">
+            <div class="update-header">
+              <span class="update-tag telemetry">Telemetry</span>
+              <span class="update-time">T-16d 11:08:22</span>
+            </div>
+            <div class="update-text">
+              Deep Space Network has established a stable communication link with the Olympus Habitat. Signal strength: 98.7%. Data rate: 2.4 Mbps.
+            </div>
+          </div>
+        </div>
+        <div class="updates-sidebar fade-in">
+          <div class="status-panel">
+            <h4>System Status</h4>
+            <div class="status-row">
+              <span class="status-name">Life Support</span>
+              <span class="status-indicator">
+                <span class="dot green"></span>
+                <span class="green-text">Nominal</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Power Systems</span>
+              <span class="status-indicator">
+                <span class="dot green"></span>
+                <span class="green-text">Nominal</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Navigation</span>
+              <span class="status-indicator">
+                <span class="dot green"></span>
+                <span class="green-text">Nominal</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Thermal Control</span>
+              <span class="status-indicator">
+                <span class="dot amber"></span>
+                <span class="amber-text">Monitoring</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Communications</span>
+              <span class="status-indicator">
+                <span class="dot green"></span>
+                <span class="green-text">Nominal</span>
+              </span>
+            </div>
+          </div>
+          <div class="status-panel">
+            <h4>Mission Metrics</h4>
+            <div class="status-row">
+              <span class="status-name">Distance from Earth</span>
+              <span class="status-indicator">
+                <span class="green-text">0 km</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Velocity</span>
+              <span class="status-indicator">
+                <span class="green-text">0 km/s</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Mission Elapsed Time</span>
+              <span class="status-indicator">
+                <span class="green-text">T-14d</span>
+              </span>
+            </div>
+            <div class="status-row">
+              <span class="status-name">Next Milestone</span>
+              <span class="status-indicator">
+                <span class="amber-text">Static Fire</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        &copy; 2026 SPACE / MISSION. Ares Reach is a fictional mission created for demonstration purposes.
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Press Kit</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ---------- COUNTDOWN ----------
+      // Set launch date: April 22, 2026 14:30:00 UTC
+      const launchDate = new Date('2026-04-22T14:30:00Z').getTime();
+
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+
+      function pad(num) {
+        return String(num).padStart(2, '0');
+      }
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = launchDate - now;
+
+        if (diff <= 0) {
+          daysEl.textContent = '00';
+          hoursEl.textContent = '00';
+          minutesEl.textContent = '00';
+          secondsEl.textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        daysEl.textContent = pad(days);
+        hoursEl.textContent = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+
+        // Flash effect on seconds change
+        secondsEl.classList.remove('flash');
+        void secondsEl.offsetWidth; // trigger reflow
+        secondsEl.classList.add('flash');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // ---------- SCROLL REVEAL ----------
+      const fadeElements = document.querySelectorAll('.fade-in');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      fadeElements.forEach(el => observer.observe(el));
+
+      // ---------- SMOOTH SCROLL FOR NAV LINKS ----------
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // ---------- HEADER SCROLL EFFECT ----------
+      const header = document.querySelector('.site-header');
+      let lastScroll = 0;
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 50) {
+          header.style.borderBottomColor = 'rgba(42, 51, 61, 0.8)';
+        } else {
+          header.style.borderBottomColor = 'rgba(42, 51, 61, 0.5)';
+        }
+        lastScroll = currentScroll;
+      }, { passive: true });
+
+    })();
+  </script>
+
+</body>
+</html>

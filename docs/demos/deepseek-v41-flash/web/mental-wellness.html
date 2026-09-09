@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENTAL / WELLNESS / APP — Your daily practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-soft: #3d3d5c;
+    --ink-mute: #6b6b8a;
+    --paper: #faf7f2;
+    --paper-warm: #f5efe6;
+    --paper-card: #ffffff;
+    --line: #e8e2d6;
+    --line-soft: #f0ebe0;
+    --accent: #d97757;
+    --accent-deep: #b85a3d;
+    --accent-soft: #f4d9cc;
+    --sage: #7a9b76;
+    --sage-soft: #dce8d8;
+    --lavender: #8b7fb8;
+    --lavender-soft: #e4dff0;
+    --gold: #d4a24c;
+    --gold-soft: #f5e6c8;
+    --rose: #c97a8a;
+    --rose-soft: #f2dce0;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --radius-lg: 28px;
+    --shadow-sm: 0 1px 2px rgba(26,26,46,0.04), 0 2px 8px rgba(26,26,46,0.04);
+    --shadow-md: 0 2px 4px rgba(26,26,46,0.04), 0 8px 24px rgba(26,26,46,0.06);
+    --shadow-lg: 0 4px 8px rgba(26,26,46,0.04), 0 16px 48px rgba(26,26,46,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+
+  /* ── Navigation ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 247, 242, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--rose) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 60%);
+  }
+
+  .logo-mark svg { position: relative; z-index: 1; }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-text .top {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .logo-text .bottom {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-ghost {
+    color: var(--ink-soft);
+    background: transparent;
+  }
+
+  .btn-ghost:hover { color: var(--accent); }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(217, 119, 87, 0.3);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 60px;
+    align-items: center;
+    min-height: calc(100vh - 73px);
+  }
+
+  .hero-content { max-width: 560px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 8px;
+    background: var(--paper-card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .eyebrow-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--sage-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .eyebrow-dot::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .btn-lg {
+    padding: 14px 26px;
+    font-size: 15px;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--ink);
+    background: var(--paper-card);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 28px;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Hero Visual (App Mockup) ── */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 560px;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.5;
+  }
+
+  .blob-1 {
+    width: 380px;
+    height: 380px;
+    background: var(--accent-soft);
+    top: 5%;
+    right: 5%;
+  }
+
+  .blob-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--lavender-soft);
+    bottom: 5%;
+    left: 0;
+  }
+
+  .blob-3 {
+    width: 240px;
+    height: 240px;
+    background: var(--sage-soft);
+    top: 40%;
+    left: 30%;
+  }
+
+  .phone {
+    position: relative;
+    width: 320px;
+    height: 640px;
+    background: var(--ink);
+    border-radius: 44px;
+    padding: 12px;
+    box-shadow: 
+      0 30px 60px -20px rgba(26,26,46,0.35),
+      0 0 0 1px rgba(26,26,46,0.05),
+      inset 0 0 0 1px rgba(255,255,255,0.08);
+    z-index: 2;
+    transform: rotate(-3deg);
+    transition: transform 0.5s ease;
+  }
+
+  .phone:hover { transform: rotate(0deg) translateY(-8px); }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--paper);
+    border-radius: 34px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 24px;
+    background: var(--ink);
+    border-radius: 100px;
+    z-index: 10;
+  }
+
+  .phone-status {
+    padding: 16px 24px 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .phone-header {
+    padding: 8px 24px 20px;
+  }
+
+  .phone-greeting {
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .phone-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 24px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .phone-title em { font-style: italic; color: var(--accent); }
+
+  .mood-card {
+    margin: 0 20px;
+    background: var(--paper-card);
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line-soft);
+  }
+
+  .mood-label {
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mood-label span:last-child {
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 11px;
+  }
+
+  .mood-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .mood-face {
+    flex: 1;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+  }
+
+  .mood-face:hover { transform: translateY(-2px); }
+
+  .mood-face.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  .mood-face svg { width: 22px; height: 22px; }
+
+  .phone-section-title {
+    padding: 20px 24px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .phone-section-title span:last-child {
+    color: var(--ink-mute);
+    font-weight: 400;
+    font-size: 11px;
+  }
+
+  .session-mini {
+    margin: 0 20px 10px;
+    background: var(--paper-card);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line-soft);
+  }
+
+  .session-mini-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .session-mini-icon.sage { background: var(--sage-soft); }
+  .session-mini-icon.lavender { background: var(--lavender-soft); }
+
+  .session-mini-text { flex: 1; min-width: 0; }
+
+  .session-mini-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .session-mini-meta {
+    font-size: 10px;
+    color: var(--ink-mute);
+  }
+
+  .session-mini-play {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .phone-nav {
+    margin-top: auto;
+    padding: 12px 24px 20px;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--line-soft);
+    background: var(--paper-card);
+  }
+
+  .phone-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    color: var(--ink-mute);
+  }
+
+  .phone-nav-item.active { color: var(--accent); }
+
+  .phone-nav-item svg { width: 18px; height: 18px; }
+
+  /* Floating cards */
+  .float-card {
+    position: absolute;
+    background: var(--paper-card);
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--line-soft);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .float-card-1 {
+    top: 12%;
+    left: -20px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .float-card-2 {
+    bottom: 18%;
+    right: -30px;
+    animation: float 6s ease-in-out infinite 3s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .float-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .float-icon.gold { background: var(--gold-soft); }
+  .float-icon.rose { background: var(--rose-soft); }
+
+  .float-text-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .float-text-sub {
+    font-size: 10px;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* ── Sections ── */
+  section { padding: 100px 40px; }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    max-width: 640px;
+    margin-bottom: 56px;
+  }
+
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* ── Sessions ── */
+  .sessions { background: var(--paper-warm); }
+
+  .session-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .session-card {
+    background: var(--paper-card);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    border: 1px solid var(--line-soft);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 340px;
+  }
+
+  .session-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+
+  .session-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .session-card:hover::before { transform: scaleX(1); }
+
+  .session-card.sage::before { background: var(--sage); }
+  .session-card.lavender::before { background: var(--lavender); }
+  .session-card.gold::before { background: var(--gold); }
+  .session-card.rose::before { background: var(--rose); }
+
+  .session-visual {
+    height: 120px;
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .session-visual.sage { background: linear-gradient(135deg, var(--sage-soft) 0%, #c8dcc4 100%); }
+  .session-visual.lavender { background: linear-gradient(135deg, var(--lavender-soft) 0%, #d4cce8 100%); }
+  .session-visual.gold { background: linear-gradient(135deg, var(--gold-soft) 0%, #f0d9a8 100%); }
+  .session-visual.rose { background: linear-gradient(135deg, var(--rose-soft) 0%, #e8c4cc 100%); }
+  .session-visual.accent { background: linear-gradient(135deg, var(--accent-soft) 0%, #e8b8a0 100%); }
+
+  .session-visual svg { width: 60px; height: 60px; opacity: 0.7; }
+
+  .session-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+  }
+
+  .session-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .session-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .session-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .session-duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+
+  .session-play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .session-card:hover .session-play {
+    background: var(--accent);
+    transform: scale(1.1);
+  }
+
+  /* ── Trends ── */
+  .trends-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+  }
+
+  .trend-card {
+    background: var(--paper-card);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .trend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .trend-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .trend-sub {
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--sage-soft);
+    color: #4a6b47;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .chart {
+    position: relative;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding-bottom: 32px;
+  }
+
+  .chart-bar {
+    flex: 1;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+    border-radius: 8px 8px 4px 4px;
+    position: relative;
+    transition: all 0.3s;
+    cursor: pointer;
+    min-height: 20px;
+  }
+
+  .chart-bar:hover { filter: brightness(1.1); transform: scaleY(1.02); transform-origin: bottom; }
+
+  .chart-bar.sage { background: linear-gradient(180deg, var(--sage) 0%, #5a7a56 100%); }
+  .chart-bar.lavender { background: linear-gradient(180deg, var(--lavender) 0%, #6b5f98 100%); }
+  .chart-bar.gold { background: linear-gradient(180deg, var(--gold) 0%, #b08535 100%); }
+  .chart-bar.rose { background: linear-gradient(180deg, var(--rose) 0%, #a85a6a 100%); }
+
+  .chart-label {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .chart-value {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .chart-bar:hover .chart-value { opacity: 1; }
+
+  .trend-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .trend-stat-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 4px;
+  }
+
+  .trend-stat-value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 24px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .trend-stat-value small {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  /* Streak card */
+  .streak-card {
+    background: linear-gradient(160deg, var(--ink) 0%, #2a2a4a 100%);
+    color: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .streak-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(217,119,87,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .streak-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -20%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(139,127,184,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .streak-content { position: relative; z-index: 1; }
+
+  .streak-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250,247,242,0.6);
+    margin-bottom: 12px;
+  }
+
+  .streak-num {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+
+  .streak-num em { font-style: italic; color: var(--accent); }
+
+  .streak-desc {
+    font-size: 14px;
+    color: rgba(250,247,242,0.7);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .streak-days {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .streak-day {
+    flex: 1;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background: rgba(250,247,242,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(250,247,242,0.5);
+    border: 1px solid rgba(250,247,242,0.08);
+  }
+
+  .streak-day.done {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  .streak-day.today {
+    background: rgba(250,247,242,0.15);
+    color: var(--paper);
+    border-color: rgba(250,247,242,0.3);
+  }
+
+  /* ── Journal ── */
+  .journal {
+    background: var(--paper-warm);
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .journal-prompt {
+    background: var(--paper-card);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    border: 1px solid var(--line-soft);
+  }
+
+  .journal-prompt::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 32px;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--accent-soft);
+    z-index: 0;
+  }
+
+  .journal-prompt-content { position: relative; z-index: 1; }
+
+  .journal-date {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .journal-date::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .journal-question {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .journal-question em { font-style: italic; color: var(--accent); }
+
+  .journal-input {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    resize: none;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+
+  .journal-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--paper-card);
+  }
+
+  .journal-input::placeholder { color: var(--ink-mute); }
+
+  .journal-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .journal-tags {
+    display: flex;
+    gap: 8px;
+  }
+
+  .journal-tag {
+    padding: 6px 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .journal-tag:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+
+  .journal-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .journal-feature {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .journal-feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--paper-card);
+    border: 1px solid var(--line-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .journal-feature-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .journal-feature-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ── Support ── */
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .support-card {
+    background: var(--paper-card);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--line-soft);
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .support-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+
+  .support-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .support-icon.accent { background: var(--accent-soft); }
+  .support-icon.sage { background: var(--sage-soft); }
+  .support-icon.lavender { background: var(--lavender-soft); }
+
+  .support-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .support-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .support-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: auto;
+  }
+
+  .support-link svg { transition: transform 0.2s; }
+  .support-card:hover .support-link svg { transform: translateX(4px); }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 80px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin: 0 40px 100px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(217,119,87,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    right: 20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(139,127,184,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cta-content { position: relative; z-index: 1; }
+
+  .cta h2 {
+    color: var(--paper);
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+
+  .cta h2 em { color: var(--accent); }
+
+  .cta p {
+    font-size: 17px;
+    color: rgba(250,247,242,0.7);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-light {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .btn-light:hover {
+    background: var(--accent);
+    color: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(217,119,87,0.4);
+  }
+
+  .btn-outline-light {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(250,247,242,0.2);
+  }
+
+  .btn-outline-light:hover {
+    border-color: var(--paper);
+    background: rgba(250,247,242,0.05);
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 60px 40px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-top: 16px;
+    max-width: 320px;
+  }
+
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 1px solid var(--line-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-crisis {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--rose-soft);
+    border-radius: 100px;
+    font-size: 12px;
+    color: #8a4a58;
+    font-weight: 500;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 32px 60px; min-height: auto; }
+    .hero-visual { min-height: 500px; }
+    .session-grid { grid-template-columns: repeat(2, 1fr); }
+    .trends-grid { grid-template-columns: 1fr; }
+    .journal-grid { grid-template-columns: 1fr; gap: 40px; }
+    .support-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 60px 20px; }
+    .nav-inner { padding: 14px 20px; }
+    .hero { padding: 32px 20px 40px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .session-grid { grid-template-columns: 1fr; }
+    .support-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .cta { padding: 48px 24px; margin: 0 20px 60px; }
+    .float-card-1 { left: -10px; }
+    .float-card-2 { right: -10px; }
+    .phone { width: 280px; height: 560px; }
+    .journal-prompt { padding: 28px; }
+    .journal-question { font-size: 22px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7-4.5-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-7 11-7 11z"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="top">MENTAL</span>
+        <span class="bottom">WELLNESS APP</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sessions">Sessions</a></li>
+      <li><a href="#trends">Trends</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#support">Support</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Start free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span>Now with adaptive daily check-ins</span>
+    </div>
+    <h1>A quieter mind, <em>one small practice</em> at a time.</h1>
+    <p class="hero-sub">MENTAL / WELLNESS / APP is your daily companion for mood tracking, guided sessions, and honest reflection — built with clinicians, designed for real life.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary btn-lg">
+        Start your practice
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#sessions" class="btn btn-outline btn-lg">Explore sessions</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2.4M</div>
+        <div class="stat-label">Daily check-ins</div>
+      </div>
+      <div>
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">App Store rating</div>
+      </div>
+      <div>
+        <div class="stat-num">180+</div>
+        <div class="stat-label">Guided sessions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Floating card 1 -->
+    <div class="float-card float-card-1">
+      <div class="float-icon gold">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b08535" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div>
+        <div class="float-text-title">14-day streak</div>
+        <div class="float-text-sub">Keep it going</div>
+      </div>
+    </div>
+
+    <!-- Floating card 2 -->
+    <div class="float-card float-card-2">
+      <div class="float-icon rose">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a85a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div>
+        <div class="float-text-title">Mood improved</div>
+        <div class="float-text-sub">+18% this week</div>
+      </div>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-status">
+          <span>9:41</span>
+          <span>•••</span>
+        </div>
+        <div class="phone-header">
+          <div class="phone-greeting">Tuesday, March 12</div>
+          <div class="phone-title">Good morning, <em>Alex</em></div>
+        </div>
+
+        <div class="mood-card">
+          <div class="mood-label">
+            <span>How are you feeling?</span>
+            <span>Check in</span>
+          </div>
+          <div class="mood-row">
+            <div class="mood-face">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6b6b8a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 15s1.5-2 4-2 4 2 4 2"/><circle cx="9" cy="10" r="0.5" fill="#6b6b8a"/><circle cx="15" cy="10" r="0.5" fill="#6b6b8a"/></svg>
+            </div>
+            <div class="mood-face">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6b6b8a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 14h8"/><circle cx="9" cy="10" r="0.5" fill="#6b6b8a"/><circle cx="15" cy="10" r="0.5" fill="#6b6b8a"/></svg>
+            </div>
+            <div class="mood-face active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#b85a3d" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="0.5" fill="#b85a3d"/><circle cx="15" cy="10" r="0.5" fill="#b85a3d"/></svg>
+            </div>
+            <div class="mood-face">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6b6b8a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 16s1.5-2 4-2 4 2 4 2"/><circle cx="9" cy="10" r="0.5" fill="#6b6b8a"/><circle cx="15" cy="10" r="0.5" fill="#6b6b8a"/></svg>
+            </div>
+            <div class="mood-face">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6b6b8a" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 17s1.5-3 4-3 4 3 4 3"/><circle cx="9" cy="10" r="0.5" fill="#6b6b8a"/><circle cx="15" cy="10" r="0.5" fill="#6b6b8a"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-section-title">
+          <span>Today's practice</span>
+          <span>See all</span>
+        </div>
+
+        <div class="session-mini">
+          <div class="session-mini-icon sage">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a7a56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="session-mini-text">
+            <div class="session-mini-title">Morning grounding</div>
+            <div class="session-mini-meta">8 min · Breathwork</div>
+          </div>
+          <div class="session-mini-play">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+        <div class="session-mini">
+          <div class="session-mini-icon lavender">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b5f98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="session-mini-text">
+            <div class="session-mini-title">Evening unwinding</div>
+            <div class="session-mini-meta">12 min · Body scan</div>
+          </div>
+          <div class="session-mini-play">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+        <div class="phone-nav">
+          <div class="phone-nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Home</span>
+          </div>
+          <div class="phone-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Sessions</span>
+          </div>
+          <div class="phone-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+            <span>Journal</span>
+          </div>
+          <div class="phone-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>You</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sessions -->
+<section class="sessions" id="sessions">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Guided sessions</div>
+      <h2>Practices that meet you <em>where you are</em>.</h2>
+      <p class="section-sub">From two-minute resets to deep evening unwinds — every session is led by a certified practitioner and adapted to how you're feeling today.</p>
+    </div>
+
+    <div class="session-grid">
+      <div class="session-card sage">
+        <div class="session-visual sage">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#5a7a56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="20"/>
+            <path d="M32 12v40M12 32h40"/>
+            <circle cx="32" cy="32" r="8" fill="#5a7a56" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="session-tag">Breathwork</div>
+        <div class="session-title">Morning grounding</div>
+        <p class="session-desc">A gentle 8-minute breath practice to settle your nervous system and set an intention for the day ahead.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            8 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card lavender">
+        <div class="session-visual lavender">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#6b5f98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 8c-8 8-8 16 0 24s8 16 0 24"/>
+            <path d="M20 20c8 4 16 4 24 0M20 44c8-4 16-4 24 0"/>
+          </svg>
+        </div>
+        <div class="session-tag">Body scan</div>
+        <div class="session-title">Evening unwinding</div>
+        <p class="session-desc">Release the day with a slow, guided body scan designed to quiet mental chatter and prepare you for rest.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            12 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card gold">
+        <div class="session-visual gold">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#b08535" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 8v48M8 32h48"/>
+            <circle cx="32" cy="32" r="16"/>
+            <circle cx="32" cy="32" r="4" fill="#b08535"/>
+          </svg>
+        </div>
+        <div class="session-tag">Focus</div>
+        <div class="session-title">Deep work reset</div>
+        <p class="session-desc">A 5-minute attention practice to clear mental fog and return to your work with clarity and calm.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            5 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card rose">
+        <div class="session-visual rose">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#a85a6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 56s-20-12-20-28a12 12 0 0 1 20-8 12 12 0 0 1 20 8c0 16-20 28-20 28z"/>
+          </svg>
+        </div>
+        <div class="session-tag">Self-compassion</div>
+        <div class="session-title">Kindness practice</div>
+        <p class="session-desc">A guided loving-kindness meditation to soften self-criticism and build a more supportive inner voice.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            15 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card accent">
+        <div class="session-visual accent">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#b85a3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 32c8-16 16-16 24 0s16 16 24 0"/>
+            <circle cx="32" cy="32" r="4" fill="#b85a3d"/>
+          </svg>
+        </div>
+        <div class="session-tag">Anxiety</div>
+        <div class="session-title">Riding the wave</div>
+        <p class="session-desc">Learn to stay present with difficult emotions without being swept away. A practical tool for anxious moments.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            10 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-card sage">
+        <div class="session-visual sage">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#5a7a56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 8v48M16 24l16 8 16-8M16 40l16 8 16-8"/>
+          </svg>
+        </div>
+        <div class="session-tag">Sleep</div>
+        <div class="session-title">Drift into rest</div>
+        <p class="session-desc">A soothing sleep story with ambient soundscapes to help you let go of the day and fall asleep naturally.</p>
+        <div class="session-meta">
+          <div class="session-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            25 min
+          </div>
+          <div class="session-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trends -->
+<section id="trends">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Personal trends</div>
+      <h2>See your patterns, <em>not just your moods</em>.</h2>
+      <p class="section-sub">Your check-ins become a private, gentle map of how you're doing over time — so you can notice what helps and what doesn't.</p>
+    </div>
+
+    <div class="trends-grid">
+      <div class="trend-card">
+        <div class="trend-header">
+          <div>
+            <div class="trend-title">Mood this week</div>
+            <div class="trend-sub">Average score: 7.2 / 10</div>
+          </div>
+          <div class="trend-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>
+            +18% vs last week
+          </div>
+        </div>
+
+        <div class="chart">
+          <div class="chart-bar" style="height: 55%;">
+            <span class="chart-value">6.2</span>
+            <span class="chart-label">Mon</span>
+          </div>
+          <div class="chart-bar sage" style="height: 70%;">
+            <span class="chart-value">7.1</span>
+            <span class="chart-label">Tue</span>
+          </div>
+          <div class="chart-bar lavender" style="height: 45%;">
+            <span class="chart-value">5.4</span>
+            <span class="chart-label">Wed</span>
+          </div>
+          <div class="chart-bar gold" style="height: 80%;">
+            <span class="chart-value">8.0</span>
+            <span class="chart-label">Thu</span>
+          </div>
+          <div class="chart-bar rose" style="height: 65%;">
+            <span class="chart-value">6.8</span>
+            <span class="chart-label">Fri</span>
+          </div>
+          <div class="chart-bar" style="height: 90%;">
+            <span class="chart-value">8.6</span>
+            <span class="chart-label">Sat</span>
+          </div>
+          <div class="chart-bar sage" style="height: 75%;">
+            <span class="chart-value">7.5</span>
+            <span class="chart-label">Sun</span>
+          </div>
+        </div>
+
+        <div class="trend-stats">
+          <div>
+            <div class="trend-stat-label">Best day</div>
+            <div class="trend-stat-value">Saturday <small>8.6</small></div>
+          </div>
+          <div>
+            <div class="trend-stat-label">Most common mood</div>
+            <div class="trend-stat-value">Calm <small>4 days</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="streak-card">
+        <div class="streak-content">
+          <div class="streak-label">Current streak</div>
+          <div class="streak-num">14<em>.</em></div>
+          <p class="streak-desc">You've checked in every day for two weeks. That's 14 small acts of self-awareness.</p>
+          <div class="streak-days">
+            <div class="streak-day done">M</div>
+            <div class="streak-day done">T</div>
+            <div class="streak-day done">W</div>
+            <div class="streak-day done">T</div>
+            <div class="streak-day done">F</div>
+            <div class="streak-day done">S</div>
+            <div class="streak-day today">S</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Journal -->
+<section class="journal" id="journal">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Journal prompt</div>
+      <h2>Write it out. <em>No one else will read it.</em></h2>
+      <p class="section-sub">A daily prompt to help you untangle thoughts, notice patterns, and build a record of your inner life — private by default, always.</p>
+    </div>
+
+    <div class="journal-grid">
+      <div class="journal-prompt">
+        <div class="journal-prompt-content">
+          <div class="journal-date">Today's prompt · March 12</div>
+          <div class="journal-question">What is one thing you're <em>carrying</em> that you could set down, even just for today?</div>
+          <textarea class="journal-input" placeholder="Start writing... there's no right answer."></textarea>
+          <div class="journal-actions">
+            <div class="journal-tags">
+              <span class="journal-tag">#lettinggo</span>
+              <span class="journal-tag">#reflection</span>
+            </div>
+            <button class="btn btn-primary">Save entry</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="journal-features">
+        <div class="journal-feature">
+          <div class="journal-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <div class="journal-feature-title">Private by design</div>
+            <p class="journal-feature-desc">Your entries are encrypted and never shared. Not with us, not with anyone.</p>
+          </div>
+        </div>
+
+        <div class="journal-feature">
+          <div class="journal-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a9b76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="journal-feature-title">Prompts that adapt</div>
+            <p class="journal-feature-desc">Based on your mood check-ins, the app suggests prompts that meet you where you are.</p>
+          </div>
+        </div>
+
+        <div class="journal-feature">
+          <div class="journal-feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b7fb8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+          </div>
+          <div>
+            <div class="journal-feature-title">Look back with kindness</div>
+            <p class="journal-feature-desc">Revisit past entries to see how far you've come — without judgment, just curiosity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Support -->
+<section id="support">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Support resources</div>
+      <h2>When you need <em>more than an app</em>.</h2>
+      <p class="section-sub">MENTAL / WELLNESS / APP is a tool, not a replacement for professional care. Here are real resources, always free to access.</p>
+    </div>
+
+    <div class="support-grid">
+      <a href="#" class="support-card">
+        <div class="support-icon accent">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b85a3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="support-title">Crisis lines</div>
+        <p class="support-desc">Immediate, free, confidential support from trained counselors — 24/7, wherever you are.</p>
+        <div class="support-link">
+          Find a line
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <a href="#" class="support-card">
+        <div class="support-icon sage">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5a7a56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="support-title">Find a therapist</div>
+        <p class="support-desc">Browse licensed therapists by specialty, insurance, and availability. Matched in minutes.</p>
+        <div class="support-link">
+          Start matching
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <a href="#" class="support-card">
+        <div class="support-icon lavender">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b5f98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="support-title">Learn & understand</div>
+        <p class="support-desc">Plain-language guides on anxiety, depression, burnout, grief, and more — written by clinicians.</p>
+        <div class="support-link">
+          Browse library
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-content">
+    <h2>Your practice starts <em>today</em>.</h2>
+    <p>Join over 2 million people building a kinder relationship with their own minds. Free to start, no credit card required.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-light btn-lg">
+        Start your free practice
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-outline-light btn-lg">See how it works</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-4.5-7-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-7 11-7 11z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="top">MENTAL</span>
+          <span class="bottom">WELLNESS APP</span>
+        </div>
+      </a>
+      <p>A daily practice for a quieter mind. Built with clinicians, designed for real life.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#sessions">Sessions</a></li>
+        <li><a href="#trends">Trends</a></li>
+        <li><a href="#journal">Journal</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2025 MENTAL / WELLNESS / APP. Made with care.</div>
+    <div class="footer-crisis">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+      In crisis? Call or text 988 (US)
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mood face selection
+  document.querySelectorAll('.mood-face').forEach(face => {
+    face.addEventListener('click', () => {
+      document.querySelectorAll('.mood-face').forEach(f => f.classList.remove('active'));
+      face.classList.add('active');
+    });
+  });
+
+  // Journal tag toggle
+  document.querySelectorAll('.journal-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      tag.style.background = tag.style.background === 'var(--accent-soft)' ? '' : 'var(--accent-soft)';
+      tag.style.borderColor = tag.style.borderColor === 'var(--accent)' ? '' : 'var(--accent)';
+      tag.style.color = tag.style.color === 'var(--accent-deep)' ? '' : 'var(--accent-deep)';
+    });
+  });
+
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.session-card, .trend-card, .streak-card, .support-card, .journal-prompt').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

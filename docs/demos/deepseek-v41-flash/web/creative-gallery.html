@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOID/FORM — digital art gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0b0b0c;
+      --surface: #131315;
+      --accent: #ff4d2e;  /* carefully chosen: hot ember */
+      --accent-glow: rgba(255, 77, 46, 0.25);
+      --text-primary: #f2f2f2;
+      --text-secondary: #9f9f9f;
+      --border-dim: #2a2a2c;
+      --grid-gap: 1.5rem;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      overflow-x: hidden;
+    }
+
+    /* custom cursor – subtle dot */
+    .cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.2s;
+      transform: translate(-50%, -50%);
+      opacity: 0.8;
+    }
+
+    .cursor--hover {
+      transform: translate(-50%, -50%) scale(2.5);
+      background: #ffffff;
+      mix-blend-mode: normal;
+      opacity: 0.9;
+    }
+
+    /* hide default cursor on interactive elements */
+    a, button, .artwork-card, .spotlight-card {
+      cursor: none;
+    }
+
+    /* layout */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      width: 100%;
+    }
+
+    /* header */
+    .header {
+      padding: 2rem 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-dim);
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav {
+      display: flex;
+      gap: 2.5rem;
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav a:hover::after {
+      width: 100%;
+    }
+
+    /* hero — huge typography */
+    .hero {
+      margin: 3rem 0 5rem;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(4rem, 14vw, 11rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .accent {
+      color: var(--accent);
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-title .accent:hover {
+      transform: translateX(8px);
+    }
+
+    .hero-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: 0;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    .hero-sub p {
+      max-width: 400px;
+    }
+
+    .hero-sub .meta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+
+    /* exhibition spotlight */
+    .spotlight {
+      margin: 5rem 0 6rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .spotlight-visual {
+      aspect-ratio: 16/9;
+      background: #0f0f11;
+      border: 1px solid var(--border-dim);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .spotlight-visual:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    /* generative canvas inside spotlight */
+    #spotlightCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .spotlight-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .spotlight-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .spotlight-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .spotlight-artist {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .spotlight-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    .spotlight-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.3rem;
+      width: fit-content;
+      transition: gap 0.2s, color 0.2s;
+    }
+
+    .spotlight-cta:hover {
+      gap: 1.2rem;
+      color: var(--accent);
+    }
+
+    /* artwork grid — unusual proportions */
+    .grid-section {
+      margin: 4rem 0 6rem;
+    }
+
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-dim);
+      padding-bottom: 0.8rem;
+    }
+
+    .grid-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .grid-header span {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .artwork-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--grid-gap);
+      grid-auto-flow: dense;
+    }
+
+    .artwork-card {
+      background: var(--surface);
+      border: 1px solid var(--border-dim);
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .artwork-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-glow);
+    }
+
+    /* unusual proportions */
+    .artwork-card:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+    .artwork-card:nth-child(2) { grid-column: span 4; grid-row: span 1; }
+    .artwork-card:nth-child(3) { grid-column: span 3; grid-row: span 1; }
+    .artwork-card:nth-child(4) { grid-column: span 3; grid-row: span 2; }
+    .artwork-card:nth-child(5) { grid-column: span 4; grid-row: span 1; }
+    .artwork-card:nth-child(6) { grid-column: span 5; grid-row: span 1; }
+
+    .artwork-visual {
+      width: 100%;
+      flex: 1;
+      min-height: 180px;
+      position: relative;
+      overflow: hidden;
+      background: #0a0a0b;
+    }
+
+    .artwork-visual canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .artwork-info {
+      padding: 1rem 1.2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      border-top: 1px solid var(--border-dim);
+      background: var(--surface);
+    }
+
+    .artwork-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .artwork-artist {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .artwork-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #6b6b6b;
+      margin-top: 0.3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    /* footer */
+    .footer {
+      margin-top: auto;
+      padding: 2.5rem 0 2rem;
+      border-top: 1px solid var(--border-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: var(--accent);
+    }
+
+    /* responsive */
+    @media (max-width: 1024px) {
+      .artwork-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      .artwork-card:nth-child(1) { grid-column: span 4; grid-row: span 2; }
+      .artwork-card:nth-child(2) { grid-column: span 2; grid-row: span 1; }
+      .artwork-card:nth-child(3) { grid-column: span 2; grid-row: span 1; }
+      .artwork-card:nth-child(4) { grid-column: span 2; grid-row: span 2; }
+      .artwork-card:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+      .artwork-card:nth-child(6) { grid-column: span 4; grid-row: span 1; }
+      .spotlight {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .nav {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .hero-sub {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-left: 0;
+      }
+      .artwork-grid {
+        grid-template-columns: 1fr;
+      }
+      .artwork-card {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+
+  <div class="container">
+    <!-- header -->
+    <header class="header">
+      <a href="#" class="logo">VOID<span>/</span>FORM</a>
+      <nav class="nav">
+        <a href="#">Exhibitions</a>
+        <a href="#">Artists</a>
+        <a href="#">About</a>
+        <a href="#">Archive</a>
+      </nav>
+    </header>
+
+    <!-- hero -->
+    <section class="hero">
+      <h1 class="hero-title">
+        DIGITAL<br>
+        <span class="accent">MATTER</span>
+      </h1>
+      <div class="hero-sub">
+        <p>Exploring the intersection of code, chaos, and composition. A gallery for generative and algorithmic art.</p>
+        <span class="meta">EST. 2024 — BERLIN</span>
+      </div>
+    </section>
+
+    <!-- exhibition spotlight -->
+    <section class="spotlight">
+      <div class="spotlight-visual">
+        <canvas id="spotlightCanvas"></canvas>
+      </div>
+      <div class="spotlight-content">
+        <span class="spotlight-tag">Current Exhibition</span>
+        <h2 class="spotlight-title">Synthetic<br>Dreamscapes</h2>
+        <p class="spotlight-artist">by LENA KOVAC</p>
+        <p class="spotlight-desc">A series of real-time generative landscapes that evolve with every visit. No two moments are ever the same.</p>
+        <a href="#" class="spotlight-cta">View exhibition <span>→</span></a>
+      </div>
+    </section>
+
+    <!-- artwork grid -->
+    <section class="grid-section">
+      <div class="grid-header">
+        <h2>Selected Works</h2>
+        <span>06 pieces</span>
+      </div>
+      <div class="artwork-grid">
+        <!-- 1 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="1"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Fractured Light</span>
+            <span class="artwork-artist">MIRA CHEN</span>
+            <div class="artwork-meta">
+              <span>2024</span>
+              <span>Generative SVG</span>
+            </div>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="2"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Noise Field</span>
+            <span class="artwork-artist">JONAS REY</span>
+            <div class="artwork-meta">
+              <span>2023</span>
+              <span>Canvas / WebGL</span>
+            </div>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="3"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Chromatic Drift</span>
+            <span class="artwork-artist">SORA KIM</span>
+            <div class="artwork-meta">
+              <span>2024</span>
+              <span>CSS / SVG</span>
+            </div>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="4"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Void Structure</span>
+            <span class="artwork-artist">ELIAS VOGT</span>
+            <div class="artwork-meta">
+              <span>2023</span>
+              <span>Generative</span>
+            </div>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="5"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Signal Decay</span>
+            <span class="artwork-artist">ANNA LEE</span>
+            <div class="artwork-meta">
+              <span>2024</span>
+              <span>Canvas</span>
+            </div>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="artwork-card">
+          <div class="artwork-visual">
+            <canvas class="artwork-canvas" data-seed="6"></canvas>
+          </div>
+          <div class="artwork-info">
+            <span class="artwork-title">Phase Shift</span>
+            <span class="artwork-artist">DAVID PARK</span>
+            <div class="artwork-meta">
+              <span>2023</span>
+              <span>SVG / CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+      <span>© 2024 VOID/FORM — ALL RIGHTS RESERVED</span>
+      <div style="display: flex; gap: 2rem;">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">Newsletter</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // custom cursor
+      const cursor = document.getElementById('cursor');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      // hover effect on interactive elements
+      const hoverTargets = document.querySelectorAll('a, button, .artwork-card, .spotlight-card, .spotlight-visual');
+      hoverTargets.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cursor--hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor--hover'));
+      });
+
+      // --- generative artwork functions ---
+
+      // helper: random with seed
+      function seededRandom(seed) {
+        let s = seed;
+        return function() {
+          s = (s * 16807) % 2147483647;
+          return (s - 1) / 2147483646;
+        };
+      }
+
+      // 1. Fractured Light — geometric shards
+      function drawFracturedLight(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const shards = 18;
+        for (let i = 0; i < shards; i++) {
+          const x = rand() * w;
+          const y = rand() * h;
+          const size = 20 + rand() * 80;
+          const angle = rand() * Math.PI * 2;
+          const hue = 10 + rand() * 20; // warm accent range
+          const sat = 70 + rand() * 30;
+          const light = 40 + rand() * 40;
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(angle);
+          ctx.beginPath();
+          ctx.moveTo(0, -size * 0.5);
+          ctx.lineTo(size * 0.4, size * 0.3);
+          ctx.lineTo(-size * 0.3, size * 0.4);
+          ctx.closePath();
+          ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${0.15 + rand() * 0.3})`;
+          ctx.fill();
+          ctx.strokeStyle = `hsla(${hue}, ${sat}%, ${light}%, 0.6)`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+          ctx.restore();
+        }
+        // accent lines
+        ctx.strokeStyle = '#ff4d2e';
+        ctx.lineWidth = 1.5;
+        for (let i = 0; i < 5; i++) {
+          ctx.beginPath();
+          ctx.moveTo(rand() * w, rand() * h);
+          ctx.lineTo(rand() * w, rand() * h);
+          ctx.stroke();
+        }
+      }
+
+      // 2. Noise Field — organic dots
+      function drawNoiseField(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const count = 400;
+        for (let i = 0; i < count; i++) {
+          const x = rand() * w;
+          const y = rand() * h;
+          const r = 1 + rand() * 4;
+          const dist = Math.sqrt((x - w/2)**2 + (y - h/2)**2) / (Math.max(w, h) * 0.7);
+          const alpha = 0.1 + (1 - dist) * 0.5;
+          const hue = 10 + rand() * 20;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+          ctx.fill();
+        }
+        // accent glow
+        const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w*0.6);
+        gradient.addColorStop(0, 'rgba(255, 77, 46, 0.15)');
+        gradient.addColorStop(1, 'rgba(255, 77, 46, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      // 3. Chromatic Drift — flowing lines
+      function drawChromaticDrift(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const lines = 30;
+        for (let i = 0; i < lines; i++) {
+          const yBase = (i / lines) * h;
+          const amp = 10 + rand() * 40;
+          const freq = 0.005 + rand() * 0.02;
+          const phase = rand() * Math.PI * 2;
+          const hue = 10 + rand() * 20;
+          const alpha = 0.2 + rand() * 0.5;
+          ctx.beginPath();
+          for (let x = 0; x <= w; x += 4) {
+            const y = yBase + Math.sin(x * freq + phase) * amp + Math.sin(x * freq * 2.3 + phase) * amp * 0.3;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+          ctx.lineWidth = 1 + rand() * 2;
+          ctx.stroke();
+        }
+        // accent overlay
+        ctx.fillStyle = 'rgba(255, 77, 46, 0.05)';
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      // 4. Void Structure — grid of squares
+      function drawVoidStructure(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const cols = 12;
+        const rows = 8;
+        const cellW = w / cols;
+        const cellH = h / rows;
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
+            const x = i * cellW;
+            const y = j * cellH;
+            const size = Math.min(cellW, cellH) * (0.2 + rand() * 0.7);
+            const offsetX = (cellW - size) / 2;
+            const offsetY = (cellH - size) / 2;
+            const hue = 10 + rand() * 20;
+            const alpha = 0.1 + rand() * 0.4;
+            ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+            ctx.fillRect(x + offsetX, y + offsetY, size, size);
+            if (rand() > 0.7) {
+              ctx.strokeStyle = '#ff4d2e';
+              ctx.lineWidth = 1;
+              ctx.strokeRect(x + offsetX, y + offsetY, size, size);
+            }
+          }
+        }
+      }
+
+      // 5. Signal Decay — concentric circles
+      function drawSignalDecay(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w * (0.3 + rand() * 0.4);
+        const cy = h * (0.3 + rand() * 0.4);
+        const maxR = Math.max(w, h) * 0.8;
+        const rings = 25;
+        for (let i = 0; i < rings; i++) {
+          const r = (i / rings) * maxR;
+          const alpha = 0.05 + (1 - i / rings) * 0.3;
+          const hue = 10 + rand() * 20;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.strokeStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+          ctx.lineWidth = 1 + rand() * 2;
+          ctx.stroke();
+        }
+        // accent dot
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ff4d2e';
+        ctx.fill();
+      }
+
+      // 6. Phase Shift — diagonal stripes
+      function drawPhaseShift(ctx, w, h, seed) {
+        const rand = seededRandom(seed);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#0b0b0c';
+        ctx.fillRect(0, 0, w, h);
+
+        const stripes = 40;
+        for (let i = 0; i < stripes; i++) {
+          const x = (i / stripes) * w * 1.5 - w * 0.25;
+          const width = 2 + rand() * 12;
+          const hue = 10 + rand() * 20;
+          const alpha = 0.1 + rand() * 0.5;
+          ctx.save();
+          ctx.translate(x, 0);
+          ctx.rotate(-0.3);
+          ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+          ctx.fillRect(0, -h, width, h * 3);
+          ctx.restore();
+        }
+        // accent overlay
+        ctx.fillStyle = 'rgba(255, 77, 46, 0.08)';
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      // spotlight canvas — animated generative
+      function initSpotlight() {
+        const canvas = document.getElementById('spotlightCanvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+
+        function resize() {
+          const rect = canvas.parentElement.getBoundingClientRect();
+          w = canvas.width = rect.width * window.devicePixelRatio;
+          h = canvas.height = rect.height * window.devicePixelRatio;
+          canvas.style.width = rect.width + 'px';
+          canvas.style.height = rect.height + 'px';
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        let time = 0;
+        function draw() {
+          if (!w || !h) return;
+          ctx.clearRect(0, 0, w, h);
+          ctx.fillStyle = '#0b0b0c';
+          ctx.fillRect(0, 0, w, h);
+
+          const cx = w * 0.5;
+          const cy = h * 0.5;
+          const maxR = Math.min(w, h) * 0.7;
+
+          // animated rings
+          for (let i = 0; i < 12; i++) {
+            const phase = time * 0.02 + i * 0.5;
+            const r = (i / 12) * maxR + Math.sin(phase) * 15;
+            const alpha = 0.05 + (1 - i / 12) * 0.25;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.strokeStyle = `hsla(${10 + i * 2}, 80%, 60%, ${alpha})`;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+
+          // floating particles
+          for (let i = 0; i < 60; i++) {
+            const angle = i * 0.5 + time * 0.01;
+            const dist = (i / 60) * maxR * 0.8 + Math.sin(time * 0.02 + i) * 20;
+            const x = cx + Math.cos(angle) * dist;
+            const y = cy + Math.sin(angle) * dist;
+            const size = 1 + Math.sin(time * 0.03 + i) * 1.5;
+            ctx.beginPath();
+            ctx.arc(x, y, Math.max(0.5, size), 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 77, 46, ${0.2 + Math.sin(time * 0.02 + i) * 0.15})`;
+            ctx.fill();
+          }
+
+          // central glow
+          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.5);
+          gradient.addColorStop(0, 'rgba(255, 77, 46, 0.15)');
+          gradient.addColorStop(1, 'rgba(255, 77, 46, 0)');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, w, h);
+
+          time++;
+          requestAnimationFrame(draw);
+        }
+        draw();
+      }
+
+      // init artwork canvases
+      function initArtworks() {
+        const canvases = document.querySelectorAll('.artwork-canvas');
+        canvases.forEach(canvas => {
+          const seed = parseInt(canvas.dataset.seed) || 1;
+          const ctx = canvas.getContext('2d');
+          const rect = canvas.parentElement.getBoundingClientRect();
+          const w = canvas.width = rect.width * window.devicePixelRatio;
+          const h = canvas.height = rect.height * window.devicePixelRatio;
+          canvas.style.width = rect.width + 'px';
+          canvas.style.height = rect.height + 'px';
+
+          // choose drawing function based on seed
+          switch(seed) {
+            case 1: drawFracturedLight(ctx, w, h, seed); break;
+            case 2: drawNoiseField(ctx, w, h, seed); break;
+            case 3: drawChromaticDrift(ctx, w, h, seed); break;
+            case 4: drawVoidStructure(ctx, w, h, seed); break;
+            case 5: drawSignalDecay(ctx, w, h, seed); break;
+            case 6: drawPhaseShift(ctx, w, h, seed); break;
+            default: drawFracturedLight(ctx, w, h, seed);
+          }
+        });
+      }
+
+      // re-draw on resize (debounced)
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          initArtworks();
+        }, 200);
+      });
+
+      // init everything
+      window.addEventListener('load', () => {
+        initSpotlight();
+        initArtworks();
+      });
+
+      // also init immediately if load already fired
+      if (document.readyState === 'complete') {
+        initSpotlight();
+        initArtworks();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONORA — Music Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-2: #101018;
+    --surface: #16161f;
+    --surface-2: #1c1c28;
+    --border: rgba(255,255,255,0.06);
+    --border-2: rgba(255,255,255,0.1);
+    --text: #f2f2f5;
+    --text-2: #a0a0b0;
+    --text-3: #6a6a7a;
+    --accent: #ff5b3a;
+    --accent-2: #ffb347;
+    --accent-3: #7c5cff;
+    --accent-4: #2dd4bf;
+    --shadow-lg: 0 30px 60px -20px rgba(0,0,0,0.7), 0 18px 36px -18px rgba(0,0,0,0.6);
+    --shadow-md: 0 12px 30px -10px rgba(0,0,0,0.6);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 1fr 92px;
+    grid-template-areas:
+      "sidebar main"
+      "player player";
+    height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(124,92,255,0.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(255,91,58,0.08), transparent 55%),
+      var(--bg);
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    grid-area: sidebar;
+    background: linear-gradient(180deg, rgba(22,22,31,0.9), rgba(10,10,15,0.9));
+    border-right: 1px solid var(--border);
+    padding: 26px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    overflow-y: auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .brand-mark {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: conic-gradient(from 210deg, #ff5b3a, #ffb347, #7c5cff, #2dd4bf, #ff5b3a);
+    position: relative;
+    box-shadow: 0 8px 20px -6px rgba(255,91,58,0.5), inset 0 0 0 1px rgba(255,255,255,0.15);
+  }
+  .brand-mark::after {
+    content: "";
+    position: absolute; inset: 8px;
+    border-radius: 50%;
+    background: #0a0a0f;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.08);
+  }
+  .brand-mark::before {
+    content: "";
+    position: absolute; inset: 13px;
+    border-radius: 50%;
+    background: #f2f2f5;
+    z-index: 1;
+  }
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.14em;
+    background: linear-gradient(180deg, #fff, #b8b8c8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding: 0 12px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--text-2);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    position: relative;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(255,91,58,0.14), rgba(255,91,58,0.02));
+    color: var(--text);
+  }
+  .nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .playlists-mini { display: flex; flex-direction: column; gap: 2px; }
+  .playlist-mini {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--text-2);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .playlist-mini:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .playlist-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 14px 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #7c5cff, #ff5b3a);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 11px; color: #fff;
+  }
+
+  /* ============ MAIN ============ */
+  .main {
+    grid-area: main;
+    overflow-y: auto;
+    padding: 28px 40px 40px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .main::-webkit-scrollbar { width: 8px; }
+  .main::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .topbar-nav { display: flex; gap: 8px; }
+  .icon-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display: grid; place-items: center;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  .search {
+    flex: 1;
+    max-width: 420px;
+    margin: 0 24px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px 10px 40px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .search input:focus {
+    border-color: rgba(255,91,58,0.4);
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 0 3px rgba(255,91,58,0.08);
+  }
+  .search input::placeholder { color: var(--text-3); }
+  .search svg {
+    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; color: var(--text-3);
+  }
+
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+  .pill-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pill-btn:hover { background: rgba(255,255,255,0.1); }
+  .pill-btn.primary {
+    background: linear-gradient(135deg, var(--accent), #ff7a4a);
+    border-color: transparent;
+    box-shadow: 0 8px 20px -8px rgba(255,91,58,0.6);
+  }
+  .pill-btn.primary:hover { filter: brightness(1.08); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+    align-items: center;
+    min-height: 340px;
+    background:
+      radial-gradient(600px 400px at 90% 20%, rgba(255,179,71,0.35), transparent 60%),
+      radial-gradient(500px 400px at 10% 100%, rgba(124,92,255,0.4), transparent 60%),
+      linear-gradient(135deg, #2a1a3e 0%, #4a1f3a 50%, #6b2a2a 100%);
+    box-shadow: var(--shadow-lg);
+    isolation: isolate;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0, transparent 40%);
+    z-index: -1;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.35));
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .hero-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 10px var(--accent-2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 62px;
+    line-height: 0.98;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 14px;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(135deg, #ffb347, #ff5b3a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-artist {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .hero-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.05em;
+    margin-bottom: 28px;
+  }
+  .hero-actions { display: flex; gap: 12px; align-items: center; }
+  .btn-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    background: #fff;
+    color: #0a0a0f;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 12px 30px -10px rgba(255,255,255,0.4);
+  }
+  .btn-play:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px rgba(255,255,255,0.5); }
+  .btn-play svg { width: 16px; height: 16px; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* Hero album art */
+  .hero-art {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+    transform: rotate(-2deg);
+    transition: transform 0.4s ease;
+  }
+  .hero-art:hover { transform: rotate(0deg) scale(1.02); }
+
+  /* ============ SECTIONS ============ */
+  .section { margin-top: 44px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .section-title em { font-style: italic; color: var(--accent-2); }
+  .section-link {
+    font-size: 12px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .section-link:hover { color: var(--accent); }
+
+  /* Recently played */
+  .recent-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .recent-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .recent-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+  }
+  .recent-card:hover .recent-play { opacity: 1; transform: scale(1); }
+  .recent-art {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,0.6);
+  }
+  .recent-info { min-width: 0; flex: 1; }
+  .recent-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .recent-artist {
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .recent-play {
+    position: absolute;
+    right: 14px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid; place-items: center;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s;
+    box-shadow: 0 8px 20px -6px rgba(255,91,58,0.6);
+  }
+  .recent-play svg { width: 12px; height: 12px; }
+
+  /* Curated playlists */
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  .playlist-card { cursor: pointer; }
+  .playlist-art {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+  }
+  .playlist-card:hover .playlist-art { transform: translateY(-4px); }
+  .playlist-card:hover .playlist-art::after { opacity: 1; }
+  .playlist-art::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5));
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+  .playlist-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .playlist-desc {
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.4;
+  }
+
+  /* Track list */
+  .tracklist {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .track-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 200px 100px 60px;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .track-row:last-child { border-bottom: none; }
+  .track-row:hover { background: rgba(255,255,255,0.04); }
+  .track-row:hover .track-num { color: var(--accent); }
+  .track-row:hover .track-play { opacity: 1; }
+  .track-row.playing { background: linear-gradient(90deg, rgba(255,91,58,0.08), transparent); }
+  .track-row.playing .track-num { color: var(--accent); }
+  .track-row.playing .track-title { color: var(--accent-2); }
+
+  .track-num {
+    font-size: 13px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+  }
+  .track-play {
+    position: absolute;
+    inset: 0;
+    display: grid; place-items: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .track-play svg { width: 12px; height: 12px; color: var(--accent); }
+
+  .track-main { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  .track-art {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.5);
+  }
+  .track-info { min-width: 0; }
+  .track-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+  }
+  .track-artist {
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-album {
+    font-size: 12px;
+    color: var(--text-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-plays {
+    font-size: 12px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .track-duration {
+    font-size: 12px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  /* ============ PLAYER BAR ============ */
+  .player {
+    grid-area: player;
+    background: linear-gradient(180deg, rgba(22,22,31,0.95), rgba(10,10,15,0.98));
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 0 24px;
+    gap: 24px;
+    position: relative;
+    z-index: 10;
+  }
+  .player::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,91,58,0.4), transparent);
+  }
+
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .np-art {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,0.6);
+    position: relative;
+  }
+  .np-info { min-width: 0; }
+  .np-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .np-artist {
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .np-like {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .np-like:hover { color: var(--accent); background: rgba(255,255,255,0.05); }
+  .np-like.liked { color: var(--accent); }
+  .np-like svg { width: 16px; height: 16px; }
+
+  .player-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ctrl-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--text-2);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: all 0.15s;
+  }
+  .ctrl-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  .ctrl-btn.active { color: var(--accent); }
+  .ctrl-btn svg { width: 16px; height: 16px; }
+  .ctrl-btn.play-main {
+    width: 42px; height: 42px;
+    background: #fff;
+    color: #0a0a0f;
+    margin: 0 6px;
+    box-shadow: 0 8px 20px -6px rgba(255,255,255,0.3);
+  }
+  .ctrl-btn.play-main:hover { background: #fff; transform: scale(1.05); }
+  .ctrl-btn.play-main svg { width: 16px; height: 16px; }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 560px;
+  }
+  .time {
+    font-size: 11px;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+    min-width: 34px;
+  }
+  .time.right { text-align: right; }
+  .progress {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+  }
+  .progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 42%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 2px;
+  }
+  .progress-fill::after {
+    content: "";
+    position: absolute;
+    right: -5px; top: 50%;
+    transform: translateY(-50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255,91,58,0.6);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .progress:hover .progress-fill::after { opacity: 1; }
+
+  .player-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .volume {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 6px;
+  }
+  .volume-bar {
+    width: 90px;
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+  }
+  .volume-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 68%;
+    background: var(--text-2);
+    border-radius: 2px;
+  }
+
+  /* ============ ALBUM ART GENERATORS ============ */
+  .art-1 {
+    background:
+      radial-gradient(circle at 30% 30%, #ffb347 0%, transparent 45%),
+      radial-gradient(circle at 70% 70%, #ff5b3a 0%, transparent 50%),
+      linear-gradient(135deg, #2a1a3e, #6b2a2a);
+  }
+  .art-1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(45deg, transparent 0 8px, rgba(255,255,255,0.04) 8px 9px);
+  }
+  .art-1::after {
+    content: "S";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    letter-spacing: -0.05em;
+  }
+
+  .art-2 {
+    background:
+      radial-gradient(circle at 20% 80%, #2dd4bf 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, #7c5cff 0%, transparent 55%),
+      linear-gradient(135deg, #0f1a2e, #1a0f2e);
+  }
+  .art-2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 70%);
+  }
+  .art-2::after {
+    content: "◐";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 70%;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .art-3 {
+    background:
+      radial-gradient(circle at 70% 30%, #ff5b3a 0%, transparent 45%),
+      radial-gradient(circle at 30% 70%, #ffb347 0%, transparent 50%),
+      linear-gradient(135deg, #3a1a1a, #1a0a0a);
+  }
+  .art-3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 12px, rgba(255,255,255,0.03) 12px 13px);
+  }
+  .art-3::after {
+    content: "M";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-4 {
+    background:
+      radial-gradient(circle at 50% 20%, #7c5cff 0%, transparent 50%),
+      radial-gradient(circle at 50% 100%, #2dd4bf 0%, transparent 50%),
+      linear-gradient(180deg, #1a0f2e, #0f1a2e);
+  }
+  .art-4::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0, transparent 40%);
+  }
+  .art-4::after {
+    content: "N";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-5 {
+    background:
+      radial-gradient(circle at 30% 30%, #ffb347 0%, transparent 40%),
+      radial-gradient(circle at 70% 70%, #ff5b3a 0%, transparent 45%),
+      linear-gradient(135deg, #2a1a3e, #4a1f3a);
+  }
+  .art-5::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 6px, rgba(255,255,255,0.03) 6px 7px);
+  }
+  .art-5::after {
+    content: "A";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-6 {
+    background:
+      radial-gradient(circle at 20% 20%, #2dd4bf 0%, transparent 45%),
+      radial-gradient(circle at 80% 80%, #7c5cff 0%, transparent 50%),
+      linear-gradient(135deg, #0f1a2e, #1a0f2e);
+  }
+  .art-6::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 80%);
+  }
+  .art-6::after {
+    content: "◑";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 70%;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .art-7 {
+    background:
+      radial-gradient(circle at 70% 30%, #ff5b3a 0%, transparent 45%),
+      radial-gradient(circle at 30% 70%, #ffb347 0%, transparent 50%),
+      linear-gradient(135deg, #3a1a1a, #1a0a0a);
+  }
+  .art-7::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(45deg, transparent 0 10px, rgba(255,255,255,0.03) 10px 11px);
+  }
+  .art-7::after {
+    content: "R";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-8 {
+    background:
+      radial-gradient(circle at 50% 20%, #7c5cff 0%, transparent 50%),
+      radial-gradient(circle at 50% 100%, #2dd4bf 0%, transparent 50%),
+      linear-gradient(180deg, #1a0f2e, #0f1a2e);
+  }
+  .art-8::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0, transparent 40%);
+  }
+  .art-8::after {
+    content: "E";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-9 {
+    background:
+      radial-gradient(circle at 30% 30%, #ffb347 0%, transparent 40%),
+      radial-gradient(circle at 70% 70%, #ff5b3a 0%, transparent 45%),
+      linear-gradient(135deg, #2a1a3e, #4a1f3a);
+  }
+  .art-9::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 8px, rgba(255,255,255,0.03) 8px 9px);
+  }
+  .art-9::after {
+    content: "L";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 60%;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.05em;
+  }
+
+  .art-10 {
+    background:
+      radial-gradient(circle at 20% 80%, #2dd4bf 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, #7c5cff 0%, transparent 55%),
+      linear-gradient(135deg, #0f1a2e, #1a0f2e);
+  }
+  .art-10::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.3) 70%);
+  }
+  .art-10::after {
+    content: "◒";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 70%;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Hero art specific */
+  .hero-art .art-1::after { font-size: 55%; }
+
+  /* Responsive tweaks */
+  @media (max-width: 1280px) {
+    .playlist-grid { grid-template-columns: repeat(4, 1fr); }
+    .recent-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero-title { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">SONORA</div>
+    </div>
+
+    <div>
+      <div class="nav-section-label">Discover</div>
+      <ul class="nav-list">
+        <li class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
+        </li>
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Explore
+        </li>
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Radio
+        </li>
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Liked Songs
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="nav-section-label">Your Library</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Albums
+        </li>
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Artists
+        </li>
+        <li class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Playlists
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="nav-section-label">Playlists</div>
+      <div class="playlists-mini">
+        <div class="playlist-mini"><span class="playlist-dot" style="background:#ff5b3a"></span>Midnight Drive</div>
+        <div class="playlist-mini"><span class="playlist-dot" style="background:#7c5cff"></span>Neon Dreams</div>
+        <div class="playlist-mini"><span class="playlist-dot" style="background:#2dd4bf"></span>Focus Flow</div>
+        <div class="playlist-mini"><span class="playlist-dot" style="background:#ffb347"></span>Golden Hour</div>
+        <div class="playlist-mini"><span class="playlist-dot" style="background:#ff5b3a"></span>Late Night Jazz</div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="avatar">AR</div>
+      <div>Aria Reyes</div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-nav">
+        <button class="icon-btn" aria-label="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Forward">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search songs, artists, albums...">
+      </div>
+
+      <div class="topbar-actions">
+        <button class="pill-btn">Upgrade</button>
+        <button class="pill-btn primary">Sign In</button>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag"><span class="dot"></span>Featured Album</div>
+        <h1 class="hero-title">Neon<br><em>Cathedral</em></h1>
+        <div class="hero-artist">Aurora Vale</div>
+        <div class="hero-meta">2024 · 12 tracks · 48 min · Electronic / Dream Pop</div>
+        <div class="hero-actions">
+          <button class="btn-play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+            Play Album
+          </button>
+          <button class="btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Save
+          </button>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="art-1" style="position:absolute;inset:0;"></div>
+      </div>
+    </section>
+
+    <!-- RECENTLY PLAYED -->
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Recently <em>played</em></h2>
+        <div class="section-link">View all</div>
+      </div>
+      <div class="recent-grid">
+        <div class="recent-card">
+          <div class="recent-art"><div class="art-2" style="position:absolute;inset:0;"></div></div>
+          <div class="recent-info">
+            <div class="recent-title">Cascade</div>
+            <div class="recent-artist">Kaito Mori</div>
+          </div>
+          <div class="recent-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+        </div>
+        <div class="recent-card">
+          <div class="recent-art"><div class="art-3" style="position:absolute;inset:0;"></div></div>
+          <div class="recent-info">
+            <div class="recent-title">Ember & Ash</div>
+            <div class="recent-artist">The Hollow Coast</div>
+          </div>
+          <div class="recent-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+        </div>
+        <div class="recent-card">
+          <div class="recent-art"><div class="art-4" style="position:absolute;inset:0;"></div></div>
+          <div class="recent-info">
+            <div class="recent-title">Violet Hours</div>
+            <div class="recent-artist">Sable</div>
+          </div>
+          <div class="recent-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+        </div>
+        <div class="recent-card">
+          <div class="recent-art"><div class="art-5" style="position:absolute;inset:0;"></div></div>
+          <div class="recent-info">
+            <div class="recent-title">Sunlit Static</div>
+            <div class="recent-artist">Mira Sol</div>
+          </div>
+          <div class="recent-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURATED PLAYLISTS -->
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Curated <em>for you</em></h2>
+        <div class="section-link">See more</div>
+      </div>
+      <div class="playlist-grid">
+        <div class="playlist-card">
+          <div class="playlist-art"><div class="art-6" style="position:absolute;inset:0;"></div></div>
+          <div class="playlist-name">Midnight Drive</div>
+          <div class="playlist-desc">Synthwave for the long road home</div>
+        </div>
+        <div class="playlist-card">
+          <div class="playlist-art"><div class="art-7" style="position:absolute;inset:0;"></div></div>
+          <div class="playlist-name">Golden Hour</div>
+          <div class="playlist-desc">Warm tones, slow tempos</div>
+        </div>
+        <div class="playlist-card">
+          <div class="playlist-art"><div class="art-8" style="position:absolute;inset:0;"></div></div>
+          <div class="playlist-name">Focus Flow</div>
+          <div class="playlist-desc">Deep work, no distractions</div>
+        </div>
+        <div class="playlist-card">
+          <div class="playlist-art"><div class="art-9" style="position:absolute;inset:0;"></div></div>
+          <div class="playlist-name">Late Night Jazz</div>
+          <div class="playlist-desc">Smoky rooms, soft horns</div>
+        </div>
+        <div class="playlist-card">
+          <div class="playlist-art"><div class="art-10" style="position:absolute;inset:0;"></div></div>
+          <div class="playlist-name">Neon Dreams</div>
+          <div class="playlist-desc">Electric, cinematic, alive</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACK LIST -->
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Neon Cathedral <em>— tracklist</em></h2>
+        <div class="section-link">Shuffle all</div>
+      </div>
+      <div class="tracklist">
+        <div class="track-row playing">
+          <div class="track-num">
+            <span>01</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Cathedral Lights</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">2,481,203</div>
+          <div class="track-duration">4:12</div>
+        </div>
+        <div class="track-row">
+          <div class="track-num">
+            <span>02</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Glass Horizon</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">1,872,441</div>
+          <div class="track-duration">3:48</div>
+        </div>
+        <div class="track-row">
+          <div class="track-num">
+            <span>03</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Static Bloom</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">1,204,882</div>
+          <div class="track-duration">5:03</div>
+        </div>
+        <div class="track-row">
+          <div class="track-num">
+            <span>04</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Midnight Choir</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">987,120</div>
+          <div class="track-duration">4:37</div>
+        </div>
+        <div class="track-row">
+          <div class="track-num">
+            <span>05</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Afterglow</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">743,556</div>
+          <div class="track-duration">3:29</div>
+        </div>
+        <div class="track-row">
+          <div class="track-num">
+            <span>06</span>
+            <div class="track-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg></div>
+          </div>
+          <div class="track-main">
+            <div class="track-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+            <div class="track-info">
+              <div class="track-title">Velvet Signal</div>
+              <div class="track-artist">Aurora Vale</div>
+            </div>
+          </div>
+          <div class="track-album">Neon Cathedral</div>
+          <div class="track-plays">612,004</div>
+          <div class="track-duration">4:55</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ PLAYER BAR ============ -->
+  <footer class="player">
+    <div class="now-playing">
+      <div class="np-art"><div class="art-1" style="position:absolute;inset:0;"></div></div>
+      <div class="np-info">
+        <div class="np-title">Cathedral Lights</div>
+        <div class="np-artist">Aurora Vale · Neon Cathedral</div>
+      </div>
+      <button class="np-like liked" aria-label="Like">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    </div>
+
+    <div class="player-center">
+      <div class="controls">
+        <button class="ctrl-btn" aria-label="Shuffle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        </button>
+        <button class="ctrl-btn" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="ctrl-btn play-main" aria-label="Play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>
+        </button>
+        <button class="ctrl-btn" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="ctrl-btn" aria-label="Repeat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+      </div>
+      <div class="progress-row">
+        <div class="time">1:47</div>
+        <div class="progress">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="time right">4:12</div>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="ctrl-btn" aria-label="Lyrics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </button>
+      <button class="ctrl-btn" aria-label="Queue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+      <button class="ctrl-btn" aria-label="Volume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </button>
+      <div class="volume">
+        <div class="volume-bar"><div class="volume-fill"></div></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple interactivity: track row selection
+    document.querySelectorAll('.track-row').forEach(row => {
+      row.addEventListener('click', () => {
+        document.querySelectorAll('.track-row').forEach(r => r.classList.remove('playing'));
+        row.classList.add('playing');
+        const title = row.querySelector('.track-title').textContent;
+        const artist = row.querySelector('.track-artist').textContent;
+        document.querySelector('.np-title').textContent = title;
+        document.querySelector('.np-artist').textContent = artist + ' · Neon Cathedral';
+      });
+    });
+
+    // Play/pause toggle
+    const playBtn = document.querySelector('.play-main');
+    let playing = true;
+    playBtn.addEventListener('click', () => {
+      playing = !playing;
+      playBtn.innerHTML = playing
+        ? '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    });
+
+    // Like toggle
+    document.querySelector('.np-like').addEventListener('click', function() {
+      this.classList.toggle('liked');
+    });
+
+    // Progress bar click
+    document.querySelector('.progress').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const pct = ((e.clientX - rect.left) / rect.width) * 100;
+      document.querySelector('.progress-fill').style.width = pct + '%';
+    });
+
+    // Volume bar click
+    document.querySelector('.volume-bar').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const pct = ((e.clientX - rect.left) / rect.width) * 100;
+      document.querySelector('.volume-fill').style.width = pct + '%';
+    });
+
+    // Nav item selection
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

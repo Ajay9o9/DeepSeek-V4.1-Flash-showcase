@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GARDENING / APP — cultivate calm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f7f3e9;  /* warm parchment */
+      font-family: 'Inter', sans-serif;
+      color: #2b3a2b;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* ---------- MAIN CARD (1440x900 canvas) ---------- */
+    .app {
+      max-width: 1440px;
+      width: 100%;
+      background: #fcfaf5;
+      border-radius: 3.5rem;
+      box-shadow: 0 30px 60px -20px rgba(43, 58, 43, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      transition: all 0.2s;
+    }
+
+    /* ---------- TYPOGRAPHY & COLORS ---------- */
+    h1, h2, h3, .serif {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      line-height: 1.1;
+      color: #1f2e1f;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #1f2e1f;
+      margin-bottom: 0.25rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: #2b3a2b;
+    }
+
+    .text-muted {
+      color: #6b7a6b;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    .accent {
+      color: #c4452b; /* terracotta */
+    }
+
+    /* ---------- HEADER ---------- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: #2b3a2b;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f7f3e9;
+      font-size: 1.6rem;
+      font-weight: 300;
+      line-height: 1;
+      box-shadow: 0 6px 12px -6px rgba(43, 58, 43, 0.4);
+    }
+
+    .logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: #1f2e1f;
+    }
+
+    .logo-text span {
+      color: #c4452b;
+      font-style: italic;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .reminder-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #eae3d7;
+      padding: 0.5rem 1rem 0.5rem 0.75rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2b3a2b;
+      transition: background 0.2s;
+    }
+
+    .reminder-badge:hover {
+      background: #ddd5c6;
+      cursor: default;
+    }
+
+    .reminder-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: #c4452b;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      background: #d9cfc0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #2b3a2b;
+      font-size: 1rem;
+      border: 2px solid #fcfaf5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    /* ---------- MAIN GRID ---------- */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    /* ---------- CARDS (general) ---------- */
+    .card {
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.75rem 1.75rem 1.5rem;
+      box-shadow: 0 8px 24px -12px rgba(43, 58, 43, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px -12px rgba(43, 58, 43, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .card-header .badge {
+      background: #eae3d7;
+      padding: 0.25rem 0.75rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #4a5a4a;
+      text-transform: uppercase;
+    }
+
+    /* ---------- PLANT COLLECTION (left column) ---------- */
+    .plant-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .plant-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 1.25rem;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .plant-item:hover {
+      background: #f7f3e9;
+    }
+
+    .plant-icon {
+      width: 48px;
+      height: 48px;
+      background: #eae3d7;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .plant-info {
+      flex: 1;
+    }
+
+    .plant-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1f2e1f;
+    }
+
+    .plant-meta {
+      font-size: 0.8rem;
+      color: #6b7a6b;
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.15rem;
+    }
+
+    .plant-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .water-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #7aa87a;
+      display: inline-block;
+    }
+
+    .water-indicator.dry {
+      background: #d9b48f;
+    }
+
+    .water-indicator.wet {
+      background: #5f8b9f;
+    }
+
+    .add-plant-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #2b3a2b;
+      color: #f7f3e9;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.9rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: auto;
+      box-shadow: 0 8px 16px -8px rgba(43, 58, 43, 0.4);
+    }
+
+    .add-plant-btn:hover {
+      background: #1f2e1f;
+    }
+
+    .add-plant-btn:active {
+      transform: scale(0.98);
+    }
+
+    .add-plant-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ---------- WATERING SCHEDULE (middle column) ---------- */
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 1.25rem;
+      background: #fcfaf5;
+      transition: background 0.2s;
+    }
+
+    .schedule-item:hover {
+      background: #f7f3e9;
+    }
+
+    .schedule-day {
+      width: 48px;
+      height: 48px;
+      background: #eae3d7;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #4a5a4a;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    .schedule-day .num {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1f2e1f;
+    }
+
+    .schedule-info {
+      flex: 1;
+    }
+
+    .schedule-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1f2e1f;
+    }
+
+    .schedule-sub {
+      font-size: 0.8rem;
+      color: #6b7a6b;
+    }
+
+    .schedule-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #d9cfc0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .schedule-check.done {
+      background: #7aa87a;
+      border-color: #7aa87a;
+      color: white;
+    }
+
+    .schedule-check svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .schedule-check.done svg {
+      opacity: 1;
+    }
+
+    .schedule-check:hover {
+      border-color: #7aa87a;
+    }
+
+    /* ---------- SEASONAL TASKS (middle column, below schedule) ---------- */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 1rem;
+      background: #fcfaf5;
+      transition: background 0.2s;
+    }
+
+    .task-item:hover {
+      background: #f7f3e9;
+    }
+
+    .task-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #d9cfc0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .task-check.done {
+      background: #c4452b;
+      border-color: #c4452b;
+      color: white;
+    }
+
+    .task-check svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .task-check.done svg {
+      opacity: 1;
+    }
+
+    .task-text {
+      font-size: 0.9rem;
+      color: #2b3a2b;
+    }
+
+    .task-text.done {
+      text-decoration: line-through;
+      color: #9aaa9a;
+    }
+
+    /* ---------- SUNLIGHT CARDS (right column) ---------- */
+    .sunlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sunlight-card {
+      background: #fcfaf5;
+      border-radius: 1.5rem;
+      padding: 1rem 0.75rem;
+      text-align: center;
+      transition: background 0.2s, transform 0.2s;
+      cursor: default;
+      border: 1px solid #eae3d7;
+    }
+
+    .sunlight-card:hover {
+      background: #f7f3e9;
+      transform: translateY(-2px);
+    }
+
+    .sunlight-icon {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    .sunlight-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #1f2e1f;
+    }
+
+    .sunlight-desc {
+      font-size: 0.7rem;
+      color: #6b7a6b;
+      margin-top: 0.15rem;
+    }
+
+    /* ---------- REMINDERS (right column, below sunlight) ---------- */
+    .reminder-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .reminder-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 1rem;
+      background: #fcfaf5;
+      transition: background 0.2s;
+    }
+
+    .reminder-item:hover {
+      background: #f7f3e9;
+    }
+
+    .reminder-icon {
+      width: 32px;
+      height: 32px;
+      background: #eae3d7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .reminder-content {
+      flex: 1;
+    }
+
+    .reminder-title {
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #1f2e1f;
+    }
+
+    .reminder-time {
+      font-size: 0.7rem;
+      color: #6b7a6b;
+    }
+
+    .reminder-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #c4452b;
+      flex-shrink: 0;
+    }
+
+    .reminder-dot.green {
+      background: #7aa87a;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .dashboard {
+        grid-template-columns: 1fr 1fr;
+      }
+      .right-column {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.75rem;
+      }
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 1rem;
+      }
+      .app {
+        padding: 1.5rem;
+        border-radius: 2rem;
+      }
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      .right-column {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app {
+        padding: 1.25rem;
+      }
+      .sunlight-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .plant-item {
+        flex-wrap: wrap;
+      }
+    }
+
+    /* ---------- DECORATIVE SVG LEAF (inline) ---------- */
+    .leaf-decor {
+      position: absolute;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ---------- UTILITY ---------- */
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+
+    /* ---------- SCROLLBAR (subtle) ---------- */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f7f3e9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d9cfc0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">🌱</div>
+        <div class="logo-text">GARDENING <span>/</span> APP</div>
+      </div>
+      <div class="header-actions">
+        <div class="reminder-badge">
+          <span class="dot"></span>
+          <span>3 reminders</span>
+        </div>
+        <div class="avatar">EM</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD GRID -->
+    <div class="dashboard">
+      <!-- LEFT COLUMN: PLANT COLLECTION -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Plant collection</h2>
+          <span class="badge">12 plants</span>
+        </div>
+        <div class="plant-list">
+          <div class="plant-item">
+            <div class="plant-icon">🌿</div>
+            <div class="plant-info">
+              <div class="plant-name">Monstera Deliciosa</div>
+              <div class="plant-meta">
+                <span><span class="water-indicator"></span> Water in 2 days</span>
+                <span>☀️ Bright indirect</span>
+              </div>
+            </div>
+          </div>
+          <div class="plant-item">
+            <div class="plant-icon">🌵</div>
+            <div class="plant-info">
+              <div class="plant-name">Golden Barrel Cactus</div>
+              <div class="plant-meta">
+                <span><span class="water-indicator dry"></span> Water in 5 days</span>
+                <span>☀️ Full sun</span>
+              </div>
+            </div>
+          </div>
+          <div class="plant-item">
+            <div class="plant-icon">🌸</div>
+            <div class="plant-info">
+              <div class="plant-name">Peace Lily</div>
+              <div class="plant-meta">
+                <span><span class="water-indicator wet"></span> Water today</span>
+                <span>☀️ Low light</span>
+              </div>
+            </div>
+          </div>
+          <div class="plant-item">
+            <div class="plant-icon">🌱</div>
+            <div class="plant-info">
+              <div class="plant-name">Snake Plant</div>
+              <div class="plant-meta">
+                <span><span class="water-indicator"></span> Water in 7 days</span>
+                <span>☀️ Any light</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="add-plant-btn">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Add plant
+        </button>
+      </div>
+
+      <!-- MIDDLE COLUMN: WATERING SCHEDULE + SEASONAL TASKS -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Watering schedule</h2>
+          <span class="badge">Today</span>
+        </div>
+        <div class="schedule-list">
+          <div class="schedule-item">
+            <div class="schedule-day">
+              <span class="num">12</span>
+              <span>Mon</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-title">Peace Lily</div>
+              <div class="schedule-sub">250 ml · filtered water</div>
+            </div>
+            <div class="schedule-check done">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-day">
+              <span class="num">13</span>
+              <span>Tue</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-title">Monstera Deliciosa</div>
+              <div class="schedule-sub">400 ml · room temp</div>
+            </div>
+            <div class="schedule-check">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-day">
+              <span class="num">14</span>
+              <span>Wed</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-title">Golden Barrel Cactus</div>
+              <div class="schedule-sub">100 ml · well-drained</div>
+            </div>
+            <div class="schedule-check">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-header" style="margin-top: 1.5rem;">
+          <h2>Seasonal tasks</h2>
+          <span class="badge">Spring</span>
+        </div>
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-check done">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="task-text done">Fertilize all indoor plants</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="task-text">Repot root-bound Monstera</span>
+          </div>
+          <div class="task-item">
+            <div class="task-check">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="task-text">Prune dead leaves from Peace Lily</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: SUNLIGHT CARDS + REMINDERS -->
+      <div class="right-column">
+        <div class="card">
+          <div class="card-header">
+            <h2>Sunlight</h2>
+            <span class="badge">Guide</span>
+          </div>
+          <div class="sunlight-grid">
+            <div class="sunlight-card">
+              <span class="sunlight-icon">☀️</span>
+              <div class="sunlight-label">Full sun</div>
+              <div class="sunlight-desc">6+ hours direct</div>
+            </div>
+            <div class="sunlight-card">
+              <span class="sunlight-icon">⛅</span>
+              <div class="sunlight-label">Bright indirect</div>
+              <div class="sunlight-desc">Near window, no direct</div>
+            </div>
+            <div class="sunlight-card">
+              <span class="sunlight-icon">🌥️</span>
+              <div class="sunlight-label">Low light</div>
+              <div class="sunlight-desc">Shade tolerant</div>
+            </div>
+            <div class="sunlight-card">
+              <span class="sunlight-icon">🌤️</span>
+              <div class="sunlight-label">Partial shade</div>
+              <div class="sunlight-desc">2–4 hours morning</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Reminders</h2>
+            <span class="badge">3 active</span>
+          </div>
+          <div class="reminder-list">
+            <div class="reminder-item">
+              <div class="reminder-icon">💧</div>
+              <div class="reminder-content">
+                <div class="reminder-title">Water Peace Lily</div>
+                <div class="reminder-time">Today, 9:00 AM</div>
+              </div>
+              <div class="reminder-dot"></div>
+            </div>
+            <div class="reminder-item">
+              <div class="reminder-icon">🌿</div>
+              <div class="reminder-content">
+                <div class="reminder-title">Mist Monstera leaves</div>
+                <div class="reminder-time">Tomorrow, 8:00 AM</div>
+              </div>
+              <div class="reminder-dot green"></div>
+            </div>
+            <div class="reminder-item">
+              <div class="reminder-icon">🪴</div>
+              <div class="reminder-content">
+                <div class="reminder-title">Rotate Snake Plant</div>
+                <div class="reminder-time">Wed, 10:00 AM</div>
+              </div>
+              <div class="reminder-dot green"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- subtle interactive script -->
+  <script>
+    (function() {
+      // Toggle schedule checkboxes
+      document.querySelectorAll('.schedule-check').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.classList.toggle('done');
+        });
+      });
+
+      // Toggle task checkboxes
+      document.querySelectorAll('.task-check').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.classList.toggle('done');
+          const text = this.nextElementSibling;
+          if (text) text.classList.toggle('done');
+        });
+      });
+
+      // Add plant button (simulated)
+      document.querySelector('.add-plant-btn').addEventListener('click', function() {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '🌱 Plant added!';
+        btn.style.background = '#7aa87a';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.background = '#2b3a2b';
+        }, 1500);
+      });
+
+      // Reminder badge pulse (already via CSS)
+      // Hover effects are CSS-driven
+    })();
+  </script>
+</body>
+</html>

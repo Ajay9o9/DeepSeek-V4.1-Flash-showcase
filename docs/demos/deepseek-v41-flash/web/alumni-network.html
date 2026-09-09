@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALUMNI / NETWORK — Where the path continues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #7a7a7a;
+    --paper: #f4f1ea;
+    --paper-warm: #ebe6db;
+    --line: #d9d3c4;
+    --accent: #c8472b;
+    --accent-deep: #a03520;
+    --gold: #b8893a;
+    --forest: #2d4a3e;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184,137,58,0.06) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(200,71,43,0.05) 0, transparent 40%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244,241,234,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .logo-mark {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+  }
+  .logo-slash { color: var(--accent); font-style: italic; }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .nav-links a { position: relative; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width .3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .btn-ghost {
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-accent:hover { background: var(--accent-deep); }
+
+  /* ============ HERO ============ */
+  .hero {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 72px 48px 96px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5.4vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-lede {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  /* Search */
+  .search {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 6px 6px 22px;
+    max-width: 560px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 12px 32px -20px rgba(0,0,0,0.15);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .search:focus-within {
+    border-color: var(--ink);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 16px 40px -20px rgba(0,0,0,0.25);
+  }
+  .search svg { flex-shrink: 0; color: var(--ink-mute); }
+  .search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 14px 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .search input::placeholder { color: var(--ink-mute); }
+  .search button {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background .2s;
+  }
+  .search button:hover { background: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  /* Hero visual — abstract composition */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--forest);
+  }
+  .hero-visual svg { width: 100%; height: 100%; display: block; }
+  .hero-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    background: rgba(244,241,234,0.96);
+    backdrop-filter: blur(8px);
+    padding: 18px 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .hero-badge-text {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .hero-badge-text strong {
+    display: block;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+  .hero-badge-arrow {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  /* ============ SECTION SHELL ============ */
+  section { position: relative; z-index: 2; }
+  .section-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(34px, 3.4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    max-width: 640px;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--ink);
+    transition: color .2s, border-color .2s;
+  }
+  .section-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ============ EVENTS ============ */
+  .events { background: var(--paper-warm); }
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .event-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ink);
+    box-shadow: 0 24px 48px -28px rgba(0,0,0,0.25);
+  }
+  .event-date {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--serif);
+  }
+  .event-day { font-size: 44px; line-height: 1; color: var(--ink); }
+  .event-month {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-family: var(--sans);
+    font-weight: 600;
+  }
+  .event-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--forest);
+    background: rgba(45,74,62,0.08);
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+  .event-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .event-meta {
+    font-size: 13px;
+    color: var(--ink-mute);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .event-meta span { display: flex; align-items: center; gap: 8px; }
+  .event-meta svg { color: var(--ink-mute); flex-shrink: 0; }
+
+  /* ============ MENTORSHIP CTA ============ */
+  .mentor {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .mentor::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,71,43,0.35) 0, transparent 65%);
+    pointer-events: none;
+  }
+  .mentor::after {
+    content: '';
+    position: absolute;
+    bottom: -40%; left: -5%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,137,58,0.25) 0, transparent 65%);
+    pointer-events: none;
+  }
+  .mentor-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 96px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .mentor .section-eyebrow { color: var(--gold); }
+  .mentor h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 3.8vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+  .mentor h2 em { font-style: italic; color: var(--gold); }
+  .mentor p {
+    color: rgba(244,241,234,0.75);
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 480px;
+    margin-bottom: 36px;
+  }
+  .mentor-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .mentor .btn-primary { background: var(--paper); color: var(--ink); }
+  .mentor .btn-primary:hover { background: var(--gold); color: var(--ink); }
+  .mentor .btn-ghost { color: var(--paper); border-color: rgba(244,241,234,0.3); }
+  .mentor .btn-ghost:hover { border-color: var(--paper); }
+
+  .mentor-visual {
+    position: relative;
+    aspect-ratio: 1 / 0.9;
+  }
+  .mentor-visual svg { width: 100%; height: 100%; }
+
+  /* ============ STORIES ============ */
+  .stories-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 24px;
+  }
+  .story {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .story:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -28px rgba(0,0,0,0.2);
+  }
+  .story-img {
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-img svg { width: 100%; height: 100%; display: block; }
+  .story-body {
+    padding: 26px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+  .story-cat {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .story-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.22;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .story.featured .story-title { font-size: 30px; }
+  .story-excerpt {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .story-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 15px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .story-author-info { font-size: 13px; line-height: 1.3; }
+  .story-author-info strong { display: block; font-weight: 600; color: var(--ink); }
+  .story-author-info span { color: var(--ink-mute); }
+
+  /* ============ CHAPTERS ============ */
+  .chapters { background: var(--paper-warm); }
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .chapter {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+  }
+  .chapter:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .chapter:hover .chapter-meta { color: rgba(244,241,234,0.6); }
+  .chapter:hover .chapter-arrow { background: var(--accent); color: #fff; }
+  .chapter-flag {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: #fff;
+  }
+  .chapter-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 400;
+  }
+  .chapter-meta {
+    font-size: 13px;
+    color: var(--ink-mute);
+    transition: color .3s;
+  }
+  .chapter-arrow {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    margin-top: auto;
+    transition: all .3s;
+  }
+
+  /* ============ DONATION ============ */
+  .donate {
+    background: var(--accent);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .donate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 20px);
+    pointer-events: none;
+  }
+  .donate-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 88px 48px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .donate h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 3.8vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .donate h2 em { font-style: italic; color: #f4d9a8; }
+  .donate p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+  .donate-amounts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .amount {
+    padding: 12px 22px;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    transition: all .2s;
+    background: transparent;
+  }
+  .amount:hover, .amount.active {
+    background: #fff;
+    color: var(--accent);
+    border-color: #fff;
+  }
+  .donate-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .donate .btn-primary { background: var(--ink); color: #fff; }
+  .donate .btn-primary:hover { background: #000; }
+  .donate-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .donate-visual {
+    aspect-ratio: 1 / 0.85;
+    position: relative;
+  }
+  .donate-visual svg { width: 100%; height: 100%; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 48px 32px;
+  }
+  .footer-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(244,241,234,0.12);
+  }
+  .footer-brand .logo { color: var(--paper); margin-bottom: 20px; }
+  .footer-brand .logo-mark { background: var(--paper); color: var(--ink); }
+  .footer-brand p {
+    color: rgba(244,241,234,0.6);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-col h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a {
+    font-size: 14px;
+    color: rgba(244,241,234,0.75);
+    transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--paper); }
+  .footer-bottom {
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(244,241,234,0.5);
+  }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(244,241,234,0.2);
+    display: grid;
+    place-items: center;
+    transition: all .2s;
+  }
+  .footer-social a:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; gap: 56px; padding: 56px 32px 72px; }
+    .hero-visual { max-width: 520px; }
+    .mentor-inner, .donate-inner { grid-template-columns: 1fr; gap: 48px; }
+    .mentor-visual, .donate-visual { max-width: 480px; }
+    .stories-grid { grid-template-columns: 1fr 1fr; }
+    .story.featured { grid-column: 1 / -1; }
+    .chapters-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 820px) {
+    .nav-inner { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .section-inner { padding: 72px 24px; }
+    .events-grid { grid-template-columns: 1fr; }
+    .stories-grid { grid-template-columns: 1fr; }
+    .chapters-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; flex-wrap: wrap; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    footer { padding: 56px 24px 24px; }
+    .mentor-inner, .donate-inner { padding: 72px 24px; }
+  }
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 42px; }
+    .search { padding: 4px 4px 4px 16px; }
+    .search button { padding: 10px 16px; font-size: 13px; }
+    .nav-cta .btn-ghost { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">A</span>
+      <span>Alumni<span class="logo-slash">/</span>Network</span>
+    </a>
+    <div class="nav-links">
+      <a href="#members">Members</a>
+      <a href="#events">Events</a>
+      <a href="#mentorship">Mentorship</a>
+      <a href="#stories">Stories</a>
+      <a href="#chapters">Chapters</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#donate" class="btn btn-primary">Give back</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Est. 1892 · 42 chapters worldwide</div>
+    <h1>The path doesn't end at <em>graduation.</em></h1>
+    <p class="hero-lede">A living network of 84,000 alumni — find a mentor, join a chapter, or reconnect with the people who shaped your first chapter.</p>
+
+    <form class="search" onsubmit="event.preventDefault();">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" placeholder="Search by name, class year, city, or industry…" aria-label="Search members">
+      <button type="submit">Find</button>
+    </form>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">84<span>k</span></div>
+        <div class="stat-label">Active members</div>
+      </div>
+      <div>
+        <div class="stat-num">42</div>
+        <div class="stat-label">Global chapters</div>
+      </div>
+      <div>
+        <div class="stat-num">3.2<span>k</span></div>
+        <div class="stat-label">Mentor matches</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 500 525" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2d4a3e"/>
+          <stop offset="1" stop-color="#1a2e26"/>
+        </linearGradient>
+        <radialGradient id="hg2" cx="0.7" cy="0.3" r="0.6">
+          <stop offset="0" stop-color="#c8472b" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#c8472b" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="hg3" cx="0.2" cy="0.8" r="0.5">
+          <stop offset="0" stop-color="#b8893a" stop-opacity="0.5"/>
+          <stop offset="1" stop-color="#b8893a" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="500" height="525" fill="url(#hg1)"/>
+      <rect width="500" height="525" fill="url(#hg2)"/>
+      <rect width="500" height="525" fill="url(#hg3)"/>
+      <!-- concentric arcs -->
+      <g fill="none" stroke="#f4f1ea" stroke-opacity="0.18" stroke-width="1">
+        <circle cx="250" cy="262" r="80"/>
+        <circle cx="250" cy="262" r="140"/>
+        <circle cx="250" cy="262" r="200"/>
+        <circle cx="250" cy="262" r="260"/>
+      </g>
+      <!-- connecting nodes -->
+      <g stroke="#f4f1ea" stroke-opacity="0.35" stroke-width="1">
+        <line x1="250" y1="262" x2="120" y2="140"/>
+        <line x1="250" y1="262" x2="380" y2="180"/>
+        <line x1="250" y1="262" x2="150" y2="400"/>
+        <line x1="250" y1="262" x2="400" y2="380"/>
+        <line x1="120" y1="140" x2="380" y2="180"/>
+        <line x1="150" y1="400" x2="400" y2="380"/>
+      </g>
+      <!-- nodes -->
+      <g>
+        <circle cx="250" cy="262" r="14" fill="#c8472b"/>
+        <circle cx="250" cy="262" r="6" fill="#f4f1ea"/>
+        <circle cx="120" cy="140" r="8" fill="#b8893a"/>
+        <circle cx="380" cy="180" r="8" fill="#f4f1ea"/>
+        <circle cx="150" cy="400" r="8" fill="#f4f1ea"/>
+        <circle cx="400" cy="380" r="8" fill="#b8893a"/>
+      </g>
+      <!-- small dots -->
+      <g fill="#f4f1ea" fill-opacity="0.5">
+        <circle cx="60" cy="60" r="2"/>
+        <circle cx="440" cy="80" r="2"/>
+        <circle cx="80" cy="480" r="2"/>
+        <circle cx="430" cy="470" r="2"/>
+        <circle cx="300" cy="60" r="2"/>
+        <circle cx="60" cy="300" r="2"/>
+      </g>
+    </svg>
+    <div class="hero-badge">
+      <div class="hero-badge-text">
+        <strong>Class of 2014 reunion</strong>
+        Saturday, June 14 · 6:00 PM · The Quad
+      </div>
+      <div class="hero-badge-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section class="events" id="events">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">What's happening</div>
+        <h2 class="section-title">Gatherings, talks, and <em>reunions</em> worth clearing your calendar for.</h2>
+      </div>
+      <a href="#" class="section-link">All events
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="events-grid">
+      <article class="event-card">
+        <div class="event-date">
+          <span class="event-day">14</span>
+          <span class="event-month">Jun</span>
+        </div>
+        <span class="event-tag">Reunion</span>
+        <h3 class="event-title">Class of 2014 — Ten Year Homecoming</h3>
+        <div class="event-meta">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            The Quad, Main Campus
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            6:00 PM · 240 attending
+          </span>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-date">
+          <span class="event-day">22</span>
+          <span class="event-month">Jun</span>
+        </div>
+        <span class="event-tag">Lecture</span>
+        <h3 class="event-title">The Future of Climate Finance — with Dr. Amara Osei</h3>
+        <div class="event-meta">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Online · Global stream
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            12:00 PM GMT · Free
+          </span>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-date">
+          <span class="event-day">05</span>
+          <span class="event-month">Jul</span>
+        </div>
+        <span class="event-tag">Chapter</span>
+        <h3 class="event-title">Singapore Chapter — Rooftop Summer Social</h3>
+        <div class="event-meta">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Marina Bay Sands, Level 57
+          </span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            7:30 PM SGT · 88 attending
+          </span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENTORSHIP ============ -->
+<section class="mentor" id="mentorship">
+  <div class="mentor-inner">
+    <div>
+      <div class="section-eyebrow">Mentorship program</div>
+      <h2>One conversation can change the <em>trajectory</em> of a career.</h2>
+      <p>Our matching program pairs students and early-career alumni with experienced mentors across 60+ industries. Commit to four sessions over six months — we handle the rest.</p>
+      <div class="mentor-actions">
+        <a href="#" class="btn btn-primary">Become a mentor
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost">Find a mentor</a>
+      </div>
+    </div>
+
+    <div class="mentor-visual">
+      <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#c8472b" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#b8893a" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+        <!-- two overlapping circles representing mentor/mentee -->
+        <circle cx="180" cy="225" r="130" fill="none" stroke="#f4f1ea" stroke-opacity="0.25" stroke-width="1"/>
+        <circle cx="320" cy="225" r="130" fill="none" stroke="#f4f1ea" stroke-opacity="0.25" stroke-width="1"/>
+        <circle cx="180" cy="225" r="90" fill="#f4f1ea" fill-opacity="0.06"/>
+        <circle cx="320" cy="225" r="90" fill="#f4f1ea" fill-opacity="0.06"/>
+        <!-- intersection highlight -->
+        <path d="M 250 145 A 90 90 0 0 1 250 305 A 90 90 0 0 1 250 145 Z" fill="url(#mg1)" fill-opacity="0.35"/>
+        <!-- center node -->
+        <circle cx="250" cy="225" r="10" fill="#f4f1ea"/>
+        <circle cx="250" cy="225" r="4" fill="#c8472b"/>
+        <!-- labels -->
+        <text x="180" y="380" text-anchor="middle" fill="#f4f1ea" fill-opacity="0.7" font-family="Inter, sans-serif" font-size="12" letter-spacing="2">MENTOR</text>
+        <text x="320" y="380" text-anchor="middle" fill="#f4f1ea" fill-opacity="0.7" font-family="Inter, sans-serif" font-size="12" letter-spacing="2">MENTEE</text>
+        <!-- small orbiting dots -->
+        <g fill="#f4f1ea" fill-opacity="0.5">
+          <circle cx="180" cy="95" r="3"/>
+          <circle cx="320" cy="95" r="3"/>
+          <circle cx="180" cy="355" r="3"/>
+          <circle cx="320" cy="355" r="3"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORIES ============ -->
+<section id="stories">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Alumni stories</div>
+        <h2 class="section-title">Lives that kept <em>moving</em> after the last lecture.</h2>
+      </div>
+      <a href="#" class="section-link">Read the journal
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="stories-grid">
+      <article class="story featured">
+        <div class="story-img">
+          <svg viewBox="0 0 600 375" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2d4a3e"/>
+                <stop offset="1" stop-color="#1a2e26"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="375" fill="url(#sg1)"/>
+            <!-- abstract landscape -->
+            <path d="M0 280 Q 150 200 300 260 T 600 240 L 600 375 L 0 375 Z" fill="#c8472b" fill-opacity="0.85"/>
+            <path d="M0 320 Q 200 260 400 300 T 600 290 L 600 375 L 0 375 Z" fill="#b8893a" fill-opacity="0.7"/>
+            <circle cx="480" cy="110" r="55" fill="#f4f1ea" fill-opacity="0.9"/>
+            <circle cx="480" cy="110" r="55" fill="none" stroke="#f4f1ea" stroke-opacity="0.3" stroke-width="1"/>
+            <g stroke="#f4f1ea" stroke-opacity="0.15" stroke-width="1">
+              <line x1="0" y1="60" x2="600" y2="60"/>
+              <line x1="0" y1="120" x2="600" y2="120"/>
+              <line x1="0" y1="180" x2="600" y2="180"/>
+            </g>
+          </svg>
+        </div>
+        <div class="story-body">
+          <span class="story-cat">Field Notes · Environment</span>
+          <h3 class="story-title">She mapped a river nobody was watching — and changed how a city drinks its water.</h3>
+          <p class="story-excerpt">Priya Raman (’09) spent four years documenting the slow decline of the Kaveri tributary. Her data is now the backbone of a municipal restoration plan serving 1.2 million people.</p>
+          <div class="story-author">
+            <div class="avatar" style="background:#c8472b;">PR</div>
+            <div class="story-author-info">
+              <strong>Priya Raman</strong>
+              <span>Class of 2009 · Environmental Science</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="story">
+        <div class="story-img">
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="250" fill="#b8893a"/>
+            <g fill="#f4f1ea" fill-opacity="0.15">
+              <circle cx="80" cy="80" r="60"/>
+              <circle cx="320" cy="180" r="80"/>
+            </g>
+            <g stroke="#1a1a1a" stroke-opacity="0.4" stroke-width="1.5" fill="none">
+              <path d="M0 180 Q 100 120 200 160 T 400 140"/>
+              <path d="M0 200 Q 100 140 200 180 T 400 160"/>
+              <path d="M0 220 Q 100 160 200 200 T 400 180"/>
+            </g>
+            <circle cx="200" cy="125" r="14" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="story-body">
+          <span class="story-cat">Career</span>
+          <h3 class="story-title">From dorm room to Series B: how two roommates built a fintech for the unbanked.</h3>
+          <div class="story-author">
+            <div class="avatar" style="background:#2d4a3e;">JM</div>
+            <div class="story-author-info">
+              <strong>Jonah Mensah</strong>
+              <span>Class of 2016 · Economics</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="story">
+        <div class="story-img">
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="250" fill="#1a1a1a"/>
+            <g fill="none" stroke="#f4f1ea" stroke-opacity="0.4" stroke-width="1">
+              <circle cx="200" cy="125" r="30"/>
+              <circle cx="200" cy="125" r="60"/>
+              <circle cx="200" cy="125" r="90"/>
+              <circle cx="200" cy="125" r="120"/>
+            </g>
+            <circle cx="200" cy="125" r="8" fill="#c8472b"/>
+            <g fill="#b8893a">
+              <circle cx="200" cy="65" r="4"/>
+              <circle cx="260" cy="125" r="4"/>
+              <circle cx="140" cy="125" r="4"/>
+              <circle cx="200" cy="185" r="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="story-body">
+          <span class="story-cat">Arts</span>
+          <h3 class="story-title">The composer who turned a campus bell tower into a concert hall.</h3>
+          <div class="story-author">
+            <div class="avatar" style="background:#b8893a;">LC</div>
+            <div class="story-author-info">
+              <strong>Lena Chen</strong>
+              <span>Class of 2011 · Music</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAPTERS ============ -->
+<section class="chapters" id="chapters">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Find your people</div>
+        <h2 class="section-title">Forty-two chapters. One <em>shared</em> table.</h2>
+      </div>
+      <a href="#" class="section-link">All chapters
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="chapters-grid">
+      <div class="chapter">
+        <div class="chapter-flag" style="background:#c8472b;">NY</div>
+        <div class="chapter-name">New York</div>
+        <div class="chapter-meta">2,140 members · 18 events this year</div>
+        <div class="chapter-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-flag" style="background:#2d4a3e;">LDN</div>
+        <div class="chapter-name">London</div>
+        <div class="chapter-meta">1,860 members · 22 events this year</div>
+        <div class="chapter-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-flag" style="background:#b8893a;">SG</div>
+        <div class="chapter-name">Singapore</div>
+        <div class="chapter-meta">940 members · 14 events this year</div>
+        <div class="chapter-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-flag" style="background:#1a1a1a;">NBO</div>
+        <div class="chapter-name">Nairobi</div>
+        <div class="chapter-meta">620 members · 9 events this year</div>
+        <div class="chapter-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DONATE ============ -->
+<section class="donate" id="donate">
+  <div class="donate-inner">
+    <div>
+      <div class="section-eyebrow" style="color:#f4d9a8;">Give back</div>
+      <h2>Fund the next <em>generation</em> of firsts.</h2>
+      <p>Every gift to the Alumni Fund goes directly to need-based scholarships, emergency grants, and the mentorship program. 100% of donations are deployed within the academic year.</p>
+
+      <div class="donate-amounts">
+        <button class="amount">$25</button>
+        <button class="amount active">$100</button>
+        <button class="amount">$250</button>
+        <button class="amount">$1,000</button>
+        <button class="amount">Custom</button>
+      </div>
+
+      <div class="donate-actions">
+        <a href="#" class="btn btn-primary">Donate $100
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <span class="donate-note">Tax-deductible · Secure checkout</span>
+      </div>
+    </div>
+
+    <div class="donate-visual">
+      <svg viewBox="0 0 500 425" xmlns="http://www.w3.org/2000/svg">
+        <!-- stacked coins / growth bars -->
+        <g>
+          <rect x="60" y="300" width="60" height="100" fill="#f4f1ea" fill-opacity="0.9" rx="2"/>
+          <rect x="140" y="240" width="60" height="160" fill="#f4f1ea" fill-opacity="0.9" rx="2"/>
+          <rect x="220" y="180" width="60" height="220" fill="#f4f1ea" fill-opacity="0.9" rx="2"/>
+          <rect x="300" y="120" width="60" height="280" fill="#f4f1ea" fill-opacity="0.9" rx="2"/>
+          <rect x="380" y="60" width="60" height="340" fill="#f4f1ea" rx="2"/>
+        </g>
+        <!-- arrow -->
+        <path d="M 60 280 Q 200 200 440 40" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 425 30 L 445 38 L 435 55" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- small dots -->
+        <g fill="#1a1a1a" fill-opacity="0.4">
+          <circle cx="90" cy="90" r="3"/>
+          <circle cx="440" cy="380" r="3"/>
+          <circle cx="30" cy="200" r="3"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark">A</span>
+          <span>Alumni<span class="logo-slash">/</span>Network</span>
+        </a>
+        <p>A living community of 84,000 graduates across 42 chapters — built to keep the conversation going long after the last lecture.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Network</h4>
+        <ul>
+          <li><a href="#members">Member directory</a></li>
+          <li><a href="#chapters">Chapters</a></li>
+          <li><a href="#mentorship">Mentorship</a></li>
+          <li><a href="#events">Events</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#donate">Give to the Fund</a></li>
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Update your details</a></li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Our mission</a></li>
+          <li><a href="#">Board & council</a></li>
+          <li><a href="#">Annual report</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Alumni / Network. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.5 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V22h-4.56v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H7.72V8z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Donation amount toggle
+  document.querySelectorAll('.amount').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.amount').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = btn.textContent.trim();
+      const cta = document.querySelector('.donate-actions .btn-primary');
+      if (val === 'Custom') {
+        cta.childNodes[0].nodeValue = 'Enter amount ';
+      } else {
+        cta.childNodes[0].nodeValue = 'Donate ' + val + ' ';
+      }
+    });
+  });
+
+  // Subtle parallax on hero visual
+  const heroVisual = document.querySelector('.hero-visual svg');
+  if (heroVisual && window.matchMedia('(min-width: 1100px)').matches) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < 800) heroVisual.style.transform = `translateY(${y * 0.04}px)`;
+    }, { passive: true });
+  }
+</script>
+
+</body>
+</html>

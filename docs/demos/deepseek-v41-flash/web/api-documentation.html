@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API / DOCUMENTATION — Nimbus Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-2: #0f1424;
+    --surface: #131a2e;
+    --surface-2: #1a2340;
+    --border: #232d4d;
+    --border-2: #2e3a5f;
+    --text: #e8ecf7;
+    --text-dim: #8b96b8;
+    --text-mute: #5d6889;
+    --accent: #ff5b3a;
+    --accent-2: #ffb547;
+    --mint: #4ee0b5;
+    --violet: #8b7cff;
+    --code-bg: #0b1020;
+    --code-key: #ff8a65;
+    --code-str: #a5e8c8;
+    --code-num: #ffb547;
+    --code-com: #5d6889;
+    --code-fn: #8b7cff;
+    --code-var: #7dd3fc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(139,124,255,0.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(255,91,58,0.10), transparent 55%),
+      radial-gradient(700px 400px at 50% 110%, rgba(78,224,181,0.08), transparent 60%),
+      var(--bg);
+    overflow-x: hidden;
+  }
+
+  /* subtle grid overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 80%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 32px;
+    background: rgba(10,14,26,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    display: grid;
+    place-items: center;
+    position: relative;
+    box-shadow: 0 6px 20px -6px rgba(255,91,58,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .brand-mark svg { width: 18px; height: 18px; }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .brand-text .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .brand-text .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .divider-v {
+    width: 1px;
+    height: 26px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Search */
+  .search {
+    flex: 1;
+    max-width: 520px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px 10px 40px;
+    color: var(--text);
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  .search input::placeholder { color: var(--text-mute); }
+  .search input:focus {
+    border-color: var(--accent);
+    background: var(--surface-2);
+    box-shadow: 0 0 0 3px rgba(255,91,58,0.14);
+  }
+  .search .icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-mute);
+    pointer-events: none;
+  }
+  .search .kbd {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-mute);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 2px 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Version switcher */
+  .version {
+    position: relative;
+  }
+  .version-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .version-btn:hover { border-color: var(--border-2); background: var(--surface-2); }
+  .version-btn .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
+  }
+  .version-btn .chev { color: var(--text-mute); transition: transform .2s; }
+  .version.open .chev { transform: rotate(180deg); }
+
+  .version-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 260px;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 20px 50px -12px rgba(0,0,0,0.7);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: all .18s ease;
+    z-index: 60;
+  }
+  .version.open .version-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .version-menu .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 10px 6px;
+  }
+  .version-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: background .12s;
+    width: 100%;
+    text-align: left;
+  }
+  .version-item:hover { background: var(--surface-2); }
+  .version-item .v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .version-item .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .tag.stable { background: rgba(78,224,181,0.14); color: var(--mint); }
+  .tag.beta { background: rgba(255,181,71,0.14); color: var(--accent-2); }
+  .tag.legacy { background: rgba(139,124,255,0.14); color: var(--violet); }
+  .version-item.active { background: var(--surface-2); }
+  .version-item.active .v { color: var(--accent); }
+
+  /* Status indicator */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: border-color .15s;
+  }
+  .status:hover { border-color: var(--border-2); }
+  .status .pulse {
+    position: relative;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+  .status .pulse::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--mint);
+    opacity: 0.35;
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.6); opacity: 0.5; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  .status .label { color: var(--text); font-weight: 500; }
+
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #1a0a05;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    box-shadow: 0 8px 22px -8px rgba(255,91,58,0.7), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 26px -8px rgba(255,91,58,0.85), inset 0 1px 0 rgba(255,255,255,0.3); }
+
+  /* ============ LAYOUT ============ */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 28px 20px 40px;
+    position: sticky;
+    top: 63px;
+    height: calc(100vh - 63px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-2) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+
+  .nav-section { margin-bottom: 26px; }
+  .nav-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0 10px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    transition: background .12s, color .12s;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--surface); color: var(--text); }
+  .nav-item.active {
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 500;
+  }
+  .nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 0 3px 3px 0;
+  }
+  .nav-item .method {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  .m-get { background: rgba(78,224,181,0.14); color: var(--mint); }
+  .m-post { background: rgba(255,181,71,0.14); color: var(--accent-2); }
+  .m-put { background: rgba(139,124,255,0.14); color: var(--violet); }
+  .m-del { background: rgba(255,91,58,0.14); color: var(--accent); }
+  .nav-item .count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-mute);
+  }
+
+  /* ============ MAIN ============ */
+  .main {
+    padding: 40px 48px 80px;
+    min-width: 0;
+  }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    background: rgba(255,181,71,0.08);
+    border: 1px solid rgba(255,181,71,0.2);
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .eyebrow .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-2); }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  h1 .accent {
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 60%, var(--violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p.lead {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin-bottom: 26px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .btn-ghost:hover { border-color: var(--border-2); background: var(--surface-2); }
+
+  /* Quickstart code panel */
+  .code-panel {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.02) inset;
+    position: relative;
+  }
+  .code-panel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,91,58,0.5), rgba(139,124,255,0.5), transparent);
+  }
+
+  .code-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+  .code-head .dots { display: flex; gap: 6px; }
+  .code-head .dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .code-head .dots span:nth-child(1) { background: #ff5f57; }
+  .code-head .dots span:nth-child(2) { background: #febc2e; }
+  .code-head .dots span:nth-child(3) { background: #28c840; }
+
+  .code-tabs {
+    display: flex;
+    gap: 2px;
+    margin-left: 8px;
+  }
+  .code-tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: var(--text-mute);
+    transition: color .12s, background .12s;
+  }
+  .code-tab:hover { color: var(--text-dim); }
+  .code-tab.active { color: var(--text); background: var(--surface); }
+
+  .code-head .copy {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    padding: 5px 9px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: color .12s, border-color .12s;
+  }
+  .code-head .copy:hover { color: var(--text); border-color: var(--border-2); }
+
+  .code-body {
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code-body .ln { color: var(--text-mute); user-select: none; display: inline-block; width: 22px; }
+  .tok-key { color: var(--code-key); }
+  .tok-str { color: var(--code-str); }
+  .tok-num { color: var(--code-num); }
+  .tok-com { color: var(--code-com); font-style: italic; }
+  .tok-fn { color: var(--code-fn); }
+  .tok-var { color: var(--code-var); }
+  .tok-punc { color: var(--text-dim); }
+
+  .code-foot {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+  .code-foot .resp {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--mint);
+  }
+  .code-foot .resp .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+  .code-foot .time { margin-left: auto; }
+
+  /* ============ ENDPOINT CATEGORIES ============ */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+  .section-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .section-head .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-mute);
+  }
+
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .18s, transform .18s, background .18s;
+    cursor: pointer;
+  }
+  .cat-card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--cat-color, var(--accent));
+    opacity: 0.7;
+  }
+  .cat-card:hover {
+    border-color: var(--border-2);
+    transform: translateY(-2px);
+    background: var(--surface-2);
+  }
+  .cat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 14px;
+    background: var(--cat-bg, rgba(255,91,58,0.12));
+    color: var(--cat-color, var(--accent));
+  }
+  .cat-icon svg { width: 20px; height: 20px; }
+  .cat-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .cat-card p {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .cat-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+  .cat-foot .arrow { color: var(--cat-color, var(--accent)); transition: transform .18s; }
+  .cat-card:hover .cat-foot .arrow { transform: translateX(3px); }
+
+  /* ============ SUPPORT ============ */
+  .support {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+  }
+  .support-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .support-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .support-card p { font-size: 13px; color: var(--text-dim); line-height: 1.55; }
+
+  .support-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .support-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .support-link:hover { border-color: var(--border-2); color: var(--text); background: var(--surface-2); }
+  .support-link svg { width: 15px; height: 15px; color: var(--accent-2); flex-shrink: 0; }
+
+  .status-card {
+    background: linear-gradient(160deg, var(--surface) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .status-card::before {
+    content: "";
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(78,224,181,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .status-card .head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .status-card .head .pulse {
+    position: relative;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+  .status-card .head .pulse::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: var(--mint);
+    opacity: 0.3;
+    animation: pulse 2s ease-out infinite;
+  }
+  .status-card .head .label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .status-card .head .uptime {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--mint);
+  }
+  .status-bars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+  .status-bars span {
+    flex: 1;
+    height: 26px;
+    border-radius: 3px;
+    background: var(--mint);
+    opacity: 0.85;
+  }
+  .status-bars span.warn { background: var(--accent-2); opacity: 0.9; }
+  .status-bars span.dim { background: var(--border-2); opacity: 1; }
+  .status-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-mute);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; }
+    .categories { grid-template-columns: repeat(2, 1fr); }
+    .support { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 28px 24px 60px; }
+    .topbar { padding: 12px 16px; gap: 12px; }
+    .search { max-width: none; }
+    .status .label { display: none; }
+    h1 { font-size: 34px; }
+    .categories { grid-template-columns: 1fr; }
+    .support-links { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .brand-text { display: none; }
+    .divider-v { display: none; }
+    .btn-primary span { display: none; }
+    .search .kbd { display: none; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1a0a05" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12h4l2-6 4 12 2-6h4"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="name">Nimbus</span>
+      <span class="sub">API / Docs</span>
+    </div>
+  </div>
+
+  <div class="divider-v"></div>
+
+  <div class="search">
+    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+    </svg>
+    <input type="text" placeholder="Search endpoints, guides, SDKs…" aria-label="Search documentation">
+    <span class="kbd">⌘ K</span>
+  </div>
+
+  <div class="topbar-right">
+    <div class="version" id="version">
+      <button class="version-btn" onclick="document.getElementById('version').classList.toggle('open')">
+        <span class="dot"></span>
+        <span>v2.4.1</span>
+        <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="version-menu">
+        <div class="label">Select version</div>
+        <button class="version-item active">
+          <span class="v">v2.4.1</span>
+          <span class="tag stable">Stable</span>
+        </button>
+        <button class="version-item">
+          <span class="v">v2.5.0-rc</span>
+          <span class="tag beta">Beta</span>
+        </button>
+        <button class="version-item">
+          <span class="v">v1.9.3</span>
+          <span class="tag legacy">Legacy</span>
+        </button>
+      </div>
+    </div>
+
+    <a class="status" href="#status">
+      <span class="pulse"></span>
+      <span class="label">All systems operational</span>
+    </a>
+
+    <button class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      <span>Get API Key</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ LAYOUT ============ -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="nav-section">
+      <div class="nav-title">Getting Started</div>
+      <a class="nav-item active" href="#">Introduction</a>
+      <a class="nav-item" href="#">Authentication</a>
+      <a class="nav-item" href="#">Rate Limits</a>
+      <a class="nav-item" href="#">Errors &amp; Codes</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Core Resources</div>
+      <a class="nav-item" href="#"><span class="method m-get">GET</span> Users <span class="count">12</span></a>
+      <a class="nav-item" href="#"><span class="method m-post">POST</span> Sessions <span class="count">6</span></a>
+      <a class="nav-item" href="#"><span class="method m-put">PUT</span> Profiles <span class="count">4</span></a>
+      <a class="nav-item" href="#"><span class="method m-del">DEL</span> Webhooks <span class="count">3</span></a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Data &amp; Analytics</div>
+      <a class="nav-item" href="#"><span class="method m-get">GET</span> Events <span class="count">8</span></a>
+      <a class="nav-item" href="#"><span class="method m-get">GET</span> Metrics <span class="count">5</span></a>
+      <a class="nav-item" href="#"><span class="method m-post">POST</span> Reports <span class="count">2</span></a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">SDKs &amp; Tools</div>
+      <a class="nav-item" href="#">JavaScript</a>
+      <a class="nav-item" href="#">Python</a>
+      <a class="nav-item" href="#">Go</a>
+      <a class="nav-item" href="#">CLI</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> v2.4.1 · Released 3 days ago</div>
+        <h1>Build on the <span class="accent">Nimbus</span> platform.</h1>
+        <p class="lead">
+          A RESTful API for identity, events, and analytics. Predictable
+          resources, cursor-based pagination, and idempotent writes — designed
+          for teams shipping at scale.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span>Read the Quickstart</span>
+          </button>
+          <button class="btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+            OpenAPI Spec
+          </button>
+        </div>
+      </div>
+
+      <!-- QUICKSTART CODE PANEL -->
+      <div class="code-panel">
+        <div class="code-head">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="code-tabs">
+            <button class="code-tab active">cURL</button>
+            <button class="code-tab">Node</button>
+            <button class="code-tab">Python</button>
+          </div>
+          <button class="copy">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            Copy
+          </button>
+        </div>
+        <div class="code-body"><span class="ln">1</span><span class="tok-com"># Fetch the current user's profile</span>
+<span class="ln">2</span><span class="tok-fn">curl</span> <span class="tok-str">https://api.nimbus.dev/v2/me</span> \
+<span class="ln">3</span>  <span class="tok-key">-H</span> <span class="tok-str">"Authorization: Bearer $NIMBUS_KEY"</span> \
+<span class="ln">4</span>  <span class="tok-key">-H</span> <span class="tok-str">"Accept: application/json"</span>
+<span class="ln">5</span>
+<span class="ln">6</span><span class="tok-com"># → 200 OK</span>
+<span class="ln">7</span><span class="tok-punc">{</span>
+<span class="ln">8</span>  <span class="tok-key">"id"</span><span class="tok-punc">:</span> <span class="tok-str">"usr_8f2a91c4"</span><span class="tok-punc">,</span>
+<span class="ln">9</span>  <span class="tok-key">"email"</span><span class="tok-punc">:</span> <span class="tok-str">"ada@nimbus.dev"</span><span class="tok-punc">,</span>
+<span class="ln">10</span>  <span class="tok-key">"plan"</span><span class="tok-punc">:</span> <span class="tok-str">"scale"</span><span class="tok-punc">,</span>
+<span class="ln">11</span>  <span class="tok-key">"created_at"</span><span class="tok-punc">:</span> <span class="tok-str">"2024-11-02T09:14:00Z"</span>
+<span class="ln">12</span><span class="tok-punc">}</span></div>
+        <div class="code-foot">
+          <span class="resp"><span class="dot"></span> 200 OK</span>
+          <span>application/json</span>
+          <span class="time">142 ms</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENDPOINT CATEGORIES -->
+    <section>
+      <div class="section-head">
+        <h2>Endpoint categories</h2>
+        <span class="meta">40 endpoints · 6 groups</span>
+      </div>
+
+      <div class="categories">
+        <div class="cat-card" style="--cat-color: var(--mint); --cat-bg: rgba(78,224,181,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </div>
+          <h3>Identity &amp; Users</h3>
+          <p>Create accounts, manage profiles, and issue scoped access tokens.</p>
+          <div class="cat-foot">
+            <span>12 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-color: var(--accent-2); --cat-bg: rgba(255,181,71,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+          </div>
+          <h3>Events &amp; Streams</h3>
+          <p>Ingest high-volume events and subscribe to real-time webhooks.</p>
+          <div class="cat-foot">
+            <span>8 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-color: var(--violet); --cat-bg: rgba(139,124,255,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+          </div>
+          <h3>Analytics</h3>
+          <p>Query aggregated metrics with flexible time windows and filters.</p>
+          <div class="cat-foot">
+            <span>5 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-color: var(--accent); --cat-bg: rgba(255,91,58,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v16"/></svg>
+          </div>
+          <h3>Billing</h3>
+          <p>Manage subscriptions, invoices, and usage-based metering.</p>
+          <div class="cat-foot">
+            <span>6 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-color: var(--mint); --cat-bg: rgba(78,224,181,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6z"/></svg>
+          </div>
+          <h3>Security</h3>
+          <p>Rotate keys, configure SSO, and audit access across your org.</p>
+          <div class="cat-foot">
+            <span>4 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+
+        <div class="cat-card" style="--cat-color: var(--accent-2); --cat-bg: rgba(255,181,71,0.12);">
+          <div class="cat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+          </div>
+          <h3>Admin &amp; Config</h3>
+          <p>Environment settings, feature flags, and workspace management.</p>
+          <div class="cat-foot">
+            <span>5 endpoints</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT -->
+    <section>
+      <div class="section-head">
+        <h2>Support &amp; resources</h2>
+        <span class="meta">Avg. response time · 2h 14m</span>
+      </div>
+
+      <div class="support">
+        <div class="support-card">
+          <h3>Need a hand?</h3>
+          <p>Our developer support team is available 24/5 across time zones. Reach out through the channel that fits your workflow.</p>
+          <div class="support-links">
+            <a class="support-link" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Live chat
+            </a>
+            <a class="support-link" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+              Email support
+            </a>
+            <a class="support-link" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+              Status page
+            </a>
+            <a class="support-link" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+              Community forum
+            </a>
+          </div>
+        </div>
+
+        <div class="status-card" id="status">
+          <div class="head">
+            <span class="pulse"></span>
+            <span class="label">API Status</span>
+            <span class="uptime">99.98% uptime</span>
+          </div>
+          <div class="status-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span class="warn"></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="status-meta">
+            <span>30 days ago</span>
+            <span>Today</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Close version dropdown on outside click
+  document.addEventListener('click', (e) => {
+    const v = document.getElementById('version');
+    if (v && !v.contains(e.target)) v.classList.remove('open');
+  });
+
+  // Code tab switching (visual only)
+  document.querySelectorAll('.code-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Copy button feedback
+  const copyBtn = document.querySelector('.code-head .copy');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const original = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg> Copied';
+      setTimeout(() => { copyBtn.innerHTML = original; }, 1400);
+    });
+  }
+
+  // Cmd/Ctrl+K focuses search
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      document.querySelector('.search input').focus();
+    }
+  });
+</script>
+</body>
+</html>

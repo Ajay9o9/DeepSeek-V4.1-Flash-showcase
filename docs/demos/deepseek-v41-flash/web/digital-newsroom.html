@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIGITAL / NEWSROOM — Independent tech & culture journalism</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #0b0e14;
+      --paper: #f5f3ef;
+      --paper-dark: #eae7e0;
+      --accent: #ff4d2e;
+      --accent-glow: #ff6b4a;
+      --muted: #6b6b6b;
+      --border: #d9d6cf;
+      --card-bg: #ffffff;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+      --radius: 12px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 24px;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 16px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo .slash {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .logo .light {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-sans);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 77, 46, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 77, 46, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ---------- NAVIGATION ---------- */
+    .section-nav {
+      display: flex;
+      gap: 8px 24px;
+      flex-wrap: wrap;
+      padding: 12px 0 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .section-nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .section-nav a:hover,
+    .section-nav a.active {
+      color: var(--ink);
+    }
+
+    .section-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* ---------- HERO / LEAD STORY ---------- */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      margin-bottom: 64px;
+    }
+
+    .lead-story {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lead-visual {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #1a1e2b 0%, #2d3345 40%, #1f2533 100%);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* abstract SVG-like shapes via CSS */
+    .lead-visual::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 70%;
+      height: 140%;
+      background: radial-gradient(circle at 30% 40%, rgba(255, 77, 46, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .lead-visual::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 60%;
+      height: 80%;
+      background: radial-gradient(circle at 60% 60%, rgba(100, 180, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(50px);
+    }
+
+    .lead-visual .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .lead-visual .floating-shape {
+      position: absolute;
+      top: 20%;
+      left: 15%;
+      width: 120px;
+      height: 120px;
+      border: 2px solid rgba(255, 77, 46, 0.4);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .lead-visual .floating-shape-2 {
+      position: absolute;
+      bottom: 25%;
+      right: 20%;
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(20px, -20px) rotate(10deg); }
+    }
+
+    .lead-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .lead-meta .category {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .lead-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .lead-excerpt {
+      font-size: 1.1rem;
+      color: #3a3a3a;
+      max-width: 90%;
+      line-height: 1.6;
+    }
+
+    .lead-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #ff8a6a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .author-info {
+      font-size: 0.9rem;
+    }
+
+    .author-info .name {
+      font-weight: 600;
+    }
+
+    .author-info .date {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* ---------- LIVE UPDATES SIDEBAR ---------- */
+    .live-sidebar {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      height: fit-content;
+    }
+
+    .live-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .live-header h3 {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-header .live-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .live-header .timestamp {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .live-item {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .live-item:last-child {
+      border-bottom: none;
+    }
+
+    .live-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 48px;
+      padding-top: 2px;
+    }
+
+    .live-content {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .live-content strong {
+      font-weight: 600;
+    }
+
+    .live-content .source {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ---------- ARTICLE GRID ---------- */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header .view-all {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      transition: gap 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .section-header .view-all:hover {
+      gap: 8px;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 64px;
+    }
+
+    .article-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-visual {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-visual .shape {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card-visual .shape-1 {
+      background: linear-gradient(135deg, #2d3345, #1a1e2b);
+    }
+
+    .card-visual .shape-2 {
+      background: linear-gradient(135deg, #3d2e2a, #2a1f1c);
+    }
+
+    .card-visual .shape-3 {
+      background: linear-gradient(135deg, #1e2d3d, #14202b);
+    }
+
+    .card-visual .overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 77, 46, 0.2) 0%, transparent 60%);
+    }
+
+    .card-visual .pattern {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .card-meta .category {
+      color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: #4a4a4a;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .card-footer .read-time {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ---------- EDITOR PICKS ---------- */
+    .editor-picks {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      margin-bottom: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .editor-picks::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 77, 46, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .editor-picks .section-header {
+      position: relative;
+      z-index: 1;
+    }
+
+    .editor-picks .section-header h2 {
+      color: var(--paper);
+    }
+
+    .editor-picks .section-header .view-all {
+      color: var(--accent-glow);
+    }
+
+    .picks-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pick-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .pick-number {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      min-width: 48px;
+      opacity: 0.8;
+    }
+
+    .pick-content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--paper);
+    }
+
+    .pick-content p {
+      font-size: 0.9rem;
+      color: rgba(245, 243, 239, 0.7);
+      line-height: 1.5;
+    }
+
+    .pick-content .pick-meta {
+      font-size: 0.75rem;
+      color: rgba(245, 243, 239, 0.5);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ---------- NEWSLETTER & SUBSCRIPTION ---------- */
+    .cta-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .newsletter-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 40px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .newsletter-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .newsletter-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 12px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 40px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      background: var(--paper);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .newsletter-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .newsletter-form .btn {
+      white-space: nowrap;
+    }
+
+    .subscription-card {
+      background: linear-gradient(135deg, #1a1e2b 0%, #2d3345 100%);
+      border-radius: var(--radius);
+      padding: 40px;
+      color: var(--paper);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscription-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 50%;
+      height: 160%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 77, 46, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .subscription-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subscription-card p {
+      color: rgba(245, 243, 239, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subscription-card .price {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent-glow);
+      position: relative;
+      z-index: 1;
+    }
+
+    .subscription-card .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: rgba(245, 243, 239, 0.5);
+    }
+
+    .subscription-card .btn {
+      align-self: flex-start;
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      border-top: 2px solid var(--ink);
+      padding: 40px 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .article-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .picks-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 16px;
+      }
+
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-picks {
+        padding: 32px 24px;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .newsletter-form .btn {
+        width: 100%;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .lead-excerpt {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .section-nav {
+        gap: 6px 16px;
+      }
+
+      .pick-item {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .pick-number {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="logo">
+        DIGITAL <span class="slash">/</span> <span class="light">NEWSROOM</span>
+      </div>
+      <div class="header-actions">
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          Live
+        </div>
+        <button class="btn btn-outline">Sign in</button>
+        <button class="btn btn-primary">Subscribe</button>
+      </div>
+    </header>
+
+    <!-- SECTION NAVIGATION -->
+    <nav class="section-nav">
+      <a href="#" class="active">Top Stories</a>
+      <a href="#">Tech</a>
+      <a href="#">Culture</a>
+      <a href="#">Business</a>
+      <a href="#">Science</a>
+      <a href="#">Opinion</a>
+      <a href="#">Podcasts</a>
+      <a href="#">Newsletters</a>
+    </nav>
+
+    <!-- HERO / LEAD STORY + LIVE UPDATES -->
+    <section class="hero-grid">
+      <article class="lead-story">
+        <div class="lead-visual">
+          <div class="grid-lines"></div>
+          <div class="floating-shape"></div>
+          <div class="floating-shape-2"></div>
+        </div>
+        <div class="lead-meta">
+          <span class="category">Exclusive</span>
+          <span>•</span>
+          <span>12 min read</span>
+        </div>
+        <h1 class="lead-title">The Quiet Revolution: How Edge Computing Is Rewriting the Rules of the Internet</h1>
+        <p class="lead-excerpt">
+          While the world fixates on AI models, a fundamental shift is happening at the network's edge — bringing computation closer to users, reducing latency, and reshaping the balance of power between cloud giants and a new wave of infrastructure startups.
+        </p>
+        <div class="lead-author">
+          <div class="avatar">MK</div>
+          <div class="author-info">
+            <div class="name">Maya Kessler</div>
+            <div class="date">Senior Correspondent · 2 hours ago</div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="live-sidebar">
+        <div class="live-header">
+          <h3><span class="live-dot"></span> Live Updates</h3>
+          <span class="timestamp">Updated 2 min ago</span>
+        </div>
+        <div class="live-item">
+          <div class="live-time">14:32</div>
+          <div class="live-content">
+            <strong>EU regulators approve landmark AI transparency bill</strong>
+            <span class="source">Brussels — Reuters</span>
+          </div>
+        </div>
+        <div class="live-item">
+          <div class="live-time">14:18</div>
+          <div class="live-content">
+            <strong>Nvidia unveils next-gen Blackwell Ultra chips at GTC</strong>
+            <span class="source">San Jose — The Verge</span>
+          </div>
+        </div>
+        <div class="live-item">
+          <div class="live-time">13:55</div>
+          <div class="live-content">
+            <strong>OpenAI announces partnership with major news publishers</strong>
+            <span class="source">New York — Bloomberg</span>
+          </div>
+        </div>
+        <div class="live-item">
+          <div class="live-time">13:40</div>
+          <div class="live-content">
+            <strong>Apple's Vision Pro 2 enters mass production, sources say</strong>
+            <span class="source">Cupertino — The Information</span>
+          </div>
+        </div>
+        <div class="live-item">
+          <div class="live-time">13:22</div>
+          <div class="live-content">
+            <strong>Global chip shortage eases as new fabs come online</strong>
+            <span class="source">Taipei — Nikkei Asia</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ARTICLE GRID -->
+    <section>
+      <div class="section-header">
+        <h2>Latest Stories</h2>
+        <a href="#" class="view-all">View all →</a>
+      </div>
+      <div class="article-grid">
+        <article class="article-card">
+          <div class="card-visual">
+            <div class="shape shape-1"></div>
+            <div class="overlay"></div>
+            <div class="pattern"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Tech</span>
+              <span>•</span>
+              <span>8 min read</span>
+            </div>
+            <h3 class="card-title">The Rise of Local-First Software: Why Your Apps Are Moving Off the Cloud</h3>
+            <p class="card-excerpt">A new generation of developers is betting that the future of computing is local, private, and resilient — and the giants are taking notice.</p>
+            <div class="card-footer">
+              <span>By James Okafor</span>
+              <span class="read-time">⏱ 8 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="card-visual">
+            <div class="shape shape-2"></div>
+            <div class="overlay"></div>
+            <div class="pattern"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Culture</span>
+              <span>•</span>
+              <span>6 min read</span>
+            </div>
+            <h3 class="card-title">Inside the Digital Nomad Economy: How Remote Work Is Reshaping Global Cities</h3>
+            <p class="card-excerpt">From Lisbon to Chiang Mai, a new class of workers is transforming urban economies — and creating tensions that local governments are only beginning to address.</p>
+            <div class="card-footer">
+              <span>By Sofia Lindqvist</span>
+              <span class="read-time">⏱ 6 min</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="card-visual">
+            <div class="shape shape-3"></div>
+            <div class="overlay"></div>
+            <div class="pattern"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category">Science</span>
+              <span>•</span>
+              <span>10 min read</span>
+            </div>
+            <h3 class="card-title">Quantum Computing's First Real-World Breakthrough Is Closer Than You Think</h3>
+            <p class="card-excerpt">Researchers at three separate labs have independently demonstrated error correction at scale — a milestone that could accelerate the timeline by years.</p>
+            <div class="card-footer">
+              <span>By Dr. Aris Thorne</span>
+              <span class="read-time">⏱ 10 min</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EDITOR PICKS -->
+    <section class="editor-picks">
+      <div class="section-header">
+        <h2>Editor's Picks</h2>
+        <a href="#" class="view-all">See all picks →</a>
+      </div>
+      <div class="picks-grid">
+        <div class="pick-item">
+          <div class="pick-number">01</div>
+          <div class="pick-content">
+            <h3>The Case Against Algorithmic Feeds</h3>
+            <p>Why chronological timelines might be the most radical design choice of the decade.</p>
+            <div class="pick-meta">Opinion · 5 min read</div>
+          </div>
+        </div>
+        <div class="pick-item">
+          <div class="pick-number">02</div>
+          <div class="pick-content">
+            <h3>How a Small Team Built the World's Fastest Database</h3>
+            <p>Inside the open-source project that's quietly outperforming billion-dollar enterprise solutions.</p>
+            <div class="pick-meta">Tech · 14 min read</div>
+          </div>
+        </div>
+        <div class="pick-item">
+          <div class="pick-number">03</div>
+          <div class="pick-content">
+            <h3>The Art of Digital Minimalism in a Hyper-Connected World</h3>
+            <p>Designers and developers are rediscovering the power of restraint — and users are responding.</p>
+            <div class="pick-meta">Culture · 7 min read</div>
+          </div>
+        </div>
+        <div class="pick-item">
+          <div class="pick-number">04</div>
+          <div class="pick-content">
+            <h3>What the Crypto Winter Taught Us About Financial Infrastructure</h3>
+            <p>Beyond the hype and the crash, real innovation is happening in the plumbing of global finance.</p>
+            <div class="pick-meta">Business · 9 min read</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER & SUBSCRIPTION -->
+    <section class="cta-section">
+      <div class="newsletter-card">
+        <h3>Stay ahead of the curve</h3>
+        <p>Get the week's most important stories in tech, culture, and business — delivered every Friday. No spam, just signal.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+          <input type="email" placeholder="your@email.com" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="subscription-card">
+        <h3>Support independent journalism</h3>
+        <p>Unlock unlimited access to every article, exclusive newsletters, and our full archive. Cancel anytime.</p>
+        <div class="price">$8 <span>/ month</span></div>
+        <button class="btn btn-primary">Start free trial</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Ethics</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div class="footer-copy">
+        © 2025 DIGITAL / NEWSROOM. All rights reserved.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

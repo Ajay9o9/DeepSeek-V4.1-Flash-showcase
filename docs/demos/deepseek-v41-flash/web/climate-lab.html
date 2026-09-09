@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLIMATE / DASHBOARD — Global Emissions Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0e14;
+    --bg-panel: #111820;
+    --bg-elevated: #18222d;
+    --border: #1e2a38;
+    --border-bright: #2a3a4d;
+    --text-primary: #e8eef5;
+    --text-secondary: #8a9bb0;
+    --text-muted: #5a6b80;
+    --accent-amber: #f5a623;
+    --accent-coral: #ff6b5b;
+    --accent-teal: #2dd4bf;
+    --accent-lime: #a3e635;
+    --accent-violet: #a78bfa;
+    --grid-line: rgba(45, 212, 191, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── Background grid ── */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-glow {
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-glow-2 {
+    position: fixed;
+    bottom: -30%;
+    left: -15%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Layout ── */
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ── Header ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .brand-mark svg { width: 100%; height: 100%; }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .brand-text .top {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+  }
+
+  .brand-text .bottom {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    color: var(--accent-teal);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav a:hover { color: var(--text-primary); }
+
+  nav a.active {
+    color: var(--accent-teal);
+  }
+
+  nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--accent-teal);
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-lime);
+    letter-spacing: 0.08em;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-lime);
+    box-shadow: 0 0 8px var(--accent-lime);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .header-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Hero / Title band ── */
+  .hero {
+    padding: 56px 0 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 4.2vw, 58px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 720px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-teal);
+  }
+
+  .hero h1 .slash {
+    color: var(--accent-amber);
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    padding-bottom: 6px;
+  }
+
+  .hero-stat {
+    text-align: right;
+  }
+
+  .hero-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-stat .val .unit {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-left: 2px;
+  }
+
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── Region selector ── */
+  .region-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .region-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-right: 12px;
+  }
+
+  .region-btn {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text-secondary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .region-btn:hover {
+    border-color: var(--accent-teal);
+    color: var(--text-primary);
+  }
+
+  .region-btn.active {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    color: var(--bg-deep);
+    font-weight: 600;
+  }
+
+  /* ── Main grid ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .panel-title .accent { color: var(--accent-teal); }
+
+  .panel-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Chart ── */
+  .chart-wrap {
+    padding: 24px 22px 20px;
+    position: relative;
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .legend-swatch {
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .legend-swatch.dashed {
+    background: repeating-linear-gradient(90deg, var(--accent-amber) 0 4px, transparent 4px 7px);
+  }
+
+  .chart-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .chart-tooltip {
+    position: absolute;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-bright);
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .chart-tooltip .tt-year {
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  .chart-tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 2px;
+  }
+
+  .chart-tooltip .tt-val { color: var(--text-primary); font-weight: 500; }
+
+  /* ── Impact metrics sidebar ── */
+  .metrics-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-list {
+    padding: 8px 0;
+    flex: 1;
+  }
+
+  .metric-item {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: background 0.2s;
+  }
+
+  .metric-item:last-child { border-bottom: none; }
+  .metric-item:hover { background: var(--bg-elevated); }
+
+  .metric-info { flex: 1; min-width: 0; }
+
+  .metric-name {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .metric-value .unit {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 3px;
+    font-weight: 400;
+  }
+
+  .metric-trend {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .trend-down { color: var(--accent-teal); background: rgba(45, 212, 191, 0.1); }
+  .trend-up { color: var(--accent-coral); background: rgba(255, 107, 91, 0.1); }
+  .trend-flat { color: var(--accent-amber); background: rgba(245, 166, 35, 0.1); }
+
+  /* ── Scenario cards ── */
+  .scenarios-section {
+    margin-bottom: 24px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .section-head h2 {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .section-head h2 .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-amber);
+    font-size: 13px;
+    margin-right: 10px;
+    font-weight: 400;
+  }
+
+  .section-head .note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .scenario-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: pointer;
+  }
+
+  .scenario-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+  }
+
+  .scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .scenario-card.s1::before { background: var(--accent-coral); }
+  .scenario-card.s2::before { background: var(--accent-amber); }
+  .scenario-card.s3::before { background: var(--accent-teal); }
+
+  .scenario-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .s1 .scenario-tag { color: var(--accent-coral); background: rgba(255, 107, 91, 0.1); }
+  .s2 .scenario-tag { color: var(--accent-amber); background: rgba(245, 166, 35, 0.1); }
+  .s3 .scenario-tag { color: var(--accent-teal); background: rgba(45, 212, 191, 0.1); }
+
+  .scenario-card h3 {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .scenario-card p {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+
+  .scenario-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .scenario-stat .big {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .s1 .scenario-stat .big { color: var(--accent-coral); }
+  .s2 .scenario-stat .big { color: var(--accent-amber); }
+  .s3 .scenario-stat .big { color: var(--accent-teal); }
+
+  .scenario-stat .desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* ── Data source notes ── */
+  .sources {
+    border-top: 1px solid var(--border);
+    padding: 28px 0 40px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+  }
+
+  .sources-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sources-label .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .sources-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 40px;
+  }
+
+  .source-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .source-item strong {
+    color: var(--text-primary);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12.5px;
+  }
+
+  .source-item .src-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  footer .foot-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--accent-teal); }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-stats { justify-content: flex-start; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .sources { grid-template-columns: 1fr; gap: 20px; }
+    .sources-list { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .shell { padding: 0 20px; }
+    nav { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .hero-stat { text-align: left; }
+    .header-meta .header-time { display: none; }
+    footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
+
+  /* ── Animations ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.12s; }
+  .d3 { animation-delay: 0.2s; }
+  .d4 { animation-delay: 0.28s; }
+  .d5 { animation-delay: 0.36s; }
+
+  .chart-line {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: drawLine 2s ease forwards 0.4s;
+  }
+
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .chart-area {
+    opacity: 0;
+    animation: fadeArea 1s ease forwards 1.2s;
+  }
+
+  @keyframes fadeArea {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<div class="shell">
+
+  <!-- ── Header ── -->
+  <header class="fade-in">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="16" stroke="#2dd4bf" stroke-width="1.5" opacity="0.3"/>
+          <path d="M18 4 A14 14 0 0 1 32 18" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 32 A14 14 0 0 1 4 18" stroke="#f5a623" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="4" fill="#2dd4bf"/>
+          <circle cx="18" cy="18" r="2" fill="#0a0e14"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="top">CLIMATE</span>
+        <span class="bottom">DASHBOARD</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#" class="active">Overview</a>
+      <a href="#">Emissions</a>
+      <a href="#">Scenarios</a>
+      <a href="#">Regions</a>
+      <a href="#">Methodology</a>
+    </nav>
+
+    <div class="header-meta">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        LIVE DATA
+      </div>
+      <div class="header-time" id="clock">--:--:-- UTC</div>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero fade-in d1">
+    <div>
+      <h1>Global emissions <em>intelligence</em><span class="slash"> /</span><br>tracked in real time.</h1>
+      <p class="hero-sub">A unified view of carbon trajectories across 42 monitored regions. Updated hourly from satellite, ground sensor, and national inventory feeds.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="val">37.4<span class="unit">Gt</span></div>
+        <div class="lbl">CO₂ 2024</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">+1.48<span class="unit">°C</span></div>
+        <div class="lbl">Anomaly</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">-2.1<span class="unit">%</span></div>
+        <div class="lbl">YoY Change</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Region selector ── -->
+  <div class="region-bar fade-in d2">
+    <span class="region-label">Region</span>
+    <button class="region-btn active" data-region="global">Global</button>
+    <button class="region-btn" data-region="na">North America</button>
+    <button class="region-btn" data-region="eu">Europe</button>
+    <button class="region-btn" data-region="apac">Asia-Pacific</button>
+    <button class="region-btn" data-region="latam">Latin America</button>
+    <button class="region-btn" data-region="africa">Africa</button>
+  </div>
+
+  <!-- ── Main grid: chart + metrics ── -->
+  <div class="main-grid fade-in d3">
+
+    <!-- Chart panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Emissions Trend <span class="accent">/</span> 1990–2024</span>
+        <span class="panel-meta" id="chart-meta">GLOBAL · GtCO₂e</span>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: var(--accent-teal);"></span>
+            Actual emissions
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch dashed"></span>
+            Paris-aligned pathway
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: var(--accent-coral);"></span>
+            Current policy trajectory
+          </div>
+        </div>
+
+        <svg class="chart-svg" viewBox="0 0 800 340" preserveAspectRatio="xMidYMid meet" id="chart">
+          <!-- Grid lines -->
+          <g stroke="#1e2a38" stroke-width="1">
+            <line x1="60" y1="40" x2="780" y2="40"/>
+            <line x1="60" y1="100" x2="780" y2="100"/>
+            <line x1="60" y1="160" x2="780" y2="160"/>
+            <line x1="60" y1="220" x2="780" y2="220"/>
+            <line x1="60" y1="280" x2="780" y2="280"/>
+          </g>
+
+          <!-- Y-axis labels -->
+          <g fill="#5a6b80" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">
+            <text x="50" y="44">45</text>
+            <text x="50" y="104">35</text>
+            <text x="50" y="164">25</text>
+            <text x="50" y="224">15</text>
+            <text x="50" y="284">5</text>
+          </g>
+
+          <!-- X-axis labels -->
+          <g fill="#5a6b80" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">
+            <text x="60" y="305">1990</text>
+            <text x="204" y="305">2000</text>
+            <text x="348" y="305">2010</text>
+            <text x="492" y="305">2015</text>
+            <text x="636" y="305">2020</text>
+            <text x="780" y="305">2024</text>
+          </g>
+
+          <!-- Area fill under actual line -->
+          <path class="chart-area" d="M60,220 L60,240 C100,235 140,225 180,215 C220,205 260,195 300,185 C340,175 380,168 420,160 C460,152 500,148 540,142 C580,136 620,130 660,124 C700,118 740,112 780,108 L780,280 L60,280 Z" fill="url(#areaGrad)" opacity="0"/>
+
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2dd4bf"/>
+              <stop offset="100%" stop-color="#a3e635"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Paris-aligned pathway (dashed amber) -->
+          <path d="M60,240 C140,230 220,215 300,195 C380,175 460,150 540,120 C620,90 700,65 780,50" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+
+          <!-- Current policy trajectory (coral) -->
+          <path d="M60,240 C140,225 220,205 300,185 C380,165 460,148 540,135 C620,125 700,120 780,118" fill="none" stroke="#ff6b5b" stroke-width="2" opacity="0.6"/>
+
+          <!-- Actual emissions line -->
+          <path class="chart-line" d="M60,220 C100,215 140,205 180,195 C220,185 260,175 300,165 C340,155 380,148 420,140 C460,132 500,128 540,122 C580,116 620,110 660,104 C700,98 740,92 780,88" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- Data points -->
+          <g fill="#2dd4bf">
+            <circle cx="60" cy="220" r="3"/>
+            <circle cx="204" cy="190" r="3"/>
+            <circle cx="348" cy="158" r="3"/>
+            <circle cx="492" cy="130" r="3"/>
+            <circle cx="636" cy="108" r="3"/>
+            <circle cx="780" cy="88" r="4" stroke="#0a0e14" stroke-width="2"/>
+          </g>
+
+          <!-- Hover overlay -->
+          <rect x="60" y="40" width="720" height="240" fill="transparent" id="hover-zone" style="cursor: crosshair;"/>
+          <line id="hover-line" x1="0" y1="40" x2="0" y2="280" stroke="#2dd4bf" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>
+          <circle id="hover-dot" cx="0" cy="0" r="5" fill="#2dd4bf" stroke="#0a0e14" stroke-width="2" opacity="0"/>
+        </svg>
+
+        <div class="chart-tooltip" id="tooltip">
+          <div class="tt-year" id="tt-year">2024</div>
+          <div class="tt-row"><span style="color:var(--accent-teal)">Actual</span><span class="tt-val" id="tt-actual">37.4 Gt</span></div>
+          <div class="tt-row"><span style="color:var(--accent-coral)">Policy</span><span class="tt-val" id="tt-policy">41.2 Gt</span></div>
+          <div class="tt-row"><span style="color:var(--accent-amber)">Paris</span><span class="tt-val" id="tt-paris">28.5 Gt</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact metrics -->
+    <div class="panel metrics-panel">
+      <div class="panel-header">
+        <span class="panel-title">Impact Metrics</span>
+        <span class="panel-meta">2024</span>
+      </div>
+      <div class="metric-list">
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Atmospheric CO₂</div>
+            <div class="metric-value">424.6<span class="unit">ppm</span></div>
+          </div>
+          <span class="metric-trend trend-up">+2.4</span>
+        </div>
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Sea level rise</div>
+            <div class="metric-value">101.4<span class="unit">mm</span></div>
+          </div>
+          <span class="metric-trend trend-up">+3.4</span>
+        </div>
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Arctic ice extent</div>
+            <div class="metric-value">4.28<span class="unit">M km²</span></div>
+          </div>
+          <span class="metric-trend trend-down">-12.6</span>
+        </div>
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Renewable share</div>
+            <div class="metric-value">30.2<span class="unit">%</span></div>
+          </div>
+          <span class="metric-trend trend-up">+4.1</span>
+        </div>
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Carbon intensity</div>
+            <div class="metric-value">436<span class="unit">g/kWh</span></div>
+          </div>
+          <span class="metric-trend trend-down">-3.8</span>
+        </div>
+        <div class="metric-item">
+          <div class="metric-info">
+            <div class="metric-name">Methane (CH₄)</div>
+            <div class="metric-value">1923<span class="unit">ppb</span></div>
+          </div>
+          <span class="metric-trend trend-flat">+0.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Scenario cards ── -->
+  <section class="scenarios-section fade-in d4">
+    <div class="section-head">
+      <h2><span class="num">01</span>Scenario Pathways</h2>
+      <span class="note">IPCC AR6 · SSP-aligned</span>
+    </div>
+    <div class="scenario-grid">
+      <div class="scenario-card s1">
+        <span class="scenario-tag">SSP5-8.5</span>
+        <h3>High Emissions</h3>
+        <p>Continued fossil fuel expansion with minimal climate policy. Warming exceeds 4°C by 2100 with severe systemic risk.</p>
+        <div class="scenario-stat">
+          <span class="big">+4.4°C</span>
+          <span class="desc">by 2100<br>business as usual</span>
+        </div>
+      </div>
+      <div class="scenario-card s2">
+        <span class="scenario-tag">SSP2-4.5</span>
+        <h3>Current Policy</h3>
+        <p>Existing pledges and moderate decarbonization. Emissions plateau mid-century before slow decline. Warming near 2.7°C.</p>
+        <div class="scenario-stat">
+          <span class="big">+2.7°C</span>
+          <span class="desc">by 2100<br>stated policies</span>
+        </div>
+      </div>
+      <div class="scenario-card s3">
+        <span class="scenario-tag">SSP1-1.9</span>
+        <h3>Paris-Aligned</h3>
+        <p>Rapid decarbonization, net-zero by 2050, large-scale carbon removal. Limits warming to well below 2°C.</p>
+        <div class="scenario-stat">
+          <span class="big">+1.8°C</span>
+          <span class="desc">by 2100<br>1.5°C pathway</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Data source notes ── -->
+  <section class="sources fade-in d5">
+    <div class="sources-label">
+      <span class="dot"></span>Data Sources
+    </div>
+    <div class="sources-list">
+      <div class="source-item">
+        <strong>Global Carbon Project</strong>
+        Annual CO₂ budget and fossil fuel emissions estimates. Updated November 2024.
+        <div class="src-meta">GCB 2024 · v2.1</div>
+      </div>
+      <div class="source-item">
+        <strong>NOAA Mauna Loa Observatory</strong>
+        Atmospheric CO₂ concentration measurements, continuous since 1958.
+        <div class="src-meta">NOAA GML · hourly</div>
+      </div>
+      <div class="source-item">
+        <strong>Copernicus Climate Service</strong>
+        Satellite-derived temperature anomalies and sea level data.
+        <div class="src-meta">C3S · ERA5 reanalysis</div>
+      </div>
+      <div class="source-item">
+        <strong>IEA World Energy Outlook</strong>
+        Energy sector emissions, renewable capacity, and policy scenario modeling.
+        <div class="src-meta">IEA WEO 2024</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span>CLIMATE / DASHBOARD · v3.2.1 · Last sync 2024-12-18 14:32 UTC</span>
+    <div class="foot-links">
+      <a href="#">Methodology</a>
+      <a href="#">API</a>
+      <a href="#">Changelog</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ── Live clock ──
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getUTCHours()).padStart(2, '0');
+    const m = String(now.getUTCMinutes()).padStart(2, '0');
+    const s = String(now.getUTCSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s} UTC`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ── Region data ──
+  const regionData = {
+    global: {
+      meta: 'GLOBAL · GtCO₂e',
+      actual: [22.5, 24.8, 27.2, 30.1, 32.4, 34.8, 36.2, 37.4],
+      policy: [22.5, 25.5, 29.0, 33.5, 37.0, 39.5, 40.8, 41.2],
+      paris:  [22.5, 24.0, 25.5, 26.0, 25.0, 23.0, 20.5, 18.0]
+    },
+    na: {
+      meta: 'NORTH AMERICA · GtCO₂e',
+      actual: [6.2, 6.8, 6.5, 6.0, 5.6, 5.2, 5.0, 4.8],
+      policy: [6.2, 6.9, 6.8, 6.5, 6.2, 5.9, 5.6, 5.4],
+      paris:  [6.2, 6.5, 5.8, 4.8, 3.8, 2.8, 1.8, 1.0]
+    },
+    eu: {
+      meta: 'EUROPE · GtCO₂e',
+      actual: [4.8, 4.5, 4.2, 3.8, 3.5, 3.2, 3.0, 2.8],
+      policy: [4.8, 4.6, 4.3, 4.0, 3.7, 3.4, 3.1, 2.9],
+      paris:  [4.8, 4.4, 3.8, 3.0, 2.2, 1.5, 0.9, 0.4]
+    },
+    apac: {
+      meta: 'ASIA-PACIFIC · GtCO₂e',
+      actual: [7.5, 9.2, 12.0, 15.2, 17.5, 19.2, 20.5, 21.4],
+      policy: [7.5, 9.5, 12.8, 16.5, 19.5, 21.5, 22.8, 23.5],
+      paris:  [7.5, 8.8, 10.5, 11.5, 11.0, 9.8, 8.2, 6.5]
+    },
+    latam: {
+      meta: 'LATIN AMERICA · GtCO₂e',
+      actual: [1.8, 2.1, 2.4, 2.6, 2.7, 2.8, 2.9, 3.0],
+      policy: [1.8, 2.2, 2.6, 2.9, 3.1, 3.3, 3.4, 3.5],
+      paris:  [1.8, 2.0, 2.1, 2.0, 1.8, 1.5, 1.2, 0.9]
+    },
+    africa: {
+      meta: 'AFRICA · GtCO₂e',
+      actual: [0.9, 1.1, 1.3, 1.5, 1.6, 1.7, 1.8, 1.9],
+      policy: [0.9, 1.2, 1.5, 1.8, 2.0, 2.2, 2.4, 2.5],
+      paris:  [0.9, 1.0, 1.1, 1.1, 1.0, 0.9, 0.7, 0.5]
+    }
+  };
+
+  const years = [1990, 2000, 2010, 2015, 2020, 2022, 2023, 2024];
+  const xPositions = [60, 204, 348, 492, 636, 700, 740, 780];
+
+  // Map value to y coordinate (y range: 40 to 280, value range: 0 to 45)
+  function valToY(val, maxVal) {
+    return 280 - (val / maxVal) * 240;
+  }
+
+  function buildPath(values, maxVal) {
+    return values.map((v, i) => {
+      const x = xPositions[i];
+      const y = valToY(v, maxVal);
+      return `${i === 0 ? 'M' : 'L'}${x},${y}`;
+    }).join(' ');
+  }
+
+  function updateChart(region) {
+    const data = regionData[region];
+    const maxVal = Math.max(...data.policy, ...data.actual, ...data.paris) * 1.1;
+
+    // Update meta
+    document.getElementById('chart-meta').textContent = data.meta;
+
+    // Update paths
+    const actualPath = document.querySelector('.chart-line');
+    const policyPath = document.querySelectorAll('path[stroke="#ff6b5b"]')[0];
+    const parisPath = document.querySelectorAll('path[stroke="#f5a623"]')[0];
+    const areaPath = document.querySelector('.chart-area');
+
+    actualPath.setAttribute('d', buildPath(data.actual, maxVal));
+    policyPath.setAttribute('d', buildPath(data.policy, maxVal));
+    parisPath.setAttribute('d', buildPath(data.paris, maxVal));
+
+    // Rebuild area
+    const areaD = buildPath(data.actual, maxVal) + ` L780,280 L60,280 Z`;
+    areaPath.setAttribute('d', areaD);
+
+    // Update data points
+    const circles = document.querySelectorAll('g[fill="#2dd4bf"] circle');
+    circles.forEach((c, i) => {
+      c.setAttribute('cy', valToY(data.actual[i], maxVal));
+    });
+
+    // Update Y-axis labels
+    const yLabels = document.querySelectorAll('g[fill="#5a6b80"] text');
+    const step = maxVal / 5;
+    for (let i = 0; i < 5; i++) {
+      yLabels[i].textContent = Math.round(maxVal - i * step);
+    }
+
+    // Re-trigger animation
+    actualPath.style.animation = 'none';
+    actualPath.offsetHeight;
+    actualPath.style.animation = 'drawLine 2s ease forwards 0.1s';
+  }
+
+  // ── Region buttons ──
+  document.querySelectorAll('.region-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateChart(btn.dataset.region);
+    });
+  });
+
+  // ── Chart hover ──
+  const hoverZone = document.getElementById('hover-zone');
+  const hoverLine = document.getElementById('hover-line');
+  const hoverDot = document.getElementById('hover-dot');
+  const tooltip = document.getElementById('tooltip');
+  const chartSvg = document.getElementById('chart');
+
+  hoverZone.addEventListener('mousemove', (e) => {
+    const rect = chartSvg.getBoundingClientRect();
+    const scaleX = 800 / rect.width;
+    const svgX = (e.clientX - rect.left) * scaleX;
+
+    // Find nearest data point
+    let nearestIdx = 0;
+    let minDist = Infinity;
+    xPositions.forEach((x, i) => {
+      const dist = Math.abs(x - svgX);
+      if (dist < minDist) { minDist = dist; nearestIdx = i; }
+    });
+
+    const activeRegion = document.querySelector('.region-btn.active').dataset.region;
+    const data = regionData[activeRegion];
+    const maxVal = Math.max(...data.policy, ...data.actual, ...data.paris) * 1.1;
+    const y = valToY(data.actual[nearestIdx], maxVal);
+
+    hoverLine.setAttribute('x1', xPositions[nearestIdx]);
+    hoverLine.setAttribute('x2', xPositions[nearestIdx]);
+    hoverLine.setAttribute('opacity', '1');
+    hoverDot.setAttribute('cx', xPositions[nearestIdx]);
+    hoverDot.setAttribute('cy', y);
+    hoverDot.setAttribute('opacity', '1');
+
+    // Tooltip
+    document.getElementById('tt-year').textContent = years[nearestIdx];
+    document.getElementById('tt-actual').textContent = data.actual[nearestIdx].toFixed(1) + ' Gt';
+    document.getElementById('tt-policy').textContent = data.policy[nearestIdx].toFixed(1) + ' Gt';
+    document.getElementById('tt-paris').textContent = data.paris[nearestIdx].toFixed(1) + ' Gt';
+
+    const tooltipX = (xPositions[nearestIdx] / 800) * rect.width;
+    const tooltipY = (y / 340) * rect.height;
+    tooltip.style.left = (tooltipX + 16) + 'px';
+    tooltip.style.top = (tooltipY - 20) + 'px';
+    tooltip.style.opacity = '1';
+  });
+
+  hoverZone.addEventListener('mouseleave', () => {
+    hoverLine.setAttribute('opacity', '0');
+    hoverDot.setAttribute('opacity', '0');
+    tooltip.style.opacity = '0';
+  });
+
+  // ── Scenario card click ──
+  document.querySelectorAll('.scenario-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.style.borderColor = 'var(--accent-teal)';
+      setTimeout(() => { card.style.borderColor = ''; }, 400);
+    });
+  });
+</script>
+
+</body>
+</html>

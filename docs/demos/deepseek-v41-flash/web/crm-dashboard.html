@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM / DASHBOARD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0B0E14;
+      font-family: 'Inter', sans-serif;
+      color: #E8EDF2;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ---------- DASHBOARD SHELL ---------- */
+    .dashboard {
+      width: 100%;
+      max-width: 1440px;
+      height: 900px;
+      background: #0F131C;
+      border-radius: 32px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---------- SIDEBAR ---------- */
+    .sidebar {
+      background: #0B0E14;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      padding-left: 8px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #FF6B4A, #FF3D71);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 8px 16px -6px rgba(255, 61, 113, 0.4);
+    }
+
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .logo-text span {
+      color: #FF6B4A;
+    }
+
+    .nav-section {
+      margin-bottom: 32px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5A6478;
+      padding: 0 12px;
+      margin-bottom: 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #8A94A8;
+      transition: all 0.2s;
+      cursor: default;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #E8EDF2;
+    }
+
+    .nav-item.active {
+      background: rgba(255, 107, 74, 0.12);
+      color: #FF6B4A;
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: #FF3D71;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      line-height: 1.4;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .user-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4A9EFF, #2D6BFF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8EDF2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 11px;
+      color: #5A6478;
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #0F131C;
+    }
+
+    /* ---------- TOP BAR ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      flex-shrink: 0;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: #5A6478;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #161B26;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 11px 16px 11px 44px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #E8EDF2;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-input::placeholder {
+      color: #5A6478;
+    }
+
+    .search-input:focus {
+      border-color: #FF6B4A;
+      box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.15);
+    }
+
+    .search-shortcut {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1E2433;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #5A6478;
+      pointer-events: none;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #161B26;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background: #1E2433;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #8A94A8;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-btn .dot {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 7px;
+      height: 7px;
+      background: #FF3D71;
+      border-radius: 50%;
+      border: 2px solid #161B26;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #FF6B4A, #FF3D71);
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      cursor: default;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px -8px rgba(255, 61, 113, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px -8px rgba(255, 61, 113, 0.6);
+    }
+
+    .btn-primary svg {
+      width: 16px;
+      height: 16px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ---------- CONTENT GRID ---------- */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px 28px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-content: start;
+    }
+
+    .content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .content::-webkit-scrollbar-thumb {
+      background: #1E2433;
+      border-radius: 3px;
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #E8EDF2;
+    }
+
+    .section-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: #FF6B4A;
+      cursor: default;
+      transition: opacity 0.2s;
+    }
+
+    .section-link:hover {
+      opacity: 0.8;
+    }
+
+    /* ---------- REVENUE SUMMARY ---------- */
+    .revenue-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: #161B26;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #FF6B4A, #FF3D71);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #5A6478;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .stat-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    .stat-change.up {
+      background: rgba(52, 211, 153, 0.12);
+      color: #34D399;
+    }
+
+    .stat-change.down {
+      background: rgba(255, 61, 113, 0.12);
+      color: #FF3D71;
+    }
+
+    .stat-change svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ---------- PIPELINE BOARD ---------- */
+    .pipeline {
+      margin-bottom: 28px;
+    }
+
+    .pipeline-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .pipeline-col {
+      background: #161B26;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 200px;
+    }
+
+    .pipeline-col-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .pipeline-col-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #8A94A8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pipeline-col-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .pipeline-col-dot.lead { background: #4A9EFF; }
+    .pipeline-col-dot.qualified { background: #FFB347; }
+    .pipeline-col-dot.proposal { background: #A78BFA; }
+    .pipeline-col-dot.closed { background: #34D399; }
+
+    .pipeline-col-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: #5A6478;
+      background: #1E2433;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .pipeline-card {
+      background: #1E2433;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: default;
+      transition: all 0.2s;
+    }
+
+    .pipeline-card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateX(2px);
+    }
+
+    .pipeline-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .pipeline-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8EDF2;
+      margin-bottom: 4px;
+    }
+
+    .pipeline-card-company {
+      font-size: 11px;
+      color: #5A6478;
+      margin-bottom: 8px;
+    }
+
+    .pipeline-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pipeline-card-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #FF6B4A;
+    }
+
+    .pipeline-card-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .avatar-1 { background: linear-gradient(135deg, #4A9EFF, #2D6BFF); }
+    .avatar-2 { background: linear-gradient(135deg, #FF6B4A, #FF3D71); }
+    .avatar-3 { background: linear-gradient(135deg, #A78BFA, #7C3AED); }
+    .avatar-4 { background: linear-gradient(135deg, #34D399, #059669); }
+    .avatar-5 { background: linear-gradient(135deg, #FFB347, #F59E0B); }
+
+    /* ---------- RIGHT COLUMN ---------- */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ---------- ACTIVITY FEED ---------- */
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .activity-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .activity-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .activity-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .activity-icon.email { background: rgba(74, 158, 255, 0.12); color: #4A9EFF; }
+    .activity-icon.call { background: rgba(52, 211, 153, 0.12); color: #34D399; }
+    .activity-icon.meeting { background: rgba(167, 139, 250, 0.12); color: #A78BFA; }
+    .activity-icon.note { background: rgba(255, 179, 71, 0.12); color: #FFB347; }
+
+    .activity-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-text {
+      font-size: 13px;
+      color: #C8D0DC;
+      line-height: 1.4;
+      margin-bottom: 2px;
+    }
+
+    .activity-text strong {
+      color: #E8EDF2;
+      font-weight: 600;
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: #5A6478;
+    }
+
+    /* ---------- TASK LIST ---------- */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .task-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .task-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #2D3648;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .task-checkbox.checked {
+      background: #FF6B4A;
+      border-color: #FF6B4A;
+    }
+
+    .task-checkbox.checked svg {
+      width: 12px;
+      height: 12px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .task-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .task-text {
+      font-size: 13px;
+      color: #C8D0DC;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .task-text.done {
+      text-decoration: line-through;
+      color: #5A6478;
+    }
+
+    .task-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .task-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .task-tag.urgent { background: rgba(255, 61, 113, 0.12); color: #FF3D71; }
+    .task-tag.followup { background: rgba(74, 158, 255, 0.12); color: #4A9EFF; }
+    .task-tag.admin { background: rgba(167, 139, 250, 0.12); color: #A78BFA; }
+
+    .task-due {
+      font-size: 11px;
+      color: #5A6478;
+    }
+
+    /* ---------- CONTACTS ---------- */
+    .contacts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .contact-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .contact-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .contact-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8EDF2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-company {
+      font-size: 11px;
+      color: #5A6478;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .contact-status.online { background: #34D399; box-shadow: 0 0 8px rgba(52, 211, 153, 0.4); }
+    .contact-status.away { background: #FFB347; }
+    .contact-status.offline { background: #5A6478; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .dashboard {
+        grid-template-columns: 220px 1fr;
+      }
+      .content {
+        grid-template-columns: 1fr;
+      }
+      .right-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 12px;
+      }
+      .dashboard {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+        border-radius: 24px;
+      }
+      .sidebar {
+        display: none;
+      }
+      .pipeline-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .revenue-grid {
+        grid-template-columns: 1fr;
+      }
+      .right-col {
+        grid-template-columns: 1fr;
+      }
+      .topbar {
+        flex-wrap: wrap;
+      }
+      .search-wrapper {
+        max-width: 100%;
+        order: 3;
+        flex-basis: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .pipeline-board {
+        grid-template-columns: 1fr;
+      }
+      .content {
+        padding: 16px;
+      }
+      .topbar {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">C</div>
+        <div class="logo-text">CRM<span>/</span>DASH</div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-label">Workspace</div>
+        <div class="nav-item active">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Contacts
+          <span class="nav-badge">12</span>
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Pipeline
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Reports
+        </div>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Tools</div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </div>
+        <div class="nav-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Help Center
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">MK</div>
+          <div class="user-info">
+            <div class="user-name">Maya Kessler</div>
+            <div class="user-role">Sales Director</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div class="search-wrapper">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-input" placeholder="Search contacts, deals, companies…" value="">
+          <span class="search-shortcut">⌘K</span>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="dot"></span>
+          </div>
+          <div class="icon-btn">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <button class="btn-primary">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Deal
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- LEFT COLUMN -->
+        <div class="left-col">
+          <!-- REVENUE SUMMARY -->
+          <section class="revenue">
+            <div class="section-header">
+              <h2 class="section-title">Revenue Summary</h2>
+              <span class="section-link">View report →</span>
+            </div>
+            <div class="revenue-grid">
+              <div class="stat-card">
+                <div class="stat-label">Total Revenue</div>
+                <div class="stat-value">$284,500</div>
+                <span class="stat-change up">
+                  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+                  12.4%
+                </span>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Deals Won</div>
+                <div class="stat-value">47</div>
+                <span class="stat-change up">
+                  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+                  8.2%
+                </span>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Avg. Deal Size</div>
+                <div class="stat-value">$6,053</div>
+                <span class="stat-change down">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  3.1%
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- PIPELINE BOARD -->
+          <section class="pipeline">
+            <div class="section-header">
+              <h2 class="section-title">Pipeline Board</h2>
+              <span class="section-link">Manage pipeline →</span>
+            </div>
+            <div class="pipeline-board">
+              <!-- LEAD -->
+              <div class="pipeline-col">
+                <div class="pipeline-col-header">
+                  <div class="pipeline-col-title">
+                    <span class="pipeline-col-dot lead"></span>
+                    Lead
+                  </div>
+                  <span class="pipeline-col-count">4</span>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Enterprise License</div>
+                  <div class="pipeline-card-company">Northwind Traders</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$24,000</span>
+                    <div class="pipeline-card-avatar avatar-1">JD</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Annual Renewal</div>
+                  <div class="pipeline-card-company">Acme Corp</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$12,500</span>
+                    <div class="pipeline-card-avatar avatar-2">SR</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Platform Upgrade</div>
+                  <div class="pipeline-card-company">Globex Inc</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$8,200</span>
+                    <div class="pipeline-card-avatar avatar-3">TW</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- QUALIFIED -->
+              <div class="pipeline-col">
+                <div class="pipeline-col-header">
+                  <div class="pipeline-col-title">
+                    <span class="pipeline-col-dot qualified"></span>
+                    Qualified
+                  </div>
+                  <span class="pipeline-col-count">3</span>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Custom Integration</div>
+                  <div class="pipeline-card-company">Initech Systems</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$18,750</span>
+                    <div class="pipeline-card-avatar avatar-4">AL</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Team Expansion</div>
+                  <div class="pipeline-card-company">Umbrella Health</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$32,000</span>
+                    <div class="pipeline-card-avatar avatar-5">MP</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Data Migration</div>
+                  <div class="pipeline-card-company">Soylent Corp</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$9,400</span>
+                    <div class="pipeline-card-avatar avatar-1">JD</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PROPOSAL -->
+              <div class="pipeline-col">
+                <div class="pipeline-col-header">
+                  <div class="pipeline-col-title">
+                    <span class="pipeline-col-dot proposal"></span>
+                    Proposal
+                  </div>
+                  <span class="pipeline-col-count">2</span>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Enterprise Suite</div>
+                  <div class="pipeline-card-company">Vandelay Industries</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$45,000</span>
+                    <div class="pipeline-card-avatar avatar-2">SR</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Premium Support</div>
+                  <div class="pipeline-card-company">Hooli Inc</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$15,600</span>
+                    <div class="pipeline-card-avatar avatar-3">TW</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CLOSED -->
+              <div class="pipeline-col">
+                <div class="pipeline-col-header">
+                  <div class="pipeline-col-title">
+                    <span class="pipeline-col-dot closed"></span>
+                    Closed Won
+                  </div>
+                  <span class="pipeline-col-count">5</span>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Starter Plan</div>
+                  <div class="pipeline-card-company">Pied Piper</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$3,600</span>
+                    <div class="pipeline-card-avatar avatar-4">AL</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Growth Plan</div>
+                  <div class="pipeline-card-company">Aviato</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$7,200</span>
+                    <div class="pipeline-card-avatar avatar-5">MP</div>
+                  </div>
+                </div>
+                <div class="pipeline-card">
+                  <div class="pipeline-card-name">Enterprise Plan</div>
+                  <div class="pipeline-card-company">Raviga Capital</div>
+                  <div class="pipeline-card-footer">
+                    <span class="pipeline-card-value">$28,000</span>
+                    <div class="pipeline-card-avatar avatar-1">JD</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-col">
+          <!-- ACTIVITY FEED -->
+          <section class="activity">
+            <div class="section-header">
+              <h2 class="section-title">Activity Feed</h2>
+              <span class="section-link">See all →</span>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon email">
+                  <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>Sarah Reeves</strong> sent a proposal to Vandelay Industries</div>
+                  <div class="activity-time">12 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon call">
+                  <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>James Doyle</strong> logged a call with Northwind Traders</div>
+                  <div class="activity-time">1 hour ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon meeting">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>Maya Kessler</strong> scheduled a demo with Hooli Inc</div>
+                  <div class="activity-time">3 hours ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon note">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>Alex Lee</strong> added a note to Initech Systems deal</div>
+                  <div class="activity-time">5 hours ago</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK LIST -->
+          <section class="tasks">
+            <div class="section-header">
+              <h2 class="section-title">Tasks</h2>
+              <span class="section-link">View all →</span>
+            </div>
+            <div class="task-list">
+              <div class="task-item">
+                <div class="task-checkbox checked">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="task-content">
+                  <div class="task-text done">Send follow-up email to Acme Corp</div>
+                  <div class="task-meta">
+                    <span class="task-tag followup">Follow-up</span>
+                    <span class="task-due">Done</span>
+                  </div>
+                </div>
+              </div>
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <div class="task-content">
+                  <div class="task-text">Prepare Q3 revenue report for board meeting</div>
+                  <div class="task-meta">
+                    <span class="task-tag urgent">Urgent</span>
+                    <span class="task-due">Due today</span>
+                  </div>
+                </div>
+              </div>
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <div class="task-content">
+                  <div class="task-text">Review contract terms with legal team</div>
+                  <div class="task-meta">
+                    <span class="task-tag admin">Admin</span>
+                    <span class="task-due">Due tomorrow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="task-item">
+                <div class="task-checkbox"></div>
+                <div class="task-content">
+                  <div class="task-text">Schedule onboarding call with Pied Piper</div>
+                  <div class="task-meta">
+                    <span class="task-tag followup">Follow-up</span>
+                    <span class="task-due">Due Fri</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CONTACTS -->
+          <section class="contacts">
+            <div class="section-header">
+              <h2 class="section-title">Key Contacts</h2>
+              <span class="section-link">All contacts →</span>
+            </div>
+            <div class="contacts-list">
+              <div class="contact-item">
+                <div class="contact-avatar avatar-1">JD</div>
+                <div class="contact-info">
+                  <div class="contact-name">James Doyle</div>
+                  <div class="contact-company">Northwind Traders</div>
+                </div>
+                <div class="contact-status online"></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-avatar avatar-2">SR</div>
+                <div class="contact-info">
+                  <div class="contact-name">Sarah Reeves</div>
+                  <div class="contact-company">Vandelay Industries</div>
+                </div>
+                <div class="contact-status online"></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-avatar avatar-3">TW</div>
+                <div class="contact-info">
+                  <div class="contact-name">Tom Wagner</div>
+                  <div class="contact-company">Globex Inc</div>
+                </div>
+                <div class="contact-status away"></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-avatar avatar-4">AL</div>
+                <div class="contact-info">
+                  <div class="contact-name">Alex Lee</div>
+                  <div class="contact-company">Initech Systems</div>
+                </div>
+                <div class="contact-status offline"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

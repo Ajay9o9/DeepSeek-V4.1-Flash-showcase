@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHARMACY / PORTAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1a1c;
+    --ink-soft: #2a3a3d;
+    --muted: #6b7a7d;
+    --line: #d9e0e0;
+    --line-soft: #eef2f2;
+    --paper: #f6f4ee;
+    --paper-2: #fbfaf6;
+    --card: #ffffff;
+    --mint: #c8e6d4;
+    --mint-deep: #2f6b52;
+    --coral: #ff6b4a;
+    --coral-soft: #ffe4dc;
+    --amber: #f0b429;
+    --amber-soft: #fff3d1;
+    --sky: #cfe4f0;
+    --sky-deep: #2a5a7a;
+    --plum: #4a2c5a;
+    --radius: 14px;
+    --radius-lg: 22px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 90% -10%, rgba(200,230,212,0.55), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(255,107,74,0.08), transparent 60%),
+      var(--paper);
+  }
+
+  .mono { font-family: 'DM Mono', ui-monospace, monospace; }
+  .serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(246,244,238,0.85);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--ink);
+    display: grid; place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .brand-mark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(200,230,212,0.5), transparent 60%);
+  }
+  .brand-mark svg { position: relative; z-index: 1; }
+
+  .brand-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .brand-name span { color: var(--coral); }
+
+  .nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .nav a:hover { background: var(--line-soft); }
+  .nav a.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--card);
+    display: grid; place-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .icon-btn:hover { transform: translateY(-1px); border-color: var(--ink); }
+  .icon-btn .dot {
+    position: absolute; top: 8px; right: 8px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--coral);
+    border: 2px solid var(--card);
+  }
+
+  .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint-deep), var(--plum));
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 28px;
+  }
+
+  /* ---------- Greeting ---------- */
+  .greeting {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 8px;
+  }
+  .greeting h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .greeting h1 em {
+    font-style: italic;
+    color: var(--mint-deep);
+  }
+  .greeting .sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+    max-width: 520px;
+  }
+  .greeting .meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .greeting .meta strong {
+    display: block;
+    color: var(--ink);
+    font-size: 22px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    margin-top: 4px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    position: relative;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .card-title strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ---------- Prescription status (hero) ---------- */
+  .status-card {
+    background: linear-gradient(160deg, #0f1a1c 0%, #1c2f2c 100%);
+    color: #eef2f2;
+    border: none;
+    overflow: hidden;
+    position: relative;
+  }
+  .status-card::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,230,212,0.35), transparent 70%);
+  }
+  .status-card::after {
+    content: "";
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,74,0.25), transparent 70%);
+  }
+  .status-card > * { position: relative; z-index: 1; }
+
+  .status-card .card-title { color: rgba(238,242,242,0.6); }
+  .status-card .card-title strong { color: #eef2f2; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(200,230,212,0.15);
+    color: var(--mint);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .status-pill .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 0 0 rgba(200,230,212,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(200,230,212,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(200,230,212,0); }
+    100% { box-shadow: 0 0 0 0 rgba(200,230,212,0); }
+  }
+
+  .status-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    margin-top: 18px;
+  }
+  .status-body h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .status-body h2 em { font-style: italic; color: var(--mint); }
+  .status-body p {
+    color: rgba(238,242,242,0.7);
+    font-size: 14px;
+    margin-top: 10px;
+    max-width: 420px;
+  }
+
+  .status-meta {
+    display: flex;
+    gap: 28px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(238,242,242,0.12);
+  }
+  .status-meta div .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(238,242,242,0.5);
+  }
+  .status-meta div .v {
+    font-size: 15px;
+    margin-top: 4px;
+    color: #eef2f2;
+  }
+
+  .refill-btn {
+    background: var(--coral);
+    color: #fff;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px -8px rgba(255,107,74,0.6);
+  }
+  .refill-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(255,107,74,0.7); }
+  .refill-btn svg { transition: transform 0.2s; }
+  .refill-btn:hover svg { transform: translateX(3px); }
+
+  /* ---------- Medication list ---------- */
+  .med-list { display: flex; flex-direction: column; }
+  .med-row {
+    display: grid;
+    grid-template-columns: 44px 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .med-row:last-child { border-bottom: none; }
+
+  .med-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    background: var(--line-soft);
+    position: relative;
+  }
+  .med-icon.mint { background: var(--mint); }
+  .med-icon.coral { background: var(--coral-soft); }
+  .med-icon.amber { background: var(--amber-soft); }
+  .med-icon.sky { background: var(--sky); }
+
+  .med-name {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .med-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .med-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--line-soft);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .med-tag.ok { background: var(--mint); color: var(--mint-deep); }
+  .med-tag.warn { background: var(--amber-soft); color: #8a5a00; }
+  .med-tag.low { background: var(--coral-soft); color: #a02a10; }
+
+  .med-action {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .med-action:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ---------- Delivery tracker ---------- */
+  .tracker {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 4px;
+  }
+  .track-step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    position: relative;
+    padding-bottom: 22px;
+  }
+  .track-step:last-child { padding-bottom: 0; }
+  .track-step::before {
+    content: "";
+    position: absolute;
+    left: 13px; top: 22px; bottom: 0;
+    width: 2px;
+    background: var(--line);
+  }
+  .track-step:last-child::before { display: none; }
+  .track-step.done::before { background: var(--mint-deep); }
+
+  .track-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--line);
+    display: grid; place-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .track-step.done .track-dot {
+    background: var(--mint-deep);
+    border-color: var(--mint-deep);
+    color: #fff;
+  }
+  .track-step.active .track-dot {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(255,107,74,0.18);
+  }
+  .track-dot svg { width: 12px; height: 12px; }
+
+  .track-label {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .track-step:not(.done):not(.active) .track-label { color: var(--muted); font-weight: 500; }
+  .track-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Pharmacist chat ---------- */
+  .chat-card {
+    background: linear-gradient(180deg, #fbfaf6 0%, #ffffff 100%);
+  }
+  .chat-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 14px;
+  }
+  .pharm-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sky-deep), var(--plum));
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+  }
+  .pharm-avatar::after {
+    content: "";
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: #4ade80;
+    border: 2px solid var(--card);
+  }
+  .pharm-name { font-weight: 600; font-size: 14px; }
+  .pharm-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .chat-msg {
+    background: var(--line-soft);
+    padding: 12px 14px;
+    border-radius: 14px 14px 14px 4px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .chat-msg .time {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+  }
+
+  .chat-input {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .chat-input input {
+    flex: 1;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input input:focus { border-color: var(--ink); }
+  .chat-input input::placeholder { color: var(--muted); }
+  .chat-send {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .chat-send:hover { transform: translateY(-1px); }
+
+  /* ---------- Health reminders ---------- */
+  .reminders { display: flex; flex-direction: column; gap: 10px; }
+  .reminder {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--line-soft);
+    transition: transform 0.15s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .reminder:hover { transform: translateX(2px); border-color: var(--line); }
+  .reminder-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .reminder-icon.mint { background: var(--mint); color: var(--mint-deep); }
+  .reminder-icon.coral { background: var(--coral-soft); color: #a02a10; }
+  .reminder-icon.amber { background: var(--amber-soft); color: #8a5a00; }
+  .reminder-icon.sky { background: var(--sky); color: var(--sky-deep); }
+
+  .reminder-body { flex: 1; }
+  .reminder-title { font-weight: 600; font-size: 13.5px; color: var(--ink); }
+  .reminder-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+  .reminder-check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .reminder:hover .reminder-check { border-color: var(--mint-deep); }
+  .reminder-check.done {
+    background: var(--mint-deep);
+    border-color: var(--mint-deep);
+    color: #fff;
+  }
+
+  /* ---------- Right column stack ---------- */
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ---------- Footer strip ---------- */
+  .footer-strip {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--line);
+    margin-top: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .footer-strip .links { display: flex; gap: 24px; }
+  .footer-strip a { color: var(--muted); text-decoration: none; }
+  .footer-strip a:hover { color: var(--ink); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .shell { grid-template-columns: 1fr; }
+    .greeting { flex-direction: column; align-items: flex-start; }
+    .greeting .meta { text-align: left; }
+  }
+  @media (max-width: 720px) {
+    .topbar { padding: 14px 20px; }
+    .nav { display: none; }
+    .shell { padding: 24px 20px 40px; }
+    .greeting h1 { font-size: 32px; }
+    .status-body { grid-template-columns: 1fr; }
+    .status-meta { flex-wrap: wrap; gap: 18px; }
+    .med-row { grid-template-columns: 44px 1fr; }
+    .med-row .med-tag, .med-row .med-action { grid-column: 2; justify-self: start; }
+    .footer-strip { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3v18M3 12h18" stroke="#c8e6d4" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="brand-name">PHARMACY <span>/</span> PORTAL</div>
+  </div>
+
+  <nav class="nav">
+    <a href="#" class="active">Overview</a>
+    <a href="#">Prescriptions</a>
+    <a href="#">Deliveries</a>
+    <a href="#">Messages</a>
+    <a href="#">Records</a>
+  </nav>
+
+  <div class="top-actions">
+    <button class="icon-btn" aria-label="Notifications">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0f1a1c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="dot"></span>
+    </button>
+    <div class="avatar">MR</div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- Greeting -->
+  <section class="greeting">
+    <div>
+      <h1>Good morning, <em>Maya</em>.</h1>
+      <p class="sub">Your next refill is ready for review. We've also flagged one medication running low — take a look when you have a moment.</p>
+    </div>
+    <div class="meta">
+      Today
+      <strong>Tuesday, 14 May</strong>
+    </div>
+  </section>
+
+  <!-- Left column -->
+  <div style="display:flex; flex-direction:column; gap:20px;">
+
+    <!-- Prescription status hero -->
+    <section class="card status-card">
+      <div class="card-head">
+        <div class="card-title">Prescription <strong>Status</strong></div>
+        <div class="status-pill">
+          <span class="pulse"></span>
+          In progress
+        </div>
+      </div>
+
+      <div class="status-body">
+        <div>
+          <h2>Atorvastatin 20mg<br><em>is being prepared.</em></h2>
+          <p>Our pharmacist is reviewing your prescription. You'll receive a notification the moment it's ready for pickup or dispatch.</p>
+        </div>
+        <button class="refill-btn">
+          Request refill
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="status-meta">
+        <div>
+          <div class="k">Prescription ID</div>
+          <div class="v mono">RX-4821-09</div>
+        </div>
+        <div>
+          <div class="k">Prescribed by</div>
+          <div class="v">Dr. E. Okafor</div>
+        </div>
+        <div>
+          <div class="k">Est. ready</div>
+          <div class="v">Today, 4:30 PM</div>
+        </div>
+        <div>
+          <div class="k">Refills left</div>
+          <div class="v">3 of 6</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medication list -->
+    <section class="card">
+      <div class="card-head">
+        <div class="card-title">Your <strong>Medications</strong></div>
+        <div class="mono" style="font-size:11px; color:var(--muted); letter-spacing:0.1em;">4 ACTIVE</div>
+      </div>
+
+      <div class="med-list">
+        <div class="med-row">
+          <div class="med-icon mint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2f6b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="8" width="18" height="8" rx="4"/>
+              <path d="M12 8v8"/>
+            </svg>
+          </div>
+          <div>
+            <div class="med-name">Atorvastatin 20mg</div>
+            <div class="med-desc">1 tablet daily · Evening</div>
+          </div>
+          <div class="med-tag ok">Ready</div>
+          <button class="med-action">Refill</button>
+        </div>
+
+        <div class="med-row">
+          <div class="med-icon coral">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a02a10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M2 12h20"/>
+            </svg>
+          </div>
+          <div>
+            <div class="med-name">Metformin 500mg</div>
+            <div class="med-desc">2 tablets daily · With meals</div>
+          </div>
+          <div class="med-tag low">Low stock</div>
+          <button class="med-action">Refill</button>
+        </div>
+
+        <div class="med-row">
+          <div class="med-icon amber">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a5a00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="med-name">Levothyroxine 50mcg</div>
+            <div class="med-desc">1 tablet daily · Morning, empty stomach</div>
+          </div>
+          <div class="med-tag warn">Refill soon</div>
+          <button class="med-action">Refill</button>
+        </div>
+
+        <div class="med-row">
+          <div class="med-icon sky">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a5a7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="med-name">Vitamin D3 1000 IU</div>
+            <div class="med-desc">1 capsule daily · With breakfast</div>
+          </div>
+          <div class="med-tag ok">Active</div>
+          <button class="med-action">Refill</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delivery tracker -->
+    <section class="card">
+      <div class="card-head">
+        <div class="card-title">Delivery <strong>Tracker</strong></div>
+        <div class="mono" style="font-size:11px; color:var(--muted); letter-spacing:0.1em;">ORDER #DP-7742</div>
+      </div>
+
+      <div class="tracker">
+        <div class="track-step done">
+          <div class="track-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+          </div>
+          <div>
+            <div class="track-label">Order confirmed</div>
+            <div class="track-time">Today · 09:14 AM</div>
+          </div>
+        </div>
+
+        <div class="track-step done">
+          <div class="track-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+          </div>
+          <div>
+            <div class="track-label">Pharmacist review complete</div>
+            <div class="track-time">Today · 10:02 AM</div>
+          </div>
+        </div>
+
+        <div class="track-step active">
+          <div class="track-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="track-label">Out for delivery</div>
+            <div class="track-time">Courier en route · ETA 2:45 PM</div>
+          </div>
+        </div>
+
+        <div class="track-step">
+          <div class="track-dot"></div>
+          <div>
+            <div class="track-label">Delivered</div>
+            <div class="track-time">Pending</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Right column -->
+  <aside class="right-col">
+
+    <!-- Pharmacist chat -->
+    <section class="card chat-card">
+      <div class="chat-head">
+        <div class="pharm-avatar">AK</div>
+        <div>
+          <div class="pharm-name">Amara Kene</div>
+          <div class="pharm-role">Lead Pharmacist · Online</div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        Hi Maya — I've reviewed your Atorvastatin prescription. Everything looks good. Let me know if you'd like to discuss the dosage change.
+        <span class="time">10:04 AM</span>
+      </div>
+
+      <div class="chat-input">
+        <input type="text" placeholder="Ask Amara a question…" />
+        <button class="chat-send" aria-label="Send">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Health reminders -->
+    <section class="card">
+      <div class="card-head">
+        <div class="card-title">Health <strong>Reminders</strong></div>
+        <div class="mono" style="font-size:11px; color:var(--muted); letter-spacing:0.1em;">3 TODAY</div>
+      </div>
+
+      <div class="reminders">
+        <div class="reminder">
+          <div class="reminder-icon mint">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M2 12h20"/>
+            </svg>
+          </div>
+          <div class="reminder-body">
+            <div class="reminder-title">Take Metformin with lunch</div>
+            <div class="reminder-sub">12:30 PM · Daily</div>
+          </div>
+          <div class="reminder-check"></div>
+        </div>
+
+        <div class="reminder">
+          <div class="reminder-icon coral">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <div class="reminder-body">
+            <div class="reminder-title">Blood pressure check</div>
+            <div class="reminder-sub">6:00 PM · Weekly</div>
+          </div>
+          <div class="reminder-check"></div>
+        </div>
+
+        <div class="reminder">
+          <div class="reminder-icon amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+          </div>
+          <div class="reminder-body">
+            <div class="reminder-title">Levothyroxine — empty stomach</div>
+            <div class="reminder-sub">7:00 AM · Daily</div>
+          </div>
+          <div class="reminder-check done">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5L20 7"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick stat -->
+    <section class="card" style="background: linear-gradient(160deg, var(--mint) 0%, #e6f2ea 100%); border-color: transparent;">
+      <div class="card-title" style="color: var(--mint-deep);">Adherence <strong style="color: var(--mint-deep);">Score</strong></div>
+      <div style="display:flex; align-items:baseline; gap:10px; margin-top:10px;">
+        <div class="serif" style="font-size:52px; line-height:1; color: var(--mint-deep);">94<span style="font-size:24px;">%</span></div>
+        <div class="mono" style="font-size:11px; color: var(--mint-deep); letter-spacing:0.08em;">+3% THIS MONTH</div>
+      </div>
+      <p style="font-size:13px; color: var(--mint-deep); margin-top:10px; opacity:0.85;">You're on track. Keep taking your medications as prescribed.</p>
+    </section>
+
+  </aside>
+
+  <!-- Footer -->
+  <div class="footer-strip">
+    <div>© 2025 PHARMACY / PORTAL · LICENSED IN THE UK</div>
+    <div class="links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Support</a>
+      <a href="#">Emergency: 999</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // Simple interactive touches
+  document.querySelectorAll('.reminder-check').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      el.classList.toggle('done');
+      if (el.classList.contains('done')) {
+        el.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
+      } else {
+        el.innerHTML = '';
+      }
+    });
+  });
+
+  // Refill button feedback
+  const refillBtn = document.querySelector('.refill-btn');
+  if (refillBtn) {
+    refillBtn.addEventListener('click', () => {
+      const original = refillBtn.innerHTML;
+      refillBtn.innerHTML = '✓ Refill requested';
+      refillBtn.style.background = '#2f6b52';
+      setTimeout(() => {
+        refillBtn.innerHTML = original;
+        refillBtn.style.background = '';
+      }, 2200);
+    });
+  }
+
+  // Med action feedback
+  document.querySelectorAll('.med-action').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const original = btn.textContent;
+      btn.textContent = '✓ Requested';
+      btn.style.background = '#2f6b52';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#2f6b52';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 1800);
+    });
+  });
+</script>
+
+</body>
+</html>

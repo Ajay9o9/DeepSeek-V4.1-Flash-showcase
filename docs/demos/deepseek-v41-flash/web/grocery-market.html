@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOODROOT — Seasonal Grocery Delivery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f1e7;
+    --paper-2: #efe8d9;
+    --paper-3: #e8dfc9;
+    --ink: #1f2a1e;
+    --ink-2: #3a4a37;
+    --muted: #6b7a63;
+    --line: #d9cfb8;
+    --moss: #4a6b3a;
+    --moss-2: #5d7f4a;
+    --leaf: #7ba05b;
+    --sage: #a8bd8f;
+    --clay: #c96a3f;
+    --clay-2: #e08a5c;
+    --gold: #d9a441;
+    --berry: #7a2e3a;
+    --shadow: 0 1px 0 rgba(31,42,30,.04), 0 12px 30px -18px rgba(31,42,30,.25);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(168,189,143,.18), transparent 40%),
+      radial-gradient(circle at 90% 60%, rgba(217,164,65,.10), transparent 45%);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 12.5px;
+    letter-spacing: .02em;
+  }
+  .topbar .wrap {
+    display: flex; justify-content: space-between; align-items: center;
+    height: 38px;
+  }
+  .topbar .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background: var(--leaf); margin-right:8px; vertical-align: middle; }
+  .topbar nav { display: flex; gap: 22px; }
+  .topbar nav a { opacity: .8; }
+  .topbar nav a:hover { opacity: 1; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(6px);
+  }
+  .header-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 28px;
+    padding: 18px 0;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .brand .mark {
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    background: var(--moss);
+    border-radius: 10px;
+    color: var(--paper);
+  }
+  .brand .mark svg { width: 20px; height: 20px; }
+
+  .search {
+    display: flex; align-items: center;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 6px 0 18px;
+    height: 46px;
+    max-width: 560px;
+    width: 100%;
+    justify-self: center;
+    transition: border-color .2s, background .2s;
+  }
+  .search:focus-within { border-color: var(--moss); background: #fff; }
+  .search svg { width: 18px; height: 18px; color: var(--muted); flex: none; }
+  .search input {
+    flex: 1; border: none; background: transparent; outline: none;
+    font-size: 14.5px; padding: 0 12px; color: var(--ink);
+    font-family: inherit;
+  }
+  .search input::placeholder { color: var(--muted); }
+  .search .go {
+    background: var(--moss); color: var(--paper);
+    height: 34px; padding: 0 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .search .go:hover { background: var(--ink); }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .loc {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper-2);
+    font-size: 13px;
+    transition: border-color .2s;
+  }
+  .loc:hover { border-color: var(--moss); }
+  .loc svg { width: 16px; height: 16px; color: var(--moss); }
+  .loc .lbl { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; display: block; line-height: 1; }
+  .loc .val { font-weight: 600; font-size: 13px; line-height: 1.2; }
+
+  .cart {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--paper);
+    padding: 0 16px; height: 46px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 600;
+    position: relative;
+  }
+  .cart:hover { background: var(--moss); }
+  .cart svg { width: 18px; height: 18px; }
+  .cart .count {
+    background: var(--gold); color: var(--ink);
+    border-radius: 999px; padding: 1px 8px; font-size: 11.5px; font-weight: 700;
+  }
+
+  /* ---------- Nav strip ---------- */
+  .navstrip {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .navstrip .wrap {
+    display: flex; gap: 28px; align-items: center;
+    height: 46px; font-size: 13.5px; color: var(--ink-2);
+    overflow-x: auto;
+  }
+  .navstrip a { white-space: nowrap; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .navstrip a:hover { color: var(--moss); border-color: var(--moss); }
+  .navstrip .pill {
+    background: var(--paper-3); color: var(--ink);
+    padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 56px 0 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--moss); font-weight: 600;
+    background: rgba(74,107,58,.08);
+    padding: 6px 12px; border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay); }
+  .hero h1 {
+    font-size: clamp(40px, 4.6vw, 62px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--moss);
+    font-weight: 500;
+  }
+  .hero p.lede {
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 480px;
+    margin: 22px 0 30px;
+    line-height: 1.55;
+  }
+  .hero-cta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 52px; padding: 0 24px; border-radius: 999px;
+    font-size: 14.5px; font-weight: 600;
+    transition: transform .15s, background .2s, color .2s;
+  }
+  .btn-primary { background: var(--moss); color: var(--paper); }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn svg { width: 16px; height: 16px; }
+
+  .hero-meta {
+    display: flex; gap: 32px; margin-top: 40px;
+    padding-top: 28px; border-top: 1px solid var(--line);
+  }
+  .hero-meta .item .num {
+    font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500;
+    color: var(--ink); line-height: 1;
+  }
+  .hero-meta .item .lbl {
+    font-size: 12px; color: var(--muted); margin-top: 6px;
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+
+  /* Hero art */
+  .hero-art {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 30% 25%, #f0e6cf 0%, transparent 55%),
+      radial-gradient(circle at 75% 80%, #e6dcc0 0%, transparent 55%),
+      linear-gradient(160deg, #efe6d0 0%, #e3d8bd 100%);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+  }
+  .hero-art::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(74,107,58,.04) 0 2px, transparent 2px 14px);
+    pointer-events: none;
+  }
+  .hero-art .badge {
+    position: absolute; top: 22px; left: 22px;
+    background: var(--paper); border: 1px solid var(--line);
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; color: var(--moss);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 3;
+  }
+  .hero-art .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay); }
+  .hero-art .price-tag {
+    position: absolute; bottom: 22px; right: 22px;
+    background: var(--ink); color: var(--paper);
+    padding: 12px 18px; border-radius: 16px;
+    z-index: 3;
+    box-shadow: 0 10px 24px -10px rgba(31,42,30,.5);
+  }
+  .hero-art .price-tag .lbl { font-size: 11px; opacity: .7; letter-spacing: .08em; text-transform: uppercase; }
+  .hero-art .price-tag .val { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; margin-top: 2px; }
+
+  /* ---------- Section header ---------- */
+  section { padding: 56px 0; }
+  .sec-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 32px; gap: 24px; flex-wrap: wrap;
+  }
+  .sec-head h2 {
+    font-size: clamp(28px, 3vw, 38px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .sec-head .sub {
+    color: var(--muted); font-size: 14.5px; margin-top: 8px; max-width: 520px;
+  }
+  .sec-head .link {
+    font-size: 13.5px; font-weight: 600; color: var(--moss);
+    display: inline-flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+  }
+  .sec-head .link:hover { border-color: var(--moss); }
+  .sec-head .link svg { width: 14px; height: 14px; }
+
+  /* ---------- Categories ---------- */
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+  }
+  .cat {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px 16px 18px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    text-align: center;
+    transition: transform .2s, border-color .2s, background .2s;
+    cursor: pointer;
+  }
+  .cat:hover { transform: translateY(-3px); border-color: var(--moss); background: #fff; }
+  .cat .art {
+    width: 64px; height: 64px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .cat .art svg { width: 40px; height: 40px; }
+  .cat .name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .cat .count { font-size: 11.5px; color: var(--muted); }
+
+  /* ---------- Products ---------- */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--sage); }
+  .card .thumb {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(160deg, #f0e8d3, #e2d7ba);
+    position: relative;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .card .thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(-45deg, rgba(74,107,58,.05) 0 2px, transparent 2px 12px);
+  }
+  .card .thumb svg { width: 62%; height: 62%; position: relative; z-index: 1; }
+  .card .tag {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--paper); color: var(--moss);
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    border: 1px solid var(--line);
+    z-index: 2;
+  }
+  .card .tag.clay { color: var(--clay); }
+  .card .tag.berry { color: var(--berry); }
+  .card .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card .origin { font-size: 11.5px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .card h3 { font-size: 17px; font-weight: 500; line-height: 1.25; }
+  .card .desc { font-size: 13px; color: var(--ink-2); line-height: 1.45; margin-top: 2px; }
+  .card .row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: auto; padding-top: 14px;
+  }
+  .card .price { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; }
+  .card .price small { font-size: 12px; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 400; margin-left: 4px; }
+  .add {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink); color: var(--paper);
+    height: 36px; padding: 0 14px; border-radius: 999px;
+    font-size: 12.5px; font-weight: 600;
+    transition: background .2s, transform .15s;
+  }
+  .add:hover { background: var(--moss); }
+  .add:active { transform: scale(.96); }
+  .add svg { width: 14px; height: 14px; }
+  .add.added { background: var(--moss); }
+
+  /* ---------- Weekly basket ---------- */
+  .basket {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 28px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .basket::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(217,164,65,.18), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(123,160,91,.20), transparent 45%);
+    pointer-events: none;
+  }
+  .basket > * { position: relative; z-index: 1; }
+  .basket .eyebrow { background: rgba(246,241,231,.10); color: var(--sage); }
+  .basket h2 { color: var(--paper); font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; }
+  .basket h2 em { color: var(--gold); font-style: italic; }
+  .basket p { color: rgba(246,241,231,.75); font-size: 15.5px; margin: 18px 0 28px; max-width: 460px; }
+  .basket .btn-primary { background: var(--gold); color: var(--ink); }
+  .basket .btn-primary:hover { background: var(--paper); }
+  .basket .btn-ghost { color: var(--paper); border-color: rgba(246,241,231,.25); }
+  .basket .btn-ghost:hover { border-color: var(--paper); }
+
+  .basket-list {
+    background: rgba(246,241,231,.06);
+    border: 1px solid rgba(246,241,231,.12);
+    border-radius: 20px;
+    padding: 22px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .basket-list .head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 14px; border-bottom: 1px dashed rgba(246,241,231,.18);
+  }
+  .basket-list .head .t { font-family: 'Fraunces', serif; font-size: 18px; }
+  .basket-list .head .s { font-size: 12px; color: rgba(246,241,231,.6); }
+  .basket-item {
+    display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center;
+  }
+  .basket-item .ic {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(246,241,231,.08);
+    display: grid; place-items: center;
+  }
+  .basket-item .ic svg { width: 26px; height: 26px; }
+  .basket-item .nm { font-size: 14px; font-weight: 500; }
+  .basket-item .qt { font-size: 12px; color: rgba(246,241,231,.55); margin-top: 2px; }
+  .basket-item .pr { font-family: 'Fraunces', serif; font-size: 15px; }
+  .basket-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 16px; border-top: 1px dashed rgba(246,241,231,.18);
+    margin-top: 4px;
+  }
+  .basket-total .lbl { font-size: 12px; color: rgba(246,241,231,.6); text-transform: uppercase; letter-spacing: .08em; }
+  .basket-total .val { font-family: 'Fraunces', serif; font-size: 26px; color: var(--gold); }
+
+  /* ---------- Delivery promise ---------- */
+  .promise {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .promise .p {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .promise .p .ic {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: var(--paper); border: 1px solid var(--line);
+    display: grid; place-items: center;
+    color: var(--moss);
+  }
+  .promise .p .ic svg { width: 24px; height: 24px; }
+  .promise .p h3 { font-size: 19px; font-weight: 500; }
+  .promise .p p { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+    padding: 56px 0 32px;
+    margin-top: 40px;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .foot-grid h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .foot-grid ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot-grid a { font-size: 14px; color: var(--ink-2); }
+  .foot-grid a:hover { color: var(--moss); }
+  .foot-brand p { font-size: 14px; color: var(--ink-2); margin: 14px 0 0; max-width: 320px; line-height: 1.55; }
+  .foot-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; font-size: 12.5px; color: var(--muted);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .foot-bottom .socials { display: flex; gap: 10px; }
+  .foot-bottom .socials a {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line); display: grid; place-items: center;
+    color: var(--ink-2);
+  }
+  .foot-bottom .socials a:hover { border-color: var(--moss); color: var(--moss); }
+  .foot-bottom .socials svg { width: 15px; height: 15px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .cats { grid-template-columns: repeat(3, 1fr); }
+    .products { grid-template-columns: repeat(2, 1fr); }
+    .basket { grid-template-columns: 1fr; padding: 36px; }
+    .promise { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 820px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-art { max-width: 480px; }
+    .header-row { grid-template-columns: auto auto; }
+    .search { grid-column: 1 / -1; order: 3; max-width: none; }
+    .loc .lbl { display: none; }
+    .topbar nav { display: none; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .cats { grid-template-columns: repeat(2, 1fr); }
+    .products { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .hero-meta { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="wrap">
+    <div><span class="dot"></span>Free delivery on baskets over $45 — every Thursday &amp; Sunday</div>
+    <nav>
+      <a href="#">Recipes</a>
+      <a href="#">Our farms</a>
+      <a href="#">Help</a>
+    </nav>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site">
+  <div class="wrap header-row">
+    <a href="#" class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21V9"/>
+          <path d="M12 9c0-3 2-6 6-6 0 4-2 6-6 6z"/>
+          <path d="M12 13c0-2.5-1.8-5-5-5 0 3.5 1.8 5 5 5z"/>
+        </svg>
+      </span>
+      GOODROOT
+    </a>
+
+    <form class="search" onsubmit="event.preventDefault();">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input type="text" placeholder="Search heirloom tomatoes, sourdough, oat milk…">
+      <button class="go" type="submit">
+        Search
+      </button>
+    </form>
+
+    <div class="header-actions">
+      <button class="loc" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <span>
+          <span class="lbl">Deliver to</span>
+          <span class="val">Brooklyn, 11211</span>
+        </span>
+      </button>
+      <button class="cart" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6"/>
+          <circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>
+        </svg>
+        Cart
+        <span class="count" id="cartCount">3</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Nav strip -->
+<div class="navstrip">
+  <div class="wrap">
+    <a href="#">Shop all</a>
+    <a href="#">Seasonal</a>
+    <a href="#">Fruit &amp; Veg</a>
+    <a href="#">Bakery</a>
+    <a href="#">Dairy &amp; Eggs</a>
+    <a href="#">Pantry</a>
+    <a href="#">Butcher</a>
+    <a href="#">Drinks</a>
+    <span class="pill">New: Spring harvest</span>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Spring harvest · Week 14</span>
+      <h1>Rooted in the season, <em>delivered</em> to your door.</h1>
+      <p class="lede">Hand-picked produce from small farms within 120 miles of your kitchen. Harvested this morning, on your table by tomorrow evening.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">
+          Shop this week's harvest
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14l11-7z"/></svg>
+          How it works
+        </a>
+      </div>
+      <div class="hero-meta">
+        <div class="item">
+          <div class="num">48</div>
+          <div class="lbl">Partner farms</div>
+        </div>
+        <div class="item">
+          <div class="num">12h</div>
+          <div class="lbl">Farm to door</div>
+        </div>
+        <div class="item">
+          <div class="num">4.9★</div>
+          <div class="lbl">From 6,200 reviews</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="badge"><span class="dot"></span>Picked today</div>
+      <div class="price-tag">
+        <div class="lbl">This week's basket</div>
+        <div class="val">$42.00</div>
+      </div>
+      <!-- Botanical SVG illustration -->
+      <svg viewBox="0 0 500 500" style="position:absolute; inset:0; width:100%; height:100%;">
+        <defs>
+          <radialGradient id="tomato" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#e88a5c"/>
+            <stop offset="60%" stop-color="#c96a3f"/>
+            <stop offset="100%" stop-color="#8f3f22"/>
+          </radialGradient>
+          <radialGradient id="leafG" cx="30%" cy="30%" r="80%">
+            <stop offset="0%" stop-color="#a8bd8f"/>
+            <stop offset="100%" stop-color="#4a6b3a"/>
+          </radialGradient>
+          <radialGradient id="lemon" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#f0d27a"/>
+            <stop offset="100%" stop-color="#c99a2e"/>
+          </radialGradient>
+          <radialGradient id="berryG" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#a04a58"/>
+            <stop offset="100%" stop-color="#5a1f2a"/>
+          </radialGradient>
+          <radialGradient id="carrot" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#e8a05c"/>
+            <stop offset="100%" stop-color="#b35a1f"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Big central tomato -->
+        <g transform="translate(250 260)">
+          <ellipse cx="0" cy="0" rx="130" ry="120" fill="url(#tomato)"/>
+          <ellipse cx="-40" cy="-40" rx="30" ry="20" fill="#f0a878" opacity=".55"/>
+          <!-- stem -->
+          <path d="M0 -110 q-6 -30 4 -50" stroke="#4a6b3a" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <!-- leaves -->
+          <path d="M0 -110 q-40 -10 -55 10 q30 15 55 -10z" fill="url(#leafG)"/>
+          <path d="M0 -110 q40 -10 55 10 q-30 15 -55 -10z" fill="url(#leafG)"/>
+          <path d="M0 -110 q-15 -35 5 -55 q20 25 -5 55z" fill="url(#leafG)"/>
+        </g>
+
+        <!-- Lemon -->
+        <g transform="translate(120 130)">
+          <ellipse cx="0" cy="0" rx="55" ry="48" fill="url(#lemon)"/>
+          <ellipse cx="-18" cy="-16" rx="14" ry="9" fill="#f8e6a8" opacity=".7"/>
+          <path d="M-55 0 q-8 -3 -12 0 q4 3 12 0z" fill="#c99a2e"/>
+          <path d="M55 0 q8 -3 12 0 q-4 3 -12 0z" fill="#c99a2e"/>
+        </g>
+
+        <!-- Berries cluster -->
+        <g transform="translate(400 130)">
+          <circle cx="0" cy="0" r="26" fill="url(#berryG)"/>
+          <circle cx="30" cy="14" r="22" fill="url(#berryG)"/>
+          <circle cx="-22" cy="20" r="20" fill="url(#berryG)"/>
+          <circle cx="8" cy="34" r="18" fill="url(#berryG)"/>
+          <circle cx="-8" cy="-8" r="6" fill="#c98a95" opacity=".6"/>
+          <circle cx="22" cy="6" r="5" fill="#c98a95" opacity=".6"/>
+          <path d="M0 -26 q-4 -14 6 -22" stroke="#4a6b3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M0 -26 q-14 -6 -22 2 q10 8 22 -2z" fill="url(#leafG)"/>
+        </g>
+
+        <!-- Carrot -->
+        <g transform="translate(400 380) rotate(-25)">
+          <path d="M0 -60 q30 40 20 90 q-10 20 -20 20 q-10 0 -20 -20 q-10 -50 20 -90z" fill="url(#carrot)"/>
+          <path d="M-8 -50 q-4 30 -2 60" stroke="#8f3f22" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M8 -50 q4 30 2 60" stroke="#8f3f22" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M0 -60 q-20 -30 -30 -40" stroke="#4a6b3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M0 -60 q0 -35 5 -50" stroke="#4a6b3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M0 -60 q20 -30 30 -40" stroke="#4a6b3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Small herb sprig -->
+        <g transform="translate(110 380)">
+          <path d="M0 40 q10 -40 0 -80" stroke="#4a6b3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="-14" cy="10" rx="14" ry="8" fill="url(#leafG)" transform="rotate(-30 -14 10)"/>
+          <ellipse cx="14" cy="-10" rx="14" ry="8" fill="url(#leafG)" transform="rotate(30 14 -10)"/>
+          <ellipse cx="-14" cy="-30" rx="14" ry="8" fill="url(#leafG)" transform="rotate(-30 -14 -30)"/>
+          <ellipse cx="14" cy="-50" rx="14" ry="8" fill="url(#leafG)" transform="rotate(30 14 -50)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Browse the aisles</h2>
+        <p class="sub">Everything you need for the week, sorted the way you actually shop.</p>
+      </div>
+      <a href="#" class="link">All categories
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="cats">
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <ellipse cx="20" cy="22" rx="13" ry="12" fill="#c96a3f"/>
+            <ellipse cx="15" cy="17" rx="4" ry="3" fill="#e8a878" opacity=".7"/>
+            <path d="M20 10 q-2 -6 2 -8" stroke="#4a6b3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M20 10 q-8 -2 -10 3 q6 3 10 -3z" fill="#7ba05b"/>
+            <path d="M20 10 q8 -2 10 3 q-6 3 -10 -3z" fill="#7ba05b"/>
+          </svg>
+        </div>
+        <div class="name">Fruit &amp; Veg</div>
+        <div class="count">142 items</div>
+      </div>
+
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <path d="M8 22 q12 -14 24 0 q-12 12 -24 0z" fill="#d9a441"/>
+            <path d="M8 22 q12 -6 24 0" stroke="#a87a1f" stroke-width="1.5" fill="none"/>
+            <circle cx="14" cy="20" r="1.2" fill="#a87a1f"/>
+            <circle cx="20" cy="18" r="1.2" fill="#a87a1f"/>
+            <circle cx="26" cy="20" r="1.2" fill="#a87a1f"/>
+          </svg>
+        </div>
+        <div class="name">Bakery</div>
+        <div class="count">38 items</div>
+      </div>
+
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <path d="M12 12 h16 v14 a8 8 0 0 1 -16 0z" fill="#f6f1e7" stroke="#4a6b3a" stroke-width="1.5"/>
+            <path d="M12 12 q8 -6 16 0" fill="#a8bd8f"/>
+            <circle cx="20" cy="22" r="3" fill="#d9a441"/>
+          </svg>
+        </div>
+        <div class="name">Dairy &amp; Eggs</div>
+        <div class="count">64 items</div>
+      </div>
+
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <path d="M14 8 h12 v6 l-2 18 h-8 l-2 -18z" fill="#7a2e3a"/>
+            <rect x="14" y="8" width="12" height="4" fill="#4a6b3a"/>
+            <rect x="16" y="18" width="8" height="6" fill="#f6f1e7" opacity=".85"/>
+          </svg>
+        </div>
+        <div class="name">Pantry</div>
+        <div class="count">96 items</div>
+      </div>
+
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <path d="M10 14 q10 -8 20 0 v14 q-10 6 -20 0z" fill="#c96a3f"/>
+            <path d="M10 14 q10 4 20 0" stroke="#8f3f22" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="20" r="1.5" fill="#f6f1e7" opacity=".7"/>
+            <circle cx="24" cy="22" r="1.5" fill="#f6f1e7" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="name">Butcher</div>
+        <div class="count">27 items</div>
+      </div>
+
+      <div class="cat">
+        <div class="art">
+          <svg viewBox="0 0 40 40">
+            <path d="M16 8 h8 v4 l-1 20 h-6 l-1 -20z" fill="#4a6b3a"/>
+            <rect x="16" y="8" width="8" height="3" fill="#d9a441"/>
+            <rect x="17" y="18" width="6" height="8" fill="#f6f1e7" opacity=".85"/>
+          </svg>
+        </div>
+        <div class="name">Drinks</div>
+        <div class="count">51 items</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section style="padding-top: 8px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Fresh from the farms</h2>
+        <p class="sub">Picked within the last 24 hours. Limited quantities — the harvest decides.</p>
+      </div>
+      <a href="#" class="link">See all 142 items
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="products">
+      <!-- Card 1: Heirloom tomatoes -->
+      <article class="card">
+        <div class="thumb">
+          <span class="tag">Peak season</span>
+          <svg viewBox="0 0 200 150">
+            <defs>
+              <radialGradient id="t1" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#e88a5c"/>
+                <stop offset="100%" stop-color="#8f3f22"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="100" cy="90" rx="55" ry="48" fill="url(#t1)"/>
+            <ellipse cx="80" cy="72" rx="14" ry="9" fill="#f0a878" opacity=".55"/>
+            <path d="M100 42 q-3 -14 3 -22" stroke="#4a6b3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M100 42 q-18 -4 -24 4 q14 8 24 -4z" fill="#7ba05b"/>
+            <path d="M100 42 q18 -4 24 4 q-14 8 -24 -4z" fill="#7ba05b"/>
+            <path d="M100 42 q-6 -16 2 -24 q10 12 -2 24z" fill="#7ba05b"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="origin">Hudson Valley, NY</div>
+          <h3>Heirloom Tomatoes</h3>
+          <p class="desc">Mixed varieties — Brandywine, Green Zebra, Cherokee Purple. Deeply sweet.</p>
+          <div class="row">
+            <div class="price">$6.50 <small>/ lb</small></div>
+            <button class="add" data-add>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Sourdough -->
+      <article class="card">
+        <div class="thumb">
+          <span class="tag clay">Baked today</span>
+          <svg viewBox="0 0 200 150">
+            <defs>
+              <radialGradient id="b1" cx="40%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#e8b878"/>
+                <stop offset="100%" stop-color="#a86a2a"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="100" cy="90" rx="70" ry="42" fill="url(#b1)"/>
+            <path d="M40 82 q60 -22 120 0" stroke="#7a4a1a" stroke-width="2" fill="none" opacity=".6"/>
+            <path d="M55 70 q45 -14 90 0" stroke="#7a4a1a" stroke-width="2" fill="none" opacity=".6"/>
+            <path d="M70 58 q30 -8 60 0" stroke="#7a4a1a" stroke-width="2" fill="none" opacity=".6"/>
+            <ellipse cx="80" cy="72" rx="14" ry="6" fill="#f0d0a0" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="origin">Bien Cuit Bakehouse</div>
+          <h3>Country Sourdough</h3>
+          <p class="desc">48-hour ferment, stone-milled wheat, blistered crust. 800g loaf.</p>
+          <div class="row">
+            <div class="price">$9.00 <small>/ loaf</small></div>
+            <button class="add" data-add>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Strawberries -->
+      <article class="card">
+        <div class="thumb">
+          <span class="tag berry">Limited</span>
+          <svg viewBox="0 0 200 150">
+            <defs>
+              <radialGradient id="s1" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#c94a5a"/>
+                <stop offset="100%" stop-color="#7a1f2a"/>
+              </radialGradient>
+            </defs>
+            <path d="M100 40 q40 20 30 60 q-10 30 -30 30 q-20 0 -30 -30 q-10 -40 30 -60z" fill="url(#s1)"/>
+            <circle cx="88" cy="70" r="1.5" fill="#f0d0a0"/>
+            <circle cx="100" cy="72" r="1.5" fill="#f0d0a0"/>
+            <circle cx="112" cy="70" r="1.5" fill="#f0d0a0"/>
+            <circle cx="94" cy="86" r="1.5" fill="#f0d0a0"/>
+            <circle cx="106" cy="86" r="1.5" fill="#f0d0a0"/>
+            <circle cx="100" cy="100" r="1.5" fill="#f0d0a0"/>
+            <path d="M100 40 q-14 -6 -20 2 q10 8 20 -2z" fill="#4a6b3a"/>
+            <path d="M100 40 q14 -6 20 2 q-10 8 -20 -2z" fill="#4a6b3a"/>
+            <path d="M100 40 q-4 -12 2 -18 q8 10 -2 18z" fill="#4a6b3a"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="origin">Westerly Farm, NJ</div>
+          <h3>Wild Strawberries</h3>
+          <p class="desc">Tiny, intensely fragrant. Picked at dawn — eat within two days.</p>
+          <div class="row">
+            <div class="price">$7.25 <small>/ pint</small></div>
+            <button class="add" data-add>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: Farm eggs -->
+      <article class="card">
+        <div class="thumb">
+          <span class="tag">Pasture-raised</span>
+          <svg viewBox="0 0 200 150">
+            <defs>
+              <radialGradient id="e1" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#f6e8c8"/>
+                <stop offset="100%" stop-color="#c9a86a"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="80" cy="90" rx="34" ry="42" fill="url(#e1)"/>
+            <ellipse cx="70" cy="76" rx="10" ry="14" fill="#fff" opacity=".5"/>
+            <ellipse cx="120" cy="95" rx="30" ry="38" fill="url(#e1)"/>
+            <ellipse cx="112" cy="82" rx="8" ry="12" fill="#fff" opacity=".5"/>
+            <ellipse cx="100" cy="70" rx="26" ry="32" fill="url(#e1)"/>
+            <ellipse cx="92" cy="58" rx="7" ry="10" fill="#fff" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="origin">Hawthorne Henhouse</div>
+          <h3>Pasture-Raised Eggs</h3>
+          <p class="desc">A dozen, mixed sizes. Deep amber yolks from hens on rotated pasture.</p>
+          <div class="row">
+            <div class="price">$8.00 <small>/ dozen</small></div>
+            <button class="add" data-add>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Weekly basket -->
+<section>
+  <div class="wrap">
+    <div class="basket">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Weekly basket · Save 15%</span>
+        <h2>Let the harvest <em>choose</em> for you.</h2>
+        <p>Each week our buyers build a basket around what's peaking. Skip, pause, or swap any item — no commitment, no surprises.</p>
+        <div class="hero-cta">
+          <a href="#" class="btn btn-primary">
+            Start a weekly basket
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a href="#" class="btn btn-ghost">See this week's box</a>
+        </div>
+      </div>
+
+      <div class="basket-list">
+        <div class="head">
+          <div class="t">This week's basket</div>
+          <div class="s">Week 14 · 8 items</div>
+        </div>
+
+        <div class="basket-item">
+          <div class="ic">
+            <svg viewBox="0 0 40 40">
+              <ellipse cx="20" cy="22" rx="13" ry="12" fill="#c96a3f"/>
+              <path d="M20 10 q-2 -6 2 -8" stroke="#7ba05b" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M20 10 q-8 -2 -10 3 q6 3 10 -3z" fill="#7ba05b"/>
+            </svg>
+          </div>
+          <div>
+            <div class="nm">Heirloom tomatoes</div>
+            <div class="qt">1 lb · Hudson Valley</div>
+          </div>
+          <div class="pr">$6.50</div>
+        </div>
+
+        <div class="basket-item">
+          <div class="ic">
+            <svg viewBox="0 0 40 40">
+              <ellipse cx="20" cy="22" rx="14" ry="9" fill="#d9a441"/>
+              <path d="M8 22 q12 -6 24 0" stroke="#a87a1f" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <div>
+            <div class="nm">Country sourdough</div>
+            <div class="qt">800g · Bien Cuit</div>
+          </div>
+          <div class="pr">$9.00</div>
+        </div>
+
+        <div class="basket-item">
+          <div class="ic">
+            <svg viewBox="0 0 40 40">
+              <path d="M20 8 q10 6 8 18 q-3 10 -8 10 q-5 0 -8 -10 q-2 -12 8 -18z" fill="#7a2e3a"/>
+              <path d="M20 8 q-4 -4 -8 0 q4 4 8 0z" fill="#4a6b3a"/>
+            </svg>
+          </div>
+          <div>
+            <div class="nm">Wild strawberries</div>
+            <div class="qt">1 pint · Westerly Farm</div>
+          </div>
+          <div class="pr">$7.25</div>
+        </div>
+
+        <div class="basket-item">
+          <div class="ic">
+            <svg viewBox="0 0 40 40">
+              <ellipse cx="20" cy="22" rx="11" ry="14" fill="#f6e8c8"/>
+              <ellipse cx="16" cy="16" rx="3" ry="5" fill="#fff" opacity=".6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="nm">Pasture-raised eggs</div>
+            <div class="qt">1 dozen · Hawthorne</div>
+          </div>
+          <div class="pr">$8.00</div>
+        </div>
+
+        <div class="basket-total">
+          <div class="lbl">Basket total</div>
+          <div class="val">$30.75</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Delivery promise -->
+<section style="padding-top: 8px;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Our delivery promise</h2>
+        <p class="sub">Three things we'll never compromise on — because good food shouldn't be a gamble.</p>
+      </div>
+    </div>
+
+    <div class="promise">
+      <div class="p">
+        <div class="ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7h11v10H3z"/>
+            <path d="M14 10h4l3 3v4h-7z"/>
+            <circle cx="7" cy="18" r="2"/>
+            <circle cx="17" cy="18" r="2"/>
+          </svg>
+        </div>
+        <h3>Next-day, cold-chain delivery</h3>
+        <p>Order by 8pm and we'll bring it tomorrow evening in insulated, recyclable crates. Everything stays at the right temperature from farm to doorstep.</p>
+      </div>
+
+      <div class="p">
+        <div class="ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18"/>
+            <path d="M12 8c0-3 2-5 5-5 0 3-2 5-5 5z"/>
+            <path d="M12 13c0-2.5-1.8-4.5-4.5-4.5 0 3 1.8 4.5 4.5 4.5z"/>
+          </svg>
+        </div>
+        <h3>Grown within 120 miles</h3>
+        <p>Every item is traceable to a named farm. We pay our growers a fair, published price — and we tell you exactly who grew your dinner.</p>
+      </div>
+
+      <div class="p">
+        <div class="ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12a8 8 0 1 1-3-6.2"/>
+            <path d="M20 4v5h-5"/>
+          </svg>
+        </div>
+        <h3>Not happy? We'll make it right</h3>
+        <p>If anything arrives less than perfect, tell us within 24 hours. We'll refund it or replace it on your next delivery — no photos, no fuss.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <span class="mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21V9"/>
+              <path d="M12 9c0-3 2-6 6-6 0 4-2 6-6 6z"/>
+              <path d="M12 13c0-2.5-1.8-5-5-5 0 3.5 1.8 5 5 5z"/>
+            </svg>
+          </span>
+          GOODROOT
+        </a>
+        <p>Seasonal groceries from small farms, delivered with care. Founded in Brooklyn, 2019.</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Seasonal harvest</a></li>
+          <li><a href="#">Weekly baskets</a></li>
+          <li><a href="#">Pantry staples</a></li>
+          <li><a href="#">Gift cards</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our farms</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Delivery areas</a></li>
+          <li><a href="#">Returns &amp; refunds</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div>© 2025 GOODROOT Grocery Co. · Made with care in Brooklyn.</div>
+      <div class="socials">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4 4 0 0 0-6.9 3.7A11.4 11.4 0 0 1 3.8 4.6a4 4 0 0 0 1.2 5.4c-.6 0-1.2-.2-1.8-.5v.1a4 4 0 0 0 3.2 4 4 4 0 0 1-1.8.1 4 4 0 0 0 3.7 2.8A8 8 0 0 1 2 18.3a11.3 11.3 0 0 0 6.2 1.8c7.4 0 11.5-6.2 11.5-11.5v-.5c.8-.6 1.5-1.3 2.1-2.1z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Newsletter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="m3 7 9 6 9-6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Add-to-cart interaction
+  const cartCount = document.getElementById('cartCount');
+  let count = parseInt(cartCount.textContent, 10) || 0;
+
+  document.querySelectorAll('[data-add]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('added')) return;
+      count += 1;
+      cartCount.textContent = count;
+      btn.classList.add('added');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg> Added';
+      setTimeout(() => {
+        btn.classList.remove('added');
+        btn.innerHTML = original;
+      }, 1600);
+    });
+  });
+</script>
+
+</body>
+</html>

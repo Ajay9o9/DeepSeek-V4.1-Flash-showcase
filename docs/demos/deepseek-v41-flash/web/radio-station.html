@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RADIO / STATION — independent airwaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & VARIABLES ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0c0b0e;
+      --surface: #141317;
+      --surface-2: #1c1b20;
+      --border: #2a282e;
+      --text: #eae8ed;
+      --text-dim: #9b97a3;
+      --accent: #ff5c35;      /* vivid coral */
+      --accent-2: #c8ff3d;    /* electric lime */
+      --accent-3: #7b61ff;    /* deep violet */
+      --radius: 12px;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- SCROLLBAR ---------- */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* ---------- UTILITY ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent-2);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12, 11, 14, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--bg);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav a:hover {
+      color: var(--text);
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      padding: 6px 14px;
+      border: 1px solid var(--accent-2);
+      border-radius: 100px;
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-2);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #ff7a5a;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ---------- HERO / NOW PLAYING ---------- */
+    .hero {
+      padding: 64px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 92, 53, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -300px;
+      left: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(123, 97, 255, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left {
+      padding-top: 8px;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Now Playing Card */
+    .now-playing {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .now-playing::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    }
+
+    .np-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .np-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .np-live {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .np-live .live-dot {
+      background: var(--accent);
+    }
+
+    .np-art {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-3) 0%, var(--accent) 50%, var(--accent-2) 100%);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .np-art::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(0,0,0,0.08) 20px,
+        rgba(0,0,0,0.08) 21px
+      );
+    }
+    .np-art-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .np-art-inner svg {
+      width: 80px;
+      height: 80px;
+      opacity: 0.9;
+    }
+
+    .np-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .np-artist {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .np-progress {
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .np-progress-bar {
+      height: 100%;
+      width: 62%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 2px;
+      animation: progress 30s linear infinite;
+    }
+    @keyframes progress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+    .np-time {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .np-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .np-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .np-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .np-btn.play {
+      width: 56px;
+      height: 56px;
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .np-btn.play:hover {
+      background: #ff7a5a;
+      transform: scale(1.05);
+    }
+
+    /* ---------- TICKER ---------- */
+    .ticker {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 48px;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .ticker-item strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .ticker-item .sep {
+      color: var(--accent);
+    }
+
+    /* ---------- SCHEDULE ---------- */
+    .schedule {
+      padding: 96px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .section-header h2 {
+      font-size: clamp(32px, 4vw, 48px);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .schedule-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .schedule-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .schedule-card.active {
+      border-color: var(--accent-2);
+      background: var(--surface-2);
+    }
+    .schedule-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-2);
+    }
+
+    .sc-time {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--accent-2);
+      margin-bottom: 12px;
+    }
+    .sc-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .sc-host {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    .sc-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--surface-2);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .schedule-card.active .sc-tag {
+      background: rgba(200, 255, 61, 0.1);
+      color: var(--accent-2);
+      border-color: rgba(200, 255, 61, 0.3);
+    }
+
+    /* ---------- ARCHIVE ---------- */
+    .archive {
+      padding: 96px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .archive-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .archive-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .ac-art {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ac-art-1 { background: linear-gradient(135deg, #ff5c35, #7b61ff); }
+    .ac-art-2 { background: linear-gradient(135deg, #c8ff3d, #0c0b0e); }
+    .ac-art-3 { background: linear-gradient(135deg, #7b61ff, #ff5c35); }
+    .ac-art-4 { background: linear-gradient(135deg, #1c1b20, #c8ff3d); }
+    .ac-art-5 { background: linear-gradient(135deg, #ff5c35, #c8ff3d); }
+    .ac-art-6 { background: linear-gradient(135deg, #7b61ff, #1c1b20); }
+
+    .ac-art::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 12px,
+        rgba(0,0,0,0.06) 12px,
+        rgba(0,0,0,0.06) 13px
+      );
+    }
+    .ac-art svg {
+      position: relative;
+      z-index: 1;
+      width: 48px;
+      height: 48px;
+      opacity: 0.85;
+    }
+
+    .ac-body {
+      padding: 20px;
+    }
+    .ac-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .ac-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .ac-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ---------- HOSTS ---------- */
+    .hosts {
+      padding: 96px 0;
+    }
+
+    .hosts-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .host-card {
+      text-align: center;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .host-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .host-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .host-card:hover .host-avatar {
+      border-color: var(--accent);
+    }
+    .host-avatar-1 { background: linear-gradient(135deg, #ff5c35, #7b61ff); }
+    .host-avatar-2 { background: linear-gradient(135deg, #c8ff3d, #ff5c35); }
+    .host-avatar-3 { background: linear-gradient(135deg, #7b61ff, #c8ff3d); }
+    .host-avatar-4 { background: linear-gradient(135deg, #ff5c35, #1c1b20); }
+
+    .host-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 60%);
+    }
+
+    .host-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .host-role {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+    }
+    .host-bio {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ---------- PODCAST ---------- */
+    .podcast {
+      padding: 96px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .podcast-content h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 20px;
+    }
+    .podcast-content p {
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      max-width: 440px;
+      line-height: 1.7;
+    }
+
+    .podcast-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .podcast-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .podcast-link:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    .pl-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pl-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-2);
+      color: var(--accent);
+    }
+    .pl-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .pl-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .pl-arrow {
+      color: var(--text-dim);
+      transition: color 0.25s;
+    }
+    .podcast-link:hover .pl-arrow {
+      color: var(--accent);
+    }
+
+    /* ---------- DONATE ---------- */
+    .donate {
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .donate::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 92, 53, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .donate-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .donate-inner h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      margin-bottom: 20px;
+    }
+    .donate-inner h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .donate-inner p {
+      color: var(--text-dim);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .donate-amounts {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .amount-btn {
+      padding: 12px 28px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .amount-btn:hover, .amount-btn.active {
+      border-color: var(--accent);
+      background: rgba(255, 92, 53, 0.1);
+      color: var(--accent);
+    }
+
+    .donate-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 64px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-top: 16px;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 12px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-bottom a {
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .footer-bottom a:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .now-playing {
+        max-width: 420px;
+      }
+      .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hosts-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .podcast-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      nav {
+        display: none;
+      }
+      .hero {
+        padding: 40px 0 56px;
+      }
+      .schedule, .archive, .hosts, .podcast, .donate {
+        padding: 64px 0;
+      }
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+      .archive-grid {
+        grid-template-columns: 1fr;
+      }
+      .hosts-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .header-cta .live-badge {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hosts-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-actions {
+        flex-direction: column;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"></div>
+        RADIO<span>/</span>STATION
+      </a>
+      <nav>
+        <a href="#schedule">Schedule</a>
+        <a href="#archive">Archive</a>
+        <a href="#hosts">Hosts</a>
+        <a href="#podcast">Podcast</a>
+        <a href="#donate">Donate</a>
+      </nav>
+      <div class="header-cta">
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          On Air
+        </div>
+        <button class="btn btn-primary">Listen Live</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / NOW PLAYING -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <div class="hero-tagline">Independent · Listener-Supported · 24/7</div>
+        <h1>Broadcasting the <em>unheard</em> since 2014.</h1>
+        <p class="hero-desc">
+          RADIO / STATION is a community-powered airwave collective. We play what commercial radio won't — deep cuts, local voices, and late-night experiments from the margins.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Listen Live
+          </button>
+          <button class="btn btn-outline">View Schedule</button>
+        </div>
+      </div>
+
+      <!-- NOW PLAYING CARD -->
+      <div class="now-playing">
+        <div class="np-header">
+          <span class="np-label">Now Playing</span>
+          <span class="np-live"><span class="live-dot"></span> Live</span>
+        </div>
+        <div class="np-art">
+          <div class="np-art-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="np-title">Midnight Frequencies</div>
+        <div class="np-artist">with Lena Voss · Ep. 142</div>
+        <div class="np-progress">
+          <div class="np-progress-bar"></div>
+        </div>
+        <div class="np-time">
+          <span>42:18</span>
+          <span>68:00</span>
+        </div>
+        <div class="np-controls">
+          <button class="np-btn" aria-label="Previous">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="np-btn play" aria-label="Play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="np-btn" aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <div class="ticker-item"><strong>Up Next</strong> <span class="sep">◆</span> The Groove Lab with Marcus Reed <span class="sep">◆</span> 14:00</div>
+      <div class="ticker-item"><strong>New Episode</strong> <span class="sep">◆</span> Field Recordings: The Harbor at Dawn <span class="sep">◆</span> Archive</div>
+      <div class="ticker-item"><strong>Live Session</strong> <span class="sep">◆</span> Kaela & The Static — Friday 21:00 <span class="sep">◆</span> Studio B</div>
+      <div class="ticker-item"><strong>Up Next</strong> <span class="sep">◆</span> The Groove Lab with Marcus Reed <span class="sep">◆</span> 14:00</div>
+      <div class="ticker-item"><strong>New Episode</strong> <span class="sep">◆</span> Field Recordings: The Harbor at Dawn <span class="sep">◆</span> Archive</div>
+      <div class="ticker-item"><strong>Live Session</strong> <span class="sep">◆</span> Kaela & The Static — Friday 21:00 <span class="sep">◆</span> Studio B</div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <section class="schedule" id="schedule">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Today's Programming</div>
+          <h2>On the air</h2>
+        </div>
+        <button class="btn btn-outline">Full Schedule →</button>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-card">
+          <div class="sc-time">06:00 — 09:00</div>
+          <div class="sc-title">Morning Static</div>
+          <div class="sc-host">with Priya Nair</div>
+          <span class="sc-tag">Talk · Music</span>
+        </div>
+        <div class="schedule-card">
+          <div class="sc-time">09:00 — 12:00</div>
+          <div class="sc-title">The Slow Wave</div>
+          <div class="sc-host">with Jonas Feld</div>
+          <span class="sc-tag">Ambient · Drone</span>
+        </div>
+        <div class="schedule-card active">
+          <div class="sc-time">12:00 — 14:00</div>
+          <div class="sc-title">Midnight Frequencies</div>
+          <div class="sc-host">with Lena Voss</div>
+          <span class="sc-tag">On Air Now</span>
+        </div>
+        <div class="schedule-card">
+          <div class="sc-time">14:00 — 17:00</div>
+          <div class="sc-title">The Groove Lab</div>
+          <div class="sc-host">with Marcus Reed</div>
+          <span class="sc-tag">Soul · Funk</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section class="archive" id="archive">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Show Archive</div>
+          <h2>Listen back</h2>
+        </div>
+        <button class="btn btn-outline">Browse All →</button>
+      </div>
+      <div class="archive-grid">
+        <div class="archive-card">
+          <div class="ac-art ac-art-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 141</span><span>58 min</span></div>
+            <div class="ac-title">The Art of Listening</div>
+            <div class="ac-desc">Lena Voss explores silence, field recordings, and the politics of attention.</div>
+          </div>
+        </div>
+        <div class="archive-card">
+          <div class="ac-art ac-art-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0c0b0e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 140</span><span>1h 12m</span></div>
+            <div class="ac-title">Night Shift Diaries</div>
+            <div class="ac-desc">Voices from the 3am city — nurses, bakers, and insomniac poets.</div>
+          </div>
+        </div>
+        <div class="archive-card">
+          <div class="ac-art ac-art-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 139</span><span>45 min</span></div>
+            <div class="ac-title">B-Sides & Rarities</div>
+            <div class="ac-desc">Marcus Reed digs through the crates for forgotten grooves and lost tapes.</div>
+          </div>
+        </div>
+        <div class="archive-card">
+          <div class="ac-art ac-art-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c8ff3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12h20"/>
+              <path d="M12 2v20"/>
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 138</span><span>1h 04m</span></div>
+            <div class="ac-title">Signal & Noise</div>
+            <div class="ac-desc">A deep dive into shortwave radio, numbers stations, and hidden broadcasts.</div>
+          </div>
+        </div>
+        <div class="archive-card">
+          <div class="ac-art ac-art-5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2z"/>
+              <path d="M8 12h8"/>
+              <path d="M12 8v8"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 137</span><span>52 min</span></div>
+            <div class="ac-title">The Local Frequency</div>
+            <div class="ac-desc">Priya Nair talks to the people keeping independent music alive in our city.</div>
+          </div>
+        </div>
+        <div class="archive-card">
+          <div class="ac-art ac-art-6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </div>
+          <div class="ac-body">
+            <div class="ac-meta"><span>Ep. 136</span><span>1h 18m</span></div>
+            <div class="ac-title">Late Night Letters</div>
+            <div class="ac-desc">Listeners send in voice notes, confessions, and dedications for the small hours.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOSTS -->
+  <section class="hosts" id="hosts">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-label">The Voices</div>
+          <h2>Meet the hosts</h2>
+        </div>
+        <button class="btn btn-outline">All Hosts →</button>
+      </div>
+      <div class="hosts-grid">
+        <div class="host-card">
+          <div class="host-avatar host-avatar-1"></div>
+          <div class="host-name">Lena Voss</div>
+          <div class="host-role">Midnight Frequencies</div>
+          <div class="host-bio">Sound artist and insomniac. Believes the best radio happens when everyone else is asleep.</div>
+        </div>
+        <div class="host-card">
+          <div class="host-avatar host-avatar-2"></div>
+          <div class="host-name">Marcus Reed</div>
+          <div class="host-role">The Groove Lab</div>
+          <div class="host-bio">Record collector, DJ, and unapologetic vinyl snob. Has 12,000 records and no regrets.</div>
+        </div>
+        <div class="host-card">
+          <div class="host-avatar host-avatar-3"></div>
+          <div class="host-name">Priya Nair</div>
+          <div class="host-role">Morning Static</div>
+          <div class="host-bio">Journalist and community organizer. Uses radio as a tool for local storytelling.</div>
+        </div>
+        <div class="host-card">
+          <div class="host-avatar host-avatar-4"></div>
+          <div class="host-name">Jonas Feld</div>
+          <div class="host-role">The Slow Wave</div>
+          <div class="host-bio">Composer and ambient enthusiast. Curates three hours of stillness every weekday.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODCAST -->
+  <section class="podcast" id="podcast">
+    <div class="container podcast-grid">
+      <div class="podcast-content">
+        <div class="section-label">Podcast</div>
+        <h2>Take the station with you.</h2>
+        <p>
+          Every show is available as a podcast. Subscribe on your favorite platform and never miss a broadcast — even when you're off the grid.
+        </p>
+        <div class="podcast-links">
+          <a href="#" class="podcast-link">
+            <div class="pl-left">
+              <div class="pl-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <div>
+                <div class="pl-name">Apple Podcasts</div>
+                <div class="pl-sub">Subscribe & listen</div>
+              </div>
+            </div>
+            <span class="pl-arrow">→</span>
+          </a>
+          <a href="#" class="podcast-link">
+            <div class="pl-left">
+              <div class="pl-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <div>
+                <div class="pl-name">Spotify</div>
+                <div class="pl-sub">Follow the station</div>
+              </div>
+            </div>
+            <span class="pl-arrow">→</span>
+          </a>
+          <a href="#" class="podcast-link">
+            <div class="pl-left">
+              <div class="pl-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <div>
+                <div class="pl-name">RSS Feed</div>
+                <div class="pl-sub">For the purists</div>
+              </div>
+            </div>
+            <span class="pl-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      <div class="podcast-visual">
+        <div class="np-art" style="aspect-ratio: 4/3; border-radius: var(--radius);">
+          <div class="np-art-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 100px; height: 100px;">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section class="donate" id="donate">
+    <div class="container donate-inner">
+      <div class="section-label" style="justify-content: center;">Support the Station</div>
+      <h2>Keep the signal <em>alive</em>.</h2>
+      <p>
+        RADIO / STATION is 100% listener-supported. No corporate sponsors, no paywalls — just people who believe independent radio matters. Every donation keeps us on the air.
+      </p>
+      <div class="donate-amounts">
+        <button class="amount-btn">$5</button>
+        <button class="amount-btn active">$15</button>
+        <button class="amount-btn">$30</button>
+        <button class="amount-btn">$50</button>
+        <button class="amount-btn">Custom</button>
+      </div>
+      <div class="donate-actions">
+        <button class="btn btn-primary">Donate Monthly</button>
+        <button class="btn btn-outline">One-Time Gift</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark"></div>
+            RADIO<span>/</span>STATION
+          </a>
+          <p>
+            Independent, listener-supported radio broadcasting from the edge of the dial since 2014.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Listen</h4>
+          <a href="#">Live Stream</a>
+          <a href="#">Schedule</a>
+          <a href="#">Archive</a>
+          <a href="#">Podcast</a>
+        </div>
+        <div class="footer-col">
+          <h4>Station</h4>
+          <a href="#">About</a>
+          <a href="#">Hosts</a>
+          <a href="#">Volunteer</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Donate</a>
+          <a href="#">Merch</a>
+          <a href="#">Membership</a>
+          <a href="#">Underwriting</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 RADIO / STATION. All frequencies reserved.</span>
+        <div style="display: flex; gap: 24px;">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Donate amount selection
+    document.querySelectorAll('.amount-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Schedule card active state
+    document.querySelectorAll('.schedule-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.schedule-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
+    // Play button toggle
+    const playBtn = document.querySelector('.np-btn.play');
+    if (playBtn) {
+      let playing = true;
+      playBtn.addEventListener('click', () => {
+        playing = !playing;
+        playBtn.innerHTML = playing
+          ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+          : '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKI / RESORT — Alpine Ridge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0B1420;
+      color: #E8EDF2;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── PALETTE ── */
+    :root {
+      --ink: #0B1420;
+      --ink-2: #111D2E;
+      --ink-3: #1A2A3F;
+      --snow: #F4F7FA;
+      --snow-2: #DCE4EC;
+      --snow-3: #B8C5D3;
+      --glacier: #7EC8E3;
+      --glacier-2: #4A9EBF;
+      --sun: #F5A623;
+      --sun-2: #E8890C;
+      --pine: #2D6A4F;
+      --pine-2: #1B4332;
+      --alpine: #E63946;
+      --alpine-2: #C1121F;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.25);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.35);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; }
+    h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); letter-spacing: -0.03em; }
+    h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -0.02em; }
+    h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+    .mono { font-family: 'Space Grotesk', monospace; font-weight: 500; letter-spacing: 0.04em; }
+    .label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--glacier);
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .section { padding: 96px 0; }
+    .section-header { margin-bottom: 48px; }
+    .section-header h2 { margin-top: 8px; }
+    .section-header p { color: var(--snow-3); max-width: 560px; margin-top: 12px; font-size: 1.05rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11, 20, 32, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.35rem; letter-spacing: -0.02em;
+      color: var(--snow);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--glacier), var(--glacier-2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--snow-3); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--snow); }
+    .nav-cta {
+      background: var(--sun); color: var(--ink); border: none;
+      padding: 10px 24px; border-radius: 8px; font-weight: 600;
+      font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-cta:hover { background: var(--sun-2); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 72px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(126, 200, 227, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(245, 166, 35, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #0B1420 0%, #111D2E 40%, #1A2A3F 100%);
+    }
+    .hero-mountains {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 55%;
+      opacity: 0.9;
+    }
+    .hero-mountains svg { width: 100%; height: 100%; }
+    .hero-content {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+      width: 100%;
+    }
+    .hero-text { max-width: 560px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(126, 200, 227, 0.1);
+      border: 1px solid rgba(126, 200, 227, 0.2);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: 0.8rem; color: var(--glacier);
+      margin-bottom: 24px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--glacier);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 { margin-bottom: 20px; }
+    .hero h1 .accent { color: var(--glacier); }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--snow-3);
+      max-width: 480px; margin-bottom: 36px; line-height: 1.6;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--sun); color: var(--ink); border: none;
+      padding: 16px 36px; border-radius: 10px; font-weight: 700;
+      font-size: 1rem; cursor: pointer; transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--sun-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245, 166, 35, 0.3); }
+    .btn-secondary {
+      background: transparent; color: var(--snow);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      padding: 16px 36px; border-radius: 10px; font-weight: 600;
+      font-size: 1rem; cursor: pointer; transition: all 0.25s;
+      font-family: 'Inter', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary:hover { border-color: var(--snow-3); background: rgba(255,255,255,0.04); }
+
+    /* ── SNOW REPORT CARD ── */
+    .snow-report {
+      background: rgba(17, 29, 46, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+    }
+    .snow-report-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px;
+    }
+    .snow-report-header h3 { font-size: 1.1rem; }
+    .snow-report-header .updated {
+      font-size: 0.75rem; color: var(--snow-3);
+    }
+    .snow-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 24px;
+    }
+    .snow-stat {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .snow-stat .value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--snow);
+      line-height: 1;
+    }
+    .snow-stat .value .unit {
+      font-size: 0.9rem; font-weight: 500; color: var(--snow-3);
+    }
+    .snow-stat .label { margin-top: 6px; }
+    .snow-bar {
+      height: 6px; background: rgba(255,255,255,0.08);
+      border-radius: 3px; overflow: hidden; margin-top: 12px;
+    }
+    .snow-bar-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--glacier), var(--glacier-2));
+      transition: width 1s ease;
+    }
+    .snow-bar-fill.sun { background: linear-gradient(90deg, var(--sun), var(--sun-2)); }
+    .snow-bar-fill.pine { background: linear-gradient(90deg, var(--pine), var(--pine-2)); }
+
+    /* ── LIFT STATUS ── */
+    .lift-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .lift-card {
+      background: var(--ink-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .lift-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .lift-info { display: flex; align-items: center; gap: 14px; }
+    .lift-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .lift-icon.open { background: rgba(45, 106, 79, 0.2); color: #4ADE80; }
+    .lift-icon.hold { background: rgba(245, 166, 35, 0.15); color: var(--sun); }
+    .lift-icon.closed { background: rgba(230, 57, 70, 0.15); color: var(--alpine); }
+    .lift-name { font-weight: 600; font-size: 0.95rem; }
+    .lift-type { font-size: 0.75rem; color: var(--snow-3); }
+    .lift-status {
+      font-size: 0.75rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .lift-status.open { background: rgba(45, 106, 79, 0.2); color: #4ADE80; }
+    .lift-status.hold { background: rgba(245, 166, 35, 0.15); color: var(--sun); }
+    .lift-status.closed { background: rgba(230, 57, 70, 0.15); color: var(--alpine); }
+
+    /* ── TRAIL MAP ── */
+    .trail-map-container {
+      background: var(--ink-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      overflow: hidden;
+    }
+    .trail-map-svg { width: 100%; height: auto; display: block; }
+    .trail-legend {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-top: 24px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--snow-3); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* ── LODGING ── */
+    .lodging-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .lodging-card {
+      background: var(--ink-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .lodging-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(255,255,255,0.12); }
+    .lodging-img {
+      height: 200px; position: relative; overflow: hidden;
+    }
+    .lodging-img svg { width: 100%; height: 100%; }
+    .lodging-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: rgba(11, 20, 32, 0.8); backdrop-filter: blur(8px);
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 0.7rem; font-weight: 600; color: var(--glacier);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .lodging-body { padding: 24px; }
+    .lodging-body h3 { margin-bottom: 8px; }
+    .lodging-body p { color: var(--snow-3); font-size: 0.9rem; margin-bottom: 16px; }
+    .lodging-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .lodging-price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; }
+    .lodging-price span { font-size: 0.8rem; font-weight: 400; color: var(--snow-3); }
+    .lodging-rating { display: flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--sun); }
+
+    /* ── LESSONS ── */
+    .lessons-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .lesson-card {
+      background: var(--ink-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .lesson-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--glacier), var(--sun));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .lesson-card:hover::before { opacity: 1; }
+    .lesson-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); }
+    .lesson-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(126, 200, 227, 0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 20px;
+    }
+    .lesson-card h3 { margin-bottom: 8px; }
+    .lesson-card p { color: var(--snow-3); font-size: 0.9rem; margin-bottom: 20px; }
+    .lesson-features { list-style: none; margin-bottom: 24px; }
+    .lesson-features li {
+      font-size: 0.85rem; color: var(--snow-2);
+      padding: 6px 0; display: flex; align-items: center; gap: 8px;
+    }
+    .lesson-features li::before {
+      content: '✓'; color: var(--glacier); font-weight: 700; font-size: 0.8rem;
+    }
+    .lesson-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+    }
+    .lesson-price span { font-size: 0.85rem; font-weight: 400; color: var(--snow-3); }
+
+    /* ── PASS CTA ── */
+    .pass-cta {
+      background: linear-gradient(135deg, var(--ink-3) 0%, var(--ink-2) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .pass-cta::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(126, 200, 227, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pass-cta h2 { margin-bottom: 16px; }
+    .pass-cta p { color: var(--snow-3); margin-bottom: 32px; font-size: 1.05rem; }
+    .pass-options { display: flex; flex-direction: column; gap: 12px; }
+    .pass-option {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .pass-option:hover { border-color: var(--glacier); background: rgba(126, 200, 227, 0.05); }
+    .pass-option .name { font-weight: 600; font-size: 0.95rem; }
+    .pass-option .desc { font-size: 0.8rem; color: var(--snow-3); }
+    .pass-option .price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--sun); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 0 32px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand p { color: var(--snow-3); font-size: 0.9rem; margin-top: 12px; max-width: 280px; }
+    .footer-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--snow-3); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { color: var(--snow-2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--glacier); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem; color: var(--snow-3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-content { grid-template-columns: 1fr; gap: 48px; }
+      .hero-text { max-width: 100%; }
+      .lodging-grid, .lessons-grid { grid-template-columns: repeat(2, 1fr); }
+      .pass-cta { grid-template-columns: 1fr; padding: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .section { padding: 64px 0; }
+      .nav-links { display: none; }
+      .lodging-grid, .lessons-grid { grid-template-columns: 1fr; }
+      .snow-stats { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .pass-cta { padding: 32px; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .snow-stats { grid-template-columns: 1fr; }
+      .lift-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">
+      <div class="logo-mark">⛷</div>
+      SKI / RESORT
+    </div>
+    <ul class="nav-links">
+      <li><a href="#snow">Snow Report</a></li>
+      <li><a href="#lifts">Lifts</a></li>
+      <li><a href="#trails">Trail Map</a></li>
+      <li><a href="#lodging">Lodging</a></li>
+      <li><a href="#lessons">Lessons</a></li>
+    </ul>
+    <button class="nav-cta">Book Now</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-mountains">
+    <svg viewBox="0 0 1440 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A2A3F"/>
+          <stop offset="100%" stop-color="#0B1420"/>
+        </linearGradient>
+        <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#22344D"/>
+          <stop offset="100%" stop-color="#111D2E"/>
+        </linearGradient>
+        <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2A3F5C"/>
+          <stop offset="100%" stop-color="#1A2A3F"/>
+        </linearGradient>
+        <linearGradient id="snowcap" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F4F7FA" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#F4F7FA" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Back mountains -->
+      <path d="M0 600 L0 350 L120 280 L240 320 L360 200 L480 260 L600 180 L720 240 L840 160 L960 220 L1080 140 L1200 200 L1320 120 L1440 180 L1440 600 Z" fill="url(#m1)"/>
+      <!-- Snow caps back -->
+      <path d="M360 200 L390 230 L420 210 L450 240 L480 260 L450 250 L420 240 L390 250 L360 200 Z" fill="url(#snowcap)" opacity="0.3"/>
+      <path d="M840 160 L870 190 L900 170 L930 200 L960 220 L930 210 L900 200 L870 210 L840 160 Z" fill="url(#snowcap)" opacity="0.3"/>
+      <!-- Mid mountains -->
+      <path d="M0 600 L0 420 L160 340 L320 400 L480 300 L640 380 L800 280 L960 360 L1120 260 L1280 340 L1440 280 L1440 600 Z" fill="url(#m2)"/>
+      <!-- Snow caps mid -->
+      <path d="M480 300 L510 330 L540 310 L570 340 L600 320 L640 380 L600 360 L570 350 L540 360 L510 350 L480 300 Z" fill="url(#snowcap)" opacity="0.4"/>
+      <path d="M800 280 L830 310 L860 290 L890 320 L920 300 L960 360 L920 340 L890 330 L860 340 L830 330 L800 280 Z" fill="url(#snowcap)" opacity="0.4"/>
+      <!-- Front mountains -->
+      <path d="M0 600 L0 500 L200 420 L400 480 L600 380 L800 460 L1000 360 L1200 440 L1440 380 L1440 600 Z" fill="url(#m3)"/>
+      <!-- Snow caps front -->
+      <path d="M600 380 L630 410 L660 390 L690 420 L720 400 L800 460 L720 440 L690 430 L660 440 L630 430 L600 380 Z" fill="url(#snowcap)" opacity="0.5"/>
+      <path d="M1000 360 L1030 390 L1060 370 L1090 400 L1120 380 L1200 440 L1120 420 L1090 410 L1060 420 L1030 410 L1000 360 Z" fill="url(#snowcap)" opacity="0.5"/>
+      <!-- Trees -->
+      <g opacity="0.6">
+        <path d="M100 520 L110 490 L120 520 Z" fill="#1B4332"/>
+        <path d="M130 530 L140 500 L150 530 Z" fill="#1B4332"/>
+        <path d="M160 525 L170 495 L180 525 Z" fill="#1B4332"/>
+        <path d="M1250 510 L1260 480 L1270 510 Z" fill="#1B4332"/>
+        <path d="M1280 520 L1290 490 L1300 520 Z" fill="#1B4332"/>
+        <path d="M1310 515 L1320 485 L1330 515 Z" fill="#1B4332"/>
+      </g>
+    </svg>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Open Daily · 8:30 AM – 4:30 PM
+      </div>
+      <h1>Find your <span class="accent">line</span> in the alpine light.</h1>
+      <p class="hero-sub">
+        2,400 vertical feet of pristine corduroy, legendary tree runs, and a village that feels like home. Alpine Ridge is where the mountain meets the sky.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">Book Your Pass →</button>
+        <button class="btn-secondary">View Trail Map</button>
+      </div>
+    </div>
+    <div class="snow-report fade-up">
+      <div class="snow-report-header">
+        <h3>Snow Report</h3>
+        <span class="updated">Updated 6:42 AM</span>
+      </div>
+      <div class="snow-stats">
+        <div class="snow-stat">
+          <div class="value">18<span class="unit">"</span></div>
+          <div class="label">24hr Snowfall</div>
+          <div class="snow-bar"><div class="snow-bar-fill" style="width: 72%"></div></div>
+        </div>
+        <div class="snow-stat">
+          <div class="value">94<span class="unit">"</span></div>
+          <div class="label">Base Depth</div>
+          <div class="snow-bar"><div class="snow-bar-fill sun" style="width: 88%"></div></div>
+        </div>
+        <div class="snow-stat">
+          <div class="value">142<span class="unit">"</span></div>
+          <div class="label">Season Total</div>
+          <div class="snow-bar"><div class="snow-bar-fill pine" style="width: 65%"></div></div>
+        </div>
+        <div class="snow-stat">
+          <div class="value">12<span class="unit">°F</span></div>
+          <div class="label">Summit Temp</div>
+          <div class="snow-bar"><div class="snow-bar-fill" style="width: 30%"></div></div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--snow-3);">
+        <span>❄️ Powder · 6" overnight</span>
+        <span>🌤 Partly Cloudy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LIFT STATUS ── -->
+<section class="section" id="lifts">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label">On-Mountain</div>
+      <h2>Lift Status</h2>
+      <p>Live updates from the mountain operations team. All times are local.</p>
+    </div>
+    <div class="lift-grid">
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon open">🚡</div>
+          <div>
+            <div class="lift-name">Summit Express</div>
+            <div class="lift-type">High-Speed Quad</div>
+          </div>
+        </div>
+        <span class="lift-status open">Open</span>
+      </div>
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon open">🚡</div>
+          <div>
+            <div class="lift-name">Glacier Bowl</div>
+            <div class="lift-type">High-Speed Six</div>
+          </div>
+        </div>
+        <span class="lift-status open">Open</span>
+      </div>
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon hold">⏸</div>
+          <div>
+            <div class="lift-name">North Ridge</div>
+            <div class="lift-type">Triple Chair</div>
+          </div>
+        </div>
+        <span class="lift-status hold">On Hold</span>
+      </div>
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon open">🚡</div>
+          <div>
+            <div class="lift-name">Timberline</div>
+            <div class="lift-type">High-Speed Quad</div>
+          </div>
+        </div>
+        <span class="lift-status open">Open</span>
+      </div>
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon closed">✕</div>
+          <div>
+            <div class="lift-name">East Peak</div>
+            <div class="lift-type">Double Chair</div>
+          </div>
+        </div>
+        <span class="lift-status closed">Closed</span>
+      </div>
+      <div class="lift-card fade-up">
+        <div class="lift-info">
+          <div class="lift-icon open">🚡</div>
+          <div>
+            <div class="lift-name">Village Gondola</div>
+            <div class="lift-type">Gondola</div>
+          </div>
+        </div>
+        <span class="lift-status open">Open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRAIL MAP ── -->
+<section class="section" id="trails" style="background: var(--ink-2);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label">Explore</div>
+      <h2>Trail Map</h2>
+      <p>From gentle groomers to steep chutes — 85 trails across 1,200 acres of terrain.</p>
+    </div>
+    <div class="trail-map-container fade-up">
+      <svg class="trail-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mapBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1A2A3F"/>
+            <stop offset="100%" stop-color="#111D2E"/>
+          </linearGradient>
+          <linearGradient id="trailGreen" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4ADE80"/>
+            <stop offset="100%" stop-color="#2D6A4F"/>
+          </linearGradient>
+          <linearGradient id="trailBlue" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7EC8E3"/>
+            <stop offset="100%" stop-color="#4A9EBF"/>
+          </linearGradient>
+          <linearGradient id="trailBlack" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#E63946"/>
+            <stop offset="100%" stop-color="#C1121F"/>
+          </linearGradient>
+        </defs>
+        <rect width="1000" height="500" fill="url(#mapBg)" rx="12"/>
+        <!-- Mountain contour lines -->
+        <g stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none">
+          <path d="M0 400 Q250 350 500 380 T1000 350"/>
+          <path d="M0 350 Q250 300 500 330 T1000 300"/>
+          <path d="M0 300 Q250 250 500 280 T1000 250"/>
+          <path d="M0 250 Q250 200 500 230 T1000 200"/>
+          <path d="M0 200 Q250 150 500 180 T1000 150"/>
+          <path d="M0 150 Q250 100 500 130 T1000 100"/>
+        </g>
+        <!-- Summit marker -->
+        <circle cx="500" cy="80" r="8" fill="#F5A623"/>
+        <text x="500" y="60" text-anchor="middle" fill="#F5A623" font-family="Space Grotesk, sans-serif" font-size="12" font-weight="600">SUMMIT · 9,200 FT</text>
+        <!-- Trails -->
+        <!-- Green trails -->
+        <path d="M500 90 Q480 150 450 200 Q420 250 400 300 Q380 350 350 400" stroke="url(#trailGreen)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q520 150 550 200 Q580 250 600 300 Q620 350 650 400" stroke="url(#trailGreen)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q500 150 500 200 Q500 250 500 300 Q500 350 500 400" stroke="url(#trailGreen)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <!-- Blue trails -->
+        <path d="M500 90 Q460 140 420 180 Q380 220 340 260 Q300 300 260 350 Q220 400 180 450" stroke="url(#trailBlue)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q540 140 580 180 Q620 220 660 260 Q700 300 740 350 Q780 400 820 450" stroke="url(#trailBlue)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q490 160 480 230 Q470 300 460 370 Q450 440 440 500" stroke="url(#trailBlue)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q510 160 520 230 Q530 300 540 370 Q550 440 560 500" stroke="url(#trailBlue)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <!-- Black trails -->
+        <path d="M500 90 Q440 120 380 150 Q320 180 260 210 Q200 240 140 270 Q80 300 20 330" stroke="url(#trailBlack)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q560 120 620 150 Q680 180 740 210 Q800 240 860 270 Q920 300 980 330" stroke="url(#trailBlack)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q470 130 440 170 Q410 210 380 250 Q350 290 320 330 Q290 370 260 410" stroke="url(#trailBlack)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <path d="M500 90 Q530 130 560 170 Q590 210 620 250 Q650 290 680 330 Q710 370 740 410" stroke="url(#trailBlack)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.9"/>
+        <!-- Lift lines -->
+        <g stroke="#F5A623" stroke-width="2" stroke-dasharray="6 4" fill="none" opacity="0.6">
+          <path d="M500 90 L500 400"/>
+          <path d="M500 90 L350 400"/>
+          <path d="M500 90 L650 400"/>
+        </g>
+        <!-- Lift markers -->
+        <g fill="#F5A623">
+          <circle cx="500" cy="400" r="5"/>
+          <circle cx="350" cy="400" r="5"/>
+          <circle cx="650" cy="400" r="5"/>
+        </g>
+        <!-- Base area -->
+        <rect x="420" y="420" width="160" height="40" rx="8" fill="rgba(126, 200, 227, 0.1)" stroke="rgba(126, 200, 227, 0.3)" stroke-width="1"/>
+        <text x="500" y="445" text-anchor="middle" fill="#7EC8E3" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600">BASE AREA · 6,800 FT</text>
+        <!-- Trail labels -->
+        <text x="380" y="280" fill="#4ADE80" font-family="Inter, sans-serif" font-size="10" opacity="0.8">Easy Street</text>
+        <text x="620" y="280" fill="#4ADE80" font-family="Inter, sans-serif" font-size="10" opacity="0.8">Sunny Side</text>
+        <text x="300" y="320" fill="#7EC8E3" font-family="Inter, sans-serif" font-size="10" opacity="0.8">Cascade Run</text>
+        <text x="700" y="320" fill="#7EC8E3" font-family="Inter, sans-serif" font-size="10" opacity="0.8">Ridge Line</text>
+        <text x="180" y="250" fill="#E63946" font-family="Inter, sans-serif" font-size="10" opacity="0.8">The Chute</text>
+        <text x="820" y="250" fill="#E63946" font-family="Inter, sans-serif" font-size="10" opacity="0.8">Steep & Deep</text>
+      </svg>
+      <div class="trail-legend">
+        <div class="legend-item"><div class="legend-dot" style="background: #4ADE80;"></div> Beginner</div>
+        <div class="legend-item"><div class="legend-dot" style="background: #7EC8E3;"></div> Intermediate</div>
+        <div class="legend-item"><div class="legend-dot" style="background: #E63946;"></div> Expert</div>
+        <div class="legend-item"><div class="legend-dot" style="background: #F5A623;"></div> Lift Line</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LODGING ── -->
+<section class="section" id="lodging">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label">Stay</div>
+      <h2>Lodging</h2>
+      <p>Slope-side comfort with a mountain soul. Every stay includes complimentary breakfast and gear storage.</p>
+    </div>
+    <div class="lodging-grid">
+      <div class="lodging-card fade-up">
+        <div class="lodging-img">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lodge1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1A2A3F"/>
+                <stop offset="100%" stop-color="#0B1420"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#lodge1)"/>
+            <!-- Stars -->
+            <g fill="#F4F7FA" opacity="0.6">
+              <circle cx="50" cy="30" r="1.5"/>
+              <circle cx="120" cy="50" r="1"/>
+              <circle cx="200" cy="25" r="1.5"/>
+              <circle cx="280" cy="45" r="1"/>
+              <circle cx="350" cy="30" r="1.5"/>
+              <circle cx="80" cy="70" r="1"/>
+              <circle cx="320" cy="65" r="1"/>
+            </g>
+            <!-- Moon -->
+            <circle cx="340" cy="40" r="15" fill="#F4F7FA" opacity="0.8"/>
+            <circle cx="348" cy="35" r="13" fill="url(#lodge1)"/>
+            <!-- Cabin -->
+            <rect x="140" y="120" width="120" height="60" fill="#2D6A4F" rx="4"/>
+            <polygon points="130,120 200,80 270,120" fill="#1B4332"/>
+            <rect x="180" y="140" width="20" height="40" fill="#F5A623" rx="2"/>
+            <rect x="155" y="135" width="15" height="15" fill="#F5A623" opacity="0.6" rx="2"/>
+            <rect x="230" y="135" width="15" height="15" fill="#F5A623" opacity="0.6" rx="2"/>
+            <!-- Snow on roof -->
+            <path d="M130 120 Q200 75 270 120" stroke="#F4F7FA" stroke-width="3" fill="none" opacity="0.5"/>
+            <!-- Trees -->
+            <path d="M100 180 L110 140 L120 180 Z" fill="#1B4332"/>
+            <path d="M280 180 L290 140 L300 180 Z" fill="#1B4332"/>
+            <path d="M310 180 L320 150 L330 180 Z" fill="#1B4332"/>
+          </svg>
+          <div class="lodging-badge">Slope-Side</div>
+        </div>
+        <div class="lodging-body">
+          <h3>The Summit Lodge</h3>
+          <p>Luxury suites with private balconies overlooking the Glacier Bowl. Steps from the gondola.</p>
+          <div class="lodging-meta">
+            <div class="lodging-price">$389 <span>/ night</span></div>
+            <div class="lodging-rating">★ 4.9</div>
+          </div>
+        </div>
+      </div>
+      <div class="lodging-card fade-up">
+        <div class="lodging-img">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lodge2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#22344D"/>
+                <stop offset="100%" stop-color="#111D2E"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#lodge2)"/>
+            <!-- Stars -->
+            <g fill="#F4F7FA" opacity="0.5">
+              <circle cx="60" cy="40" r="1.5"/>
+              <circle cx="150" cy="25" r="1"/>
+              <circle cx="250" cy="50" r="1.5"/>
+              <circle cx="330" cy="35" r="1"/>
+            </g>
+            <!-- Moon -->
+            <circle cx="60" cy="50" r="12" fill="#F4F7FA" opacity="0.7"/>
+            <circle cx="66" cy="46" r="10" fill="url(#lodge2)"/>
+            <!-- Village buildings -->
+            <rect x="80" y="130" width="60" height="50" fill="#2D6A4F" rx="3"/>
+            <polygon points="75,130 110,100 145,130" fill="#1B4332"/>
+            <rect x="160" y="110" width="80" height="70" fill="#2D6A4F" rx="3"/>
+            <polygon points="155,110 200,75 245,110" fill="#1B4332"/>
+            <rect x="250" y="140" width="70" height="40" fill="#2D6A4F" rx="3"/>
+            <polygon points="245,140 285,115 325,140" fill="#1B4332"/>
+            <!-- Windows -->
+            <rect x="95" y="145" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="115" y="145" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="180" y="130" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="200" y="130" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="220" y="130" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="265" y="150" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <rect x="285" y="150" width="12" height="12" fill="#F5A623" opacity="0.7" rx="2"/>
+            <!-- Snow -->
+            <path d="M75 130 Q110 95 145 130" stroke="#F4F7FA" stroke-width="2" fill="none" opacity="0.4"/>
+            <path d="M155 110 Q200 70 245 110" stroke="#F4F7FA" stroke-width="2" fill="none" opacity="0.4"/>
+            <path d="M245 140 Q285 110 325 140" stroke="#F4F7FA" stroke-width="2" fill="none" opacity="0.4"/>
+          </svg>
+          <div class="lodging-badge">Village</div>
+        </div>
+        <div class="lodging-body">
+          <h3>Alpine Village Inn</h3>
+          <p>Cozy rooms in the heart of the village. Walk to restaurants, shops, and the gondola.</p>
+          <div class="lodging-meta">
+            <div class="lodging-price">$219 <span>/ night</span></div>
+            <div class="lodging-rating">★ 4.7</div>
+          </div>
+        </div>
+      </div>
+      <div class="lodging-card fade-up">
+        <div class="lodging-img">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lodge3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1A2A3F"/>
+                <stop offset="100%" stop-color="#0B1420"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#lodge3)"/>
+            <!-- Stars -->
+            <g fill="#F4F7FA" opacity="0.5">
+              <circle cx="40" cy="30" r="1.5"/>
+              <circle cx="180" cy="20" r="1"/>
+              <circle cx="300" cy="40" r="1.5"/>
+              <circle cx="360" cy="25" r="1"/>
+            </g>
+            <!-- Moon -->
+            <circle cx="350" cy="45" r="14" fill="#F4F7FA" opacity="0.7"/>
+            <circle cx="357" cy="40" r="12" fill="url(#lodge3)"/>
+            <!-- A-frame cabin -->
+            <polygon points="200,70 120,180 280,180" fill="#2D6A4F"/>
+            <polygon points="200,70 120,180 280,180" fill="none" stroke="#1B4332" stroke-width="3"/>
+            <rect x="185" y="140" width="30" height="40" fill="#F5A623" rx="2"/>
+            <rect x="160" y="120" width="15" height="15" fill="#F5A623" opacity="0.6" rx="2"/>
+            <rect x="225" y="120" width="15" height="15" fill="#F5A623" opacity="0.6" rx="2"/>
+            <!-- Snow on roof -->
+            <path d="M200 70 L120 180" stroke="#F4F7FA" stroke-width="3" fill="none" opacity="0.5"/>
+            <path d="M200 70 L280 180" stroke="#F4F7FA" stroke-width="3" fill="none" opacity="0.5"/>
+            <!-- Trees -->
+            <path d="M80 180 L90 140 L100 180 Z" fill="#1B4332"/>
+            <path d="M300 180 L310 140 L320 180 Z" fill="#1B4332"/>
+            <path d="M330 180 L340 150 L350 180 Z" fill="#1B4332"/>
+          </svg>
+          <div class="lodging-badge">Secluded</div>
+        </div>
+        <div class="lodging-body">
+          <h3>Timberline Cabin</h3>
+          <p>Private A-frame cabins nestled in the pines. Wood-burning fireplace and outdoor hot tub.</p>
+          <div class="lodging-meta">
+            <div class="lodging-price">$279 <span>/ night</span></div>
+            <div class="lodging-rating">★ 4.8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LESSONS ── -->
+<section class="section" id="lessons" style="background: var(--ink-2);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label">Learn</div>
+      <h2>Lessons & Clinics</h2>
+      <p>Whether it's your first snowplow or your first backflip, our certified instructors will get you there.</p>
+    </div>
+    <div class="lessons-grid">
+      <div class="lesson-card fade-up">
+        <div class="lesson-icon">🎿</div>
+        <h3>First Tracks</h3>
+        <p>Never skied before? This is your starting point. All gear included.</p>
+        <ul class="lesson-features">
+          <li>2-hour group lesson</li>
+          <li>Equipment rental included</li>
+          <li>Beginner terrain only</li>
+          <li>Max 6 students per instructor</li>
+        </ul>
+        <div class="lesson-price">$89 <span>/ person</span></div>
+      </div>
+      <div class="lesson-card fade-up">
+        <div class="lesson-icon">🏔️</div>
+        <h3>Alpine Progression</h3>
+        <p>Take your intermediate skills to expert terrain with confidence.</p>
+        <ul class="lesson-features">
+          <li>Half-day private lesson</li>
+          <li>Video analysis included</li>
+          <li>All-mountain access</li>
+          <li>Personalized feedback</li>
+        </ul>
+        <div class="lesson-price">$249 <span>/ person</span></div>
+      </div>
+      <div class="lesson-card fade-up">
+        <div class="lesson-icon">🏂</div>
+        <h3>Freeride Camp</h3>
+        <p>For advanced riders ready to tackle steeps, trees, and powder.</p>
+        <ul class="lesson-features">
+          <li>Full-day guided session</li>
+          <li>Backcountry safety briefing</li>
+          <li>Small group (max 4)</li>
+          <li>Lunch included</li>
+        </ul>
+        <div class="lesson-price">$399 <span>/ person</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PASS CTA ── -->
+<section class="section" id="passes">
+  <div class="container">
+    <div class="pass-cta fade-up">
+      <div>
+        <div class="label">Season Passes</div>
+        <h2>Ride all season.<br>Save all winter.</h2>
+        <p>Lock in your pass before November 15 and save up to 30%. Payment plans available.</p>
+        <button class="btn-primary">Compare Passes →</button>
+      </div>
+      <div class="pass-options">
+        <div class="pass-option">
+          <div>
+            <div class="name">Midweek Pass</div>
+            <div class="desc">Monday – Friday, non-holiday</div>
+          </div>
+          <div class="price">$549</div>
+        </div>
+        <div class="pass-option">
+          <div>
+            <div class="name">Full Access Pass</div>
+            <div class="desc">Unlimited days, no blackouts</div>
+          </div>
+          <div class="price">$899</div>
+        </div>
+        <div class="pass-option">
+          <div>
+            <div class="name">Family Pass</div>
+            <div class="desc">2 adults + 2 kids, unlimited</div>
+          </div>
+          <div class="price">$1,999</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">⛷</div>
+          SKI / RESORT
+        </div>
+        <p>Alpine Ridge Resort · 1 Summit Road, Silverton, CO 81433 · 800-555-0199</p>
+      </div>
+      <div class="footer-col">
+        <h4>Mountain</h4>
+        <ul>
+          <li><a href="#snow">Snow Report</a></li>
+          <li><a href="#lifts">Lift Status</a></li>
+          <li><a href="#trails">Trail Map</a></li>
+          <li><a href="#">Weather</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Plan</h4>
+        <ul>
+          <li><a href="#lodging">Lodging</a></li>
+          <li><a href="#lessons">Lessons</a></li>
+          <li><a href="#passes">Season Passes</a></li>
+          <li><a href="#">Dining</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Alpine Ridge Resort. All rights reserved.</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── SCROLL ANIMATIONS ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── SMOOTH SCROLL FOR NAV LINKS ──
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── SNOW BAR ANIMATION ON LOAD ──
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.snow-bar-fill').forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = width; }, 300);
+    });
+  });
+</script>
+
+</body>
+</html>

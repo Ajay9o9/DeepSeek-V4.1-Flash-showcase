@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIREN HOUSE — Coastal Hotel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --stone-50: #f7f5f1;
+    --stone-100: #efece5;
+    --stone-200: #e2ddd2;
+    --stone-300: #cfc8b8;
+    --stone-400: #a89f8c;
+    --stone-500: #7d7462;
+    --stone-600: #5a5344;
+    --stone-700: #3d382e;
+    --deep-900: #0a1a2b;
+    --deep-800: #0f2438;
+    --deep-700: #16324a;
+    --deep-600: #1e4260;
+    --deep-500: #2c5a7d;
+    --coral-500: #d97757;
+    --coral-400: #e08e70;
+    --coral-300: #eaa88e;
+    --coral-600: #b85f42;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--stone-50);
+    color: var(--stone-700);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(247, 245, 241, 0.94);
+    backdrop-filter: blur(12px);
+    padding: 14px 56px;
+    box-shadow: 0 1px 0 rgba(61, 56, 46, 0.08);
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: 26px;
+    letter-spacing: 0.32em;
+    font-weight: 500;
+    color: var(--stone-50);
+    text-decoration: none;
+    transition: color 0.4s ease;
+  }
+  nav.scrolled .logo { color: var(--deep-900); }
+  .logo span { color: var(--coral-400); }
+  nav.scrolled .logo span { color: var(--coral-500); }
+
+  .nav-links {
+    display: flex;
+    gap: 38px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--stone-100);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  nav.scrolled .nav-links a { color: var(--stone-600); }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 0;
+    width: 0; height: 1px;
+    background: var(--coral-400);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--coral-400); }
+  nav.scrolled .nav-links a:hover { color: var(--coral-500); }
+
+  .nav-cta {
+    padding: 11px 26px;
+    border: 1px solid rgba(247, 245, 241, 0.5);
+    color: var(--stone-50);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: all 0.3s ease;
+  }
+  .nav-cta:hover {
+    background: var(--coral-500);
+    border-color: var(--coral-500);
+    color: #fff;
+  }
+  nav.scrolled .nav-cta {
+    border-color: var(--deep-900);
+    color: var(--deep-900);
+  }
+  nav.scrolled .nav-cta:hover {
+    background: var(--deep-900);
+    color: var(--stone-50);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 720px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #f4d9c2 0%,
+      #e8b89a 18%,
+      #d99a7c 32%,
+      #b87a68 46%,
+      #7a5a63 60%,
+      #3d4a63 74%,
+      #1a2c44 88%,
+      #0a1a2b 100%);
+  }
+  .hero-sun {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff4e0 0%, #ffd9a8 30%, #f0a878 60%, rgba(217, 119, 87, 0) 75%);
+    filter: blur(2px);
+    opacity: 0.9;
+  }
+  .hero-sun::after {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 220, 180, 0.4) 0%, rgba(255, 200, 150, 0) 70%);
+  }
+  .hero-ocean {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 46%;
+  }
+  .hero-ocean svg { width: 100%; height: 100%; display: block; }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    color: var(--stone-50);
+    padding: 0 24px;
+    margin-top: -40px;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--stone-100);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--coral-300);
+    vertical-align: middle;
+    margin: 0 18px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(64px, 9vw, 132px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.4s forwards;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--coral-300);
+    font-weight: 300;
+  }
+  .hero-sub {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--stone-100);
+    max-width: 520px;
+    margin: 0 auto 44px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.6s forwards;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    color: var(--stone-200);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .hero-scroll .line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--stone-200), transparent);
+    animation: scrollPulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.4; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* ---------- BOOKING BAR ---------- */
+  .booking-wrap {
+    position: relative;
+    z-index: 10;
+    margin-top: -70px;
+    padding: 0 56px;
+  }
+  .booking {
+    max-width: 1240px;
+    margin: 0 auto;
+    background: var(--stone-50);
+    box-shadow: 0 30px 60px -20px rgba(10, 26, 43, 0.35);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    align-items: stretch;
+    border: 1px solid var(--stone-200);
+  }
+  .booking-field {
+    padding: 26px 28px;
+    border-right: 1px solid var(--stone-200);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+  .booking-field label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone-500);
+    font-weight: 500;
+  }
+  .booking-field input, .booking-field select {
+    border: none;
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--deep-900);
+    font-weight: 500;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .booking-field input::placeholder { color: var(--stone-400); }
+  .booking-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237d7462' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 20px;
+  }
+  .booking-submit {
+    background: var(--deep-900);
+    color: var(--stone-50);
+    border: none;
+    padding: 0 44px;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .booking-submit:hover { background: var(--coral-500); }
+  .booking-submit svg { transition: transform 0.3s ease; }
+  .booking-submit:hover svg { transform: translateX(4px); }
+
+  /* ---------- SECTION BASE ---------- */
+  section { padding: 120px 56px; }
+  .container { max-width: 1240px; margin: 0 auto; }
+
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .section-head .left { max-width: 640px; }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--coral-500);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--coral-500);
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--deep-900);
+    letter-spacing: 0.01em;
+  }
+  h2 em { font-style: italic; color: var(--coral-500); }
+  .section-head p {
+    font-size: 16px;
+    color: var(--stone-600);
+    max-width: 380px;
+    line-height: 1.7;
+  }
+
+  /* ---------- ROOMS ---------- */
+  .rooms { background: var(--stone-50); }
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .room-card {
+    background: #fff;
+    overflow: hidden;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .room-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 50px -20px rgba(10, 26, 43, 0.25);
+  }
+  .room-visual {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+  }
+  .room-visual svg { width: 100%; height: 100%; display: block; transition: transform 0.8s ease; }
+  .room-card:hover .room-visual svg { transform: scale(1.06); }
+  .room-tag {
+    position: absolute;
+    top: 20px; left: 20px;
+    background: rgba(247, 245, 241, 0.95);
+    padding: 7px 14px;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--deep-900);
+    font-weight: 500;
+  }
+  .room-body {
+    padding: 32px 32px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .room-body h3 {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--deep-900);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .room-body p {
+    font-size: 14.5px;
+    color: var(--stone-600);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .room-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 22px;
+    border-top: 1px solid var(--stone-200);
+  }
+  .room-meta .specs {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stone-500);
+    line-height: 1.9;
+  }
+  .room-price {
+    text-align: right;
+  }
+  .room-price .from {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone-500);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .room-price .amount {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--deep-900);
+    font-weight: 500;
+  }
+  .room-price .amount small {
+    font-size: 13px;
+    color: var(--stone-500);
+    font-family: var(--sans);
+    font-weight: 300;
+  }
+
+  /* ---------- AMENITIES ---------- */
+  .amenities {
+    background: var(--deep-900);
+    color: var(--stone-100);
+    position: relative;
+    overflow: hidden;
+  }
+  .amenities::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 119, 87, 0.15), transparent 70%);
+  }
+  .amenities .eyebrow { color: var(--coral-300); }
+  .amenities .eyebrow::before { background: var(--coral-300); }
+  .amenities h2 { color: var(--stone-50); }
+  .amenities h2 em { color: var(--coral-300); }
+  .amenities .section-head p { color: var(--stone-300); }
+
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(247, 245, 241, 0.1);
+    border: 1px solid rgba(247, 245, 241, 0.1);
+  }
+  .amenity {
+    background: var(--deep-900);
+    padding: 44px 32px;
+    transition: background 0.4s ease;
+  }
+  .amenity:hover { background: var(--deep-800); }
+  .amenity-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 26px;
+    color: var(--coral-300);
+  }
+  .amenity h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--stone-50);
+    margin-bottom: 12px;
+  }
+  .amenity p {
+    font-size: 14px;
+    color: var(--stone-300);
+    line-height: 1.7;
+  }
+
+  /* ---------- EXPERIENCES ---------- */
+  .experiences { background: var(--stone-100); }
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+  }
+  .exp-feature {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 48px;
+    color: var(--stone-50);
+  }
+  .exp-feature svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .exp-feature::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 26, 43, 0.1) 0%, rgba(10, 26, 43, 0.75) 100%);
+    z-index: 1;
+  }
+  .exp-feature-content { position: relative; z-index: 2; max-width: 460px; }
+  .exp-feature-content .eyebrow { color: var(--coral-300); }
+  .exp-feature-content .eyebrow::before { background: var(--coral-300); }
+  .exp-feature-content h3 {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .exp-feature-content p {
+    font-size: 15px;
+    color: var(--stone-200);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .exp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--stone-50);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--coral-300);
+    padding-bottom: 6px;
+    transition: gap 0.3s ease;
+  }
+  .exp-link:hover { gap: 20px; }
+
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--stone-300);
+  }
+  .exp-item {
+    background: var(--stone-50);
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  .exp-item:hover { background: #fff; }
+  .exp-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    color: var(--coral-500);
+    font-weight: 400;
+    font-style: italic;
+    min-width: 44px;
+  }
+  .exp-item-body h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--deep-900);
+    margin-bottom: 4px;
+  }
+  .exp-item-body p {
+    font-size: 13.5px;
+    color: var(--stone-600);
+    line-height: 1.6;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    background: var(--stone-50);
+    padding: 0;
+  }
+  .cta-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+  }
+  .cta-visual {
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-visual svg { width: 100%; height: 100%; display: block; }
+  .cta-content {
+    background: var(--deep-900);
+    color: var(--stone-50);
+    padding: 80px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cta-content .eyebrow { color: var(--coral-300); }
+  .cta-content .eyebrow::before { background: var(--coral-300); }
+  .cta-content h2 {
+    color: var(--stone-50);
+    font-size: clamp(38px, 4vw, 56px);
+    margin-bottom: 24px;
+  }
+  .cta-content h2 em { color: var(--coral-300); }
+  .cta-content p {
+    font-size: 16px;
+    color: var(--stone-300);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 420px;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--coral-500);
+    color: #fff;
+    padding: 18px 40px;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-primary:hover { background: var(--coral-600); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--stone-50);
+    padding: 18px 40px;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 400;
+    border: 1px solid rgba(247, 245, 241, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover { border-color: var(--stone-50); background: rgba(247, 245, 241, 0.05); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--deep-900);
+    color: var(--stone-300);
+    padding: 80px 56px 40px;
+    border-top: 1px solid rgba(247, 245, 241, 0.08);
+  }
+  .footer-inner { max-width: 1240px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(247, 245, 241, 0.1);
+  }
+  .footer-brand .logo { color: var(--stone-50); font-size: 28px; }
+  .footer-brand .logo span { color: var(--coral-400); }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--stone-400);
+    line-height: 1.8;
+    margin-top: 20px;
+    max-width: 320px;
+  }
+  .footer-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone-50);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: var(--stone-400);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  .footer-col a:hover { color: var(--coral-400); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-bottom p {
+    font-size: 12px;
+    color: var(--stone-500);
+    letter-spacing: 0.08em;
+  }
+  .footer-social {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-social a {
+    color: var(--stone-400);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  .footer-social a:hover { color: var(--coral-400); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    nav { padding: 18px 32px; }
+    nav.scrolled { padding: 14px 32px; }
+    .nav-links { display: none; }
+    section { padding: 80px 32px; }
+    .booking-wrap { padding: 0 32px; }
+    .booking { grid-template-columns: 1fr 1fr; }
+    .booking-submit { grid-column: 1 / -1; padding: 22px; justify-content: center; }
+    .rooms-grid { grid-template-columns: 1fr; }
+    .amenities-grid { grid-template-columns: 1fr 1fr; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .cta-inner { grid-template-columns: 1fr; }
+    .cta-visual { min-height: 320px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    footer { padding: 60px 32px 32px; }
+  }
+  @media (max-width: 640px) {
+    .booking { grid-template-columns: 1fr; }
+    .booking-field { border-right: none; border-bottom: 1px solid var(--stone-200); }
+    .amenities-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .cta-content { padding: 56px 32px; }
+    .hero-eyebrow::before, .hero-eyebrow::after { width: 20px; margin: 0 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">MIREN<span>·</span>HOUSE</a>
+  <ul class="nav-links">
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#story">Our Story</a></li>
+  </ul>
+  <a href="#book" class="nav-cta">Reserve</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-sky"></div>
+  <div class="hero-sun"></div>
+  <div class="hero-ocean">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2c5a7d"/>
+          <stop offset="40%" stop-color="#16324a"/>
+          <stop offset="100%" stop-color="#0a1a2b"/>
+        </linearGradient>
+        <linearGradient id="sunReflect" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f0a878" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#f0a878" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="500" fill="url(#oceanGrad)"/>
+      <ellipse cx="720" cy="0" rx="180" ry="120" fill="url(#sunReflect)"/>
+      <!-- wave layers -->
+      <path d="M0,60 C240,20 480,100 720,60 C960,20 1200,100 1440,60 L1440,500 L0,500 Z" fill="#1e4260" opacity="0.6"/>
+      <path d="M0,120 C240,80 480,160 720,120 C960,80 1200,160 1440,120 L1440,500 L0,500 Z" fill="#16324a" opacity="0.7"/>
+      <path d="M0,200 C240,160 480,240 720,200 C960,160 1200,240 1440,200 L1440,500 L0,500 Z" fill="#0f2438" opacity="0.85"/>
+      <path d="M0,300 C240,260 480,340 720,300 C960,260 1200,340 1440,300 L1440,500 L0,500 Z" fill="#0a1a2b"/>
+      <!-- highlights -->
+      <path d="M0,60 C240,20 480,100 720,60 C960,20 1200,100 1440,60" stroke="#eaa88e" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M0,120 C240,80 480,160 720,120 C960,80 1200,160 1440,120" stroke="#eaa88e" stroke-width="0.8" fill="none" opacity="0.25"/>
+    </svg>
+  </div>
+  <div class="hero-grain"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Est. 1924 · Cape Miren</div>
+    <h1>Where the <em>sea</em><br>meets stillness</h1>
+    <p class="hero-sub">A quiet coastal retreat of twenty-two rooms, perched above the Atlantic on a private stretch of Cape Miren.</p>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</header>
+
+<!-- BOOKING -->
+<div class="booking-wrap" id="book">
+  <form class="booking" onsubmit="event.preventDefault();">
+    <div class="booking-field">
+      <label for="arrive">Arrival</label>
+      <input type="text" id="arrive" placeholder="Select date" onfocus="(this.type='date')" onblur="(this.type='text')">
+    </div>
+    <div class="booking-field">
+      <label for="depart">Departure</label>
+      <input type="text" id="depart" placeholder="Select date" onfocus="(this.type='date')" onblur="(this.type='text')">
+    </div>
+    <div class="booking-field">
+      <label for="guests">Guests</label>
+      <select id="guests">
+        <option>2 Adults</option>
+        <option>1 Adult</option>
+        <option>2 Adults, 1 Child</option>
+        <option>2 Adults, 2 Children</option>
+        <option>3 Adults</option>
+      </select>
+    </div>
+    <div class="booking-field">
+      <label for="room">Room</label>
+      <select id="room">
+        <option>Any Room</option>
+        <option>The Atlantic Suite</option>
+        <option>Sea View King</option>
+        <option>Garden Cottage</option>
+      </select>
+    </div>
+    <button type="submit" class="booking-submit">
+      Check Availability
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M11 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+    </button>
+  </form>
+</div>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="eyebrow">The Rooms</div>
+        <h2>Twenty-two rooms,<br>each facing the <em>water</em></h2>
+      </div>
+      <p>Every room is a study in restraint — linen, oak, and stone, with windows that open to the salt air and the sound of the tide.</p>
+    </div>
+
+    <div class="rooms-grid">
+      <!-- Room 1 -->
+      <article class="room-card">
+        <div class="room-visual">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="r1sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f4d9c2"/>
+                <stop offset="60%" stop-color="#e8b89a"/>
+                <stop offset="100%" stop-color="#d99a7c"/>
+              </linearGradient>
+              <linearGradient id="r1sea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2c5a7d"/>
+                <stop offset="100%" stop-color="#0f2438"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#r1sky)"/>
+            <circle cx="200" cy="140" r="40" fill="#fff4e0" opacity="0.9"/>
+            <rect y="180" width="400" height="120" fill="url(#r1sea)"/>
+            <path d="M0,180 C100,170 200,190 300,180 C350,175 380,185 400,180 L400,300 L0,300 Z" fill="#16324a" opacity="0.6"/>
+            <path d="M0,210 C100,200 200,220 300,210 C350,205 380,215 400,210 L400,300 L0,300 Z" fill="#0a1a2b" opacity="0.7"/>
+            <!-- window frame -->
+            <rect x="40" y="40" width="320" height="220" fill="none" stroke="#3d382e" stroke-width="3"/>
+            <line x1="200" y1="40" x2="200" y2="260" stroke="#3d382e" stroke-width="3"/>
+            <line x1="40" y1="150" x2="360" y2="150" stroke="#3d382e" stroke-width="3"/>
+          </svg>
+          <span class="room-tag">Sea View</span>
+        </div>
+        <div class="room-body">
+          <h3>Sea View King</h3>
+          <p>A generous corner room with a private balcony, deep soaking tub, and an uninterrupted view of the Atlantic horizon.</p>
+          <div class="room-meta">
+            <div class="specs">
+              42 m² · King Bed<br>Balcony · Ocean View
+            </div>
+            <div class="room-price">
+              <span class="from">From</span>
+              <span class="amount">€480<small> / night</small></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 2 -->
+      <article class="room-card">
+        <div class="room-visual">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="r2sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e2ddd2"/>
+                <stop offset="100%" stop-color="#cfc8b8"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#r2sky)"/>
+            <!-- interior scene -->
+            <rect x="0" y="200" width="400" height="100" fill="#a89f8c"/>
+            <rect x="0" y="200" width="400" height="4" fill="#7d7462"/>
+            <!-- bed -->
+            <rect x="80" y="150" width="240" height="60" fill="#f7f5f1"/>
+            <rect x="80" y="150" width="240" height="8" fill="#e2ddd2"/>
+            <rect x="90" y="120" width="60" height="40" fill="#f7f5f1"/>
+            <rect x="250" y="120" width="60" height="40" fill="#f7f5f1"/>
+            <!-- pillows -->
+            <rect x="100" y="130" width="50" height="20" fill="#efece5"/>
+            <rect x="250" y="130" width="50" height="20" fill="#efece5"/>
+            <!-- window -->
+            <rect x="20" y="40" width="80" height="100" fill="#2c5a7d"/>
+            <rect x="20" y="40" width="80" height="100" fill="none" stroke="#3d382e" stroke-width="2"/>
+            <line x1="60" y1="40" x2="60" y2="140" stroke="#3d382e" stroke-width="2"/>
+            <!-- lamp -->
+            <rect x="340" y="140" width="4" height="60" fill="#3d382e"/>
+            <path d="M320,140 L364,140 L356,120 L328,120 Z" fill="#d97757"/>
+          </svg>
+          <span class="room-tag">Signature</span>
+        </div>
+        <div class="room-body">
+          <h3>The Atlantic Suite</h3>
+          <p>Our finest accommodation — a two-room suite with a wraparound terrace, private dining, and a wood-burning fireplace.</p>
+          <div class="room-meta">
+            <div class="specs">
+              78 m² · Super King<br>Terrace · Fireplace
+            </div>
+            <div class="room-price">
+              <span class="from">From</span>
+              <span class="amount">€920<small> / night</small></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 3 -->
+      <article class="room-card">
+        <div class="room-visual">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="r3sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cfc8b8"/>
+                <stop offset="100%" stop-color="#a89f8c"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#r3sky)"/>
+            <!-- garden -->
+            <rect y="180" width="400" height="120" fill="#5a5344"/>
+            <rect y="180" width="400" height="6" fill="#3d382e"/>
+            <!-- cottage -->
+            <rect x="100" y="100" width="200" height="80" fill="#efece5"/>
+            <path d="M90,100 L200,50 L310,100 Z" fill="#7d7462"/>
+            <rect x="180" y="130" width="40" height="50" fill="#3d382e"/>
+            <rect x="120" y="120" width="30" height="30" fill="#2c5a7d"/>
+            <rect x="250" y="120" width="30" height="30" fill="#2c5a7d"/>
+            <!-- trees -->
+            <circle cx="60" cy="160" r="30" fill="#3d382e"/>
+            <circle cx="340" cy="150" r="35" fill="#3d382e"/>
+            <circle cx="360" cy="170" r="25" fill="#5a5344"/>
+            <!-- flowers -->
+            <circle cx="80" cy="220" r="4" fill="#d97757"/>
+            <circle cx="120" cy="240" r="4" fill="#eaa88e"/>
+            <circle cx="300" cy="230" r="4" fill="#d97757"/>
+            <circle cx="340" cy="250" r="4" fill="#eaa88e"/>
+          </svg>
+          <span class="room-tag">Garden</span>
+        </div>
+        <div class="room-body">
+          <h3>Garden Cottage</h3>
+          <p>A standalone stone cottage set within the walled garden, with its own terrace, outdoor shower, and wood-fired hot tub.</p>
+          <div class="room-meta">
+            <div class="specs">
+              56 m² · King Bed<br>Private Garden · Hot Tub
+            </div>
+            <div class="room-price">
+              <span class="from">From</span>
+              <span class="amount">€640<small> / night</small></span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="eyebrow">The House</div>
+        <h2>Considered <em>comforts</em>,<br>quietly delivered</h2>
+      </div>
+      <p>We believe luxury is found in the details — the weight of a linen robe, the temperature of the pool, the timing of your morning coffee.</p>
+    </div>
+
+    <div class="amenities-grid">
+      <div class="amenity">
+        <svg class="amenity-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 4 C14 12 8 20 8 28 C8 35 14 40 22 40 C30 40 36 35 36 28 C36 20 30 12 22 4 Z" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M22 12 C18 18 14 22 14 28 C14 32 17 35 22 35" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.6"/>
+        </svg>
+        <h4>The Salt Pool</h4>
+        <p>A heated seawater pool set into the cliff, open from dawn until the last guest leaves.</p>
+      </div>
+      <div class="amenity">
+        <svg class="amenity-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M22 6 L22 22 L34 30" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <circle cx="22" cy="22" r="2" fill="currentColor"/>
+        </svg>
+        <h4>Spa & Sauna</h4>
+        <p>A cedar sauna, cold plunge, and treatment rooms overlooking the cove. Booked by the hour.</p>
+      </div>
+      <div class="amenity">
+        <svg class="amenity-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 30 L8 14 L22 8 L36 14 L36 30" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M14 30 L14 20 L30 20 L30 30" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M4 30 L40 30" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M18 30 L18 24 L26 24 L26 30" stroke="currentColor" stroke-width="1.2" fill="none"/>
+        </svg>
+        <h4>The Dining Room</h4>
+        <p>A daily-changing menu built around the morning's catch and the kitchen garden.</p>
+      </div>
+      <div class="amenity">
+        <svg class="amenity-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 34 L6 20 L14 20 L14 34" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M14 34 L14 12 L22 12 L22 34" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M22 34 L22 16 L30 16 L30 34" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M30 34 L30 24 L38 24 L38 34" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M4 34 L40 34" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <h4>The Library</h4>
+        <p>Two thousand volumes, a working fireplace, and a bar that opens at six.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiences">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="eyebrow">The Surrounds</div>
+        <h2>Days shaped by<br>the <em>coastline</em></h2>
+      </div>
+      <p>Our concierge arranges everything from private sailing to foraging walks with the head chef. Nothing is too much trouble.</p>
+    </div>
+
+    <div class="exp-grid">
+      <div class="exp-feature">
+        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="expSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f4d9c2"/>
+              <stop offset="50%" stop-color="#d99a7c"/>
+              <stop offset="100%" stop-color="#7a5a63"/>
+            </linearGradient>
+            <linearGradient id="expSea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2c5a7d"/>
+              <stop offset="100%" stop-color="#0a1a2b"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="600" fill="url(#expSky)"/>
+          <circle cx="400" cy="280" r="70" fill="#fff4e0" opacity="0.85"/>
+          <rect y="340" width="800" height="260" fill="url(#expSea)"/>
+          <path d="M0,340 C200,320 400,360 600,340 C700,330 750,350 800,340 L800,600 L0,600 Z" fill="#16324a" opacity="0.5"/>
+          <path d="M0,400 C200,380 400,420 600,400 C700,390 750,410 800,400 L800,600 L0,600 Z" fill="#0f2438" opacity="0.7"/>
+          <!-- sailboat -->
+          <path d="M380,340 L380,260 L420,340 Z" fill="#f7f5f1"/>
+          <path d="M380,340 L380,280 L350,340 Z" fill="#e2ddd2"/>
+          <rect x="370" y="340" width="60" height="6" fill="#3d382e"/>
+          <path d="M360,346 L440,346 L430,360 L370,360 Z" fill="#3d382e"/>
+          <!-- birds -->
+          <path d="M200,180 Q210,170 220,180" stroke="#3d382e" stroke-width="1.5" fill="none"/>
+          <path d="M240,200 Q250,190 260,200" stroke="#3d382e" stroke-width="1.5" fill="none"/>
+          <path d="M600,160 Q610,150 620,160" stroke="#3d382e" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div class="exp-feature-content">
+          <div class="eyebrow">Signature Experience</div>
+          <h3>Sunset sailing on the <em style="font-style:italic;color:var(--coral-300)">Miren Star</em></h3>
+          <p>Join our skipper for a two-hour sail along the cape, with champagne and oysters served as the sun drops behind the headland.</p>
+          <a href="#" class="exp-link">Reserve a sail <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        </div>
+      </div>
+
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-num">01</div>
+          <div class="exp-item-body">
+            <h4>Foraging with the Chef</h4>
+            <p>A morning walk through the hedgerows and rock pools, ending with lunch in the kitchen.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-num">02</div>
+          <div class="exp-item-body">
+            <h4>Private Coastal Picnic</h4>
+            <p>A hamper of local produce, a blanket, and a hidden cove all to yourselves.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-num">03</div>
+          <div class="exp-item-body">
+            <h4>Sea Swim & Sauna</h4>
+            <p>A guided cold-water swim at dawn, followed by the cedar sauna and a warm breakfast.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-num">04</div>
+          <div class="exp-item-body">
+            <h4>The Lighthouse Walk</h4>
+            <p>A three-hour cliff path to the old lighthouse, with a flask of tea and a local guide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="story">
+  <div class="cta-inner">
+    <div class="cta-visual">
+      <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ctaSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e8b89a"/>
+            <stop offset="40%" stop-color="#d99a7c"/>
+            <stop offset="100%" stop-color="#7a5a63"/>
+          </linearGradient>
+          <linearGradient id="ctaSea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2c5a7d"/>
+            <stop offset="100%" stop-color="#0a1a2b"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="600" fill="url(#ctaSky)"/>
+        <circle cx="300" cy="240" r="60" fill="#fff4e0" opacity="0.9"/>
+        <rect y="320" width="600" height="280" fill="url(#ctaSea)"/>
+        <path d="M0,320 C150,300 300,340 450,320 C525,310 575,330 600,320 L600,600 L0,600 Z" fill="#16324a" opacity="0.5"/>
+        <path d="M0,380 C150,360 300,400 450,380 C525,370 575,390 600,380 L600,600 L0,600 Z" fill="#0f2438" opacity="0.7"/>
+        <path d="M0,450 C150,430 300,470 450,450 C525,440 575,460 600,450 L600,600 L0,600 Z" fill="#0a1a2b"/>
+        <!-- house silhouette -->
+        <rect x="240" y="280" width="120" height="60" fill="#3d382e"/>
+        <path d="M230,280 L300,240 L370,280 Z" fill="#3d382e"/>
+        <rect x="270" y="300" width="20" height="40" fill="#f4d9c2" opacity="0.8"/>
+        <rect x="310" y="300" width="20" height="40" fill="#f4d9c2" opacity="0.8"/>
+        <rect x="290" y="260" width="20" height="20" fill="#f4d9c2" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="cta-content">
+      <div class="eyebrow">Reserve Your Stay</div>
+      <h2>We keep a room<br>for those who <em>wander</em></h2>
+      <p>MIREN HOUSE is open from March to November. We recommend booking well in advance for the summer months, when the cape is at its most beautiful.</p>
+      <div class="cta-actions">
+        <a href="#book" class="btn-primary">
+          Check Availability
+          <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M11 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+        </a>
+        <a href="#" class="btn-ghost">Speak to Concierge</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">MIREN<span>·</span>HOUSE</a>
+        <p>A twenty-two room coastal retreat on the wild Atlantic edge of Cape Miren. Independent, family-run, and quietly devoted to the art of hospitality.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Stay</h5>
+        <ul>
+          <li><a href="#rooms">Rooms & Suites</a></li>
+          <li><a href="#book">Availability</a></li>
+          <li><a href="#">Offers</a></li>
+          <li><a href="#">Gift Vouchers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Discover</h5>
+        <ul>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#">The Dining Room</a></li>
+          <li><a href="#">The Spa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="#">Cape Miren, Co. Kerry</a></li>
+          <li><a href="tel:+3536400000">+353 64 000 0000</a></li>
+          <li><a href="mailto:stay@mirenhouse.com">stay@mirenhouse.com</a></li>
+          <li><a href="#">Directions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 MIREN HOUSE. All rights reserved. A member of Ireland's Blue Book.</p>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">Journal</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Subtle parallax on hero ocean
+  const heroOcean = document.querySelector('.hero-ocean');
+  const heroSun = document.querySelector('.hero-sun');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight) {
+      heroOcean.style.transform = `translateY(${y * 0.15}px)`;
+      heroSun.style.transform = `translate(-50%, calc(-50% + ${y * 0.25}px))`;
+    }
+  });
+</script>
+
+</body>
+</html>

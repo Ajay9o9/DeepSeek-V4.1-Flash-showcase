@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHILDCARE / PORTAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1e1c1a;
+      --paper: #faf7f2;
+      --cream: #f3ede4;
+      --sage: #b7c9b1;
+      --sage-deep: #7f9a7a;
+      --terracotta: #c96f4b;
+      --terracotta-light: #e8a88c;
+      --gold: #e3b448;
+      --sky: #b3d0d9;
+      --sky-deep: #6f9aa8;
+      --plum: #8b6b7d;
+      --border-light: rgba(30, 28, 26, 0.08);
+      --shadow-sm: 0 2px 8px rgba(30, 28, 26, 0.04);
+      --shadow-md: 0 8px 24px rgba(30, 28, 26, 0.06);
+      --shadow-lg: 0 16px 48px rgba(30, 28, 26, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    .serif {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ---------- SIDEBAR ---------- */
+    .sidebar {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(250, 247, 242, 0.12);
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--terracotta);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-mark svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .logo-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-top: 2px;
+    }
+
+    .nav-section {
+      margin-bottom: 32px;
+    }
+
+    .nav-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 242, 0.4);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: rgba(250, 247, 242, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .nav-item:hover {
+      background: rgba(250, 247, 242, 0.06);
+      color: var(--paper);
+    }
+
+    .nav-item.active {
+      background: rgba(201, 111, 75, 0.15);
+      color: var(--terracotta-light);
+      font-weight: 500;
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--terracotta);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      line-height: 1.4;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(250, 247, 242, 0.12);
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage), var(--sky-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--paper);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 0.7rem;
+      color: rgba(250, 247, 242, 0.5);
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    .main {
+      padding: 32px 40px 48px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* ---------- HEADER ---------- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .header-left h1 {
+      font-size: 2.25rem;
+      margin-bottom: 4px;
+    }
+
+    .header-left p {
+      color: rgba(30, 28, 26, 0.55);
+      font-size: 0.95rem;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .date-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      border: 1px solid var(--border-light);
+    }
+
+    .date-chip svg {
+      width: 16px;
+      height: 16px;
+      color: var(--terracotta);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: #333;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-outline:hover {
+      background: var(--cream);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ---------- DASHBOARD GRID ---------- */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--terracotta);
+    }
+
+    .card-action {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--terracotta);
+      text-decoration: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .card-action:hover {
+      opacity: 0.7;
+    }
+
+    /* ---------- CHECK-IN CARD ---------- */
+    .checkin-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(183, 201, 177, 0.15), rgba(179, 208, 217, 0.15));
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+    }
+
+    .checkin-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage), var(--sky-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .checkin-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    .checkin-info p {
+      font-size: 0.85rem;
+      color: rgba(30, 28, 26, 0.55);
+    }
+
+    .checkin-badge {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--sage);
+      color: var(--ink);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .checkin-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sage-deep);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .checkin-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .detail-item {
+      padding: 12px 16px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+    }
+
+    .detail-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(30, 28, 26, 0.45);
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* ---------- MESSAGES CARD ---------- */
+    .message-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .message-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .message-item:hover {
+      background: var(--cream);
+    }
+
+    .message-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .message-avatar.teacher {
+      background: var(--terracotta-light);
+      color: var(--ink);
+    }
+
+    .message-avatar.admin {
+      background: var(--sky);
+      color: var(--ink);
+    }
+
+    .message-avatar.parent {
+      background: var(--sage);
+      color: var(--ink);
+    }
+
+    .message-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .message-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .message-sender {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .message-time {
+      font-size: 0.7rem;
+      color: rgba(30, 28, 26, 0.4);
+      white-space: nowrap;
+    }
+
+    .message-preview {
+      font-size: 0.8rem;
+      color: rgba(30, 28, 26, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .message-unread {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ---------- PICKUP CARD ---------- */
+    .pickup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pickup-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--cream);
+      border-radius: var(--radius-md);
+      transition: all 0.2s;
+    }
+
+    .pickup-item:hover {
+      background: #ede6db;
+    }
+
+    .pickup-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .pickup-avatar.mom {
+      background: linear-gradient(135deg, var(--terracotta-light), var(--terracotta));
+      color: white;
+    }
+
+    .pickup-avatar.dad {
+      background: linear-gradient(135deg, var(--sky), var(--sky-deep));
+      color: white;
+    }
+
+    .pickup-avatar.grandma {
+      background: linear-gradient(135deg, var(--sage), var(--sage-deep));
+      color: white;
+    }
+
+    .pickup-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pickup-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .pickup-relation {
+      font-size: 0.75rem;
+      color: rgba(30, 28, 26, 0.5);
+    }
+
+    .pickup-status {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .pickup-status.approved {
+      background: rgba(183, 201, 177, 0.3);
+      color: var(--sage-deep);
+    }
+
+    .pickup-status.pending {
+      background: rgba(227, 180, 72, 0.2);
+      color: #a07a1a;
+    }
+
+    /* ---------- NOTES CARD ---------- */
+    .note-item {
+      padding: 16px;
+      background: var(--cream);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border-left: 3px solid var(--terracotta);
+    }
+
+    .note-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .note-author {
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .note-author-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--terracotta);
+    }
+
+    .note-time {
+      font-size: 0.7rem;
+      color: rgba(30, 28, 26, 0.4);
+    }
+
+    .note-text {
+      font-size: 0.85rem;
+      color: rgba(30, 28, 26, 0.75);
+      line-height: 1.6;
+    }
+
+    /* ---------- MEAL CARD ---------- */
+    .meal-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .meal-item {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .meal-item:last-child {
+      border-bottom: none;
+    }
+
+    .meal-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      width: 60px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .meal-content {
+      flex: 1;
+    }
+
+    .meal-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .meal-desc {
+      font-size: 0.8rem;
+      color: rgba(30, 28, 26, 0.55);
+    }
+
+    .meal-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-top: 4px;
+    }
+
+    .meal-tag.veg {
+      background: rgba(183, 201, 177, 0.3);
+      color: var(--sage-deep);
+    }
+
+    .meal-tag.allergen {
+      background: rgba(201, 111, 75, 0.15);
+      color: var(--terracotta);
+    }
+
+    /* ---------- CALENDAR CARD ---------- */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .cal-day-label {
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(30, 28, 26, 0.4);
+      padding: 8px 0;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      gap: 2px;
+    }
+
+    .cal-day:hover {
+      background: var(--cream);
+    }
+
+    .cal-day.today {
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 600;
+    }
+
+    .cal-day.has-event::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--terracotta);
+    }
+
+    .cal-day.today.has-event::after {
+      background: var(--terracotta-light);
+    }
+
+    .cal-day.other-month {
+      color: rgba(30, 28, 26, 0.2);
+    }
+
+    .cal-event-list {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .cal-event {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 0.8rem;
+    }
+
+    .cal-event-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cal-event-dot.terracotta { background: var(--terracotta); }
+    .cal-event-dot.sage { background: var(--sage-deep); }
+    .cal-event-dot.sky { background: var(--sky-deep); }
+
+    .cal-event-text {
+      flex: 1;
+      color: rgba(30, 28, 26, 0.7);
+    }
+
+    .cal-event-time {
+      font-size: 0.7rem;
+      color: rgba(30, 28, 26, 0.4);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 20px 24px;
+        flex-direction: row;
+        align-items: center;
+        gap: 24px;
+        overflow-x: auto;
+      }
+
+      .logo {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+        flex-shrink: 0;
+      }
+
+      .nav-section {
+        margin-bottom: 0;
+        display: flex;
+        gap: 4px;
+      }
+
+      .nav-label {
+        display: none;
+      }
+
+      .nav-item {
+        white-space: nowrap;
+        padding: 8px 14px;
+      }
+
+      .sidebar-footer {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .main {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+      }
+
+      .header-left h1 {
+        font-size: 1.75rem;
+      }
+
+      .header-right {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .checkin-details {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .logo-text {
+        font-size: 1rem;
+      }
+
+      .logo-text span {
+        font-size: 0.55rem;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-right {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .date-chip {
+        justify-content: center;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+
+      .checkin-status {
+        flex-wrap: wrap;
+      }
+
+      .checkin-badge {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* ---------- SCROLLBAR ---------- */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(30, 28, 26, 0.15);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(30, 28, 26, 0.25);
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    .card {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          Childcare
+          <span>Portal</span>
+        </div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-label">Main</div>
+        <a class="nav-item active" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Dashboard
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Messages
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Calendar
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          Daily Notes
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Manage</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Pickup Auth
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+          Meal Schedule
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">SM</div>
+          <div class="user-info">
+            <div class="user-name">Sarah Mitchell</div>
+            <div class="user-role">Parent · Emma's Mom</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-left">
+          <h1>Good morning, Sarah</h1>
+          <p>Here's what's happening with Emma today.</p>
+        </div>
+        <div class="header-right">
+          <div class="date-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Tuesday, March 18
+          </div>
+          <button class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            New Message
+          </button>
+        </div>
+      </header>
+
+      <!-- DASHBOARD GRID -->
+      <div class="dashboard">
+        <!-- CHECK-IN CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Daily Check-in
+            </h2>
+            <button class="card-action">View History</button>
+          </div>
+
+          <div class="checkin-status">
+            <div class="checkin-avatar">E</div>
+            <div class="checkin-info">
+              <h3>Emma Mitchell</h3>
+              <p>Age 4 · Sunflower Room</p>
+            </div>
+            <div class="checkin-badge">
+              <span class="dot"></span>
+              Checked In
+            </div>
+          </div>
+
+          <div class="checkin-details">
+            <div class="detail-item">
+              <div class="detail-label">Arrival</div>
+              <div class="detail-value">8:15 AM</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Mood</div>
+              <div class="detail-value">Happy &amp; Energetic</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Breakfast</div>
+              <div class="detail-value">Finished all</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Nap</div>
+              <div class="detail-value">12:30 – 2:00 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MESSAGES CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Messages
+            </h2>
+            <button class="card-action">View All</button>
+          </div>
+
+          <div class="message-list">
+            <div class="message-item">
+              <div class="message-avatar teacher">LT</div>
+              <div class="message-body">
+                <div class="message-top">
+                  <span class="message-sender">Ms. Lauren</span>
+                  <span class="message-time">10:42 AM</span>
+                </div>
+                <div class="message-preview">Emma had a wonderful morning painting with the group!</div>
+              </div>
+              <div class="message-unread"></div>
+            </div>
+
+            <div class="message-item">
+              <div class="message-avatar admin">AD</div>
+              <div class="message-body">
+                <div class="message-top">
+                  <span class="message-sender">Admin Office</span>
+                  <span class="message-time">9:15 AM</span>
+                </div>
+                <div class="message-preview">Reminder: Spring picture day is this Friday, March 21.</div>
+              </div>
+              <div class="message-unread"></div>
+            </div>
+
+            <div class="message-item">
+              <div class="message-avatar parent">JM</div>
+              <div class="message-body">
+                <div class="message-top">
+                  <span class="message-sender">Jake Mitchell</span>
+                  <span class="message-time">Yesterday</span>
+                </div>
+                <div class="message-preview">I'll pick up Emma at 4:30 today instead of 5.</div>
+              </div>
+            </div>
+
+            <div class="message-item">
+              <div class="message-avatar teacher">LT</div>
+              <div class="message-body">
+                <div class="message-top">
+                  <span class="message-sender">Ms. Lauren</span>
+                  <span class="message-time">Yesterday</span>
+                </div>
+                <div class="message-preview">Emma is doing great with her letter recognition!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PICKUP AUTHORIZATION CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              Pickup Authorization
+            </h2>
+            <button class="card-action">Manage</button>
+          </div>
+
+          <div class="pickup-list">
+            <div class="pickup-item">
+              <div class="pickup-avatar mom">SM</div>
+              <div class="pickup-info">
+                <div class="pickup-name">Sarah Mitchell</div>
+                <div class="pickup-relation">Mother · Primary Contact</div>
+              </div>
+              <div class="pickup-status approved">Approved</div>
+            </div>
+
+            <div class="pickup-item">
+              <div class="pickup-avatar dad">JM</div>
+              <div class="pickup-info">
+                <div class="pickup-name">Jake Mitchell</div>
+                <div class="pickup-relation">Father · Primary Contact</div>
+              </div>
+              <div class="pickup-status approved">Approved</div>
+            </div>
+
+            <div class="pickup-item">
+              <div class="pickup-avatar grandma">RG</div>
+              <div class="pickup-info">
+                <div class="pickup-name">Ruth Garcia</div>
+                <div class="pickup-relation">Grandmother · Emergency</div>
+              </div>
+              <div class="pickup-status pending">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHILD NOTES CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              Child Notes
+            </h2>
+            <button class="card-action">Add Note</button>
+          </div>
+
+          <div class="note-item">
+            <div class="note-header">
+              <div class="note-author">
+                <span class="note-author-dot"></span>
+                Ms. Lauren
+              </div>
+              <div class="note-time">10:42 AM</div>
+            </div>
+            <div class="note-text">Emma was very engaged during story time today. She correctly identified all the animal sounds and helped a friend who was feeling shy.</div>
+          </div>
+
+          <div class="note-item">
+            <div class="note-header">
+              <div class="note-author">
+                <span class="note-author-dot" style="background: var(--sky-deep);"></span>
+                Mr. Daniel
+              </div>
+              <div class="note-time">9:20 AM</div>
+            </div>
+            <div class="note-text">Great progress on the balance beam during outdoor play. Emma is building confidence with her coordination.</div>
+          </div>
+        </div>
+
+        <!-- MEAL SCHEDULE CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                <line x1="6" y1="1" x2="6" y2="4"/>
+                <line x1="10" y1="1" x2="10" y2="4"/>
+                <line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+              Meal Schedule
+            </h2>
+            <button class="card-action">Full Menu</button>
+          </div>
+
+          <div class="meal-timeline">
+            <div class="meal-item">
+              <div class="meal-time">8:00 AM</div>
+              <div class="meal-content">
+                <div class="meal-name">Breakfast</div>
+                <div class="meal-desc">Whole grain toast, scrambled eggs, fresh berries</div>
+                <span class="meal-tag veg">Vegetarian</span>
+              </div>
+            </div>
+
+            <div class="meal-item">
+              <div class="meal-time">10:00 AM</div>
+              <div class="meal-content">
+                <div class="meal-name">Morning Snack</div>
+                <div class="meal-desc">Apple slices with sunflower butter</div>
+                <span class="meal-tag allergen">Contains Nuts</span>
+              </div>
+            </div>
+
+            <div class="meal-item">
+              <div class="meal-time">12:00 PM</div>
+              <div class="meal-content">
+                <div class="meal-name">Lunch</div>
+                <div class="meal-desc">Grilled chicken, brown rice, steamed broccoli</div>
+                <span class="meal-tag veg">Gluten Free</span>
+              </div>
+            </div>
+
+            <div class="meal-item">
+              <div class="meal-time">3:00 PM</div>
+              <div class="meal-content">
+                <div class="meal-name">Afternoon Snack</div>
+                <div class="meal-desc">Yogurt parfait with granola and honey</div>
+                <span class="meal-tag veg">Vegetarian</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALENDAR CARD -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              March 2025
+            </h2>
+            <button class="card-action">Full Calendar</button>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="cal-day-label">S</div>
+            <div class="cal-day-label">M</div>
+            <div class="cal-day-label">T</div>
+            <div class="cal-day-label">W</div>
+            <div class="cal-day-label">T</div>
+            <div class="cal-day-label">F</div>
+            <div class="cal-day-label">S</div>
+
+            <div class="cal-day other-month">23</div>
+            <div class="cal-day other-month">24</div>
+            <div class="cal-day other-month">25</div>
+            <div class="cal-day other-month">26</div>
+            <div class="cal-day other-month">27</div>
+            <div class="cal-day other-month">28</div>
+            <div class="cal-day">1</div>
+
+            <div class="cal-day">2</div>
+            <div class="cal-day">3</div>
+            <div class="cal-day">4</div>
+            <div class="cal-day">5</div>
+            <div class="cal-day">6</div>
+            <div class="cal-day">7</div>
+            <div class="cal-day">8</div>
+
+            <div class="cal-day">9</div>
+            <div class="cal-day">10</div>
+            <div class="cal-day">11</div>
+            <div class="cal-day">12</div>
+            <div class="cal-day">13</div>
+            <div class="cal-day">14</div>
+            <div class="cal-day">15</div>
+
+            <div class="cal-day">16</div>
+            <div class="cal-day">17</div>
+            <div class="cal-day today has-event">18</div>
+            <div class="cal-day has-event">19</div>
+            <div class="cal-day">20</div>
+            <div class="cal-day has-event">21</div>
+            <div class="cal-day">22</div>
+
+            <div class="cal-day">23</div>
+            <div class="cal-day">24</div>
+            <div class="cal-day">25</div>
+            <div class="cal-day">26</div>
+            <div class="cal-day">27</div>
+            <div class="cal-day">28</div>
+            <div class="cal-day">29</div>
+
+            <div class="cal-day">30</div>
+            <div class="cal-day">31</div>
+            <div class="cal-day other-month">1</div>
+            <div class="cal-day other-month">2</div>
+            <div class="cal-day other-month">3</div>
+            <div class="cal-day other-month">4</div>
+            <div class="cal-day other-month">5</div>
+          </div>
+
+          <div class="cal-event-list">
+            <div class="cal-event">
+              <span class="cal-event-dot terracotta"></span>
+              <span class="cal-event-text">Spring Picture Day</span>
+              <span class="cal-event-time">Fri, Mar 21</span>
+            </div>
+            <div class="cal-event">
+              <span class="cal-event-dot sage"></span>
+              <span class="cal-event-text">Parent-Teacher Conference</span>
+              <span class="cal-event-time">Wed, Mar 19</span>
+            </div>
+            <div class="cal-event">
+              <span class="cal-event-dot sky"></span>
+              <span class="cal-event-text">Field Trip: Local Farm</span>
+              <span class="cal-event-time">Fri, Mar 28</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRANSIT / CONTROL — Operations Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0c10;
+    --bg-panel: #11151c;
+    --bg-panel-2: #161b24;
+    --bg-elevated: #1c222d;
+    --border: #232a36;
+    --border-bright: #2f3846;
+    --text: #e8ecf2;
+    --text-dim: #8a94a6;
+    --text-mute: #5a6478;
+    --accent: #ff5b2e;
+    --accent-2: #ffb347;
+    --good: #2dd4a7;
+    --warn: #ffb347;
+    --bad: #ff4d5e;
+    --info: #4d9fff;
+    --line-a: #ff5b2e;
+    --line-b: #4d9fff;
+    --line-c: #2dd4a7;
+    --line-d: #c084fc;
+    --line-e: #ffb347;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 800px 400px at 15% 0%, rgba(255,91,46,0.08), transparent 60%),
+      radial-gradient(ellipse 600px 300px at 85% 100%, rgba(77,159,255,0.06), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+
+  .brand-mark svg { width: 100%; height: 100%; }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .brand-text .t1 {
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+  }
+
+  .brand-text .t2 {
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.28em;
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .topbar-center {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .topbar-center .stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--good);
+    box-shadow: 0 0 8px currentColor;
+    color: var(--good);
+  }
+  .dot.warn { background: var(--warn); color: var(--warn); }
+  .dot.bad { background: var(--bad); color: var(--bad); }
+  .dot.info { background: var(--info); color: var(--info); }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .clock {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-panel);
+  }
+
+  .clock .tz { color: var(--text-mute); font-size: 10px; margin-left: 6px; }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 12px;
+    color: #0a0c10;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ LAYOUT ============ */
+  .shell {
+    display: grid;
+    grid-template-columns: 240px 1fr 340px;
+    min-height: calc(100vh - 63px);
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 22px 0;
+    background: rgba(17,21,28,0.4);
+  }
+
+  .nav-section {
+    padding: 0 20px;
+    margin-bottom: 26px;
+  }
+
+  .nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  .nav-item:hover { background: var(--bg-panel); color: var(--text); }
+
+  .nav-item.active {
+    background: var(--bg-panel);
+    color: var(--text);
+    border-left-color: var(--accent);
+  }
+
+  .nav-item .ico {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+
+  .nav-item .badge {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--bg-elevated);
+    color: var(--text-dim);
+  }
+
+  .nav-item .badge.bad { background: rgba(255,77,94,0.15); color: var(--bad); }
+  .nav-item .badge.warn { background: rgba(255,179,71,0.15); color: var(--warn); }
+
+  /* ============ MAIN ============ */
+  .main {
+    padding: 24px 28px;
+    overflow: hidden;
+  }
+
+  .page-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .page-head h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .page-head .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+    margin-top: 6px;
+  }
+
+  .head-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 8px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--border-bright);
+    background: var(--bg-panel);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+  }
+
+  .btn:hover { color: var(--text); border-color: var(--text-mute); }
+
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0c10;
+    font-weight: 700;
+  }
+
+  .btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+
+  /* ============ MAP ============ */
+  .map-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .map-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel-2);
+  }
+
+  .map-head .title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-head .title::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .map-legend {
+    display: flex;
+    gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  .map-legend .lg {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .map-legend .swatch {
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .map-canvas {
+    position: relative;
+    height: 340px;
+    background:
+      linear-gradient(180deg, rgba(28,34,45,0.4), rgba(17,21,28,0.6)),
+      repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(35,42,54,0.5) 39px, rgba(35,42,54,0.5) 40px),
+      repeating-linear-gradient(90deg, transparent 0, transparent 39px, rgba(35,42,54,0.5) 39px, rgba(35,42,54,0.5) 40px);
+  }
+
+  .map-canvas svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .station-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    fill: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .station-label.hub { fill: var(--text); font-weight: 700; }
+
+  .map-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+
+  .map-chip {
+    background: rgba(10,12,16,0.85);
+    border: 1px solid var(--border-bright);
+    padding: 5px 9px;
+    border-radius: 4px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(6px);
+  }
+
+  .map-chip strong { color: var(--text); }
+
+  /* ============ STATUS GRID ============ */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .line-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .line-card:hover { border-color: var(--border-bright); transform: translateY(-1px); }
+
+  .line-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--lc);
+  }
+
+  .line-card .lc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .line-card .lc-name {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+
+  .line-card .lc-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .lc-status.good { background: rgba(45,212,167,0.15); color: var(--good); }
+  .lc-status.warn { background: rgba(255,179,71,0.15); color: var(--warn); }
+  .lc-status.bad { background: rgba(255,77,94,0.15); color: var(--bad); }
+
+  .line-card .lc-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .line-card .lc-meta strong { color: var(--text-dim); font-weight: 500; }
+
+  /* ============ TIMELINE ============ */
+  .timeline-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel-2);
+  }
+
+  .panel-head .title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-head .title::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--info);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--info);
+  }
+
+  .panel-head .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+  }
+
+  .timeline {
+    padding: 16px 20px 20px;
+    position: relative;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 70px 20px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .tl-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 79px;
+    top: 30px;
+    bottom: -10px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .tl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg-panel);
+    border: 2px solid var(--text-mute);
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot.bad { border-color: var(--bad); box-shadow: 0 0 10px rgba(255,77,94,0.5); }
+  .tl-dot.warn { border-color: var(--warn); box-shadow: 0 0 10px rgba(255,179,71,0.4); }
+  .tl-dot.good { border-color: var(--good); box-shadow: 0 0 10px rgba(45,212,167,0.4); }
+  .tl-dot.info { border-color: var(--info); }
+
+  .tl-body .tl-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+
+  .tl-body .tl-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .tl-body .tl-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--bg-elevated);
+    color: var(--text-dim);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ============ RIGHT RAIL ============ */
+  .rail {
+    border-left: 1px solid var(--border);
+    padding: 22px 20px;
+    background: rgba(17,21,28,0.4);
+    overflow-y: auto;
+  }
+
+  .rail-section { margin-bottom: 24px; }
+
+  .rail-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rail-title .count {
+    color: var(--text-dim);
+    background: var(--bg-elevated);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 9px;
+  }
+
+  /* Alerts */
+  .alert {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 5px;
+    padding: 11px 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .alert:hover { background: var(--bg-panel-2); }
+
+  .alert.bad { border-left-color: var(--bad); }
+  .alert.info { border-left-color: var(--info); }
+  .alert.good { border-left-color: var(--good); }
+
+  .alert-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .alert-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--bg-elevated);
+    color: var(--text);
+  }
+
+  .alert-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-mute);
+  }
+
+  .alert-title {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+
+  .alert-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Operator actions */
+  .action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 11px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 12px;
+  }
+
+  .action:hover { border-color: var(--border-bright); background: var(--bg-panel-2); }
+
+  .action .ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    background: var(--bg-elevated);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .action .ico svg { width: 13px; height: 13px; }
+
+  .action .label { flex: 1; }
+  .action .label .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-mute);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  .action .arrow { color: var(--text-mute); font-size: 14px; }
+
+  /* Metrics */
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .metric {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px 12px;
+  }
+
+  .metric .m-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .metric .m-value {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .metric .m-value .unit {
+    font-size: 11px;
+    color: var(--text-mute);
+    font-weight: 400;
+    margin-left: 2px;
+  }
+
+  .metric .m-trend {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    margin-top: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  .m-trend.up { color: var(--good); }
+  .m-trend.down { color: var(--bad); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1200px) {
+    .shell { grid-template-columns: 200px 1fr 300px; }
+    .status-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 980px) {
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .rail { border-left: none; border-top: 1px solid var(--border); }
+    .topbar-center { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 12px 16px; }
+    .main { padding: 16px; }
+    .rail { padding: 16px; }
+    .status-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .map-canvas { height: 260px; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
+
+  /* Pulse animation */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes dash {
+    to { stroke-dashoffset: -20; }
+  }
+  .flow { stroke-dasharray: 4 6; animation: dash 1.5s linear infinite; }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#ff5b2e" stroke-width="2"/>
+        <circle cx="20" cy="20" r="6" fill="#ff5b2e"/>
+        <path d="M20 2 L20 14 M20 26 L20 38 M2 20 L14 20 M26 20 L38 20" stroke="#ff5b2e" stroke-width="1.5" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="t1">TRANSIT / CONTROL</span>
+      <span class="t2">OPS · SECTOR 04</span>
+    </div>
+  </div>
+
+  <div class="topbar-center">
+    <div class="stat"><span class="dot"></span> NETWORK NOMINAL</div>
+    <div class="stat"><span class="dot warn pulse"></span> 3 ACTIVE ALERTS</div>
+    <div class="stat"><span class="dot info"></span> 142 TRAINS IN SERVICE</div>
+  </div>
+
+  <div class="topbar-right">
+    <div class="clock mono">14:32:08 <span class="tz">UTC</span></div>
+    <div class="avatar">RK</div>
+  </div>
+</header>
+
+<!-- ============ SHELL ============ -->
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Operations</div>
+      <div class="nav-item active">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5"/><rect x="9" y="2" width="5" height="5"/><rect x="2" y="9" width="5" height="5"/><rect x="9" y="9" width="5" height="5"/></svg>
+        Overview
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8 L6 8 L8 4 L10 12 L12 8 L14 8"/></svg>
+        Live Map
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4 L8 8 L11 10"/></svg>
+        Timetable
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12 L6 6 L10 10 L14 4"/></svg>
+        Performance
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Incidents</div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 13 L2 13 Z"/><path d="M8 6 L8 9 M8 11 L8 11.5"/></svg>
+        Active
+        <span class="badge bad">3</span>
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8 L7 12 L13 4"/></svg>
+        Resolved
+        <span class="badge">28</span>
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1"/><path d="M5 5 L11 5 M5 8 L11 8 M5 11 L9 11"/></svg>
+        Log
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">System</div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1 L8 3 M8 13 L8 15 M1 8 L3 8 M13 8 L15 8 M3 3 L4.5 4.5 M11.5 11.5 L13 13 M13 3 L11.5 4.5 M4.5 11.5 L3 13"/></svg>
+        Settings
+      </div>
+      <div class="nav-item">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L8 8 L12 10"/><circle cx="8" cy="8" r="6"/></svg>
+        Audit Trail
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>Network Overview</h1>
+        <div class="sub">SECTOR 04 · 5 LINES · 142 TRAINS · 14:32:08 UTC</div>
+      </div>
+      <div class="head-actions">
+        <button class="btn">Export Log</button>
+        <button class="btn primary">+ New Incident</button>
+      </div>
+    </div>
+
+    <!-- ============ MAP ============ -->
+    <div class="map-panel">
+      <div class="map-head">
+        <div class="title">Route Map · Live</div>
+        <div class="map-legend">
+          <div class="lg"><span class="swatch" style="background:var(--line-a)"></span>Line A</div>
+          <div class="lg"><span class="swatch" style="background:var(--line-b)"></span>Line B</div>
+          <div class="lg"><span class="swatch" style="background:var(--line-c)"></span>Line C</div>
+          <div class="lg"><span class="swatch" style="background:var(--line-d)"></span>Line D</div>
+          <div class="lg"><span class="swatch" style="background:var(--line-e)"></span>Line E</div>
+        </div>
+      </div>
+      <div class="map-canvas">
+        <svg viewBox="0 0 900 340" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid dots -->
+          <defs>
+            <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="0.8" fill="#2f3846"/>
+            </pattern>
+          </defs>
+          <rect width="900" height="340" fill="url(#dots)"/>
+
+          <!-- Line A (orange) - horizontal with curve -->
+          <path d="M 40 90 L 200 90 L 260 130 L 420 130 L 480 90 L 700 90 L 860 90"
+                stroke="#ff5b2e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 40 90 L 200 90 L 260 130 L 420 130 L 480 90 L 700 90 L 860 90"
+                stroke="#ffb347" stroke-width="1.5" fill="none" class="flow" opacity="0.6"/>
+
+          <!-- Line B (blue) - diagonal -->
+          <path d="M 60 280 L 180 280 L 260 200 L 420 200 L 520 130 L 700 130 L 840 130"
+                stroke="#4d9fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 60 280 L 180 280 L 260 200 L 420 200 L 520 130 L 700 130 L 840 130"
+                stroke="#8fc0ff" stroke-width="1.5" fill="none" class="flow" opacity="0.6"/>
+
+          <!-- Line C (green) - vertical -->
+          <path d="M 340 40 L 340 130 L 380 170 L 380 300"
+                stroke="#2dd4a7" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 340 40 L 340 130 L 380 170 L 380 300"
+                stroke="#7ee8c8" stroke-width="1.5" fill="none" class="flow" opacity="0.6"/>
+
+          <!-- Line D (purple) - loop -->
+          <path d="M 620 60 L 720 60 L 780 120 L 780 220 L 720 280 L 620 280 L 560 220 L 560 120 Z"
+                stroke="#c084fc" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 620 60 L 720 60 L 780 120 L 780 220 L 720 280 L 620 280 L 560 220 L 560 120 Z"
+                stroke="#d9b3ff" stroke-width="1.5" fill="none" class="flow" opacity="0.6"/>
+
+          <!-- Line E (yellow) - short -->
+          <path d="M 100 200 L 200 200 L 260 240 L 340 240"
+                stroke="#ffb347" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Stations -->
+          <g>
+            <!-- Line A stations -->
+            <circle cx="40" cy="90" r="5" fill="#0a0c10" stroke="#ff5b2e" stroke-width="2.5"/>
+            <circle cx="200" cy="90" r="5" fill="#0a0c10" stroke="#ff5b2e" stroke-width="2.5"/>
+            <circle cx="260" cy="130" r="6" fill="#0a0c10" stroke="#ff5b2e" stroke-width="3"/>
+            <circle cx="420" cy="130" r="6" fill="#0a0c10" stroke="#ff5b2e" stroke-width="3"/>
+            <circle cx="480" cy="90" r="5" fill="#0a0c10" stroke="#ff5b2e" stroke-width="2.5"/>
+            <circle cx="700" cy="90" r="5" fill="#0a0c10" stroke="#ff5b2e" stroke-width="2.5"/>
+            <circle cx="860" cy="90" r="5" fill="#0a0c10" stroke="#ff5b2e" stroke-width="2.5"/>
+
+            <!-- Line B stations -->
+            <circle cx="60" cy="280" r="5" fill="#0a0c10" stroke="#4d9fff" stroke-width="2.5"/>
+            <circle cx="180" cy="280" r="5" fill="#0a0c10" stroke="#4d9fff" stroke-width="2.5"/>
+            <circle cx="260" cy="200" r="6" fill="#0a0c10" stroke="#4d9fff" stroke-width="3"/>
+            <circle cx="420" cy="200" r="6" fill="#0a0c10" stroke="#4d9fff" stroke-width="3"/>
+            <circle cx="520" cy="130" r="6" fill="#0a0c10" stroke="#4d9fff" stroke-width="3"/>
+            <circle cx="700" cy="130" r="5" fill="#0a0c10" stroke="#4d9fff" stroke-width="2.5"/>
+            <circle cx="840" cy="130" r="5" fill="#0a0c10" stroke="#4d9fff" stroke-width="2.5"/>
+
+            <!-- Line C stations -->
+            <circle cx="340" cy="40" r="5" fill="#0a0c10" stroke="#2dd4a7" stroke-width="2.5"/>
+            <circle cx="340" cy="130" r="6" fill="#0a0c10" stroke="#2dd4a7" stroke-width="3"/>
+            <circle cx="380" cy="170" r="5" fill="#0a0c10" stroke="#2dd4a7" stroke-width="2.5"/>
+            <circle cx="380" cy="300" r="5" fill="#0a0c10" stroke="#2dd4a7" stroke-width="2.5"/>
+
+            <!-- Line D stations -->
+            <circle cx="620" cy="60" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="720" cy="60" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="780" cy="120" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="780" cy="220" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="720" cy="280" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="620" cy="280" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="560" cy="220" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+            <circle cx="560" cy="120" r="5" fill="#0a0c10" stroke="#c084fc" stroke-width="2.5"/>
+
+            <!-- Line E stations -->
+            <circle cx="100" cy="200" r="5" fill="#0a0c10" stroke="#ffb347" stroke-width="2.5"/>
+            <circle cx="200" cy="200" r="5" fill="#0a0c10" stroke="#ffb347" stroke-width="2.5"/>
+            <circle cx="260" cy="240" r="5" fill="#0a0c10" stroke="#ffb347" stroke-width="2.5"/>
+            <circle cx="340" cy="240" r="5" fill="#0a0c10" stroke="#ffb347" stroke-width="2.5"/>
+          </g>
+
+          <!-- Interchange hubs (larger) -->
+          <g>
+            <circle cx="260" cy="130" r="9" fill="#0a0c10" stroke="#e8ecf2" stroke-width="2"/>
+            <circle cx="260" cy="130" r="3" fill="#e8ecf2"/>
+            <circle cx="420" cy="130" r="9" fill="#0a0c10" stroke="#e8ecf2" stroke-width="2"/>
+            <circle cx="420" cy="130" r="3" fill="#e8ecf2"/>
+            <circle cx="520" cy="130" r="9" fill="#0a0c10" stroke="#e8ecf2" stroke-width="2"/>
+            <circle cx="520" cy="130" r="3" fill="#e8ecf2"/>
+            <circle cx="340" cy="130" r="9" fill="#0a0c10" stroke="#e8ecf2" stroke-width="2"/>
+            <circle cx="340" cy="130" r="3" fill="#e8ecf2"/>
+          </g>
+
+          <!-- Incident marker -->
+          <g>
+            <circle cx="420" cy="130" r="16" fill="none" stroke="#ff4d5e" stroke-width="1.5" opacity="0.6" class="pulse"/>
+            <circle cx="420" cy="130" r="22" fill="none" stroke="#ff4d5e" stroke-width="1" opacity="0.3" class="pulse"/>
+          </g>
+
+          <!-- Station labels -->
+          <text x="40" y="78" class="station-label" text-anchor="middle">WESTGATE</text>
+          <text x="200" y="78" class="station-label" text-anchor="middle">NORTHFIELD</text>
+          <text x="260" y="118" class="station-label hub" text-anchor="middle">CENTRAL</text>
+          <text x="420" y="118" class="station-label hub" text-anchor="middle">KING'S CROSS</text>
+          <text x="480" y="78" class="station-label" text-anchor="middle">RIVERSIDE</text>
+          <text x="700" y="78" class="station-label" text-anchor="middle">EASTPORT</text>
+          <text x="860" y="78" class="station-label" text-anchor="middle">HARBOUR</text>
+
+          <text x="60" y="300" class="station-label" text-anchor="middle">SOUTHBANK</text>
+          <text x="180" y="300" class="station-label" text-anchor="middle">GREENWICH</text>
+          <text x="260" y="188" class="station-label" text-anchor="middle">CENTRAL</text>
+          <text x="420" y="188" class="station-label" text-anchor="middle">KING'S CROSS</text>
+          <text x="520" y="118" class="station-label hub" text-anchor="middle">OLD ST.</text>
+          <text x="700" y="118" class="station-label" text-anchor="middle">BETHNAL</text>
+          <text x="840" y="118" class="station-label" text-anchor="middle">STRATFORD</text>
+
+          <text x="340" y="30" class="station-label" text-anchor="middle">HIGHBURY</text>
+          <text x="380" y="318" class="station-label" text-anchor="middle">PECKHAM</text>
+
+          <text x="620" y="50" class="station-label" text-anchor="middle">DOCKLANDS</text>
+          <text x="720" y="50" class="station-label" text-anchor="middle">CANARY</text>
+          <text x="780" y="110" class="station-label" text-anchor="middle">POPLAR</text>
+          <text x="780" y="238" class="station-label" text-anchor="middle">LEWISHAM</text>
+          <text x="720" y="298" class="station-label" text-anchor="middle">CATFORD</text>
+          <text x="620" y="298" class="station-label" text-anchor="middle">BRIXTON</text>
+          <text x="560" y="238" class="station-label" text-anchor="middle">CLAPHAM</text>
+          <text x="560" y="110" class="station-label" text-anchor="middle">VAUXHALL</text>
+
+          <text x="100" y="188" class="station-label" text-anchor="middle">RICHMOND</text>
+          <text x="200" y="188" class="station-label" text-anchor="middle">WIMBLEDON</text>
+          <text x="260" y="258" class="station-label" text-anchor="middle">TOOTING</text>
+          <text x="340" y="258" class="station-label" text-anchor="middle">STREATHAM</text>
+        </svg>
+
+        <div class="map-overlay">
+          <div class="map-chip">TRAINS <strong>142</strong></div>
+          <div class="map-chip">DELAYS <strong style="color:var(--warn)">7</strong></div>
+          <div class="map-chip">INCIDENTS <strong style="color:var(--bad)">3</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STATUS GRID ============ -->
+    <div class="status-grid">
+      <div class="line-card" style="--lc: var(--line-a)">
+        <div class="lc-head">
+          <span class="lc-name">LINE A</span>
+          <span class="lc-status warn">Minor</span>
+        </div>
+        <div class="lc-meta"><span>Next: <strong>2 min</strong></span><span>92%</span></div>
+      </div>
+      <div class="line-card" style="--lc: var(--line-b)">
+        <div class="lc-head">
+          <span class="lc-name">LINE B</span>
+          <span class="lc-status good">Good</span>
+        </div>
+        <div class="lc-meta"><span>Next: <strong>1 min</strong></span><span>98%</span></div>
+      </div>
+      <div class="line-card" style="--lc: var(--line-c)">
+        <div class="lc-head">
+          <span class="lc-name">LINE C</span>
+          <span class="lc-status good">Good</span>
+        </div>
+        <div class="lc-meta"><span>Next: <strong>3 min</strong></span><span>96%</span></div>
+      </div>
+      <div class="line-card" style="--lc: var(--line-d)">
+        <div class="lc-head">
+          <span class="lc-name">LINE D</span>
+          <span class="lc-status bad">Severe</span>
+        </div>
+        <div class="lc-meta"><span>Next: <strong>8 min</strong></span><span>64%</span></div>
+      </div>
+      <div class="line-card" style="--lc: var(--line-e)">
+        <div class="lc-head">
+          <span class="lc-name">LINE E</span>
+          <span class="lc-status warn">Minor</span>
+        </div>
+        <div class="lc-meta"><span>Next: <strong>4 min</strong></span><span>88%</span></div>
+      </div>
+    </div>
+
+    <!-- ============ TIMELINE ============ -->
+    <div class="timeline-panel">
+      <div class="panel-head">
+        <div class="title">Incident Timeline</div>
+        <div class="meta">LAST 4 HOURS · 14:32 UTC</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">14:28</div>
+          <div class="tl-dot bad"></div>
+          <div class="tl-body">
+            <div class="tl-title">Signal failure at King's Cross</div>
+            <div class="tl-desc">Line D services suspended between Vauxhall and Poplar. Engineers dispatched, ETA 25 min.</div>
+            <span class="tl-tag">Line D · Critical</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">14:12</div>
+          <div class="tl-dot warn"></div>
+          <div class="tl-body">
+            <div class="tl-title">Platform congestion at Central</div>
+            <div class="tl-desc">Line A eastbound platform 3 experiencing overcrowding. Additional staff deployed.</div>
+            <span class="tl-tag">Line A · Warning</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">13:47</div>
+          <div class="tl-dot info"></div>
+          <div class="tl-body">
+            <div class="tl-title">Scheduled maintenance completed</div>
+            <div class="tl-desc">Track inspection on Line C between Highbury and Peckham finished ahead of schedule.</div>
+            <span class="tl-tag">Line C · Info</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">13:22</div>
+          <div class="tl-dot good"></div>
+          <div class="tl-body">
+            <div class="tl-title">Service restored on Line B</div>
+            <div class="tl-desc">Earlier points failure at Greenwich resolved. Normal service resumed across all stations.</div>
+            <span class="tl-tag">Line B · Resolved</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:58</div>
+          <div class="tl-dot warn"></div>
+          <div class="tl-body">
+            <div class="tl-title">Minor delays on Line E</div>
+            <div class="tl-desc">Rolling stock shortage causing 5-8 min delays between Richmond and Streatham.</div>
+            <span class="tl-tag">Line E · Warning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============ RIGHT RAIL ============ -->
+  <aside class="rail">
+
+    <!-- Platform Alerts -->
+    <div class="rail-section">
+      <div class="rail-title">
+        <span>Platform Alerts</span>
+        <span class="count">3</span>
+      </div>
+
+      <div class="alert bad">
+        <div class="alert-head">
+          <span class="alert-line">LINE D</span>
+          <span class="alert-time">14:28</span>
+        </div>
+        <div class="alert-title">King's Cross — Platforms 5 & 6 closed</div>
+        <div class="alert-desc">Signal failure. No service between Vauxhall and Poplar. Use Line B via Central.</div>
+      </div>
+
+      <div class="alert">
+        <div class="alert-head">
+          <span class="alert-line">LINE A</span>
+          <span class="alert-time">14:12</span>
+        </div>
+        <div class="alert-title">Central — Platform 3 overcrowding</div>
+        <div class="alert-desc">Eastbound services delayed 4-6 min. Additional staff on site.</div>
+      </div>
+
+      <div class="alert info">
+        <div class="alert-head">
+          <span class="alert-line">LINE E</span>
+          <span class="alert-time">12:58</span>
+        </div>
+        <div class="alert-title">Richmond — Reduced service</div>
+        <div class="alert-desc">Rolling stock shortage. Trains every 12 min instead of 8.</div>
+      </div>
+    </div>
+
+    <!-- Operator Actions -->
+    <div class="rail-section">
+      <div class="rail-title">
+        <span>Operator Actions</span>
+        <span class="count">4</span>
+      </div>
+
+      <div class="action">
+        <div class="ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#ff4d5e" stroke-width="1.5"><path d="M8 2 L14 13 L2 13 Z"/><path d="M8 6 L8 9 M8 11 L8 11.5"/></svg>
+        </div>
+        <div class="label">
+          Dispatch engineers
+          <div class="sub">KING'S CROSS · LINE D</div>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+
+      <div class="action">
+        <div class="ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#ffb347" stroke-width="1.5"><path d="M2 8 L6 8 L8 4 L10 12 L12 8 L14 8"/></svg>
+        </div>
+        <div class="label">
+          Reroute Line A
+          <div class="sub">CENTRAL · EASTBOUND</div>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+
+      <div class="action">
+        <div class="ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#4d9fff" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4 L8 8 L11 10"/></svg>
+        </div>
+        <div class="label">
+          Adjust timetable
+          <div class="sub">LINE E · ALL STATIONS</div>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+
+      <div class="action">
+        <div class="ico">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#2dd4a7" stroke-width="1.5"><path d="M3 8 L7 12 L13 4"/></svg>
+        </div>
+        <div class="label">
+          Confirm resolution
+          <div class="sub">LINE B · GREENWICH</div>
+        </div>
+        <span class="arrow">→</span>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="rail-section">
+      <div class="rail-title">
+        <span>Network Metrics</span>
+        <span class="count">LIVE</span>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-label">On-Time</div>
+          <div class="m-value">94.2<span class="unit">%</span></div>
+          <div class="m-trend down">▼ 1.8% vs 1h</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Avg Delay</div>
+          <div class="m-value">2.4<span class="unit">min</span></div>
+          <div class="m-trend up">▲ 0.6 min</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Trains</div>
+          <div class="m-value">142</div>
+          <div class="m-trend up">▲ 4 in service</div>
+        </div>
+        <div class="metric">
+          <div class="m-label">Incidents</div>
+          <div class="m-value">3</div>
+          <div class="m-trend down">▼ 2 resolved</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+<script>
+  // Live clock
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getUTCHours()).padStart(2, '0');
+    const m = String(now.getUTCMinutes()).padStart(2, '0');
+    const s = String(now.getUTCSeconds()).padStart(2, '0');
+    const clock = document.querySelector('.clock');
+    if (clock) {
+      clock.innerHTML = `${h}:${m}:${s} <span class="tz">UTC</span>`;
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Subtle interactivity: nav items
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // Line card hover pulse
+  document.querySelectorAll('.line-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.boxShadow = '0 0 0 1px var(--border-bright), 0 4px 12px rgba(0,0,0,0.3)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.boxShadow = 'none';
+    });
+  });
+
+  // Alert click feedback
+  document.querySelectorAll('.alert').forEach(alert => {
+    alert.addEventListener('click', () => {
+      alert.style.transform = 'scale(0.98)';
+      setTimeout(() => alert.style.transform = '', 150);
+    });
+  });
+
+  // Action click feedback
+  document.querySelectorAll('.action').forEach(action => {
+    action.addEventListener('click', () => {
+      action.style.transform = 'scale(0.98)';
+      setTimeout(() => action.style.transform = '', 150);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RECORD / LABEL — independent sound</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0c0b0e;
+      --surface: #141217;
+      --surface-2: #1c1a21;
+      --text: #f2eee7;
+      --text-dim: #a8a29b;
+      --accent: #ff5e5b;
+      --accent-2: #d4ff3f;
+      --accent-3: #b983ff;
+      --border: rgba(255, 255, 255, 0.08);
+      --radius: 12px;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .mono-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(12, 11, 14, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent-2);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all 0.25s;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-2);
+      color: var(--bg);
+      border-color: var(--accent-2);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding-top: 160px;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px var(--accent-2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(52px, 6.5vw, 88px);
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 .accent {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero h1 .outline {
+      -webkit-text-stroke: 1.5px var(--text);
+      color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 440px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent-2);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 30px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(212, 255, 63, 0.25);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 30px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text-dim);
+      background: var(--surface);
+    }
+
+    /* hero visual — abstract vinyl / waveform */
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vinyl {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%,
+        #1a181f 0%, #1a181f 18%,
+        #0f0e12 18.5%, #0f0e12 22%,
+        #1a181f 22.5%, #1a181f 26%,
+        #0f0e12 26.5%, #0f0e12 30%,
+        #1a181f 30.5%, #1a181f 34%,
+        #0f0e12 34.5%, #0f0e12 38%,
+        #1a181f 38.5%, #1a181f 42%,
+        #0f0e12 42.5%, #0f0e12 46%,
+        #1a181f 46.5%, #1a181f 50%,
+        #0f0e12 50.5%, #0f0e12 54%,
+        #1a181f 54.5%, #1a181f 58%,
+        #0f0e12 58.5%, #0f0e12 62%,
+        #1a181f 62.5%, #1a181f 66%,
+        #0f0e12 66.5%, #0f0e12 70%,
+        #1a181f 70.5%, #1a181f 74%,
+        #0f0e12 74.5%, #0f0e12 78%,
+        #1a181f 78.5%, #1a181f 82%,
+        #0f0e12 82.5%, #0f0e12 86%,
+        #1a181f 86.5%, #1a181f 90%,
+        #0f0e12 90.5%, #0f0e12 94%,
+        #1a181f 94.5%, #1a181f 100%);
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(0, 0, 0, 0.5);
+      animation: spin 24s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+        transparent 0deg, rgba(255, 94, 91, 0.15) 30deg, transparent 60deg,
+        transparent 180deg, rgba(212, 255, 63, 0.12) 210deg, transparent 240deg);
+      mix-blend-mode: screen;
+    }
+
+    .vinyl-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 34%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .vinyl-label span {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--bg);
+      line-height: 1.2;
+    }
+
+    .vinyl-label small {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: rgba(12, 11, 14, 0.7);
+      margin-top: 4px;
+    }
+
+    .vinyl-hole {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--bg);
+      z-index: 2;
+    }
+
+    /* floating stat cards */
+    .hero-stat {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-stat .num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--accent-2);
+    }
+
+    .hero-stat .lbl {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .hero-stat.s1 {
+      top: 8%;
+      left: -4%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-stat.s2 {
+      bottom: 12%;
+      right: -2%;
+      animation: float 6s ease-in-out infinite 3s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ---------- MARQUEE ---------- */
+    .marquee {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--surface);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 48px;
+      animation: scroll 30s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .marquee-track span::after {
+      content: '✦';
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    @keyframes scroll {
+      to { transform: translateX(-50%); }
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-size: clamp(32px, 4vw, 52px);
+    }
+
+    .section-head h2 .thin {
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+
+    .section-head .link {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.2s;
+    }
+
+    .section-head .link:hover {
+      gap: 14px;
+    }
+
+    /* ---------- LATEST RELEASE ---------- */
+    .release-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .release-art {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 40%, #4a1f3d 100%);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .release-art::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(185, 131, 255, 0.5), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 94, 91, 0.4), transparent 50%);
+    }
+
+    .release-art .art-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.6;
+    }
+
+    .release-art .art-title {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      right: 32px;
+    }
+
+    .release-art .art-title h3 {
+      font-size: 34px;
+      color: #fff;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .release-art .art-title p {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 6px;
+    }
+
+    .release-art .badge {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: var(--accent-2);
+      color: var(--bg);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+
+    .release-info .mono-label {
+      margin-bottom: 16px;
+    }
+
+    .release-info h3 {
+      font-size: clamp(36px, 4.5vw, 56px);
+      margin-bottom: 8px;
+    }
+
+    .release-info .artist-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--accent-2);
+      margin-bottom: 24px;
+    }
+
+    .release-info .desc {
+      color: var(--text-dim);
+      max-width: 480px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .release-meta {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .release-meta .item .k {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .release-meta .item .v {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    /* ---------- AUDIO PLAYER ---------- */
+    .player {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 520px;
+    }
+
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--bg);
+    }
+
+    .player-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .player-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    .player-top .track {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-top .time {
+      font-size: 12px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .progress {
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 100px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 38%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 100px;
+      transition: width 0.1s linear;
+    }
+
+    .player-controls {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    .player-controls button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+
+    .player-controls button:hover {
+      color: var(--text);
+    }
+
+    .player-controls svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .volume {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .volume-bar {
+      width: 60px;
+      height: 3px;
+      background: var(--surface-2);
+      border-radius: 100px;
+      position: relative;
+    }
+
+    .volume-bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 70%;
+      background: var(--text-dim);
+      border-radius: 100px;
+    }
+
+    /* ---------- ROSTER ---------- */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .artist-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .artist-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .artist-portrait {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .artist-portrait svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .artist-card .info {
+      padding: 20px;
+    }
+
+    .artist-card .info h4 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .artist-card .info .genre {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .artist-card .info .plays {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .artist-card .info .plays .count {
+      color: var(--accent-2);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    /* ---------- TOUR DATES ---------- */
+    .tour-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .tour-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s, padding 0.2s;
+      cursor: pointer;
+    }
+
+    .tour-row:hover {
+      background: var(--surface);
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .tour-date {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .tour-date .day {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .tour-venue {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .tour-venue .city {
+      display: block;
+      font-family: var(--font-mono);
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .tour-artist {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .tour-artist strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .tour-btn {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tour-row:hover .tour-btn {
+      background: var(--accent-2);
+      color: var(--bg);
+      border-color: var(--accent-2);
+    }
+
+    .tour-btn.sold-out {
+      color: var(--text-dim);
+      cursor: not-allowed;
+    }
+
+    .tour-row:hover .tour-btn.sold-out {
+      background: transparent;
+      color: var(--text-dim);
+      border-color: var(--border);
+    }
+
+    /* ---------- NEWSLETTER ---------- */
+    .newsletter {
+      background: linear-gradient(135deg, var(--surface) 0%, #1a1420 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 72px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(185, 131, 255, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 94, 91, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .newsletter h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 16px;
+    }
+
+    .newsletter p {
+      color: var(--text-dim);
+      max-width: 400px;
+      line-height: 1.7;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 16px 24px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-form input:focus {
+      border-color: var(--accent-2);
+    }
+
+    .newsletter-form input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .newsletter-form button {
+      background: var(--accent-2);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      padding: 16px 32px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(212, 255, 63, 0.25);
+    }
+
+    .newsletter-note {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 64px 0 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 20px;
+    }
+
+    .footer-brand p {
+      color: var(--text-dim);
+      font-size: 13px;
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      font-size: 14px;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent-2);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom .socials {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom .socials a {
+      transition: color 0.2s;
+    }
+
+    .footer-bottom .socials a:hover {
+      color: var(--accent-2);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-visual {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .release-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .release-art {
+        max-width: 480px;
+      }
+      .roster-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .newsletter-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 24px;
+      }
+      section {
+        padding: 72px 0;
+      }
+      .nav-links {
+        display: none;
+      }
+      .hero {
+        padding-top: 130px;
+      }
+      .hero-stat.s1 {
+        left: 0;
+      }
+      .hero-stat.s2 {
+        right: 0;
+      }
+      .tour-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 24px 0;
+      }
+      .tour-row:hover {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .tour-btn {
+        justify-self: start;
+      }
+      .newsletter {
+        padding: 48px 28px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .roster-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-primary, .btn-ghost {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark"></span>
+        RECORD / LABEL
+      </a>
+      <ul class="nav-links">
+        <li><a href="#release">Releases</a></li>
+        <li><a href="#roster">Roster</a></li>
+        <li><a href="#tour">Tour</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <a href="#newsletter" class="nav-cta">Subscribe</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span class="mono-label">New release — out now</span>
+        </div>
+        <h1>
+          Sound that<br>
+          <span class="accent">refuses</span> to<br>
+          <span class="outline">sit still.</span>
+        </h1>
+        <p class="hero-desc">
+          An independent label for artists who colour outside the lines. We press records, build worlds, and champion the strange and the beautiful.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('release').scrollIntoView({behavior:'smooth'})">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Listen now
+          </button>
+          <a href="#roster" class="btn-ghost">Meet the roster</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="vinyl">
+          <div class="vinyl-label">
+            <span>RECORD<br>LABEL</span>
+            <small>RL-042</small>
+          </div>
+          <div class="vinyl-hole"></div>
+        </div>
+        <div class="hero-stat s1">
+          <div class="num">2.4M</div>
+          <div class="lbl">Monthly listeners</div>
+        </div>
+        <div class="hero-stat s2">
+          <div class="num">18</div>
+          <div class="lbl">Artists signed</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>New music every Friday</span>
+      <span>Independent since 2016</span>
+      <span>Pressed in Berlin</span>
+      <span>Streaming everywhere</span>
+      <span>New music every Friday</span>
+      <span>Independent since 2016</span>
+      <span>Pressed in Berlin</span>
+      <span>Streaming everywhere</span>
+    </div>
+  </div>
+
+  <!-- LATEST RELEASE -->
+  <section id="release">
+    <div class="container">
+      <div class="section-head">
+        <h2>Latest <span class="thin">release</span></h2>
+        <a href="#" class="link">All releases →</a>
+      </div>
+
+      <div class="release-grid">
+        <div class="release-art">
+          <svg class="art-lines" viewBox="0 0 400 400" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#d4ff3f" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#ff5e5b" stop-opacity="0.2"/>
+              </linearGradient>
+            </defs>
+            <g stroke="url(#lineGrad)" stroke-width="1.5" fill="none">
+              <path d="M0,200 Q100,100 200,200 T400,200"/>
+              <path d="M0,220 Q100,120 200,220 T400,220"/>
+              <path d="M0,240 Q100,140 200,240 T400,240"/>
+              <path d="M0,260 Q100,160 200,260 T400,260"/>
+              <path d="M0,180 Q100,80 200,180 T400,180"/>
+              <path d="M0,160 Q100,60 200,160 T400,160"/>
+            </g>
+          </svg>
+          <div class="badge">New</div>
+          <div class="art-title">
+            <h3>Neon Cartography</h3>
+            <p>Mira Vale — LP</p>
+          </div>
+        </div>
+
+        <div class="release-info">
+          <div class="mono-label">RL-042 · 12" Vinyl / Digital</div>
+          <h3>Neon Cartography</h3>
+          <div class="artist-name">Mira Vale</div>
+          <p class="desc">
+            A nocturnal journey through synthetic landscapes and half-remembered dreams. Ten tracks of shimmering electronics, field recordings, and Mira's unmistakable voice.
+          </p>
+
+          <div class="release-meta">
+            <div class="item">
+              <div class="k">Released</div>
+              <div class="v">14 Mar 2025</div>
+            </div>
+            <div class="item">
+              <div class="k">Tracks</div>
+              <div class="v">10</div>
+            </div>
+            <div class="item">
+              <div class="k">Runtime</div>
+              <div class="v">42:18</div>
+            </div>
+          </div>
+
+          <!-- AUDIO PLAYER -->
+          <div class="player">
+            <button class="play-btn" id="playBtn" aria-label="Play">
+              <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="player-body">
+              <div class="player-top">
+                <span class="track">01 — Cartography (Intro)</span>
+                <span class="time" id="timeDisplay">1:24 / 3:42</span>
+              </div>
+              <div class="progress" id="progress">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="player-controls">
+                <button aria-label="Previous">
+                  <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button aria-label="Next">
+                  <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
+                </button>
+                <div class="volume">
+                  <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                  <div class="volume-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROSTER -->
+  <section id="roster" style="background: var(--surface);">
+    <div class="container">
+      <div class="section-head">
+        <h2>The <span class="thin">roster</span></h2>
+        <a href="#" class="link">View all artists →</a>
+      </div>
+
+      <div class="roster-grid">
+        <!-- Artist 1 -->
+        <div class="artist-card">
+          <div class="artist-portrait">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff5e5b"/>
+                  <stop offset="100%" stop-color="#b983ff"/>
+                </linearGradient>
+              </defs>
+              <rect width="300" height="300" fill="#1a1420"/>
+              <circle cx="150" cy="130" r="70" fill="url(#g1)" opacity="0.9"/>
+              <ellipse cx="150" cy="260" rx="90" ry="60" fill="url(#g1)" opacity="0.7"/>
+              <circle cx="130" cy="120" r="6" fill="#0c0b0e"/>
+              <circle cx="170" cy="120" r="6" fill="#0c0b0e"/>
+              <path d="M135,150 Q150,165 165,150" stroke="#0c0b0e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info">
+            <h4>Mira Vale</h4>
+            <div class="genre">Electronic / Dream Pop</div>
+            <div class="plays">
+              <span>Monthly plays</span>
+              <span class="count">842K</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artist 2 -->
+        <div class="artist-card">
+          <div class="artist-portrait">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#d4ff3f"/>
+                  <stop offset="100%" stop-color="#ff5e5b"/>
+                </linearGradient>
+              </defs>
+              <rect width="300" height="300" fill="#141217"/>
+              <circle cx="150" cy="130" r="70" fill="url(#g2)" opacity="0.9"/>
+              <ellipse cx="150" cy="260" rx="90" ry="60" fill="url(#g2)" opacity="0.7"/>
+              <circle cx="130" cy="120" r="6" fill="#0c0b0e"/>
+              <circle cx="170" cy="120" r="6" fill="#0c0b0e"/>
+              <path d="M135,150 Q150,165 165,150" stroke="#0c0b0e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info">
+            <h4>Kaito Ren</h4>
+            <div class="genre">Ambient / Techno</div>
+            <div class="plays">
+              <span>Monthly plays</span>
+              <span class="count">621K</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artist 3 -->
+        <div class="artist-card">
+          <div class="artist-portrait">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#b983ff"/>
+                  <stop offset="100%" stop-color="#d4ff3f"/>
+                </linearGradient>
+              </defs>
+              <rect width="300" height="300" fill="#1a1420"/>
+              <circle cx="150" cy="130" r="70" fill="url(#g3)" opacity="0.9"/>
+              <ellipse cx="150" cy="260" rx="90" ry="60" fill="url(#g3)" opacity="0.7"/>
+              <circle cx="130" cy="120" r="6" fill="#0c0b0e"/>
+              <circle cx="170" cy="120" r="6" fill="#0c0b0e"/>
+              <path d="M135,150 Q150,165 165,150" stroke="#0c0b0e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info">
+            <h4>Solene</h4>
+            <div class="genre">R&B / Neo-Soul</div>
+            <div class="plays">
+              <span>Monthly plays</span>
+              <span class="count">1.1M</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artist 4 -->
+        <div class="artist-card">
+          <div class="artist-portrait">
+            <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff5e5b"/>
+                  <stop offset="100%" stop-color="#d4ff3f"/>
+                </linearGradient>
+              </defs>
+              <rect width="300" height="300" fill="#141217"/>
+              <circle cx="150" cy="130" r="70" fill="url(#g4)" opacity="0.9"/>
+              <ellipse cx="150" cy="260" rx="90" ry="60" fill="url(#g4)" opacity="0.7"/>
+              <circle cx="130" cy="120" r="6" fill="#0c0b0e"/>
+              <circle cx="170" cy="120" r="6" fill="#0c0b0e"/>
+              <path d="M135,150 Q150,165 165,150" stroke="#0c0b0e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info">
+            <h4>Void Signal</h4>
+            <div class="genre">Post-Punk / Shoegaze</div>
+            <div class="plays">
+              <span>Monthly plays</span>
+              <span class="count">487K</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOUR DATES -->
+  <section id="tour">
+    <div class="container">
+      <div class="section-head">
+        <h2>On <span class="thin">tour</span></h2>
+        <a href="#" class="link">Full schedule →</a>
+      </div>
+
+      <div class="tour-list">
+        <div class="tour-row">
+          <div class="tour-date">
+            Apr 12
+            <span class="day">Saturday</span>
+          </div>
+          <div class="tour-venue">
+            Berghain Kantine
+            <span class="city">Berlin, DE</span>
+          </div>
+          <div class="tour-artist">
+            <strong>Mira Vale</strong> · Album launch
+          </div>
+          <button class="tour-btn">Tickets</button>
+        </div>
+
+        <div class="tour-row">
+          <div class="tour-date">
+            Apr 19
+            <span class="day">Saturday</span>
+          </div>
+          <div class="tour-venue">
+            Le Trabendo
+            <span class="city">Paris, FR</span>
+          </div>
+          <div class="tour-artist">
+            <strong>Kaito Ren</strong> · Live A/V
+          </div>
+          <button class="tour-btn">Tickets</button>
+        </div>
+
+        <div class="tour-row">
+          <div class="tour-date">
+            Apr 26
+            <span class="day">Saturday</span>
+          </div>
+          <div class="tour-venue">
+            Paradiso
+            <span class="city">Amsterdam, NL</span>
+          </div>
+          <div class="tour-artist">
+            <strong>Solene</strong> · Full band
+          </div>
+          <button class="tour-btn sold-out">Sold out</button>
+        </div>
+
+        <div class="tour-row">
+          <div class="tour-date">
+            May 03
+            <span class="day">Saturday</span>
+          </div>
+          <div class="tour-venue">
+            Village Underground
+            <span class="city">London, UK</span>
+          </div>
+          <div class="tour-artist">
+            <strong>Void Signal</strong> · Album tour
+          </div>
+          <button class="tour-btn">Tickets</button>
+        </div>
+
+        <div class="tour-row">
+          <div class="tour-date">
+            May 10
+            <span class="day">Saturday</span>
+          </div>
+          <div class="tour-venue">
+            Sala Apolo
+            <span class="city">Barcelona, ES</span>
+          </div>
+          <div class="tour-artist">
+            <strong>Mira Vale</strong> · Festival set
+          </div>
+          <button class="tour-btn">Tickets</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter">
+    <div class="container">
+      <div class="newsletter">
+        <div class="newsletter-inner">
+          <div>
+            <div class="mono-label" style="margin-bottom: 16px;">Stay in the loop</div>
+            <h2>Hear it first.</h2>
+            <p>
+              New releases, tour announcements, and the occasional behind-the-scenes dispatch. No spam, just signal.
+            </p>
+          </div>
+          <div>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed ✓'; this.querySelector('input').value='';">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Subscribe</button>
+            </form>
+            <p class="newsletter-note">Join 12,400+ subscribers. Unsubscribe anytime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="about">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-mark"></span>
+            RECORD / LABEL
+          </a>
+          <p>
+            An independent record label based in Berlin, championing artists who push boundaries. Founded 2016.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Explore</h5>
+          <ul>
+            <li><a href="#release">Releases</a></li>
+            <li><a href="#roster">Roster</a></li>
+            <li><a href="#tour">Tour dates</a></li>
+            <li><a href="#">Merch</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Label</h5>
+          <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Demo submissions</a></li>
+            <li><a href="#">Press kit</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Licensing</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 RECORD / LABEL. All rights reserved.</span>
+        <div class="socials">
+          <a href="#">Instagram</a>
+          <a href="#">Bandcamp</a>
+          <a href="#">Spotify</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Audio player simulation
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const progressFill = document.getElementById('progressFill');
+    const progress = document.getElementById('progress');
+    const timeDisplay = document.getElementById('timeDisplay');
+
+    let isPlaying = false;
+    let progressPercent = 38;
+    let interval = null;
+    const totalSeconds = 222; // 3:42
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateDisplay() {
+      const currentSeconds = (progressPercent / 100) * totalSeconds;
+      timeDisplay.textContent = `${formatTime(currentSeconds)} / ${formatTime(totalSeconds)}`;
+      progressFill.style.width = progressPercent + '%';
+    }
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playIcon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
+        interval = setInterval(() => {
+          progressPercent += 0.15;
+          if (progressPercent >= 100) {
+            progressPercent = 0;
+          }
+          updateDisplay();
+        }, 100);
+      } else {
+        playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        clearInterval(interval);
+      }
+    });
+
+    progress.addEventListener('click', (e) => {
+      const rect = progress.getBoundingClientRect();
+      progressPercent = ((e.clientX - rect.left) / rect.width) * 100;
+      updateDisplay();
+    });
+
+    updateDisplay();
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

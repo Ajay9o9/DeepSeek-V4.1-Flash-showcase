@@ -1,0 +1,1720 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-09T21:04:19.938799+00:00",
+  "title": "DeepSeek One-Shot",
+  "description": "100 websites, one sample each, generated with DeepSeek-V4.1-Flash via the official API.",
+  "models": [
+    {
+      "id": "deepseek-v41-flash",
+      "name": "DeepSeek-V4.1 Flash",
+      "version": "v4.1",
+      "quant": "API",
+      "label": "DeepSeek-V4.1 Flash",
+      "notes": "One sample per site. DeepSeek-V4.1-Flash chat completions, streamed, thinking off.",
+      "tracks": {
+        "web": [
+          {
+            "id": "web_fintech_dashboard",
+            "title": "Northstar Wealth · Portfolio",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/fintech-dashboard.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/fintech-dashboard/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/fintech-dashboard/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_architecture_studio",
+            "title": "FORM/NOIR — Architecture Studio",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/architecture-studio.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/architecture-studio/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/architecture-studio/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_music_player",
+            "title": "SONORA — Music Player",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/music-player.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/music-player/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/music-player/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_fashion_editorial",
+            "title": "ATELIER 09 — Collection No. 09",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/fashion-editorial.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/fashion-editorial/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/fashion-editorial/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_ai_product_launch",
+            "title": "ORBIT AI — Frontier Intelligence Platform",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/ai-product-launch.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/ai-product-launch/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/ai-product-launch/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_travel_editor",
+            "title": "THE NORTH EDIT — Travel, Refined",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/travel-editor.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/travel-editor/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/travel-editor/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_developer_tool",
+            "title": "FLUXTRACE — Distributed Tracing at the Speed of Thought",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/developer-tool.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/developer-tool/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/developer-tool/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_restaurant",
+            "title": "CASA ORO · Mediterranean fine dining",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/restaurant.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/restaurant/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/restaurant/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_creative_gallery",
+            "title": "VOID/FORM — digital art gallery",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/creative-gallery.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/creative-gallery/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/creative-gallery/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_productivity_app",
+            "title": "DAYLINE — Focus & Flow",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/productivity-app.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/productivity-app/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/productivity-app/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_hotel_booking",
+            "title": "MIREN HOUSE — Coastal Hotel",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/hotel-booking.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/hotel-booking/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/hotel-booking/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_healthcare_portal",
+            "title": "Northstar Health — Patient Portal",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/healthcare-portal.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/healthcare-portal/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/healthcare-portal/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_civic_services",
+            "title": "LUMEN CITY · City services, permits & transit",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/civic-services.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/civic-services/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/civic-services/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_real_estate",
+            "title": "FIELDHOUSE — Real Estate Discovery",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/real-estate.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/real-estate/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/real-estate/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_bookstore",
+            "title": "Margin Notes — An Independent Bookstore",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/bookstore.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/bookstore/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/bookstore/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_podcast_studio",
+            "title": "AFTERGLOW — Premium Podcast Network",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/podcast-studio.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/podcast-studio/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/podcast-studio/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_event_conference",
+            "title": "SIGNAL / 26 — The conference for builders",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/event-conference.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/event-conference/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/event-conference/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_nonprofit_campaign",
+            "title": "TIDE / TURN — Turn the Tide on Ocean Pollution",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/nonprofit-campaign.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/nonprofit-campaign/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/nonprofit-campaign/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_sports_club",
+            "title": "NORTHLINE FC — Women's Football",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/sports-club.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/sports-club/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/sports-club/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_grocery_market",
+            "title": "GOODROOT — Seasonal Grocery Delivery",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/grocery-market.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/grocery-market/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/grocery-market/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_education_course",
+            "title": "Studio Class — Learning Dashboard",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/education-course.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/education-course/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/education-course/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_job_board",
+            "title": "WORKROOM — Find work that fits",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/job-board.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/job-board/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/job-board/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_weather_atlas",
+            "title": "ISOBAR — Weather Dashboard",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/weather-atlas.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/weather-atlas/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/weather-atlas/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_biotech_lab",
+            "title": "LATTICE BIO — Molecular Research",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/biotech-lab.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/biotech-lab/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/biotech-lab/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_cinema_streaming",
+            "title": "FRAME/ONE — Cinema, Curated",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/cinema-streaming.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/cinema-streaming/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/cinema-streaming/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_pet_care",
+            "title": "PAWLINE — premium pet care",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/pet-care.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/pet-care/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/pet-care/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_legal_consulting",
+            "title": "VANTAGE LAW — Strategic Legal Counsel",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/legal-consulting.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/legal-consulting/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/legal-consulting/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_automotive",
+            "title": "AER / 01 — Electric, Reimagined",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/automotive.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/automotive/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/automotive/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_wellness_studio",
+            "title": "STILL / FORM — mindful movement",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/wellness-studio.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/wellness-studio/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/wellness-studio/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_financial_advisor",
+            "title": "CLEARWATER CAPITAL — Private Wealth Advisory",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/financial-advisor.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/financial-advisor/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/financial-advisor/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_furniture_showroom",
+            "title": "FURNITURE / SHOWROOM — Objects of Permanence",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/furniture-showroom.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/furniture-showroom/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/furniture-showroom/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_skincare_brand",
+            "title": "SKINCARE / BRAND — ritual, reimagined",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/skincare-brand.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/skincare-brand/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/skincare-brand/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_sneaker_drop",
+            "title": "SNEAKER / DROP — AERO GLIDE 01",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/sneaker-drop.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/sneaker-drop/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/sneaker-drop/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_coffee_roaster",
+            "title": "COFFEE / ROASTER — small batch, big character",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/coffee-roaster.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/coffee-roaster/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/coffee-roaster/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_record_label",
+            "title": "RECORD / LABEL — independent sound",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/record-label.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/record-label/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/record-label/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_museum_exhibition",
+            "title": "MUSEUM / EXHIBITION — The Shape of Silence",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/museum-exhibition.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/museum-exhibition/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/museum-exhibition/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_theatre_program",
+            "title": "THEATRE / PROGRAM — Season 2025",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/theatre-program.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/theatre-program/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/theatre-program/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_university_admissions",
+            "title": "UNIVERSITY / ADMISSIONS",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/university-admissions.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/university-admissions/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/university-admissions/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_public_library",
+            "title": "PUBLIC / LIBRARY — A civic commons for readers",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/public-library.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/public-library/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/public-library/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_digital_newsroom",
+            "title": "DIGITAL / NEWSROOM — Independent tech & culture journalism",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/digital-newsroom.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/digital-newsroom/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/digital-newsroom/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_airline_lounge",
+            "title": "AIRLINE / LOUNGE — Elevated travel, redefined",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/airline-lounge.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/airline-lounge/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/airline-lounge/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_hiking_guide",
+            "title": "HIKING / GUIDE — find your next trail",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/hiking-guide.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/hiking-guide/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/hiking-guide/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_ski_resort",
+            "title": "SKI / RESORT — Alpine Ridge",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/ski-resort.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/ski-resort/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/ski-resort/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_wedding_planner",
+            "title": "WEDDING / PLANNER — Studio",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/wedding-planner.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/wedding-planner/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/wedding-planner/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_meal_planner",
+            "title": "MEAL / PLANNER — Your week, plated.",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/meal-planner.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/meal-planner/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/meal-planner/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_crm_dashboard",
+            "title": "CRM / DASHBOARD",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/crm-dashboard.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/crm-dashboard/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/crm-dashboard/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_email_client",
+            "title": "EMAIL / CLIENT — inbox reimagined",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/email-client.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/email-client/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/email-client/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_password_manager",
+            "title": "PASSWORD / MANAGER — vault & health",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/password-manager.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/password-manager/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/password-manager/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_incident_response",
+            "title": "INCIDENT / RESPONSE — active incident",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/incident-response.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/incident-response/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/incident-response/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_fleet_logistics",
+            "title": "FLEET / LOGISTICS — Dispatch Control",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/fleet-logistics.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/fleet-logistics/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/fleet-logistics/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_inventory_manager",
+            "title": "INVENTORY / MANAGER — Warehouse Control",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/inventory-manager.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/inventory-manager/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/inventory-manager/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_insurance_claims",
+            "title": "INSURANCE / CLAIMS — Claim Progress",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/insurance-claims.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/insurance-claims/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/insurance-claims/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_climate_lab",
+            "title": "CLIMATE / DASHBOARD — Global Emissions Intelligence",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/climate-lab.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/climate-lab/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/climate-lab/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_research_conference",
+            "title": "RESEARCH / CONFERENCE — 2025",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/research-conference.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/research-conference/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/research-conference/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_community_center",
+            "title": "COMMUNITY / CENTER — A place to gather, learn, and grow",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/community-center.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/community-center/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/community-center/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_game_launcher",
+            "title": "INDIE / GAME / LAUNCHER",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/game-launcher.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/game-launcher/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/game-launcher/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_language_learning",
+            "title": "LINGUA · daily practice",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/language-learning.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/language-learning/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/language-learning/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_sleep_tracker",
+            "title": "SLEEP / TRACKER — nocturnal intelligence",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/sleep-tracker.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/sleep-tracker/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/sleep-tracker/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_auction_house",
+            "title": "AUCTION / HOUSE — Fine Art & Objects",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/auction-house.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/auction-house/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/auction-house/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_subscription_box",
+            "title": "SUBSCRIPTION / BOX — monthly curation",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/subscription-box.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/subscription-box/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/subscription-box/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_solar_energy",
+            "title": "SOLAR / ENERGY — Power your home with the sun",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/solar-energy.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/solar-energy/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/solar-energy/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_home_renovation",
+            "title": "HOME / RENOVATION — Crafted transformations",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/home-renovation.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/home-renovation/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/home-renovation/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_maker_market",
+            "title": "MAKER / MARKETPLACE — objects with a pulse",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/maker-market.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/maker-market/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/maker-market/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_film_festival",
+            "title": "FILM / FESTIVAL — 2025 edition",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/film-festival.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/film-festival/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/film-festival/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_radio_station",
+            "title": "RADIO / STATION — independent airwaves",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/radio-station.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/radio-station/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/radio-station/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_photo_archive",
+            "title": "PHOTOGRAPHY / ARCHIVE",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/photo-archive.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/photo-archive/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/photo-archive/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_cookbook",
+            "title": "DIGITAL / COOKBOOK — A modern kitchen companion",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/cookbook.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/cookbook/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/cookbook/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_gardening_app",
+            "title": "GARDENING / APP — cultivate calm",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/gardening-app.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/gardening-app/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/gardening-app/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_bike_share",
+            "title": "BIKE-SHARE / APP — Ride the city",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/bike-share.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/bike-share/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/bike-share/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_transit_control",
+            "title": "TRANSIT / CONTROL — Operations Dashboard",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/transit-control.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/transit-control/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/transit-control/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_space_mission",
+            "title": "SPACE / MISSION — Ares Reach",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/space-mission.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/space-mission/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/space-mission/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_observatory",
+            "title": "OBSERVATORY / WEBSITE",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/observatory.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/observatory/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/observatory/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_archive_catalog",
+            "title": "ARCHIVE / CATALOG — A Living Index of Material Memory",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/archive-catalog.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/archive-catalog/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/archive-catalog/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_mental_wellness",
+            "title": "MENTAL / WELLNESS / APP — Your daily practice",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/mental-wellness.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/mental-wellness/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/mental-wellness/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_pharmacy",
+            "title": "PHARMACY / PORTAL",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/pharmacy.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/pharmacy/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/pharmacy/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_dental_clinic",
+            "title": "DENTAL / CLINIC — Modern dentistry, human care",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/dental-clinic.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/dental-clinic/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/dental-clinic/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_childcare_portal",
+            "title": "CHILDCARE / PORTAL",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/childcare-portal.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/childcare-portal/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/childcare-portal/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_alumni_network",
+            "title": "ALUMNI / NETWORK — Where the path continues",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/alumni-network.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/alumni-network/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/alumni-network/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_volunteer_hub",
+            "title": "VOLUNTEER / HUB — Find your place in the work that matters",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/volunteer-hub.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/volunteer-hub/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/volunteer-hub/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_grant_portal",
+            "title": "GRANT / PORTAL — application dashboard",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/grant-portal.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/grant-portal/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/grant-portal/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_investor_relations",
+            "title": "INVESTOR / RELATIONS — Meridian Capital Partners",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/investor-relations.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/investor-relations/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/investor-relations/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_supply_chain",
+            "title": "SUPPLY-CHAIN / DASHBOARD",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/supply-chain.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/supply-chain/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/supply-chain/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_construction_bid",
+            "title": "CONSTRUCTION / BID / PORTAL — Riverside Logistics Hub",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/construction-bid.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/construction-bid/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/construction-bid/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_hr_people_ops",
+            "title": "People / Operations / App",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/hr-people-ops.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/hr-people-ops/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/hr-people-ops/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_design_system",
+            "title": "DESIGN / SYSTEM / DOCS",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/design-system.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/design-system/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/design-system/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_api_documentation",
+            "title": "API / DOCUMENTATION — Nimbus Platform",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/api-documentation.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/api-documentation/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/api-documentation/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_security_console",
+            "title": "SECURITY / CONSOLE",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/security-console.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/security-console/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/security-console/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_data_notebook",
+            "title": "DATA / NOTEBOOK",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/data-notebook.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/data-notebook/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/data-notebook/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_ai_research",
+            "title": "AI / RESEARCH / LAB — Advancing Machine Intelligence",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/ai-research.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/ai-research/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/ai-research/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_robotics_lab",
+            "title": "ROBOTICS / LAB — Autonomous Systems & Human-Robot Collaboration",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/robotics-lab.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/robotics-lab/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/robotics-lab/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_immersive_exhibition",
+            "title": "IMMERSIVE / EXHIBITION — A Sensory Descent",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/immersive-exhibition.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/immersive-exhibition/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/immersive-exhibition/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_esports_league",
+            "title": "ESPORTS / LEAGUE — Live Arena",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/esports-league.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/esports-league/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/esports-league/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_board_game",
+            "title": "BOARD / GAME / STUDIO — Tactical Tabletop Worlds",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/board-game.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/board-game/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/board-game/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_travel_planner",
+            "title": "TRAVEL / PLANNER — Kyoto & Beyond",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/travel-planner.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/travel-planner/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/travel-planner/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_language_magazine",
+            "title": "LANGUAGE / MAGAZINE",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/language-magazine.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/language-magazine/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/language-magazine/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_home_cooking",
+            "title": "HOME / COOKING — Today's recipe, pantry search & meal collections",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/home-cooking.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/home-cooking/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/home-cooking/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_urban_farm",
+            "title": "URBAN / FARM — grow where you are",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/urban-farm.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/urban-farm/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/urban-farm/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_festival_market",
+            "title": "FESTIVAL / MARKET — a gathering of makers, music & flavour",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/festival-market.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/festival-market/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/festival-market/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_charity_annual_report",
+            "title": "CHARITY / ANNUAL / REPORT — 2024",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/charity-annual-report.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/charity-annual-report/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/charity-annual-report/mobile.png"
+              }
+            ]
+          },
+          {
+            "id": "web_indie_publisher",
+            "title": "INDEPENDENT / PUBLISHER — Books with a pulse",
+            "track": "web",
+            "url": "demos/deepseek-v41-flash/web/indie-publisher.html",
+            "source_tag": "deepseek-v4.1-flash",
+            "screenshots": [
+              {
+                "kind": "desktop",
+                "url": "screenshots/deepseek-v41-flash/web/indie-publisher/desktop.png"
+              },
+              {
+                "kind": "mobile",
+                "url": "screenshots/deepseek-v41-flash/web/indie-publisher/mobile.png"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

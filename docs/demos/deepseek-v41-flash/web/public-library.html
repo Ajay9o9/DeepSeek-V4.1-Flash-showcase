@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUBLIC / LIBRARY — A civic commons for readers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0d0b;
+    --paper:#f4efe4;
+    --paper-2:#ebe4d3;
+    --rule:#1a1815;
+    --accent:#e8541f;      /* vermilion */
+    --accent-2:#1f4d3a;    /* deep forest */
+    --accent-3:#f2c14e;    /* mustard */
+    --muted:#6b6459;
+    --shadow: 0 1px 0 var(--rule), 0 2px 0 var(--rule);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(rgba(14,13,11,0.045) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 40px;
+    border-bottom:1.5px solid var(--rule);
+    background:var(--paper);
+    position:sticky;top:0;z-index:50;
+  }
+  .brand{
+    display:flex;align-items:center;gap:14px;
+    font-family:'Fraunces',serif;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    font-size:22px;
+  }
+  .brand .mark{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--accent);
+    display:grid;place-items:center;
+    color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;font-weight:700;
+    border:1.5px solid var(--rule);
+    box-shadow: 2px 2px 0 var(--rule);
+  }
+  .brand .slash{color:var(--accent);font-weight:400;font-style:italic;margin:0 2px}
+  .brand small{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;font-weight:500;
+    letter-spacing:0.14em;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-left:6px;
+    align-self:flex-end;
+    padding-bottom:4px;
+  }
+  nav.primary{display:flex;gap:28px;font-size:14px;font-weight:500}
+  nav.primary a{position:relative;padding:4px 0}
+  nav.primary a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;
+    background:var(--accent);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s ease;
+  }
+  nav.primary a:hover::after{transform:scaleX(1)}
+  .top-actions{display:flex;gap:10px;align-items:center}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+    font-size:13px;font-weight:600;
+    letter-spacing:0.02em;
+    border-radius:999px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow: 2px 2px 0 var(--rule);
+  }
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--rule)}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.accent{background:var(--accent);color:var(--paper)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:0;
+    border-bottom:1.5px solid var(--rule);
+    min-height: 560px;
+  }
+  .hero-left{
+    padding:56px 40px 48px 40px;
+    border-right:1.5px solid var(--rule);
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:500;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .eyebrow .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    font-size: clamp(48px, 6.4vw, 92px);
+    line-height:0.94;
+    letter-spacing:-0.035em;
+    margin: 22px 0 20px;
+    max-width: 12ch;
+  }
+  h1 em{font-style:italic;font-weight:300;color:var(--accent-2)}
+  h1 .amp{font-family:'Fraunces',serif;font-style:italic;color:var(--accent);font-weight:400}
+  .lede{
+    font-size:17px;line-height:1.55;max-width:46ch;color:#2a2620;
+  }
+  .hero-meta{
+    display:flex;gap:36px;margin-top:36px;padding-top:24px;
+    border-top:1px dashed rgba(14,13,11,0.25);
+  }
+  .hero-meta div{font-size:13px}
+  .hero-meta .k{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--muted);display:block;margin-bottom:4px;
+  }
+  .hero-meta .v{font-weight:600;font-size:15px}
+
+  /* Search */
+  .search{
+    margin-top:32px;
+    display:flex;align-items:stretch;
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+    border-radius:999px;
+    overflow:hidden;
+    box-shadow: 3px 3px 0 var(--rule);
+    max-width:560px;
+  }
+  .search .icon{
+    display:grid;place-items:center;padding:0 6px 0 18px;color:var(--muted);
+  }
+  .search input{
+    flex:1;border:0;background:transparent;outline:none;
+    padding:16px 12px;font-family:inherit;font-size:15px;color:var(--ink);
+  }
+  .search input::placeholder{color:#8a8275}
+  .search button{
+    border:0;background:var(--ink);color:var(--paper);
+    padding:0 22px;font-weight:600;font-size:13px;letter-spacing:0.04em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .search button:hover{background:var(--accent)}
+  .search-hint{
+    margin-top:12px;font-size:12px;color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .search-hint b{color:var(--ink);font-weight:600}
+
+  /* Hero right — visual */
+  .hero-right{
+    position:relative;
+    background:var(--accent-2);
+    color:var(--paper);
+    padding:40px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    overflow:hidden;
+  }
+  .hero-right::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(90deg, rgba(244,239,228,0.06) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(0deg, rgba(244,239,228,0.06) 0 1px, transparent 1px 22px);
+    pointer-events:none;
+  }
+  .shelf{
+    position:relative;z-index:2;
+    display:flex;align-items:flex-end;gap:6px;
+    height:280px;
+    padding-bottom:14px;
+    border-bottom:2px solid rgba(244,239,228,0.5);
+  }
+  .book{
+    flex:1;
+    border-radius:2px 2px 0 0;
+    position:relative;
+    box-shadow: inset -3px 0 0 rgba(0,0,0,0.18), inset 3px 0 0 rgba(255,255,255,0.08);
+    display:flex;align-items:flex-end;justify-content:center;
+    padding-bottom:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;letter-spacing:0.1em;
+    color:rgba(244,239,228,0.85);
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    overflow:hidden;
+  }
+  .book::after{
+    content:"";position:absolute;left:0;right:0;top:14%;height:1px;background:rgba(244,239,228,0.35);
+  }
+  .book::before{
+    content:"";position:absolute;left:0;right:0;bottom:14%;height:1px;background:rgba(244,239,228,0.35);
+  }
+  .b1{height:78%;background:#e8541f}
+  .b2{height:92%;background:#f2c14e;color:#0e0d0b}
+  .b3{height:64%;background:#c9b8a0;color:#0e0d0b}
+  .b4{height:88%;background:#8a3a1a}
+  .b5{height:72%;background:#f4efe4;color:#0e0d0b}
+  .b6{height:96%;background:#1f4d3a;border:1px solid rgba(244,239,228,0.4)}
+  .b7{height:58%;background:#d97a4a}
+  .b8{height:82%;background:#3a2f24}
+  .b9{height:70%;background:#f2c14e;color:#0e0d0b}
+  .b10{height:90%;background:#e8541f}
+  .b11{height:66%;background:#c9b8a0;color:#0e0d0b}
+  .b12{height:84%;background:#8a3a1a}
+
+  .hero-right .caption{
+    position:relative;z-index:2;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-top:24px;
+  }
+  .hero-right .caption .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:rgba(244,239,228,0.7);
+  }
+  .hero-right .caption .big{
+    font-family:'Fraunces',serif;
+    font-size:34px;line-height:1;letter-spacing:-0.02em;
+    font-weight:400;
+  }
+  .hero-right .caption .big em{font-style:italic;color:var(--accent-3)}
+
+  /* ---------- Ticker ---------- */
+  .ticker{
+    background:var(--ink);color:var(--paper);
+    border-bottom:1.5px solid var(--rule);
+    overflow:hidden;
+    padding:12px 0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+  }
+  .ticker-track{
+    display:flex;gap:48px;white-space:nowrap;
+    animation: scroll 40s linear infinite;
+  }
+  .ticker-track span{display:inline-flex;align-items:center;gap:14px}
+  .ticker-track span::before{content:"◆";color:var(--accent);font-size:9px}
+  @keyframes scroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
+
+  /* ---------- Sections ---------- */
+  section{padding:72px 40px;border-bottom:1.5px solid var(--rule)}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:40px;gap:24px;flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    font-size: clamp(32px, 3.6vw, 52px);
+    line-height:1;letter-spacing:-0.025em;
+    margin:0;
+    max-width:16ch;
+  }
+  .section-head h2 em{font-style:italic;color:var(--accent)}
+  .section-head .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.18em;color:var(--muted);
+    text-transform:uppercase;
+  }
+  .section-head .num b{color:var(--ink);font-weight:600}
+
+  /* Hours */
+  .hours-grid{
+    display:grid;grid-template-columns: 1.1fr 1fr 1fr;gap:0;
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+    box-shadow: 4px 4px 0 var(--rule);
+  }
+  .hours-grid > div{padding:28px 28px;border-right:1.5px solid var(--rule)}
+  .hours-grid > div:last-child{border-right:0}
+  .hours-grid .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:14px;
+  }
+  .hours-grid .big{
+    font-family:'Fraunces',serif;
+    font-size:44px;line-height:1;letter-spacing:-0.02em;
+    margin-bottom:6px;
+  }
+  .hours-grid .big em{font-style:italic;color:var(--accent-2)}
+  .hours-grid .sub{font-size:13px;color:var(--muted)}
+  .hours-list{list-style:none;padding:0;margin:0;font-size:14px}
+  .hours-list li{
+    display:flex;justify-content:space-between;
+    padding:8px 0;border-bottom:1px dashed rgba(14,13,11,0.18);
+  }
+  .hours-list li:last-child{border-bottom:0}
+  .hours-list li.today{color:var(--accent);font-weight:600}
+  .hours-list li.today::before{content:"●";margin-right:8px;font-size:9px;vertical-align:middle}
+  .hours-list li span:last-child{font-family:'JetBrains Mono',monospace;font-size:13px}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 12px;border-radius:999px;
+    background:var(--accent-2);color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .status-pill .pulse{
+    width:8px;height:8px;border-radius:50%;background:#7ee0a8;
+    box-shadow:0 0 0 0 rgba(126,224,168,0.7);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(126,224,168,0.7)}
+    70%{box-shadow:0 0 0 10px rgba(126,224,168,0)}
+    100%{box-shadow:0 0 0 0 rgba(126,224,168,0)}
+  }
+
+  /* Events */
+  .events{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .event{
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+    padding:24px;
+    display:flex;flex-direction:column;gap:14px;
+    transition:transform .2s ease, box-shadow .2s ease;
+    position:relative;
+  }
+  .event:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--rule)}
+  .event .date{
+    display:flex;align-items:baseline;gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .event .date b{
+    font-family:'Fraunces',serif;
+    font-size:38px;font-weight:400;color:var(--ink);
+    letter-spacing:-0.02em;line-height:1;
+  }
+  .event h3{
+    font-family:'Fraunces',serif;
+    font-weight:400;font-size:24px;line-height:1.1;
+    letter-spacing:-0.015em;margin:0;
+  }
+  .event p{margin:0;font-size:14px;color:#3a352d;line-height:1.5}
+  .event .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:auto;padding-top:14px;border-top:1px dashed rgba(14,13,11,0.2);
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+  }
+  .event .tag{
+    display:inline-block;padding:3px 9px;border-radius:999px;
+    background:var(--accent-3);color:var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:0.12em;text-transform:uppercase;font-weight:600;
+    align-self:flex-start;
+  }
+  .event .tag.green{background:var(--accent-2);color:var(--paper)}
+  .event .tag.orange{background:var(--accent);color:var(--paper)}
+
+  /* Digital resources */
+  .resources{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+  }
+  .resource{
+    padding:28px 24px;
+    border-right:1.5px solid var(--rule);
+    display:flex;flex-direction:column;gap:14px;
+    transition:background .2s ease;
+    cursor:pointer;
+  }
+  .resource:last-child{border-right:0}
+  .resource:hover{background:var(--paper-2)}
+  .resource .icon{
+    width:44px;height:44px;border-radius:50%;
+    border:1.5px solid var(--rule);
+    display:grid;place-items:center;
+    background:var(--paper);
+  }
+  .resource h4{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:20px;margin:0;letter-spacing:-0.01em;
+  }
+  .resource p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .resource .arrow{
+    margin-top:auto;font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;
+  }
+
+  /* New books */
+  .books{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:24px;
+  }
+  .book-card{
+    display:flex;flex-direction:column;gap:14px;
+    cursor:pointer;
+  }
+  .cover{
+    aspect-ratio: 2/3;
+    border:1.5px solid var(--rule);
+    position:relative;
+    overflow:hidden;
+    box-shadow: 4px 4px 0 var(--rule);
+    transition:transform .25s ease, box-shadow .25s ease;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:18px 16px;
+  }
+  .book-card:hover .cover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--rule)}
+  .cover .spine{
+    position:absolute;left:0;top:0;bottom:0;width:8px;
+    background:rgba(0,0,0,0.18);
+  }
+  .cover .title{
+    font-family:'Fraunces',serif;
+    font-weight:400;font-size:20px;line-height:1.05;
+    letter-spacing:-0.015em;
+    position:relative;z-index:2;
+  }
+  .cover .author{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+    position:relative;z-index:2;
+  }
+  .cover .pub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+    opacity:0.7;position:relative;z-index:2;
+  }
+  .cover.c1{background:#e8541f;color:var(--paper)}
+  .cover.c2{background:#f2c14e;color:var(--ink)}
+  .cover.c3{background:#1f4d3a;color:var(--paper)}
+  .cover.c4{background:#f4efe4;color:var(--ink);border-color:var(--rule)}
+  .cover.c5{background:#0e0d0b;color:var(--paper)}
+  .cover.c1::before, .cover.c3::before, .cover.c5::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 8px);
+  }
+  .cover.c2::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 30% 70%, rgba(232,84,31,0.35), transparent 60%);
+  }
+  .cover.c4::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(0deg, rgba(14,13,11,0.08) 0 1px, transparent 1px 6px);
+  }
+  .book-card .info h5{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:17px;margin:0 0 4px;letter-spacing:-0.01em;
+  }
+  .book-card .info .by{
+    font-size:12px;color:var(--muted);
+    font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;
+  }
+  .book-card .info .avail{
+    margin-top:8px;font-size:11px;
+    font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--accent-2);font-weight:600;
+  }
+  .book-card .info .avail.wait{color:var(--accent)}
+
+  /* Membership CTA */
+  .cta{
+    background:var(--ink);color:var(--paper);
+    padding:80px 40px;
+    display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center;
+    position:relative;overflow:hidden;
+    border-bottom:1.5px solid var(--rule);
+  }
+  .cta::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 90% 20%, rgba(232,84,31,0.25), transparent 45%),
+      radial-gradient(circle at 10% 90%, rgba(242,193,78,0.15), transparent 40%);
+    pointer-events:none;
+  }
+  .cta > *{position:relative;z-index:2}
+  .cta h2{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height:0.98;letter-spacing:-0.03em;
+    margin:0 0 20px;
+  }
+  .cta h2 em{font-style:italic;color:var(--accent-3)}
+  .cta p{font-size:17px;line-height:1.55;color:rgba(244,239,228,0.8);max-width:44ch;margin:0 0 32px}
+  .cta-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .cta .btn{background:var(--paper);color:var(--ink);border-color:var(--paper);box-shadow:3px 3px 0 var(--accent)}
+  .cta .btn:hover{box-shadow:5px 5px 0 var(--accent)}
+  .cta .btn.ghost{background:transparent;color:var(--paper);border-color:var(--paper);box-shadow:3px 3px 0 rgba(244,239,228,0.3)}
+  .cta .btn.ghost:hover{box-shadow:5px 5px 0 rgba(244,239,228,0.5)}
+
+  .card-visual{
+    aspect-ratio: 1.6/1;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--accent) 0%, #b83a10 100%);
+    padding:24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    box-shadow: 8px 8px 0 var(--accent-3), 8px 8px 0 1.5px var(--rule);
+    position:relative;overflow:hidden;
+    transform:rotate(-3deg);
+    transition:transform .3s ease;
+  }
+  .card-visual:hover{transform:rotate(-1deg) translateY(-4px)}
+  .card-visual::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(115deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 14px);
+  }
+  .card-visual .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .card-visual .logo{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:18px;letter-spacing:-0.02em;color:var(--paper);
+  }
+  .card-visual .chip{
+    width:36px;height:26px;border-radius:4px;
+    background:linear-gradient(135deg, #f2c14e, #d99a2a);
+    border:1px solid rgba(0,0,0,0.2);
+  }
+  .card-visual .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:16px;letter-spacing:0.18em;color:var(--paper);
+    position:relative;z-index:2;
+  }
+  .card-visual .bottom{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    position:relative;z-index:2;
+  }
+  .card-visual .bottom .name{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(244,239,228,0.85);
+  }
+  .card-visual .bottom .name b{display:block;font-size:14px;color:var(--paper);letter-spacing:0.06em;margin-top:2px}
+  .card-visual .bottom .valid{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.14em;color:rgba(244,239,228,0.7);
+  }
+
+  /* Footer */
+  footer{
+    background:var(--paper);
+    padding:56px 40px 32px;
+  }
+  .foot-grid{
+    display:grid;grid-template-columns: 1.4fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:40px;border-bottom:1.5px solid var(--rule);
+  }
+  .foot-grid h6{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 16px;font-weight:500;
+  }
+  .foot-grid ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px}
+  .foot-grid ul a:hover{color:var(--accent)}
+  .foot-brand p{font-size:14px;color:#3a352d;max-width:36ch;line-height:1.55;margin:14px 0 0}
+  .foot-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:24px;font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--muted);flex-wrap:wrap;gap:12px;
+  }
+  .foot-bottom .socials{display:flex;gap:16px}
+  .foot-bottom .socials a:hover{color:var(--accent)}
+
+  /* Responsive */
+  @media (max-width: 1100px){
+    .hero{grid-template-columns:1fr}
+    .hero-left{border-right:0;border-bottom:1.5px solid var(--rule)}
+    .hero-right{min-height:340px}
+    .hours-grid{grid-template-columns:1fr}
+    .hours-grid > div{border-right:0;border-bottom:1.5px solid var(--rule)}
+    .hours-grid > div:last-child{border-bottom:0}
+    .events{grid-template-columns:1fr 1fr}
+    .resources{grid-template-columns:1fr 1fr}
+    .resource:nth-child(2){border-right:0}
+    .resource:nth-child(1),.resource:nth-child(2){border-bottom:1.5px solid var(--rule)}
+    .books{grid-template-columns:repeat(3,1fr)}
+    .cta{grid-template-columns:1fr;gap:40px}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width: 720px){
+    .topbar{padding:12px 20px;flex-wrap:wrap;gap:12px}
+    nav.primary{display:none}
+    section{padding:48px 20px}
+    .hero-left{padding:36px 20px}
+    .hero-right{padding:28px 20px}
+    .events{grid-template-columns:1fr}
+    .resources{grid-template-columns:1fr}
+    .resource{border-right:0;border-bottom:1.5px solid var(--rule)}
+    .resource:last-child{border-bottom:0}
+    .books{grid-template-columns:repeat(2,1fr)}
+    .cta{padding:56px 20px}
+    .foot-grid{grid-template-columns:1fr;gap:28px}
+    footer{padding:40px 20px 24px}
+    .hero-meta{flex-wrap:wrap;gap:20px}
+    .search{flex-direction:column;border-radius:14px}
+    .search .icon{display:none}
+    .search input{padding:14px 18px}
+    .search button{padding:14px;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <a href="#" class="brand">
+    <span class="mark">PL</span>
+    <span>PUBLIC<span class="slash">/</span>LIBRARY</span>
+    <small>Est. 1892</small>
+  </a>
+  <nav class="primary">
+    <a href="#catalog">Catalog</a>
+    <a href="#hours">Visit</a>
+    <a href="#events">Events</a>
+    <a href="#digital">Digital</a>
+    <a href="#new">New Books</a>
+  </nav>
+  <div class="top-actions">
+    <a href="#" class="btn">Sign in</a>
+    <a href="#join" class="btn accent">Get a card</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="catalog" style="padding:0">
+  <div class="hero-left">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> A civic commons · Open to all</span>
+      <h1>Every book <em>you</em> need, <span class="amp">&amp;</span> a few you don't.</h1>
+      <p class="lede">Search 2.4 million titles across our shelves, place a hold, and pick up at any of our nine branches. Free with a library card — always.</p>
+
+      <form class="search" onsubmit="event.preventDefault();">
+        <span class="icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </span>
+        <input type="text" placeholder="Search by title, author, ISBN, or subject…" aria-label="Search the catalog">
+        <button type="submit">
+          Search
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <div class="search-hint">Try: <b>“Ursula K. Le Guin”</b> · <b>“oral history”</b> · <b>“978-0-06-112008-4”</b></div>
+    </div>
+
+    <div class="hero-meta">
+      <div><span class="k">Branches</span><span class="v">9 across the city</span></div>
+      <div><span class="k">Titles</span><span class="v">2,412,880</span></div>
+      <div><span class="k">Cardholders</span><span class="v">184,000+</span></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div>
+      <span class="eyebrow" style="color:rgba(244,239,228,0.7)"><span class="dot" style="background:var(--accent-3)"></span> On the shelf this week</span>
+    </div>
+    <div class="shelf" aria-hidden="true">
+      <div class="book b1">FICTION</div>
+      <div class="book b2">POETRY</div>
+      <div class="book b3">HISTORY</div>
+      <div class="book b4">MEMOIR</div>
+      <div class="book b5">ESSAYS</div>
+      <div class="book b6">SCIENCE</div>
+      <div class="book b7">ART</div>
+      <div class="book b8">PHILOSOPHY</div>
+      <div class="book b9">COOKING</div>
+      <div class="book b10">FICTION</div>
+      <div class="book b11">TRAVEL</div>
+      <div class="book b12">CHILDREN</div>
+    </div>
+    <div class="caption">
+      <div>
+        <div class="label">Curated by our librarians</div>
+        <div class="big">The <em>reading room</em> is open.</div>
+      </div>
+      <div class="label" style="text-align:right">Vol. 132<br>Spring 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>New: 340 titles added this week</span>
+    <span>Author talk · Thursday 7pm · Main Hall</span>
+    <span>Free tax help · Saturdays 10–2</span>
+    <span>Book sale · $1 paperbacks · Courtyard</span>
+    <span>Seed library now open</span>
+    <span>New: 340 titles added this week</span>
+    <span>Author talk · Thursday 7pm · Main Hall</span>
+    <span>Free tax help · Saturdays 10–2</span>
+    <span>Book sale · $1 paperbacks · Courtyard</span>
+    <span>Seed library now open</span>
+  </div>
+</div>
+
+<!-- Hours -->
+<section id="hours">
+  <div class="section-head">
+    <div>
+      <div class="num"><b>01</b> / Visit</div>
+      <h2>Opening hours <em>&amp;</em> locations</h2>
+    </div>
+    <div class="num" style="text-align:right">Main Branch<br><b>100 Civic Plaza</b></div>
+  </div>
+
+  <div class="hours-grid">
+    <div>
+      <div class="status-pill"><span class="pulse"></span> Open now</div>
+      <div class="big">Until <em>9:00</em> pm</div>
+      <div class="sub">Main Branch · closes in 4 hours 12 minutes</div>
+    </div>
+    <div>
+      <div class="label">This week</div>
+      <ul class="hours-list">
+        <li class="today"><span>Monday</span><span>10 – 9</span></li>
+        <li><span>Tuesday</span><span>10 – 9</span></li>
+        <li><span>Wednesday</span><span>10 – 9</span></li>
+        <li><span>Thursday</span><span>10 – 9</span></li>
+        <li><span>Friday</span><span>10 – 6</span></li>
+        <li><span>Saturday</span><span>9 – 5</span></li>
+        <li><span>Sunday</span><span>12 – 5</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="label">Also open today</div>
+      <ul class="hours-list">
+        <li><span>Eastside Branch</span><span>10 – 8</span></li>
+        <li><span>Riverside Branch</span><span>10 – 6</span></li>
+        <li><span>Northgate Branch</span><span>11 – 7</span></li>
+        <li><span>Children's Library</span><span>10 – 5</span></li>
+        <li><span>Maker Lab</span><span>12 – 8</span></li>
+        <li><span>Local History Room</span><span>By appointment</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Events -->
+<section id="events">
+  <div class="section-head">
+    <div>
+      <div class="num"><b>02</b> / What's on</div>
+      <h2>Events <em>&amp;</em> programs</h2>
+    </div>
+    <a href="#" class="btn">Full calendar →</a>
+  </div>
+
+  <div class="events">
+    <article class="event">
+      <span class="tag orange">Author talk</span>
+      <div class="date"><b>17</b> APR · 7:00 PM</div>
+      <h3>Ocean Vuong on memory, migration, and the sentence</h3>
+      <p>A reading and conversation in the Main Hall, followed by a signing. Doors open at 6:30.</p>
+      <div class="meta"><span>Main Hall</span><span>Free · RSVP</span></div>
+    </article>
+
+    <article class="event">
+      <span class="tag green">Workshop</span>
+      <div class="date"><b>19</b> APR · 10:30 AM</div>
+      <h3>Zine-making for teens: cut, paste, publish</h3>
+      <p>All materials provided. Bring an idea, leave with a printed zine. Ages 13–18.</p>
+      <div class="meta"><span>Maker Lab</span><span>Free · Drop-in</span></div>
+    </article>
+
+    <article class="event">
+      <span class="tag">Storytime</span>
+      <div class="date"><b>20</b> APR · 11:00 AM</div>
+      <h3>Saturday storytime: The Bear &amp; the Bees</h3>
+      <p>Songs, puppets, and a picture book read-aloud for ages 2–6 and their grown-ups.</p>
+      <div class="meta"><span>Children's Library</span><span>Free · Drop-in</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- Digital resources -->
+<section id="digital">
+  <div class="section-head">
+    <div>
+      <div class="num"><b>03</b> / From anywhere</div>
+      <h2>Digital <em>resources</em></h2>
+    </div>
+    <div class="num" style="text-align:right">Free with your card<br><b>No ads · No tracking</b></div>
+  </div>
+
+  <div class="resources">
+    <div class="resource">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4z"/><path d="M18 20h2V7a3 3 0 0 0-3-3"/></svg>
+      </div>
+      <h4>eBooks &amp; Audiobooks</h4>
+      <p>Over 90,000 titles from Libby and Hoopla. Download to any device, keep for 21 days.</p>
+      <div class="arrow">Browse →</div>
+    </div>
+
+    <div class="resource">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+      </div>
+      <h4>Streaming Film</h4>
+      <p>Kanopy and Criterion: 30,000 films, documentaries, and world cinema. 10 credits a month.</p>
+      <div class="arrow">Watch →</div>
+    </div>
+
+    <div class="resource">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+      </div>
+      <h4>Research &amp; Databases</h4>
+      <p>JSTOR, Ancestry, Consumer Reports, and 60+ academic databases. In-library or at home.</p>
+      <div class="arrow">Search →</div>
+    </div>
+
+    <div class="resource">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v6h6"/></svg>
+      </div>
+      <h4>Learning &amp; Courses</h4>
+      <p>LinkedIn Learning, Mango Languages, and free GED &amp; citizenship prep. Self-paced.</p>
+      <div class="arrow">Start →</div>
+    </div>
+  </div>
+</section>
+
+<!-- New books -->
+<section id="new">
+  <div class="section-head">
+    <div>
+      <div class="num"><b>04</b> / Just arrived</div>
+      <h2>New <em>on the shelf</em></h2>
+    </div>
+    <a href="#" class="btn">See all 340 →</a>
+  </div>
+
+  <div class="books">
+    <div class="book-card">
+      <div class="cover c1">
+        <div class="spine"></div>
+        <div class="pub">Farrar, Straus &amp; Giroux</div>
+        <div class="title">The Cartographer's Daughter</div>
+        <div class="author">Mira Okonkwo</div>
+      </div>
+      <div class="info">
+        <h5>The Cartographer's Daughter</h5>
+        <div class="by">Mira Okonkwo · Fiction</div>
+        <div class="avail">Available · 3 copies</div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="cover c2">
+        <div class="spine"></div>
+        <div class="pub">Graywolf Press</div>
+        <div class="title">Small Hours, Long Light</div>
+        <div class="author">Daniel Reyes</div>
+      </div>
+      <div class="info">
+        <h5>Small Hours, Long Light</h5>
+        <div class="by">Daniel Reyes · Poetry</div>
+        <div class="avail">Available · 2 copies</div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="cover c3">
+        <div class="spine"></div>
+        <div class="pub">W. W. Norton</div>
+        <div class="title">The River Remembers</div>
+        <div class="author">Aisha Bello</div>
+      </div>
+      <div class="info">
+        <h5>The River Remembers</h5>
+        <div class="by">Aisha Bello · History</div>
+        <div class="avail wait">Waitlist · 4 holds</div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="cover c4">
+        <div class="spine"></div>
+        <div class="pub">Penguin Press</div>
+        <div class="title">How to Read a City</div>
+        <div class="author">Jonah Feldman</div>
+      </div>
+      <div class="info">
+        <h5>How to Read a City</h5>
+        <div class="by">Jonah Feldman · Essays</div>
+        <div class="avail">Available · 5 copies</div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="cover c5">
+        <div class="spine"></div>
+        <div class="pub">Knopf</div>
+        <div class="title">The Quiet Algorithm</div>
+        <div class="author">Priya Raman</div>
+      </div>
+      <div class="info">
+        <h5>The Quiet Algorithm</h5>
+        <div class="by">Priya Raman · Science</div>
+        <div class="avail">Available · 1 copy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Membership CTA -->
+<section class="cta" id="join">
+  <div>
+    <span class="eyebrow" style="color:rgba(244,239,228,0.7)"><span class="dot" style="background:var(--accent-3)"></span> Membership</span>
+    <h2>Get a card. <em>Keep it forever.</em></h2>
+    <p>Free for anyone who lives, works, or studies in the county. Borrow books, stream films, book a study room, and join 184,000 neighbours who read with us.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn">Apply online →</a>
+      <a href="#" class="btn ghost">Visit a branch</a>
+    </div>
+  </div>
+
+  <div class="card-visual" aria-hidden="true">
+    <div class="top">
+      <div class="logo">PUBLIC / LIBRARY</div>
+      <div class="chip"></div>
+    </div>
+    <div class="num">•••• 1892 •••• 2025</div>
+    <div class="bottom">
+      <div class="name">Cardholder<b>YOUR NAME HERE</b></div>
+      <div class="valid">VALID<br>THRU 12/29</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="brand">
+        <span class="mark">PL</span>
+        <span>PUBLIC<span class="slash">/</span>LIBRARY</span>
+      </a>
+      <p>A civic commons for readers, researchers, and neighbours. Free to join, free to use, open to all since 1892.</p>
+    </div>
+    <div>
+      <h6>Visit</h6>
+      <ul>
+        <li><a href="#">Main Branch</a></li>
+        <li><a href="#">Eastside Branch</a></li>
+        <li><a href="#">Riverside Branch</a></li>
+        <li><a href="#">Northgate Branch</a></li>
+        <li><a href="#">Children's Library</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Use</h6>
+      <ul>
+        <li><a href="#">Catalog search</a></li>
+        <li><a href="#">Digital resources</a></li>
+        <li><a href="#">Book a study room</a></li>
+        <li><a href="#">Interlibrary loan</a></li>
+        <li><a href="#">Suggest a purchase</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>About</h6>
+      <ul>
+        <li><a href="#">Our mission</a></li>
+        <li><a href="#">Board &amp; governance</a></li>
+        <li><a href="#">Jobs</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Donate</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2025 Public Library · 100 Civic Plaza · (555) 010-1892</div>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Accessibility</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

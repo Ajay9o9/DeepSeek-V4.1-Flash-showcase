@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE NORTH EDIT — Travel, Refined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ─────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #4a4a4a;
+      --ink-muted: #8a8a8a;
+      --paper: #faf8f5;
+      --paper-warm: #f3efe9;
+      --accent: #c45d3e;
+      --accent-deep: #8b3a24;
+      --rule: #d9d3ca;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ───────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 72px;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 10px 24px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: linear-gradient(
+        180deg,
+        #1a2a3a 0%,
+        #2d4a5e 18%,
+        #4a7a8a 35%,
+        #7a9e9e 50%,
+        #c4a882 68%,
+        #d4b896 78%,
+        #e8d5b8 88%,
+        #f0e6d4 100%
+      );
+    }
+
+    /* Sun glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 22%;
+      left: 62%;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 220, 160, 0.7) 0%, rgba(255, 200, 120, 0.3) 40%, transparent 70%);
+      filter: blur(20px);
+      z-index: 1;
+    }
+
+    /* Landscape SVG layers */
+    .hero-landscape {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .hero-landscape svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .layer-far { opacity: 0.35; }
+    .layer-mid { opacity: 0.55; }
+    .layer-near { opacity: 0.85; }
+    .layer-front { opacity: 1; }
+
+    /* Mist overlay */
+    .hero-mist {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 45%;
+      background: linear-gradient(0deg, rgba(240, 230, 212, 0.9) 0%, rgba(240, 230, 212, 0.4) 40%, transparent 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 48px 80px;
+      max-width: 780px;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-kicker::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent-deep);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    .hero-meta .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 48px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      writing-mode: vertical-rl;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 48px;
+      background: var(--ink-muted);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── Section Shared ───────────────────────────────── */
+    .section {
+      padding: 100px 48px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--ink);
+      line-height: 1.15;
+    }
+
+    .section-link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+
+    .section-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Featured Destinations ────────────────────────── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .featured-card {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .featured-card:hover { transform: translateY(-6px); }
+
+    .featured-card:first-child { grid-row: span 2; }
+
+    .card-visual {
+      position: relative;
+      height: 100%;
+      min-height: 280px;
+      display: flex;
+      align-items: flex-end;
+      padding: 28px;
+    }
+
+    .featured-card:first-child .card-visual { min-height: 580px; }
+
+    /* Card gradient scenes */
+    .card-visual--fjord {
+      background: linear-gradient(160deg, #1a2a3a 0%, #2d4a5e 30%, #4a7a8a 55%, #7a9e9e 75%, #c4a882 100%);
+    }
+
+    .card-visual--desert {
+      background: linear-gradient(160deg, #3a2a1a 0%, #6a4a2a 30%, #a87a4a 55%, #d4a86a 75%, #e8c89a 100%);
+    }
+
+    .card-visual--alpine {
+      background: linear-gradient(160deg, #2a3a2a 0%, #4a6a4a 30%, #7a9a7a 55%, #a8c4a8 75%, #d4e0d4 100%);
+    }
+
+    .card-visual--coastal {
+      background: linear-gradient(160deg, #1a2a3a 0%, #2a4a6a 30%, #4a7a9a 55%, #8ab4c4 75%, #d4e0e8 100%);
+    }
+
+    /* SVG silhouette inside cards */
+    .card-silhouette {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+    }
+
+    .card-silhouette svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+      z-index: 2;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 3;
+      color: #fff;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .featured-card:first-child .card-title { font-size: 2rem; }
+
+    .card-sub {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    /* ── Story Cards (Horizontal Scroll) ──────────────── */
+    .stories-section {
+      background: var(--paper-warm);
+      padding: 100px 0;
+    }
+
+    .stories-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .stories-scroll {
+      display: flex;
+      gap: 28px;
+      overflow-x: auto;
+      padding-bottom: 24px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rule) transparent;
+    }
+
+    .stories-scroll::-webkit-scrollbar { height: 4px; }
+    .stories-scroll::-webkit-scrollbar-track { background: transparent; }
+    .stories-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+    .story-card {
+      flex: 0 0 340px;
+      scroll-snap-align: start;
+      background: var(--paper);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: pointer;
+    }
+
+    .story-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .story-visual {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-visual--1 { background: linear-gradient(135deg, #2a3a4a 0%, #4a6a7a 40%, #8aa4b4 70%, #c4d4dc 100%); }
+    .story-visual--2 { background: linear-gradient(135deg, #3a2a1a 0%, #7a5a3a 40%, #b88a5a 70%, #e0c8a0 100%); }
+    .story-visual--3 { background: linear-gradient(135deg, #1a2a1a 0%, #3a5a3a 40%, #6a8a6a 70%, #a8c4a8 100%); }
+    .story-visual--4 { background: linear-gradient(135deg, #2a1a2a 0%, #5a3a5a 40%, #8a6a8a 70%, #c4a8c4 100%); }
+    .story-visual--5 { background: linear-gradient(135deg, #1a2a3a 0%, #3a5a7a 40%, #6a8aaa 70%, #a8c4dc 100%); }
+
+    .story-visual svg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+    }
+
+    .story-body {
+      padding: 24px;
+    }
+
+    .story-cat {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .story-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .story-excerpt {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .story-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+    }
+
+    .story-meta .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+    }
+
+    /* ── Category Navigation ──────────────────────────── */
+    .categories {
+      padding: 100px 48px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .cat-item {
+      background: var(--paper);
+      padding: 40px 32px;
+      text-decoration: none;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .cat-item:hover { background: var(--paper-warm); }
+
+    .cat-item::after {
+      content: '→';
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      font-size: 1.1rem;
+      color: var(--rule);
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .cat-item:hover::after {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .cat-num {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+
+    .cat-item:hover .cat-num { color: var(--accent); }
+
+    .cat-name {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .cat-desc {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Newsletter ───────────────────────────────────── */
+    .newsletter {
+      background: var(--ink);
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .newsletter-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .newsletter-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .newsletter-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--paper);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .newsletter-desc {
+      font-size: 0.9rem;
+      color: rgba(250, 248, 245, 0.6);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      border: 1px solid rgba(250, 248, 245, 0.2);
+      border-right: none;
+      background: transparent;
+      color: var(--paper);
+      outline: none;
+      border-radius: 2px 0 0 2px;
+      transition: border-color 0.3s;
+    }
+
+    .newsletter-form input::placeholder { color: rgba(250, 248, 245, 0.35); }
+    .newsletter-form input:focus { border-color: var(--accent); }
+
+    .newsletter-form button {
+      padding: 14px 28px;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--paper);
+      border: none;
+      cursor: pointer;
+      border-radius: 0 2px 2px 0;
+      transition: background 0.3s;
+    }
+
+    .newsletter-form button:hover { background: var(--accent-deep); }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .footer {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--rule);
+      padding: 64px 48px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .footer-brand span { color: var(--accent); }
+
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .footer-col a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .footer-social a:hover { color: var(--accent); }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .featured-grid { grid-template-columns: 1fr 1fr; }
+      .featured-card:first-child { grid-row: span 1; grid-column: span 2; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 60px; }
+      .section { padding: 64px 24px; }
+      .stories-inner { padding: 0 24px; }
+      .categories { padding: 64px 24px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-card:first-child { grid-column: span 1; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .footer { padding: 48px 24px 32px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-right: 1px solid rgba(250,248,245,0.2); border-radius: 2px; }
+      .newsletter-form button { border-radius: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────── -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">THE NORTH <span>EDIT</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Destinations</a></li>
+      <li><a href="#">Stories</a></li>
+      <li><a href="#">Guides</a></li>
+      <li><a href="#">Culture</a></li>
+      <li><a href="#">Journal</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Subscribe</a>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-landscape">
+      <!-- Far mountains -->
+      <svg class="layer-far" viewBox="0 0 1440 400" preserveAspectRatio="none" style="height: 55%;">
+        <path d="M0,400 L0,280 Q120,200 240,240 Q360,280 480,180 Q600,80 720,160 Q840,240 960,140 Q1080,40 1200,120 Q1320,200 1440,160 L1440,400 Z" fill="#2a3a4a"/>
+      </svg>
+      <!-- Mid mountains -->
+      <svg class="layer-mid" viewBox="0 0 1440 350" preserveAspectRatio="none" style="height: 45%;">
+        <path d="M0,350 L0,260 Q180,180 360,220 Q540,260 720,160 Q900,60 1080,180 Q1260,300 1440,200 L1440,350 Z" fill="#3a4a5a"/>
+      </svg>
+      <!-- Near hills -->
+      <svg class="layer-near" viewBox="0 0 1440 280" preserveAspectRatio="none" style="height: 35%;">
+        <path d="M0,280 L0,220 Q200,160 400,200 Q600,240 800,180 Q1000,120 1200,200 Q1320,250 1440,220 L1440,280 Z" fill="#4a5a6a"/>
+      </svg>
+      <!-- Front ridge -->
+      <svg class="layer-front" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height: 25%;">
+        <path d="M0,200 L0,160 Q240,120 480,150 Q720,180 960,140 Q1200,100 1440,150 L1440,200 Z" fill="#5a6a7a"/>
+      </svg>
+    </div>
+    <div class="hero-mist"></div>
+
+    <div class="hero-content">
+      <div class="hero-kicker">Issue No. 47 — The Quiet North</div>
+      <h1 class="hero-title">Where the <em>Fjords</em> Meet the Sky</h1>
+      <p class="hero-desc">A slow journey through Norway's Lofoten Islands, where fishing villages cling to granite cliffs and the midnight sun rewrites the rules of time.</p>
+      <div class="hero-meta">
+        <span>By Elin Marstrand</span>
+        <span class="dot"></span>
+        <span>12 min read</span>
+        <span class="dot"></span>
+        <span>Photography by Jonas Lindqvist</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ── Featured Destinations ────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Featured Destinations</div>
+        <h2 class="section-title">Places Worth the Journey</h2>
+      </div>
+      <a href="#" class="section-link">View All</a>
+    </div>
+
+    <div class="featured-grid">
+      <!-- Large card -->
+      <div class="featured-card">
+        <div class="card-visual card-visual--fjord">
+          <div class="card-silhouette">
+            <svg viewBox="0 0 600 300" preserveAspectRatio="none">
+              <path d="M0,300 L0,200 Q100,140 200,180 Q300,220 400,160 Q500,100 600,150 L600,300 Z" fill="rgba(0,0,0,0.3)"/>
+              <path d="M0,300 L0,240 Q150,200 300,230 Q450,260 600,220 L600,300 Z" fill="rgba(0,0,0,0.5)"/>
+            </svg>
+          </div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">Norway</div>
+            <h3 class="card-title">The Lofoten Islands</h3>
+            <p class="card-sub">Granite peaks rising from Arctic waters, red fishing cabins, and a silence that feels like the end of the world.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small card 1 -->
+      <div class="featured-card">
+        <div class="card-visual card-visual--desert">
+          <div class="card-silhouette">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="none">
+              <path d="M0,300 L0,220 Q100,180 200,210 Q300,240 400,200 L400,300 Z" fill="rgba(0,0,0,0.35)"/>
+            </svg>
+          </div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">Morocco</div>
+            <h3 class="card-title">Sahara Dunes</h3>
+            <p class="card-sub">Golden light, endless sand, and the quiet rhythm of camel caravans.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small card 2 -->
+      <div class="featured-card">
+        <div class="card-visual card-visual--alpine">
+          <div class="card-silhouette">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="none">
+              <path d="M0,300 L0,200 Q80,140 160,180 Q240,220 320,160 Q360,130 400,150 L400,300 Z" fill="rgba(0,0,0,0.3)"/>
+            </svg>
+          </div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">Switzerland</div>
+            <h3 class="card-title">Alpine Meadows</h3>
+            <p class="card-sub">Wildflower valleys and the slow art of mountain walking.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small card 3 -->
+      <div class="featured-card">
+        <div class="card-visual card-visual--coastal">
+          <div class="card-silhouette">
+            <svg viewBox="0 0 400 300" preserveAspectRatio="none">
+              <path d="M0,300 L0,230 Q100,190 200,220 Q300,250 400,210 L400,300 Z" fill="rgba(0,0,0,0.35)"/>
+            </svg>
+          </div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">Portugal</div>
+            <h3 class="card-title">Atlantic Coast</h3>
+            <p class="card-sub">Cliffside villages, salt air, and the best seafood of your life.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stories ──────────────────────────────────────── -->
+  <section class="stories-section">
+    <div class="stories-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">From the Journal</div>
+          <h2 class="section-title">Stories &amp; Dispatches</h2>
+        </div>
+        <a href="#" class="section-link">All Stories</a>
+      </div>
+
+      <div class="stories-scroll">
+        <!-- Story 1 -->
+        <article class="story-card">
+          <div class="story-visual story-visual--1">
+            <svg viewBox="0 0 340 100" preserveAspectRatio="none">
+              <path d="M0,100 L0,60 Q60,30 120,50 Q180,70 240,40 Q300,10 340,30 L340,100 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="story-body">
+            <div class="story-cat">Iceland</div>
+            <h3 class="story-title">Chasing the Northern Lights Across the Snæfellsnes Peninsula</h3>
+            <p class="story-excerpt">A week of dark skies, geothermal pools, and the quiet thrill of waiting for the aurora to appear.</p>
+            <div class="story-meta">
+              <span>8 min read</span>
+              <span class="dot"></span>
+              <span>Feb 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 2 -->
+        <article class="story-card">
+          <div class="story-visual story-visual--2">
+            <svg viewBox="0 0 340 100" preserveAspectRatio="none">
+              <path d="M0,100 L0,70 Q80,40 160,60 Q240,80 340,50 L340,100 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="story-body">
+            <div class="story-cat">Japan</div>
+            <h3 class="story-title">The Slow Trains of Kyushu: A Journey Through Tea Country</h3>
+            <p class="story-excerpt">Riding the Hisatsu Line through misty mountains, stopping at villages where time moves at its own pace.</p>
+            <div class="story-meta">
+              <span>11 min read</span>
+              <span class="dot"></span>
+              <span>Jan 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 3 -->
+        <article class="story-card">
+          <div class="story-visual story-visual--3">
+            <svg viewBox="0 0 340 100" preserveAspectRatio="none">
+              <path d="M0,100 L0,50 Q100,20 200,55 Q280,80 340,45 L340,100 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="story-body">
+            <div class="story-cat">Scotland</div>
+            <h3 class="story-title">Walking the Outer Hebrides: Wind, Wool, and Wild Atlantic Light</h3>
+            <p class="story-excerpt">A solo trek across the Uists, where the weather changes every hour and the beaches are empty.</p>
+            <div class="story-meta">
+              <span>9 min read</span>
+              <span class="dot"></span>
+              <span>Dec 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 4 -->
+        <article class="story-card">
+          <div class="story-visual story-visual--4">
+            <svg viewBox="0 0 340 100" preserveAspectRatio="none">
+              <path d="M0,100 L0,65 Q70,35 140,55 Q210,75 280,45 Q320,30 340,40 L340,100 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="story-body">
+            <div class="story-cat">India</div>
+            <h3 class="story-title">The Spice Routes of Kerala: A Culinary Journey Through the Backwaters</h3>
+            <p class="story-excerpt">From cardamom hills to coconut-lined canals, tracing the flavors that shaped a region.</p>
+            <div class="story-meta">
+              <span>14 min read</span>
+              <span class="dot"></span>
+              <span>Nov 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Story 5 -->
+        <article class="story-card">
+          <div class="story-visual story-visual--5">
+            <svg viewBox="0 0 340 100" preserveAspectRatio="none">
+              <path d="M0,100 L0,55 Q90,25 180,50 Q260,70 340,40 L340,100 Z" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+          </div>
+          <div class="story-body">
+            <div class="story-cat">Patagonia</div>
+            <h3 class="story-title">At the End of the World: Torres del Paine in Autumn</h3>
+            <p class="story-excerpt">Granite towers, guanaco trails, and the fierce beauty of a landscape that refuses to be tamed.</p>
+            <div class="story-meta">
+              <span>10 min read</span>
+              <span class="dot"></span>
+              <span>Oct 2024</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Categories ───────────────────────────────────── -->
+  <section class="categories">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Browse by Category</div>
+        <h2 class="section-title">Find Your Next Journey</h2>
+      </div>
+    </div>
+
+    <div class="cat-grid">
+      <a href="#" class="cat-item">
+        <div class="cat-num">01</div>
+        <div class="cat-name">Wilderness</div>
+        <div class="cat-desc">Remote landscapes, national parks, and the art of getting lost.</div>
+      </a>
+      <a href="#" class="cat-item">
+        <div class="cat-num">02</div>
+        <div class="cat-name">Cities</div>
+        <div class="cat-desc">Urban culture, architecture, and the rhythm of streets.</div>
+      </a>
+      <a href="#" class="cat-item">
+        <div class="cat-num">03</div>
+        <div class="cat-name">Coastal</div>
+        <div class="cat-desc">Islands, shorelines, and the pull of the open sea.</div>
+      </a>
+      <a href="#" class="cat-item">
+        <div class="cat-num">04</div>
+        <div class="cat-name">Culture</div>
+        <div class="cat-desc">Food, craft, and the people who keep traditions alive.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ───────────────────────────────────── -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <div class="newsletter-label">The Dispatch</div>
+      <h2 class="newsletter-title">Stories Worth Slowing Down For</h2>
+      <p class="newsletter-desc">A weekly letter from the road — long-form travel writing, photography, and the places we can't stop thinking about.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed ✓'; this.querySelector('input').value='';">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">THE NORTH <span>EDIT</span></div>
+          <p class="footer-tagline">Independent travel journalism for the curious and the patient. Published from Copenhagen since 2019.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">Stories</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Journal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>About</h4>
+          <ul>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Editorial Policy</a></li>
+            <li><a href="#">Contributors</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Licensing</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 The North Edit. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="#">Instagram</a>
+          <a href="#">Twitter</a>
+          <a href="#">Pinterest</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

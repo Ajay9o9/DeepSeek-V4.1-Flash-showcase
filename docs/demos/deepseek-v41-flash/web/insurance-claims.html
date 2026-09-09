@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSURANCE / CLAIMS — Claim Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E1B2C;
+    --ink-2: #1B2A3F;
+    --paper: #F4EFE6;
+    --paper-2: #EDE6D8;
+    --line: #D9CFBC;
+    --line-2: #C4B79E;
+    --accent: #E8552B;
+    --accent-2: #F2A03D;
+    --moss: #2F5D4E;
+    --sky: #6FA8C7;
+    --muted: #6B6355;
+    --ok: #2F7A5A;
+    --warn: #C97A1F;
+    --pending: #8A7F6B;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(232,85,43,0.06), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(47,93,78,0.06), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  .mono { font-family: 'DM Mono', ui-monospace, monospace; }
+  .serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(244,239,230,0.85);
+    backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    display: grid; place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    font-style: italic;
+    letter-spacing: 0;
+  }
+  .brand-sep { color: var(--line-2); }
+  .brand strong { font-weight: 500; }
+
+  .topnav {
+    display: flex; gap: 28px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .topnav a { color: inherit; text-decoration: none; }
+  .topnav a:hover { color: var(--ink); }
+
+  .top-actions { display: flex; align-items: center; gap: 14px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--paper-2);
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(47,122,90,0.15); }
+
+  .avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 600; font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 32px;
+    align-items: stretch;
+    margin-bottom: 32px;
+  }
+
+  .hero-card {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 20px;
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    min-height: 380px;
+  }
+  .hero-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(232,85,43,0.35), transparent 45%),
+      radial-gradient(circle at 10% 100%, rgba(111,168,199,0.18), transparent 50%);
+    pointer-events: none;
+  }
+  .hero-card::after {
+    content: "";
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px dashed rgba(244,239,230,0.18);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.65);
+    margin-bottom: 18px;
+  }
+  .eyebrow .bar { width: 24px; height: 1px; background: rgba(244,239,230,0.4); }
+
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 56px;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    font-weight: 400;
+  }
+  .hero-title em { font-style: italic; color: var(--accent-2); }
+
+  .hero-sub {
+    color: rgba(244,239,230,0.72);
+    max-width: 46ch;
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta {
+    display: flex; gap: 32px;
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(244,239,230,0.14);
+  }
+  .meta-item .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.55);
+    margin-bottom: 6px;
+  }
+  .meta-item .v {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--paper);
+  }
+  .meta-item .v small { font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(244,239,230,0.6); margin-left: 4px; }
+
+  /* Progress card */
+  .progress-card {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 22px;
+  }
+  .progress-head h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0 0 4px;
+  }
+  .progress-head p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+  .progress-pct {
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .progress-pct sup { font-size: 18px; vertical-align: super; color: var(--muted); }
+
+  .bar-track {
+    height: 8px;
+    background: rgba(14,27,44,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 68%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 999px;
+    position: relative;
+  }
+  .bar-fill::after {
+    content: "";
+    position: absolute; right: -1px; top: 50%;
+    width: 14px; height: 14px;
+    background: var(--accent);
+    border: 3px solid var(--paper-2);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .steps {
+    display: flex; flex-direction: column; gap: 2px;
+    margin-top: auto;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .step:last-child { border-bottom: none; }
+  .step .mark {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 10px;
+    color: #fff;
+    background: var(--ok);
+  }
+  .step.pending .mark { background: transparent; border: 1.5px dashed var(--line-2); color: var(--muted); }
+  .step.active .mark { background: var(--accent); box-shadow: 0 0 0 4px rgba(232,85,43,0.15); }
+  .step .label { color: var(--ink-2); }
+  .step.pending .label { color: var(--muted); }
+  .step .when {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Grid sections ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .panel {
+    background: #FBF8F1;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+  }
+  .panel-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-head h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0;
+  }
+  .panel-head .count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Checklist */
+  .checklist { display: flex; flex-direction: column; }
+  .check-item {
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: rgba(232,85,43,0.03); }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 1.5px solid var(--line-2);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    background: #fff;
+    transition: all 0.15s;
+  }
+  .check-item.done .check-box {
+    background: var(--moss);
+    border-color: var(--moss);
+  }
+  .check-item.done .check-box::after {
+    content: "";
+    width: 10px; height: 6px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .check-item .name { font-size: 14px; color: var(--ink); }
+  .check-item .name small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+  .check-item.done .name { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line-2); }
+  .check-item .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--paper-2);
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+  .check-item.done .tag { background: rgba(47,122,90,0.1); color: var(--ok); border-color: rgba(47,122,90,0.25); }
+  .check-item.required .tag { background: rgba(232,85,43,0.08); color: var(--accent); border-color: rgba(232,85,43,0.25); }
+
+  /* Adjuster */
+  .adjuster {
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .adj-top {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .adj-avatar {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--moss), #4a7a68);
+    color: #fff;
+    display: grid; place-items: center;
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    font-style: italic;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .adj-avatar::after {
+    content: "";
+    position: absolute; bottom: -3px; right: -3px;
+    width: 14px; height: 14px;
+    background: var(--ok);
+    border: 3px solid #FBF8F1;
+    border-radius: 50%;
+  }
+  .adj-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    margin: 0 0 2px;
+  }
+  .adj-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .adj-rows {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .adj-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .adj-row .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .adj-row .v { color: var(--ink); font-weight: 500; }
+  .adj-actions { display: flex; gap: 10px; margin-top: 4px; }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--ink-2); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-2);
+  }
+  .btn-ghost:hover { background: var(--paper-2); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 8px; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 90px 20px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 98px; top: 32px; bottom: -14px;
+    width: 1px;
+    background: var(--line);
+  }
+  .tl-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding-top: 3px;
+  }
+  .tl-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--line-2);
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .tl-item.active .tl-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px rgba(232,85,43,0.15); }
+  .tl-item.done .tl-dot { background: var(--moss); border-color: var(--moss); }
+  .tl-body h4 {
+    margin: 0 0 3px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .tl-body p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .tl-body .who {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 6px;
+    display: inline-block;
+  }
+
+  /* Coverage */
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .cov {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    position: relative;
+  }
+  .cov .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .cov .v {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .cov .v small { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--muted); margin-left: 4px; }
+  .cov .sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+  .cov.highlight { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .cov.highlight .k { color: rgba(244,239,230,0.6); }
+  .cov.highlight .v { color: var(--paper); }
+  .cov.highlight .v small { color: rgba(244,239,230,0.6); }
+  .cov.highlight .sub { color: rgba(244,239,230,0.55); }
+
+  /* Upload */
+  .upload {
+    background: linear-gradient(135deg, var(--accent) 0%, #C93F1A 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 32px 32px 28px;
+    position: relative;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    min-height: 100%;
+  }
+  .upload::before {
+    content: "";
+    position: absolute;
+    right: -40px; bottom: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  }
+  .upload::after {
+    content: "";
+    position: absolute;
+    left: -30px; top: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.25);
+  }
+  .upload-inner { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+  .upload .eyebrow { color: rgba(255,255,255,0.75); }
+  .upload .eyebrow .bar { background: rgba(255,255,255,0.5); }
+  .upload h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0 0 12px;
+  }
+  .upload p {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    margin: 0 0 24px;
+    max-width: 34ch;
+  }
+  .dropzone {
+    border: 1.5px dashed rgba(255,255,255,0.5);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-align: center;
+    background: rgba(255,255,255,0.06);
+    margin-bottom: 20px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .dropzone:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
+  .dropzone .icon {
+    width: 44px; height: 44px;
+    margin: 0 auto 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    display: grid; place-items: center;
+  }
+  .dropzone .icon svg { width: 22px; height: 22px; }
+  .dropzone .t { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .dropzone .s { font-size: 11px; color: rgba(255,255,255,0.7); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+  .upload .btn-primary {
+    background: #fff;
+    color: var(--accent);
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+  }
+  .upload .btn-primary:hover { background: var(--paper); }
+  .upload .foot {
+    margin-top: auto;
+    padding-top: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    display: flex; justify-content: space-between;
+  }
+
+  /* Footer */
+  footer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px 40px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+  }
+  footer .links { display: flex; gap: 24px; }
+  footer a { color: inherit; text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* Responsive */
+  @media (max-width: 1080px) {
+    .hero, .grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 44px; }
+  }
+  @media (max-width: 720px) {
+    .topbar { padding: 14px 20px; }
+    .topnav { display: none; }
+    .shell { padding: 20px 20px 60px; }
+    .hero-card { padding: 28px 24px; }
+    .hero-title { font-size: 36px; }
+    .hero-meta { flex-wrap: wrap; gap: 20px; }
+    .panel { padding: 22px 20px; }
+    .coverage-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; padding: 20px; }
+    .tl-item { grid-template-columns: 70px 20px 1fr; gap: 12px; }
+    .tl-item:not(:last-child)::before { left: 78px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">I</div>
+    <span>INSURANCE <span class="brand-sep">/</span> <strong>CLAIMS</strong></span>
+  </div>
+  <nav class="topnav">
+    <a href="#">Dashboard</a>
+    <a href="#">My Claims</a>
+    <a href="#">Documents</a>
+    <a href="#">Support</a>
+  </nav>
+  <div class="top-actions">
+    <span class="pill"><span class="dot"></span> Claim Active</span>
+    <div class="avatar">MR</div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card">
+      <div class="hero-inner">
+        <div class="eyebrow"><span class="bar"></span> Claim #CLM-2024-08841</div>
+        <h1 class="hero-title">Your claim is <em>under review</em>.</h1>
+        <p class="hero-sub">We've received your documentation and our adjuster is verifying the details. Most claims of this type are resolved within 7–10 business days.</p>
+
+        <div class="hero-meta">
+          <div class="meta-item">
+            <div class="k">Filed</div>
+            <div class="v">Mar 14 <small>2024</small></div>
+          </div>
+          <div class="meta-item">
+            <div class="k">Est. Resolution</div>
+            <div class="v">Mar 26 <small>2024</small></div>
+          </div>
+          <div class="meta-item">
+            <div class="k">Claim Type</div>
+            <div class="v">Water Damage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-head">
+        <div>
+          <h3>Progress</h3>
+          <p>STEP 3 OF 5</p>
+        </div>
+        <div class="progress-pct">68<sup>%</sup></div>
+      </div>
+
+      <div class="bar-track"><div class="bar-fill"></div></div>
+
+      <div class="steps">
+        <div class="step done">
+          <div class="mark">✓</div>
+          <div class="label">Claim submitted</div>
+          <div class="when">Mar 14</div>
+        </div>
+        <div class="step done">
+          <div class="mark">✓</div>
+          <div class="label">Documents received</div>
+          <div class="when">Mar 15</div>
+        </div>
+        <div class="step active">
+          <div class="mark">●</div>
+          <div class="label">Adjuster review</div>
+          <div class="when">In progress</div>
+        </div>
+        <div class="step pending">
+          <div class="mark">4</div>
+          <div class="label">Settlement offer</div>
+          <div class="when">Pending</div>
+        </div>
+        <div class="step pending">
+          <div class="mark">5</div>
+          <div class="label">Payment issued</div>
+          <div class="when">Pending</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID: Checklist + Adjuster -->
+  <section class="grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Document checklist</h3>
+        <span class="count">4 of 6 received</span>
+      </div>
+
+      <div class="checklist">
+        <div class="check-item done">
+          <div class="check-box"></div>
+          <div class="name">Proof of ownership<small>Deed or lease agreement</small></div>
+          <span class="tag">Received</span>
+        </div>
+        <div class="check-item done">
+          <div class="check-box"></div>
+          <div class="name">Photo evidence<small>12 images uploaded</small></div>
+          <span class="tag">Received</span>
+        </div>
+        <div class="check-item done">
+          <div class="check-box"></div>
+          <div class="name">Incident report<small>Signed statement</small></div>
+          <span class="tag">Received</span>
+        </div>
+        <div class="check-item done">
+          <div class="check-box"></div>
+          <div class="name">Repair estimate<small>From licensed contractor</small></div>
+          <span class="tag">Received</span>
+        </div>
+        <div class="check-item required">
+          <div class="check-box"></div>
+          <div class="name">Bank verification letter<small>For direct deposit</small></div>
+          <span class="tag">Required</span>
+        </div>
+        <div class="check-item required">
+          <div class="check-box"></div>
+          <div class="name">Signed release form<small>Authorizes settlement</small></div>
+          <span class="tag">Required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Your adjuster</h3>
+        <span class="count">Assigned</span>
+      </div>
+
+      <div class="adjuster">
+        <div class="adj-top">
+          <div class="adj-avatar">E</div>
+          <div>
+            <h4 class="adj-name">Elena Vasquez</h4>
+            <div class="adj-role">Senior Claims Adjuster</div>
+          </div>
+        </div>
+
+        <div class="adj-rows">
+          <div class="adj-row">
+            <span class="k">Direct line</span>
+            <span class="v">+1 (415) 555-0182</span>
+          </div>
+          <div class="adj-row">
+            <span class="k">Email</span>
+            <span class="v">e.vasquez@claims.co</span>
+          </div>
+          <div class="adj-row">
+            <span class="k">Availability</span>
+            <span class="v">Mon–Fri · 9–5 PT</span>
+          </div>
+          <div class="adj-row">
+            <span class="k">Last contact</span>
+            <span class="v">Mar 18, 2:14 PM</span>
+          </div>
+        </div>
+
+        <div class="adj-actions">
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call
+          </button>
+          <button class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID: Timeline + Coverage -->
+  <section class="grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Incident timeline</h3>
+        <span class="count">6 events</span>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item done">
+          <div class="tl-time">MAR 12 · 08:42</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Incident occurred</h4>
+            <p>Water damage detected in the kitchen from a burst supply line under the sink.</p>
+            <span class="who">Reported by you</span>
+          </div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-time">MAR 12 · 09:15</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Emergency mitigation</h4>
+            <p>Water shut off and a restoration crew dispatched to prevent further damage.</p>
+            <span class="who">Vendor · RapidDry Co.</span>
+          </div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-time">MAR 14 · 11:03</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Claim filed</h4>
+            <p>Initial claim submitted with photos and a preliminary damage estimate.</p>
+            <span class="who">You</span>
+          </div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-time">MAR 15 · 14:20</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Documents received</h4>
+            <p>Ownership proof, incident report, and contractor estimate verified.</p>
+            <span class="who">Claims intake</span>
+          </div>
+        </div>
+        <div class="tl-item active">
+          <div class="tl-time">MAR 18 · 10:00</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Adjuster review in progress</h4>
+            <p>Elena is reviewing the estimate and coordinating with the restoration vendor.</p>
+            <span class="who">Elena Vasquez</span>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">MAR 26 · EST.</div>
+          <div class="tl-dot"></div>
+          <div class="tl-body">
+            <h4>Settlement offer</h4>
+            <p>Expected offer and payment schedule will be issued once review is complete.</p>
+            <span class="who">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Coverage summary</h3>
+        <span class="count">Policy #H-4472</span>
+      </div>
+
+      <div class="coverage-grid">
+        <div class="cov highlight">
+          <div class="k">Dwelling</div>
+          <div class="v">$250,000</div>
+          <div class="sub">Structure & fixtures</div>
+        </div>
+        <div class="cov">
+          <div class="k">Personal property</div>
+          <div class="v">$80,000</div>
+          <div class="sub">Contents & belongings</div>
+        </div>
+        <div class="cov">
+          <div class="k">Loss of use</div>
+          <div class="v">$30,000</div>
+          <div class="sub">Temporary housing</div>
+        </div>
+        <div class="cov">
+          <div class="k">Deductible</div>
+          <div class="v">$1,500</div>
+          <div class="sub">Applied to settlement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPLOAD -->
+  <section class="grid" style="grid-template-columns: 1fr;">
+    <div class="upload">
+      <div class="upload-inner">
+        <div class="eyebrow"><span class="bar"></span> Action required</div>
+        <h3>Upload the remaining documents to keep your claim moving.</h3>
+        <p>Two items are still outstanding. Upload them now and we'll resume the review within one business day.</p>
+
+        <div class="dropzone" id="dropzone">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="t">Drop files here or click to browse</div>
+          <div class="s">PDF, JPG, PNG · up to 25 MB each</div>
+        </div>
+
+        <button class="btn btn-primary" id="uploadBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload documents
+        </button>
+
+        <div class="foot">
+          <span>Secure · Encrypted transfer</span>
+          <span>Ref #CLM-2024-08841</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>© 2024 INSURANCE / CLAIMS · All rights reserved</div>
+  <div class="links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+    <a href="#">Status</a>
+  </div>
+</footer>
+
+<script>
+  // Checklist toggle
+  document.querySelectorAll('.check-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('done');
+      item.classList.toggle('required');
+      const tag = item.querySelector('.tag');
+      if (item.classList.contains('done')) {
+        tag.textContent = 'Received';
+      } else {
+        tag.textContent = 'Required';
+      }
+      updateCount();
+    });
+  });
+
+  function updateCount() {
+    const total = document.querySelectorAll('.check-item').length;
+    const done = document.querySelectorAll('.check-item.done').length;
+    document.querySelector('.panel-head .count').textContent = `${done} of ${total} received`;
+  }
+
+  // Dropzone interaction
+  const dropzone = document.getElementById('dropzone');
+  const uploadBtn = document.getElementById('uploadBtn');
+
+  dropzone.addEventListener('click', () => {
+    dropzone.style.background = 'rgba(255,255,255,0.2)';
+    setTimeout(() => dropzone.style.background = '', 200);
+  });
+
+  uploadBtn.addEventListener('click', () => {
+    uploadBtn.textContent = 'Uploading…';
+    uploadBtn.style.opacity = '0.8';
+    setTimeout(() => {
+      uploadBtn.innerHTML = '✓ Documents uploaded';
+      uploadBtn.style.background = '#fff';
+      uploadBtn.style.color = '#2F7A5A';
+      uploadBtn.style.opacity = '1';
+    }, 1200);
+  });
+
+  // Drag over
+  ['dragover', 'dragenter'].forEach(evt => {
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.style.background = 'rgba(255,255,255,0.2)';
+      dropzone.style.borderColor = '#fff';
+    });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.style.background = '';
+      dropzone.style.borderColor = '';
+    });
+  });
+</script>
+
+</body>
+</html>

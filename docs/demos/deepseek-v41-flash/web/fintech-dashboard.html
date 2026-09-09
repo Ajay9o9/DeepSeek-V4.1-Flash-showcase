@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northstar Wealth · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f6f7f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1e24;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding: 0 24px;
+    }
+
+    /* ---------- TYPOGRAPHY SCALE ---------- */
+    .text-xs { font-size: 0.75rem; letter-spacing: 0.01em; }
+    .text-sm { font-size: 0.875rem; letter-spacing: 0.005em; }
+    .text-base { font-size: 1rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .text-5xl { font-size: 3rem; }
+    .text-6xl { font-size: 3.75rem; }
+
+    .font-light { font-weight: 300; }
+    .font-regular { font-weight: 400; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+
+    .text-muted { color: #6b7280; }
+    .text-subtle { color: #8e95a2; }
+    .text-positive { color: #0e7c5c; }
+    .text-negative { color: #b23b3b; }
+
+    /* ---------- LAYOUT & SPACING ---------- */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 8px;
+    }
+
+    /* ---------- TOP NAVIGATION ---------- */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      margin-bottom: 32px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: #0b1a2e;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #1e3a5f 0%, #2b5a8c 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(26, 58, 95, 0.2);
+    }
+
+    .workspace-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 6px 12px 6px 10px;
+      border-radius: 40px;
+      border: 1px solid #e2e5ea;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #1f2937;
+      cursor: default;
+      transition: border-color 0.15s ease;
+    }
+
+    .workspace-switcher:hover {
+      border-color: #cbd0d8;
+    }
+
+    .workspace-avatar {
+      width: 22px;
+      height: 22px;
+      background: #eef2f6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #2b5a8c;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #e2e5ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4b5563;
+      font-size: 18px;
+      cursor: default;
+      transition: all 0.15s ease;
+    }
+
+    .nav-icon:hover {
+      background: #f9fafb;
+      border-color: #cbd0d8;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #d9e2ec, #cbd5e1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+      color: #1e3a5f;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      cursor: default;
+    }
+
+    /* ---------- HERO / PORTFOLIO VALUE ---------- */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .hero-value {
+      font-size: 3.75rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #0b1a2e;
+      line-height: 1.1;
+    }
+
+    .hero-change {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .change-badge {
+      background: #e6f5ef;
+      color: #0e7c5c;
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .change-badge.negative {
+      background: #fef0f0;
+      color: #b23b3b;
+    }
+
+    .hero-meta {
+      font-size: 0.875rem;
+      color: #8e95a2;
+    }
+
+    .hero-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: default;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #0b1a2e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(11, 26, 46, 0.15);
+    }
+
+    .btn-primary:hover {
+      background: #1a2e4a;
+      box-shadow: 0 4px 12px rgba(11, 26, 46, 0.2);
+    }
+
+    .btn-outline {
+      background: white;
+      border-color: #e2e5ea;
+      color: #1f2937;
+    }
+
+    .btn-outline:hover {
+      background: #f9fafb;
+      border-color: #cbd0d8;
+    }
+
+    /* ---------- MAIN GRID ---------- */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    /* ---------- CARDS ---------- */
+    .card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #eaecf0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.02);
+      padding: 24px;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0b1a2e;
+      letter-spacing: -0.01em;
+    }
+
+    .card-subtitle {
+      font-size: 0.75rem;
+      color: #8e95a2;
+      font-weight: 400;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #f3f4f6;
+      color: #4b5563;
+      cursor: default;
+      transition: all 0.15s ease;
+    }
+
+    .pill.active {
+      background: #0b1a2e;
+      color: white;
+    }
+
+    .pill:hover:not(.active) {
+      background: #e5e7eb;
+    }
+
+    /* ---------- PERFORMANCE CHART (SVG) ---------- */
+    .chart-container {
+      width: 100%;
+      height: 240px;
+      margin-top: 8px;
+      position: relative;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      background: #0b1a2e;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
+    }
+
+    .chart-tooltip.visible {
+      opacity: 1;
+    }
+
+    /* ---------- ALLOCATION BREAKDOWN ---------- */
+    .allocation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .allocation-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .allocation-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .allocation-name {
+      color: #1f2937;
+    }
+
+    .allocation-percent {
+      color: #0b1a2e;
+      font-weight: 600;
+    }
+
+    .allocation-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #f0f2f5;
+      border-radius: 40px;
+      overflow: hidden;
+    }
+
+    .allocation-bar-fill {
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bar-equities { background: #1e3a5f; }
+    .bar-fixed { background: #3b6e9e; }
+    .bar-alts { background: #6b9bc0; }
+    .bar-cash { background: #a8c4d9; }
+
+    /* ---------- RECENT TRANSACTIONS ---------- */
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 4px;
+    }
+
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .transaction-item:last-child {
+      border-bottom: none;
+    }
+
+    .transaction-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .transaction-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #4b5563;
+    }
+
+    .transaction-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .transaction-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #1f2937;
+    }
+
+    .transaction-date {
+      font-size: 0.75rem;
+      color: #8e95a2;
+    }
+
+    .transaction-amount {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #0b1a2e;
+    }
+
+    .transaction-amount.positive {
+      color: #0e7c5c;
+    }
+
+    /* ---------- MARKET INDICATORS ---------- */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .market-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 16px;
+      background: #fafbfc;
+      border-radius: 14px;
+      border: 1px solid #f0f2f5;
+    }
+
+    .market-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .market-value {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #0b1a2e;
+      letter-spacing: -0.01em;
+    }
+
+    .market-change {
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .market-change.positive { color: #0e7c5c; }
+    .market-change.negative { color: #b23b3b; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .market-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 0 16px; }
+      .hero-value { font-size: 2.5rem; }
+      .top-nav { flex-wrap: wrap; gap: 12px; }
+      .nav-left { gap: 16px; }
+      .market-grid { grid-template-columns: 1fr; }
+      .hero-right { width: 100%; }
+      .btn { flex: 1; justify-content: center; }
+    }
+
+    /* ---------- MICRO DETAILS ---------- */
+    .divider {
+      height: 1px;
+      background: #f0f2f5;
+      margin: 16px 0;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .badge-dot.green { background: #0e7c5c; }
+    .badge-dot.amber { background: #d97706; }
+
+    /* subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 40px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- TOP NAVIGATION -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <div class="logo">
+          <div class="logo-mark">N</div>
+          <span>Northstar Wealth</span>
+        </div>
+        <div class="workspace-switcher">
+          <div class="workspace-avatar">P</div>
+          <span>Private Office</span>
+          <span style="font-size: 10px; color: #8e95a2;">▼</span>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-icon">🔔</div>
+        <div class="nav-icon">⚙️</div>
+        <div class="user-avatar">JD</div>
+      </div>
+    </nav>
+
+    <!-- HERO / PORTFOLIO VALUE -->
+    <header class="hero">
+      <div class="hero-left">
+        <span class="hero-label">Total portfolio value</span>
+        <span class="hero-value">$4,286,420</span>
+        <div class="hero-change">
+          <span class="change-badge">
+            <span>▲</span> 2.4%
+          </span>
+          <span class="hero-meta">+$100,420 today</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="btn btn-outline">📊 Export</div>
+        <div class="btn btn-primary">+ Add funds</div>
+      </div>
+    </header>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <div class="dashboard-grid">
+      <!-- LEFT COLUMN: PERFORMANCE CHART -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Performance</div>
+            <div class="card-subtitle">Portfolio vs. S&P 500 · YTD</div>
+          </div>
+          <div class="card-actions">
+            <span class="pill active">1M</span>
+            <span class="pill">3M</span>
+            <span class="pill">6M</span>
+            <span class="pill">YTD</span>
+            <span class="pill">1Y</span>
+          </div>
+        </div>
+        <div class="chart-container" id="chartContainer">
+          <svg class="chart-svg" viewBox="0 0 800 240" preserveAspectRatio="none">
+            <!-- Grid lines -->
+            <line x1="0" y1="40" x2="800" y2="40" stroke="#f0f2f5" stroke-width="1" />
+            <line x1="0" y1="80" x2="800" y2="80" stroke="#f0f2f5" stroke-width="1" />
+            <line x1="0" y1="120" x2="800" y2="120" stroke="#f0f2f5" stroke-width="1" />
+            <line x1="0" y1="160" x2="800" y2="160" stroke="#f0f2f5" stroke-width="1" />
+            <line x1="0" y1="200" x2="800" y2="200" stroke="#f0f2f5" stroke-width="1" />
+
+            <!-- Area fill under portfolio line -->
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.12" />
+                <stop offset="100%" stop-color="#1e3a5f" stop-opacity="0.00" />
+              </linearGradient>
+            </defs>
+            <path d="M0,180 Q50,170 100,160 T200,140 T300,120 T400,100 T500,90 T600,80 T700,70 T800,60 L800,240 L0,240 Z" fill="url(#areaGradient)" />
+
+            <!-- Portfolio line (primary) -->
+            <path d="M0,180 Q50,170 100,160 T200,140 T300,120 T400,100 T500,90 T600,80 T700,70 T800,60" fill="none" stroke="#1e3a5f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+            <!-- S&P 500 line (secondary) -->
+            <path d="M0,190 Q50,185 100,178 T200,165 T300,150 T400,140 T500,135 T600,130 T700,125 T800,120" fill="none" stroke="#a8c4d9" stroke-width="1.8" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round" />
+
+            <!-- Data points (portfolio) -->
+            <circle cx="0" cy="180" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="100" cy="160" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="200" cy="140" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="300" cy="120" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="400" cy="100" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="500" cy="90" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="600" cy="80" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="700" cy="70" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+            <circle cx="800" cy="60" r="3" fill="#1e3a5f" stroke="white" stroke-width="1.5" />
+
+            <!-- X-axis labels -->
+            <text x="0" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Jan</text>
+            <text x="100" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Feb</text>
+            <text x="200" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Mar</text>
+            <text x="300" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Apr</text>
+            <text x="400" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">May</text>
+            <text x="500" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Jun</text>
+            <text x="600" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Jul</text>
+            <text x="700" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif">Aug</text>
+            <text x="800" y="235" font-size="10" fill="#8e95a2" font-family="Inter, sans-serif" text-anchor="end">Sep</text>
+          </svg>
+          <div class="chart-tooltip" id="chartTooltip">$4,286,420</div>
+        </div>
+        <div style="display: flex; gap: 24px; margin-top: 12px; font-size: 0.75rem; color: #6b7280;">
+          <span><span style="display: inline-block; width: 12px; height: 2px; background: #1e3a5f; margin-right: 6px; vertical-align: middle;"></span> Northstar Portfolio</span>
+          <span><span style="display: inline-block; width: 12px; height: 2px; background: #a8c4d9; margin-right: 6px; vertical-align: middle; border-top: 2px dashed #a8c4d9;"></span> S&P 500</span>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: ALLOCATION BREAKDOWN -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Allocation</div>
+          <div class="card-subtitle">By asset class</div>
+        </div>
+        <div class="allocation-list">
+          <div class="allocation-item">
+            <div class="allocation-header">
+              <span class="allocation-name">Equities</span>
+              <span class="allocation-percent">58%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill bar-equities" style="width: 58%;"></div>
+            </div>
+          </div>
+          <div class="allocation-item">
+            <div class="allocation-header">
+              <span class="allocation-name">Fixed income</span>
+              <span class="allocation-percent">24%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill bar-fixed" style="width: 24%;"></div>
+            </div>
+          </div>
+          <div class="allocation-item">
+            <div class="allocation-header">
+              <span class="allocation-name">Alternatives</span>
+              <span class="allocation-percent">12%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill bar-alts" style="width: 12%;"></div>
+            </div>
+          </div>
+          <div class="allocation-item">
+            <div class="allocation-header">
+              <span class="allocation-name">Cash & equivalents</span>
+              <span class="allocation-percent">6%</span>
+            </div>
+            <div class="allocation-bar-bg">
+              <div class="allocation-bar-fill bar-cash" style="width: 6%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280;">
+          <span>Total assets</span>
+          <span style="font-weight: 600; color: #0b1a2e;">$4.29M</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: TRANSACTIONS + MARKET INDICATORS -->
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; margin-bottom: 40px;">
+      <!-- RECENT TRANSACTIONS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Recent transactions</div>
+          <div class="card-subtitle">Last 7 days</div>
+        </div>
+        <div class="transaction-list">
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <div class="transaction-icon">📈</div>
+              <div class="transaction-info">
+                <span class="transaction-name">Vanguard Total Stock Market ETF</span>
+                <span class="transaction-date">Today · 09:42 AM</span>
+              </div>
+            </div>
+            <span class="transaction-amount positive">+$12,450.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <div class="transaction-icon">🏦</div>
+              <div class="transaction-info">
+                <span class="transaction-name">iShares Core U.S. Aggregate Bond</span>
+                <span class="transaction-date">Yesterday · 02:15 PM</span>
+              </div>
+            </div>
+            <span class="transaction-amount">-$5,200.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <div class="transaction-icon">🌍</div>
+              <div class="transaction-info">
+                <span class="transaction-name">International Developed Markets</span>
+                <span class="transaction-date">Sep 12 · 11:30 AM</span>
+              </div>
+            </div>
+            <span class="transaction-amount positive">+$8,320.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <div class="transaction-icon">💎</div>
+              <div class="transaction-info">
+                <span class="transaction-name">Gold & Precious Metals</span>
+                <span class="transaction-date">Sep 11 · 04:05 PM</span>
+              </div>
+            </div>
+            <span class="transaction-amount">-$2,100.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <div class="transaction-icon">🏢</div>
+              <div class="transaction-info">
+                <span class="transaction-name">Real Estate Investment Trust</span>
+                <span class="transaction-date">Sep 10 · 10:00 AM</span>
+              </div>
+            </div>
+            <span class="transaction-amount positive">+$3,750.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKET INDICATORS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Market indicators</div>
+          <div class="card-subtitle">Live</div>
+        </div>
+        <div class="market-grid">
+          <div class="market-item">
+            <span class="market-label">S&P 500</span>
+            <span class="market-value">5,842.30</span>
+            <span class="market-change positive">▲ 0.82%</span>
+          </div>
+          <div class="market-item">
+            <span class="market-label">NASDAQ</span>
+            <span class="market-value">18,920.15</span>
+            <span class="market-change positive">▲ 1.24%</span>
+          </div>
+          <div class="market-item">
+            <span class="market-label">10Y Treasury</span>
+            <span class="market-value">4.28%</span>
+            <span class="market-change negative">▼ 0.06%</span>
+          </div>
+          <div class="market-item">
+            <span class="market-label">Gold</span>
+            <span class="market-value">$2,418.60</span>
+            <span class="market-change positive">▲ 0.35%</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280;">
+          <span><span class="badge-dot green"></span> Markets open</span>
+          <span>Updated 2 min ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FOR CHART TOOLTIP -->
+  <script>
+    (function() {
+      const container = document.getElementById('chartContainer');
+      const tooltip = document.getElementById('chartTooltip');
+      const svg = container.querySelector('svg');
+
+      // Data points for portfolio line (x, y, value)
+      const dataPoints = [
+        { x: 0, y: 180, value: '$3,920,000' },
+        { x: 100, y: 160, value: '$4,010,000' },
+        { x: 200, y: 140, value: '$4,120,000' },
+        { x: 300, y: 120, value: '$4,180,000' },
+        { x: 400, y: 100, value: '$4,210,000' },
+        { x: 500, y: 90, value: '$4,240,000' },
+        { x: 600, y: 80, value: '$4,260,000' },
+        { x: 700, y: 70, value: '$4,275,000' },
+        { x: 800, y: 60, value: '$4,286,420' }
+      ];
+
+      // Map SVG coordinates to container pixels
+      function getContainerCoords(svgX, svgY) {
+        const rect = svg.getBoundingClientRect();
+        const viewBox = svg.viewBox.baseVal;
+        const scaleX = rect.width / viewBox.width;
+        const scaleY = rect.height / viewBox.height;
+        return {
+          x: svgX * scaleX,
+          y: svgY * scaleY
+        };
+      }
+
+      // Show tooltip on mousemove over chart
+      container.addEventListener('mousemove', function(e) {
+        const rect = container.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Find nearest data point
+        let nearest = dataPoints[0];
+        let minDist = Infinity;
+
+        dataPoints.forEach(function(point) {
+          const coords = getContainerCoords(point.x, point.y);
+          const dist = Math.sqrt(
+            Math.pow(mouseX - coords.x, 2) + Math.pow(mouseY - coords.y, 2)
+          );
+          if (dist < minDist) {
+            minDist = dist;
+            nearest = point;
+          }
+        });
+
+        // Only show if reasonably close (within 40px)
+        if (minDist < 40) {
+          const coords = getContainerCoords(nearest.x, nearest.y);
+          tooltip.textContent = nearest.value;
+          tooltip.style.left = (coords.x - 40) + 'px';
+          tooltip.style.top = (coords.y - 40) + 'px';
+          tooltip.classList.add('visible');
+        } else {
+          tooltip.classList.remove('visible');
+        }
+      });
+
+      container.addEventListener('mouseleave', function() {
+        tooltip.classList.remove('visible');
+      });
+
+      // Animate allocation bars on load
+      window.addEventListener('load', function() {
+        const bars = document.querySelectorAll('.allocation-bar-fill');
+        bars.forEach(function(bar) {
+          const width = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(function() {
+            bar.style.width = width;
+          }, 100);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

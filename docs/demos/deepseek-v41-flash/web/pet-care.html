@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAWLINE — premium pet care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #faf6f0; /* cream base */
+      color: #2e2b26;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 2rem;
+    }
+
+    /* ---------- typography ---------- */
+    h1, h2, h3, .serif {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      line-height: 1.1;
+      color: #2e2b26;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      line-height: 1.3;
+    }
+
+    .subhead {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #5f5a52;
+      max-width: 42ch;
+    }
+
+    /* ---------- color tokens ---------- */
+    :root {
+      --terracotta: #c26a4a;
+      --terracotta-light: #e2c7b8;
+      --terracotta-soft: #f4e3da;
+      --cream: #faf6f0;
+      --cream-dark: #f0e8de;
+      --moss: #5f6b4a;
+      --moss-light: #d9dfcf;
+      --moss-soft: #eef1e8;
+      --charcoal: #2e2b26;
+      --stone: #7b756c;
+      --white: #ffffff;
+    }
+
+    /* ---------- layout ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    /* ---------- header / nav ---------- */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0 2rem;
+      border-bottom: 1px solid rgba(95, 107, 74, 0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+    }
+
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--terracotta);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--stone);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--terracotta);
+    }
+
+    .nav-cta {
+      background: var(--terracotta);
+      color: var(--white);
+      padding: 0.6rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: #a85a3d;
+    }
+
+    /* ---------- hero / pet profile ---------- */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin: 3rem 0 4rem;
+      align-items: center;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-left .badge {
+      display: inline-block;
+      background: var(--moss-soft);
+      color: var(--moss);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      width: fit-content;
+    }
+
+    .hero-left h1 {
+      max-width: 12ch;
+    }
+
+    .hero-left .subhead {
+      max-width: 38ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #a85a3d;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid var(--moss-light);
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--moss);
+      background: var(--moss-soft);
+    }
+
+    /* pet profile card */
+    .pet-card {
+      background: var(--white);
+      border-radius: 32px;
+      padding: 2rem 2rem 1.8rem;
+      box-shadow: 0 12px 30px -12px rgba(46, 43, 38, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      border: 1px solid rgba(95, 107, 74, 0.08);
+    }
+
+    .pet-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .pet-avatar {
+      width: 64px;
+      height: 64px;
+      background: var(--terracotta-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pet-avatar svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--terracotta);
+    }
+
+    .pet-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .pet-info p {
+      font-size: 0.9rem;
+      color: var(--stone);
+    }
+
+    .pet-details {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      padding: 0.5rem 0 0.2rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+
+    .pet-details span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .pet-details svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--moss);
+    }
+
+    .pet-note {
+      background: var(--moss-soft);
+      padding: 0.8rem 1rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      color: var(--moss);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pet-note svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--moss);
+      flex-shrink: 0;
+    }
+
+    /* ---------- upcoming booking ---------- */
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 1.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 24px -12px rgba(46, 43, 38, 0.08);
+      border: 1px solid rgba(95, 107, 74, 0.06);
+      margin-bottom: 3.5rem;
+    }
+
+    .booking-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .booking-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--terracotta-soft);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--terracotta);
+    }
+
+    .booking-details h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .booking-details p {
+      font-size: 0.9rem;
+      color: var(--stone);
+    }
+
+    .booking-meta {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .booking-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .booking-meta-item .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--stone);
+    }
+
+    .booking-meta-item .value {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .booking-status {
+      background: var(--moss-soft);
+      color: var(--moss);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ---------- sitter search ---------- */
+    .search-section {
+      margin-bottom: 4rem;
+    }
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 0.8rem;
+      background: var(--white);
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid var(--cream-dark);
+      align-items: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .search-bar input {
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.6rem 0;
+      width: 100%;
+      outline: none;
+      color: var(--charcoal);
+    }
+
+    .search-bar input::placeholder {
+      color: var(--stone);
+    }
+
+    .search-bar button {
+      background: var(--terracotta);
+      border: none;
+      border-radius: 40px;
+      padding: 0.7rem 1.5rem;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-bar button:hover {
+      background: #a85a3d;
+    }
+
+    .sitter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .sitter-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 1.5rem;
+      border: 1px solid rgba(95, 107, 74, 0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sitter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -16px rgba(46, 43, 38, 0.12);
+    }
+
+    .sitter-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sitter-avatar {
+      width: 52px;
+      height: 52px;
+      background: var(--moss-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--moss);
+      font-size: 1.1rem;
+    }
+
+    .sitter-info h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .sitter-info p {
+      font-size: 0.8rem;
+      color: var(--stone);
+    }
+
+    .sitter-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .sitter-rating svg {
+      width: 16px;
+      height: 16px;
+      fill: #e6b800;
+    }
+
+    .sitter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .sitter-tags span {
+      background: var(--cream);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      color: var(--stone);
+      border: 1px solid var(--cream-dark);
+    }
+
+    .sitter-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+
+    .sitter-price .amount {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--charcoal);
+    }
+
+    .sitter-price .amount small {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--stone);
+    }
+
+    .sitter-price .book-link {
+      color: var(--terracotta);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .sitter-price .book-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- care plans ---------- */
+    .plans-section {
+      margin-bottom: 4rem;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .plan-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem 1.8rem;
+      border: 1px solid rgba(95, 107, 74, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transition: border-color 0.2s;
+    }
+
+    .plan-card.featured {
+      border: 2px solid var(--terracotta);
+      position: relative;
+    }
+
+    .plan-card.featured::before {
+      content: "most popular";
+      position: absolute;
+      top: -12px;
+      left: 2rem;
+      background: var(--terracotta);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+    }
+
+    .plan-card h3 {
+      font-size: 1.5rem;
+    }
+
+    .plan-price {
+      font-size: 2.2rem;
+      font-family: 'DM Serif Display', serif;
+      color: var(--charcoal);
+    }
+
+    .plan-price small {
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: var(--stone);
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .plan-features svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--moss);
+      flex-shrink: 0;
+    }
+
+    .plan-card .btn-outline,
+    .plan-card .btn-primary {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* ---------- reviews ---------- */
+    .reviews-section {
+      margin-bottom: 4rem;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .review-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 1.8rem;
+      border: 1px solid rgba(95, 107, 74, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 0.2rem;
+    }
+
+    .review-stars svg {
+      width: 18px;
+      height: 18px;
+      fill: #e6b800;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--charcoal);
+      font-style: italic;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--terracotta-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--terracotta);
+      font-size: 0.9rem;
+    }
+
+    .review-author-info h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .review-author-info p {
+      font-size: 0.8rem;
+      color: var(--stone);
+    }
+
+    /* ---------- trust signals ---------- */
+    .trust-section {
+      background: var(--moss-soft);
+      border-radius: 32px;
+      padding: 2.5rem 3rem;
+      margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .trust-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--moss);
+    }
+
+    .trust-text h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .trust-text p {
+      font-size: 0.85rem;
+      color: var(--stone);
+    }
+
+    /* ---------- quick booking ---------- */
+    .quick-booking {
+      background: var(--terracotta);
+      border-radius: 32px;
+      padding: 3rem 3.5rem;
+      margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--white);
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .quick-booking h2 {
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .quick-booking p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+      max-width: 40ch;
+    }
+
+    .quick-booking .btn-white {
+      background: var(--white);
+      color: var(--terracotta);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .quick-booking .btn-white:hover {
+      background: var(--cream);
+    }
+
+    /* ---------- footer ---------- */
+    .footer {
+      border-top: 1px solid rgba(95, 107, 74, 0.15);
+      padding: 3rem 0 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--stone);
+      max-width: 30ch;
+      line-height: 1.6;
+    }
+
+    .footer h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--charcoal);
+    }
+
+    .footer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer ul a {
+      text-decoration: none;
+      color: var(--stone);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer ul a:hover {
+      color: var(--terracotta);
+    }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(95, 107, 74, 0.1);
+      font-size: 0.85rem;
+      color: var(--stone);
+    }
+
+    .footer-bottom .socials {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-bottom .socials a {
+      color: var(--stone);
+      transition: color 0.2s;
+    }
+
+    .footer-bottom .socials a:hover {
+      color: var(--terracotta);
+    }
+
+    .footer-bottom .socials svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .sitter-grid,
+      .plans-grid,
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 1.2rem;
+      }
+      h1 {
+        font-size: 2.4rem;
+      }
+      .top-bar {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .sitter-grid,
+      .plans-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .booking-meta {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .trust-section {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+      }
+      .quick-booking {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+      }
+      .footer {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <header class="top-bar">
+      <div class="logo">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 4c-2.5 0-4.5 1.8-4.5 4 0 1.2.6 2.3 1.5 3-.8.6-1.5 1.5-1.5 2.5 0 1.7 1.3 3 3 3h3c1.7 0 3-1.3 3-3 0-1-.7-1.9-1.5-2.5.9-.7 1.5-1.8 1.5-3 0-2.2-2-4-4.5-4z"/>
+          <circle cx="10" cy="10" r="2.5"/>
+          <circle cx="22" cy="10" r="2.5"/>
+          <circle cx="8" cy="18" r="2"/>
+          <circle cx="24" cy="18" r="2"/>
+        </svg>
+        PAWLINE
+      </div>
+      <nav class="nav-links">
+        <a href="#">Sitters</a>
+        <a href="#">Care plans</a>
+        <a href="#">Reviews</a>
+        <a href="#">How it works</a>
+      </nav>
+      <a href="#" class="nav-cta">Book now</a>
+    </header>
+
+    <!-- hero / pet profile -->
+    <section class="hero-grid">
+      <div class="hero-left">
+        <span class="badge">Premium pet care</span>
+        <h1>Care that feels like home.</h1>
+        <p class="subhead">Trusted sitters, transparent pricing, and a profile that keeps every detail of your pet’s routine in one place.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">Find a sitter</a>
+          <a href="#" class="btn-outline">View care plans</a>
+        </div>
+      </div>
+      <div class="pet-card">
+        <div class="pet-card-header">
+          <div class="pet-avatar">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M20 6c-3.5 0-6.5 2.5-6.5 5.5 0 1.8.9 3.4 2.2 4.4-1.2.9-2.2 2.2-2.2 3.6 0 2.5 2 4.5 4.5 4.5h4c2.5 0 4.5-2 4.5-4.5 0-1.4-1-2.7-2.2-3.6 1.3-1 2.2-2.6 2.2-4.4 0-3-3-5.5-6.5-5.5z"/>
+              <circle cx="12" cy="14" r="3.5"/>
+              <circle cx="28" cy="14" r="3.5"/>
+              <circle cx="10" cy="24" r="2.8"/>
+              <circle cx="30" cy="24" r="2.8"/>
+            </svg>
+          </div>
+          <div class="pet-info">
+            <h3>Miso</h3>
+            <p>Golden Retriever · 3 years</p>
+          </div>
+        </div>
+        <div class="pet-details">
+          <span>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3 4.5 8.5 4.5 8.5S12.5 9 12.5 6c0-2.5-2-4.5-4.5-4.5zM8 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+            Seattle, WA
+          </span>
+          <span>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5C4.4 1.5 1.5 4.4 1.5 8s2.9 6.5 6.5 6.5 6.5-2.9 6.5-6.5S11.6 1.5 8 1.5zM8 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"/><circle cx="8" cy="8" r="1.5"/></svg>
+            Neutered
+          </span>
+          <span>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5C4.4 1.5 1.5 4.4 1.5 8s2.9 6.5 6.5 6.5 6.5-2.9 6.5-6.5S11.6 1.5 8 1.5zM8 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"/><path d="M8 5v3l2 2"/></svg>
+            Friendly
+          </span>
+        </div>
+        <div class="pet-note">
+          <svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zM9 13.5c-2.5 0-4.5-2-4.5-4.5S6.5 4.5 9 4.5s4.5 2 4.5 4.5-2 4.5-4.5 4.5z"/><circle cx="9" cy="9" r="2"/></svg>
+          Needs daily medication at 8am & 8pm
+        </div>
+      </div>
+    </section>
+
+    <!-- upcoming booking -->
+    <div class="section-label">Upcoming booking</div>
+    <div class="booking-card">
+      <div class="booking-left">
+        <div class="booking-icon">
+          <svg viewBox="0 0 28 28"><path d="M14 2C7.4 2 2 7.4 2 14s5.4 12 12 12 12-5.4 12-12S20.6 2 14 2zm0 22c-5.5 0-10-4.5-10-10S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10z"/><path d="M14 6v8l6 3"/></svg>
+        </div>
+        <div class="booking-details">
+          <h3>Weekend stay with Clara</h3>
+          <p>Fri, Jun 14 – Sun, Jun 16 · 2 nights</p>
+        </div>
+      </div>
+      <div class="booking-meta">
+        <div class="booking-meta-item">
+          <span class="label">Sitter</span>
+          <span class="value">Clara M.</span>
+        </div>
+        <div class="booking-meta-item">
+          <span class="label">Total</span>
+          <span class="value">$148</span>
+        </div>
+        <span class="booking-status">Confirmed</span>
+      </div>
+    </div>
+
+    <!-- sitter search -->
+    <section class="search-section">
+      <div class="search-header">
+        <div>
+          <div class="section-label">Find a sitter</div>
+          <h2>Trusted sitters near you</h2>
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search by neighborhood or name…" aria-label="Search sitters">
+          <button>Search</button>
+        </div>
+      </div>
+      <div class="sitter-grid">
+        <div class="sitter-card">
+          <div class="sitter-top">
+            <div class="sitter-avatar">CM</div>
+            <div class="sitter-info">
+              <h4>Clara M.</h4>
+              <p>Ballard · 2.1 mi</p>
+            </div>
+          </div>
+          <div class="sitter-rating">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            4.98 · 47 reviews
+          </div>
+          <div class="sitter-tags">
+            <span>Dogs</span>
+            <span>Medication</span>
+            <span>Senior pets</span>
+          </div>
+          <div class="sitter-price">
+            <span class="amount">$74 <small>/ night</small></span>
+            <a href="#" class="book-link">Book →</a>
+          </div>
+        </div>
+        <div class="sitter-card">
+          <div class="sitter-top">
+            <div class="sitter-avatar">JR</div>
+            <div class="sitter-info">
+              <h4>James R.</h4>
+              <p>Fremont · 3.4 mi</p>
+            </div>
+          </div>
+          <div class="sitter-rating">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            4.92 · 31 reviews
+          </div>
+          <div class="sitter-tags">
+            <span>Cats</span>
+            <span>Puppies</span>
+            <span>Overnight</span>
+          </div>
+          <div class="sitter-price">
+            <span class="amount">$68 <small>/ night</small></span>
+            <a href="#" class="book-link">Book →</a>
+          </div>
+        </div>
+        <div class="sitter-card">
+          <div class="sitter-top">
+            <div class="sitter-avatar">SP</div>
+            <div class="sitter-info">
+              <h4>Sofia P.</h4>
+              <p>Queen Anne · 1.8 mi</p>
+            </div>
+          </div>
+          <div class="sitter-rating">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            5.00 · 62 reviews
+          </div>
+          <div class="sitter-tags">
+            <span>Dogs</span>
+            <span>Training</span>
+            <span>Daycare</span>
+          </div>
+          <div class="sitter-price">
+            <span class="amount">$82 <small>/ night</small></span>
+            <a href="#" class="book-link">Book →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- care plans -->
+    <section class="plans-section">
+      <div class="section-label">Care plans</div>
+      <h2>Simple, transparent pricing</h2>
+      <p class="subhead" style="margin-bottom: 0.5rem;">Choose the level of care that fits your pet’s needs. No hidden fees, ever.</p>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <h3>Essential</h3>
+          <div class="plan-price">$49 <small>/ visit</small></div>
+          <ul class="plan-features">
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> 30-min drop-in visit</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Feeding & fresh water</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Photo update</li>
+          </ul>
+          <a href="#" class="btn-outline">Choose Essential</a>
+        </div>
+        <div class="plan-card featured">
+          <h3>Complete</h3>
+          <div class="plan-price">$74 <small>/ night</small></div>
+          <ul class="plan-features">
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Overnight stay</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Walks & playtime</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Medication administration</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Daily photo & note</li>
+          </ul>
+          <a href="#" class="btn-primary">Choose Complete</a>
+        </div>
+        <div class="plan-card">
+          <h3>Premium</h3>
+          <div class="plan-price">$112 <small>/ night</small></div>
+          <ul class="plan-features">
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Everything in Complete</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Vet visit coordination</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> Grooming & spa add-on</li>
+            <li><svg viewBox="0 0 18 18"><path d="M9 1.5C4.9 1.5 1.5 4.9 1.5 9s3.4 7.5 7.5 7.5 7.5-3.4 7.5-7.5S13.1 1.5 9 1.5zm-1.5 11L4 9l1.5-1.5L7.5 9.5 12.5 4.5 14 6l-6.5 6.5z"/></svg> 24/7 concierge line</li>
+          </ul>
+          <a href="#" class="btn-outline">Choose Premium</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- reviews -->
+    <section class="reviews-section">
+      <div class="section-label">Reviews</div>
+      <h2>Loved by pet parents</h2>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+          </div>
+          <p class="review-text">“Clara sent the sweetest updates every day. Miso came home relaxed and happy — I could tell she was genuinely cared for.”</p>
+          <div class="review-author">
+            <div class="review-avatar">AK</div>
+            <div class="review-author-info">
+              <h4>Anna K.</h4>
+              <p>Miso’s mom · Ballard</p>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+          </div>
+          <p class="review-text">“James is a natural with cats. He followed our routine perfectly and even cleaned the litter box without being asked.”</p>
+          <div class="review-author">
+            <div class="review-avatar">MR</div>
+            <div class="review-author-info">
+              <h4>Marcus R.</h4>
+              <p>Luna’s dad · Fremont</p>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1.5l1.8 3.7 4.1.6-3 2.9.7 4.1L8 10.8l-3.6 1.9.7-4.1-3-2.9 4.1-.6z"/></svg>
+          </div>
+          <p class="review-text">“Sofia is worth every penny. She trained our puppy while we were away and sent videos. PAWLINE is the only service I trust.”</p>
+          <div class="review-author">
+            <div class="review-avatar">JL</div>
+            <div class="review-author-info">
+              <h4>Jenna L.</h4>
+              <p>Biscuit’s mom · Queen Anne</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- trust signals -->
+    <section class="trust-section">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.5 15L5 11.5 6.5 10l4 4 7-7 1.5 1.5-8.5 8.5z"/></svg>
+        </div>
+        <div class="trust-text">
+          <h4>Background checked</h4>
+          <p>Every sitter is ID-verified and reference-checked.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="trust-text">
+          <h4>24/7 support</h4>
+          <p>Real humans on call, day or night.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="trust-text">
+          <h4>Insured & bonded</h4>
+          <p>Full coverage for every booking.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.5 15L5 11.5 6.5 10l4 4 7-7 1.5 1.5-8.5 8.5z"/></svg>
+        </div>
+        <div class="trust-text">
+          <h4>Happiness guarantee</h4>
+          <p>If you’re not satisfied, we’ll make it right.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- quick booking -->
+    <section class="quick-booking">
+      <div>
+        <h2>Ready to book?</h2>
+        <p>Tell us about your pet and we’ll match you with the perfect sitter in minutes.</p>
+      </div>
+      <a href="#" class="btn-white">Start quick booking</a>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 4c-2.5 0-4.5 1.8-4.5 4 0 1.2.6 2.3 1.5 3-.8.6-1.5 1.5-1.5 2.5 0 1.7 1.3 3 3 3h3c1.7 0 3-1.3 3-3 0-1-.7-1.9-1.5-2.5.9-.7 1.5-1.8 1.5-3 0-2.2-2-4-4.5-4z"/>
+            <circle cx="10" cy="10" r="2.5"/>
+            <circle cx="22" cy="10" r="2.5"/>
+            <circle cx="8" cy="18" r="2"/>
+            <circle cx="24" cy="18" r="2"/>
+          </svg>
+          PAWLINE
+        </div>
+        <p>Premium pet care in your neighborhood. Trusted sitters, transparent pricing, and peace of mind.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Neighborhoods</h4>
+        <ul>
+          <li><a href="#">Ballard</a></li>
+          <li><a href="#">Fremont</a></li>
+          <li><a href="#">Queen Anne</a></li>
+          <li><a href="#">Capitol Hill</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 PAWLINE. All rights reserved.</span>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0-2.2C8.7 0 8.3 0 7 .1 5.7.2 4.8.4 4 .7c-.8.3-1.5.8-2.2 1.5C1.1 2.9.6 3.6.3 4.4.1 5.2-.1 6.1 0 7.4.1 8.7.1 9.1.1 12s0 3.3.1 4.6c.1 1.3.3 2.2.6 3 .3.8.8 1.5 1.5 2.2.7.7 1.4 1.2 2.2 1.5.8.3 1.7.5 3 .6 1.3.1 1.7.1 4.6.1s3.3 0 4.6-.1c1.3-.1 2.2-.3 3-.6.8-.3 1.5-.8 2.2-1.5.7-.7 1.2-1.4 1.5-2.2.3-.8.5-1.7.6-3 .1-1.3.1-1.7.1-4.6s0-3.3-.1-4.6c-.1-1.3-.3-2.2-.6-3-.3-.8-.8-1.5-1.5-2.2C21.1 1.1 20.4.6 19.6.3c-.8-.3-1.7-.5-3-.6C15.3 0 14.9 0 12 0z"/><path d="M12 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"/><circle cx="18.4" cy="5.6" r="1.4"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M22.5 5.9c-.8.4-1.7.6-2.6.7 1-.6 1.7-1.5 2-2.6-.9.5-1.9.9-2.9 1.1-.8-.9-2-1.4-3.3-1.4-2.5 0-4.5 2-4.5 4.5 0 .4 0 .7.1 1-3.7-.2-7-2-9.2-4.7-.4.7-.6 1.5-.6 2.3 0 1.6.8 3 2 3.8-.7 0-1.4-.2-2-.5v.1c0 2.2 1.6 4 3.6 4.4-.4.1-.8.2-1.2.2-.3 0-.6 0-.9-.1.6 1.8 2.3 3.1 4.3 3.1-1.6 1.2-3.5 1.9-5.6 1.9-.4 0-.7 0-1.1-.1 2 1.3 4.4 2 7 2 8.4 0 13-7 13-13v-.6c.9-.6 1.7-1.4 2.3-2.3z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12c0-6.6-5.4-12-12-12S0 5.4 0 12c0 6 4.4 11 10.1 11.9v-8.4H7.1V12h3v-2.6c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4C19.6 23 24 18 24 12z"/></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

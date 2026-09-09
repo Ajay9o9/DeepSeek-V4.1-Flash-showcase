@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FURNITURE / SHOWROOM — Objects of Permanence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1e1c1a;
+      --paper: #f5f2ed;
+      --stone: #d9d2c5;
+      --clay: #b86b4a;
+      --moss: #4a5e4a;
+      --gold: #c9a87c;
+      --charcoal: #2b2a28;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --gutter: clamp(1.5rem, 5vw, 4rem);
+      --section-pad: clamp(4rem, 10vw, 8rem);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--serif);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    }
+
+    h3 {
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .lead {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.7;
+      color: #4a4744;
+      max-width: 52ch;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      width: min(1280px, 100% - 2 * var(--gutter));
+      margin-inline: auto;
+    }
+
+    section {
+      padding-block: var(--section-pad);
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(245, 242, 237, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(30, 28, 26, 0.06);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-left: 0.25rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--clay);
+      transition: width 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--clay);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2rem;
+      font-size: 0.75rem !important;
+      transition: background 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--clay) !important;
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--ink);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content .eyebrow {
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .hero-content h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--clay);
+    }
+
+    .hero-content .lead {
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--clay);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid rgba(30, 28, 26, 0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Hero visual — CSS/SVG furniture composition */
+    .hero-visual {
+      position: relative;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-visual .frame {
+      position: absolute;
+      inset: 0;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #e8e2d8 0%, #d9d2c5 40%, #c9bfae 100%);
+    }
+
+    .hero-visual .frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 60%);
+    }
+
+    .hero-visual .frame::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(30,28,26,0.08), transparent);
+    }
+
+    /* Chair SVG */
+    .chair-svg {
+      position: relative;
+      z-index: 2;
+      width: 70%;
+      max-width: 340px;
+      filter: drop-shadow(0 20px 40px rgba(30,28,26,0.15));
+    }
+
+    .hero-visual .accent-circle {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: var(--clay);
+      opacity: 0.12;
+      top: 10%;
+      right: 5%;
+      z-index: 1;
+    }
+
+    .hero-visual .accent-line {
+      position: absolute;
+      width: 1px;
+      height: 120px;
+      background: var(--gold);
+      bottom: 15%;
+      left: 10%;
+      z-index: 1;
+      opacity: 0.5;
+    }
+
+    .hero-visual .accent-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--moss);
+      bottom: 20%;
+      right: 15%;
+      z-index: 1;
+    }
+
+    /* ---------- MARQUEE / TICKER ---------- */
+    .ticker {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(30, 28, 26, 0.08);
+      border-bottom: 1px solid rgba(30, 28, 26, 0.08);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 3rem;
+      animation: ticker 30s linear infinite;
+    }
+
+    .ticker-track span {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--stone);
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .ticker-track span::after {
+      content: '◆';
+      font-style: normal;
+      font-size: 0.5rem;
+      color: var(--clay);
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ---------- COLLECTIONS ---------- */
+    .collections-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .collections-header h2 {
+      max-width: 16ch;
+    }
+
+    .collections-header .lead {
+      max-width: 38ch;
+      text-align: right;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .collection-card {
+      position: relative;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .collection-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .collection-card .card-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .collection-card:hover .card-bg {
+      transform: scale(1.05);
+    }
+
+    .collection-card .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(30,28,26,0.75) 0%, rgba(30,28,26,0.1) 50%, transparent 100%);
+      z-index: 1;
+    }
+
+    .collection-card .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      z-index: 2;
+      color: var(--paper);
+    }
+
+    .collection-card .card-content .eyebrow {
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .collection-card .card-content h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .collection-card .card-content p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .collection-card .card-arrow {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(245, 242, 237, 0.15);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .collection-card:hover .card-arrow {
+      background: var(--clay);
+      transform: rotate(-45deg);
+    }
+
+    .collection-card .card-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--paper);
+    }
+
+    /* Card backgrounds — CSS art */
+    .card-bg--living {
+      background: linear-gradient(160deg, #8b7355 0%, #6b5a45 50%, #4a3f32 100%);
+    }
+
+    .card-bg--living::before {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 15%;
+      width: 70%;
+      height: 35%;
+      background: linear-gradient(135deg, #a89070, #7a6548);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .card-bg--living::after {
+      content: '';
+      position: absolute;
+      bottom: 55%;
+      left: 25%;
+      width: 50%;
+      height: 20%;
+      background: linear-gradient(135deg, #c4a882, #9a7f5e);
+      border-radius: 4px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .card-bg--dining {
+      background: linear-gradient(160deg, #5a6b5a 0%, #3d4f3d 50%, #2a382a 100%);
+    }
+
+    .card-bg--dining::before {
+      content: '';
+      position: absolute;
+      bottom: 25%;
+      left: 10%;
+      width: 80%;
+      height: 8%;
+      background: linear-gradient(90deg, #8a9a7a, #6b7d5e);
+      border-radius: 4px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .card-bg--dining::after {
+      content: '';
+      position: absolute;
+      bottom: 33%;
+      left: 20%;
+      width: 15%;
+      height: 25%;
+      background: linear-gradient(180deg, #7a8a6a, #5a6b4a);
+      border-radius: 4px 4px 0 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .card-bg--bedroom {
+      background: linear-gradient(160deg, #7a6b7a 0%, #5a4a5a 50%, #3d2f3d 100%);
+    }
+
+    .card-bg--bedroom::before {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      width: 80%;
+      height: 30%;
+      background: linear-gradient(135deg, #9a8a9a, #7a6a7a);
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .card-bg--bedroom::after {
+      content: '';
+      position: absolute;
+      bottom: 50%;
+      left: 30%;
+      width: 40%;
+      height: 15%;
+      background: linear-gradient(135deg, #b8a8b8, #9a8a9a);
+      border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    /* ---------- MATERIALS ---------- */
+    .materials {
+      background: var(--charcoal);
+      color: var(--paper);
+      border-radius: 2rem;
+      margin-inline: var(--gutter);
+      padding: var(--section-pad) var(--gutter);
+    }
+
+    .materials .container {
+      width: 100%;
+    }
+
+    .materials-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .materials-header h2 {
+      color: var(--paper);
+      max-width: 14ch;
+    }
+
+    .materials-header .lead {
+      color: rgba(245, 242, 237, 0.6);
+      max-width: 38ch;
+      text-align: right;
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .swatch {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .swatch:hover {
+      transform: translateY(-4px);
+    }
+
+    .swatch-color {
+      aspect-ratio: 1;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .swatch-color::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    }
+
+    .swatch-color--oak {
+      background: linear-gradient(135deg, #c9a87c, #a8885c, #8a6e48);
+    }
+
+    .swatch-color--walnut {
+      background: linear-gradient(135deg, #6b4a3a, #4a3228, #3a251e);
+    }
+
+    .swatch-color--linen {
+      background: linear-gradient(135deg, #e8e0d0, #d0c8b8, #b8b0a0);
+    }
+
+    .swatch-color--brass {
+      background: linear-gradient(135deg, #d4b88c, #b89a6a, #9a7e50);
+    }
+
+    .swatch-color--marble {
+      background: linear-gradient(135deg, #e8e4e0, #d0ccc8, #b8b4b0);
+    }
+
+    .swatch-color--leather {
+      background: linear-gradient(135deg, #8a5a3a, #6a3a2a, #4a2a1a);
+    }
+
+    .swatch-color--wool {
+      background: linear-gradient(135deg, #a8a0a0, #888080, #686060);
+    }
+
+    .swatch-color--stone {
+      background: linear-gradient(135deg, #b8b0a8, #989088, #787068);
+    }
+
+    .swatch-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .swatch-desc {
+      font-size: 0.75rem;
+      color: rgba(245, 242, 237, 0.5);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- PRODUCT DETAIL ---------- */
+    .product {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .product-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #e8e2d8, #d9d2c5);
+    }
+
+    .product-visual .product-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .product-visual .badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: var(--clay);
+      color: var(--paper);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      z-index: 2;
+    }
+
+    .product-info .eyebrow {
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .product-info h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .product-info .lead {
+      margin-bottom: 2rem;
+    }
+
+    .product-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .spec {
+      border-top: 1px solid rgba(30, 28, 26, 0.1);
+      padding-top: 1rem;
+    }
+
+    .spec-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 0.3rem;
+    }
+
+    .spec-value {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+    }
+
+    .product-price {
+      font-family: var(--serif);
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .product-price small {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #8a8580;
+      margin-left: 0.5rem;
+    }
+
+    /* ---------- STORY ---------- */
+    .story {
+      background: var(--stone);
+      border-radius: 2rem;
+      margin-inline: var(--gutter);
+      padding: var(--section-pad) var(--gutter);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story .container {
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .story-content .eyebrow {
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .story-content h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .story-content .lead {
+      margin-bottom: 2rem;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      color: var(--clay);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6a6560;
+    }
+
+    .story-visual {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #c9bfae, #b8a898);
+    }
+
+    .story-visual .story-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .story-visual .quote {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+      z-index: 2;
+    }
+
+    .story-visual .quote::before {
+      content: '“';
+      font-size: 3rem;
+      color: var(--clay);
+      line-height: 0;
+      vertical-align: -0.3em;
+      margin-right: 0.2rem;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      text-align: center;
+      padding-block: var(--section-pad);
+    }
+
+    .cta h2 {
+      max-width: 20ch;
+      margin-inline: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta .lead {
+      margin-inline: auto;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 480px;
+      margin-inline: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cta-form input {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.9rem 1.5rem;
+      border: 1px solid rgba(30, 28, 26, 0.15);
+      border-radius: 2rem;
+      background: transparent;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .cta-form input:focus {
+      border-color: var(--clay);
+    }
+
+    .cta-form input::placeholder {
+      color: #a8a29a;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      border-top: 1px solid rgba(30, 28, 26, 0.08);
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: #8a8580;
+      max-width: 30ch;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.85rem;
+      color: #6a6560;
+      text-decoration: none;
+      margin-bottom: 0.6rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: var(--ink);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(30, 28, 26, 0.06);
+      font-size: 0.75rem;
+      color: #a8a29a;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-visual {
+        height: 400px;
+        order: -1;
+      }
+
+      .collections-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .swatch-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .product {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        flex-direction: column;
+        padding: 2rem var(--gutter);
+        gap: 1.5rem;
+        border-bottom: 1px solid rgba(30, 28, 26, 0.08);
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .collections-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .swatch-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .collections-header .lead,
+      .materials-header .lead {
+        text-align: left;
+      }
+
+      .story-stats {
+        gap: 2rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero {
+        padding-top: 6rem;
+      }
+
+      .hero-visual {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .swatch-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .product-specs {
+        grid-template-columns: 1fr;
+      }
+
+      .story-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">FURNITURE <span>/ Showroom</span></a>
+      <nav id="nav">
+        <a href="#collections">Collections</a>
+        <a href="#materials">Materials</a>
+        <a href="#product">Featured</a>
+        <a href="#story">Our Story</a>
+        <a href="#inquiry" class="nav-cta">Inquire</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="eyebrow fade-in">Est. 2012 — Copenhagen & Kyoto</span>
+        <h1 class="fade-in fade-in-delay-1">Objects of <em>permanence</em> for modern living.</h1>
+        <p class="lead fade-in fade-in-delay-2">We design and craft furniture that outlives trends. Each piece is made from responsibly sourced materials, shaped by hand, and built to be passed down.</p>
+        <div class="hero-actions fade-in fade-in-delay-3">
+          <a href="#collections" class="btn btn-primary">
+            Explore Collections
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#story" class="btn btn-outline">Our Craft</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-in fade-in-delay-2">
+        <div class="frame"></div>
+        <div class="accent-circle"></div>
+        <div class="accent-line"></div>
+        <div class="accent-dot"></div>
+        <!-- Chair SVG -->
+        <svg class="chair-svg" viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Back legs -->
+          <rect x="60" y="180" width="12" height="180" rx="3" fill="#4a3f32"/>
+          <rect x="228" y="180" width="12" height="180" rx="3" fill="#4a3f32"/>
+          <!-- Seat -->
+          <rect x="50" y="160" width="200" height="24" rx="6" fill="#8a6e48"/>
+          <rect x="50" y="160" width="200" height="8" rx="4" fill="#a8885c"/>
+          <!-- Backrest -->
+          <rect x="60" y="40" width="180" height="130" rx="12" fill="#6b5a45"/>
+          <rect x="70" y="50" width="160" height="110" rx="8" fill="#8a6e48"/>
+          <!-- Backrest cushion lines -->
+          <line x1="90" y1="70" x2="210" y2="70" stroke="#a8885c" stroke-width="2" opacity="0.5"/>
+          <line x1="90" y1="90" x2="210" y2="90" stroke="#a8885c" stroke-width="2" opacity="0.5"/>
+          <line x1="90" y1="110" x2="210" y2="110" stroke="#a8885c" stroke-width="2" opacity="0.5"/>
+          <line x1="90" y1="130" x2="210" y2="130" stroke="#a8885c" stroke-width="2" opacity="0.5"/>
+          <!-- Front legs -->
+          <rect x="70" y="184" width="12" height="176" rx="3" fill="#5a4a3a"/>
+          <rect x="218" y="184" width="12" height="176" rx="3" fill="#5a4a3a"/>
+          <!-- Armrests -->
+          <rect x="40" y="140" width="16" height="50" rx="6" fill="#6b5a45"/>
+          <rect x="244" y="140" width="16" height="50" rx="6" fill="#6b5a45"/>
+          <!-- Shadow -->
+          <ellipse cx="150" cy="370" rx="100" ry="12" fill="rgba(30,28,26,0.1)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>Handcrafted in small batches</span>
+      <span>FSC-certified timber</span>
+      <span>Lifetime repair guarantee</span>
+      <span>Carbon-neutral shipping</span>
+      <span>Designed to be inherited</span>
+      <span>Handcrafted in small batches</span>
+      <span>FSC-certified timber</span>
+      <span>Lifetime repair guarantee</span>
+      <span>Carbon-neutral shipping</span>
+      <span>Designed to be inherited</span>
+    </div>
+  </div>
+
+  <!-- COLLECTIONS -->
+  <section id="collections">
+    <div class="container">
+      <div class="collections-header fade-in">
+        <h2>Rooms that hold a lifetime of stories.</h2>
+        <p class="lead">Three distinct collections, each rooted in a different rhythm of daily life. Every piece is designed to work alone or in quiet conversation with the others.</p>
+      </div>
+      <div class="collections-grid">
+        <div class="collection-card fade-in fade-in-delay-1">
+          <div class="card-bg card-bg--living"></div>
+          <div class="card-overlay"></div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="card-content">
+            <span class="eyebrow">Collection 01</span>
+            <h3>The Living Room</h3>
+            <p>Low-slung sofas, sculptural coffee tables, and lighting that pools warmth into every corner.</p>
+          </div>
+        </div>
+        <div class="collection-card fade-in fade-in-delay-2">
+          <div class="card-bg card-bg--dining"></div>
+          <div class="card-overlay"></div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="card-content">
+            <span class="eyebrow">Collection 02</span>
+            <h3>The Dining Room</h3>
+            <p>Solid oak tables, hand-turned chairs, and sideboards that anchor the ritual of gathering.</p>
+          </div>
+        </div>
+        <div class="collection-card fade-in fade-in-delay-3">
+          <div class="card-bg card-bg--bedroom"></div>
+          <div class="card-overlay"></div>
+          <div class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+          <div class="card-content">
+            <span class="eyebrow">Collection 03</span>
+            <h3>The Bedroom</h3>
+            <p>Upholstered beds, linen-covered benches, and bedside tables with soft-close everything.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section id="materials" class="materials">
+    <div class="container">
+      <div class="materials-header fade-in">
+        <h2>Materials that age with grace.</h2>
+        <p class="lead">We work with a tight palette of natural materials. Each one is chosen for how it feels on day one — and how it looks on day one thousand.</p>
+      </div>
+      <div class="swatch-grid">
+        <div class="swatch fade-in fade-in-delay-1">
+          <div class="swatch-color swatch-color--oak"></div>
+          <div class="swatch-name">European Oak</div>
+          <div class="swatch-desc">Hard · Warm · Durable</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-1">
+          <div class="swatch-color swatch-color--walnut"></div>
+          <div class="swatch-name">Black Walnut</div>
+          <div class="swatch-desc">Rich · Deep · Timeless</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-2">
+          <div class="swatch-color swatch-color--linen"></div>
+          <div class="swatch-name">Belgian Linen</div>
+          <div class="swatch-desc">Breathable · Soft · Natural</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-2">
+          <div class="swatch-color swatch-color--brass"></div>
+          <div class="swatch-name">Aged Brass</div>
+          <div class="swatch-desc">Living finish · Warm · Patina</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-3">
+          <div class="swatch-color swatch-color--marble"></div>
+          <div class="swatch-name">Carrara Marble</div>
+          <div class="swatch-desc">Cool · Veined · Sculptural</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-3">
+          <div class="swatch-color swatch-color--leather"></div>
+          <div class="swatch-name">Vegetable Leather</div>
+          <div class="swatch-desc">Supple · Honest · Enduring</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-3">
+          <div class="swatch-color swatch-color--wool"></div>
+          <div class="swatch-name">Undyed Wool</div>
+          <div class="swatch-desc">Textured · Calm · Insulating</div>
+        </div>
+        <div class="swatch fade-in fade-in-delay-3">
+          <div class="swatch-color swatch-color--stone"></div>
+          <div class="swatch-name">Honed Stone</div>
+          <div class="swatch-desc">Matte · Grounding · Solid</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT DETAIL -->
+  <section id="product">
+    <div class="container product">
+      <div class="product-visual fade-in">
+        <span class="badge">Featured Piece</span>
+        <svg class="product-svg" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background texture -->
+          <rect width="400" height="500" fill="url(#bgGrad)"/>
+          <defs>
+            <linearGradient id="bgGrad" x1="0" y1="0" x2="400" y2="500" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#e8e2d8"/>
+              <stop offset="100%" stop-color="#d0c8b8"/>
+            </linearGradient>
+            <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a8885c"/>
+              <stop offset="100%" stop-color="#7a6548"/>
+            </linearGradient>
+            <linearGradient id="cushionGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#d9d2c5"/>
+              <stop offset="100%" stop-color="#b8b0a0"/>
+            </linearGradient>
+          </defs>
+          <!-- Floor shadow -->
+          <ellipse cx="200" cy="440" rx="140" ry="16" fill="rgba(30,28,26,0.08)"/>
+          <!-- Sofa base -->
+          <rect x="60" y="300" width="280" height="80" rx="12" fill="url(#woodGrad)"/>
+          <!-- Sofa seat cushion -->
+          <rect x="70" y="260" width="260" height="50" rx="10" fill="url(#cushionGrad)"/>
+          <!-- Sofa back -->
+          <rect x="70" y="140" width="260" height="130" rx="12" fill="#c9bfae"/>
+          <!-- Back cushion left -->
+          <rect x="80" y="150" width="115" height="110" rx="8" fill="#d9d2c5"/>
+          <!-- Back cushion right -->
+          <rect x="205" y="150" width="115" height="110" rx="8" fill="#d9d2c5"/>
+          <!-- Armrest left -->
+          <rect x="50" y="200" width="30" height="180" rx="10" fill="#b8a898"/>
+          <!-- Armrest right -->
+          <rect x="320" y="200" width="30" height="180" rx="10" fill="#b8a898"/>
+          <!-- Legs -->
+          <rect x="80" y="380" width="10" height="50" rx="3" fill="#5a4a3a"/>
+          <rect x="310" y="380" width="10" height="50" rx="3" fill="#5a4a3a"/>
+          <!-- Throw pillow -->
+          <rect x="120" y="230" width="60" height="50" rx="8" fill="#b86b4a" opacity="0.8"/>
+          <rect x="220" y="230" width="60" height="50" rx="8" fill="#4a5e4a" opacity="0.7"/>
+          <!-- Subtle highlight -->
+          <rect x="70" y="140" width="260" height="8" rx="4" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+      <div class="product-info fade-in fade-in-delay-1">
+        <span class="eyebrow">The Anchor Sofa</span>
+        <h2>Built for the long conversation.</h2>
+        <p class="lead">A three-seater with a solid oak frame, hand-tied springs, and cushions wrapped in Belgian linen. The kind of sofa that becomes the gravitational center of a home.</p>
+        <div class="product-specs">
+          <div class="spec">
+            <div class="spec-label">Dimensions</div>
+            <div class="spec-value">220 × 95 × 78 cm</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Frame</div>
+            <div class="spec-value">Solid European Oak</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Upholstery</div>
+            <div class="spec-value">Belgian Linen</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Lead Time</div>
+            <div class="spec-value">8–10 weeks</div>
+          </div>
+        </div>
+        <div class="product-price">€4,850 <small>incl. VAT</small></div>
+        <a href="#inquiry" class="btn btn-primary">
+          Request a Quote
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story" class="story">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-content fade-in">
+          <span class="eyebrow">Our Story</span>
+          <h2>We believe furniture should be inherited, not replaced.</h2>
+          <p class="lead">FURNITURE / SHOWROOM began in a small Copenhagen workshop in 2012. We were tired of disposable design — pieces that looked good in a photograph but fell apart in a decade. So we started making furniture the slow way: solid joinery, natural finishes, and a repair guarantee that lasts a lifetime.</p>
+          <p class="lead">Today, we work with a team of 14 craftspeople across two studios. Every piece is still made by hand, one at a time.</p>
+          <div class="story-stats">
+            <div>
+              <div class="stat-number">12</div>
+              <div class="stat-label">Years of Craft</div>
+            </div>
+            <div>
+              <div class="stat-number">2,400+</div>
+              <div class="stat-label">Pieces Delivered</div>
+            </div>
+            <div>
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Repairable</div>
+            </div>
+          </div>
+        </div>
+        <div class="story-visual fade-in fade-in-delay-1">
+          <svg class="story-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="storyBg" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c9bfae"/>
+                <stop offset="100%" stop-color="#a89888"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#storyBg)"/>
+            <!-- Workshop scene -->
+            <!-- Workbench -->
+            <rect x="40" y="280" width="320" height="20" rx="4" fill="#6b5a45"/>
+            <rect x="60" y="300" width="12" height="80" rx="3" fill="#5a4a3a"/>
+            <rect x="328" y="300" width="12" height="80" rx="3" fill="#5a4a3a"/>
+            <!-- Wood plank on bench -->
+            <rect x="80" y="250" width="240" height="30" rx="4" fill="#a8885c"/>
+            <rect x="80" y="250" width="240" height="6" rx="3" fill="#c9a87c"/>
+            <!-- Hand plane -->
+            <rect x="140" y="230" width="80" height="20" rx="4" fill="#4a3f32"/>
+            <rect x="150" y="220" width="60" height="12" rx="3" fill="#8a6e48"/>
+            <!-- Chisel -->
+            <rect x="260" y="235" width="60" height="8" rx="2" fill="#b8a898"/>
+            <rect x="310" y="233" width="20" height="12" rx="2" fill="#6b5a45"/>
+            <!-- Wood shavings -->
+            <path d="M100 270 Q110 260 120 270" stroke="#c9a87c" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M200 275 Q210 265 220 275" stroke="#c9a87c" stroke-width="2" fill="none" opacity="0.6"/>
+            <!-- Window light -->
+            <rect x="280" y="40" width="80" height="100" rx="4" fill="rgba(255,255,255,0.15)"/>
+            <line x1="320" y1="40" x2="320" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+            <line x1="280" y1="90" x2="360" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+            <!-- Dust particles -->
+            <circle cx="150" cy="180" r="2" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="200" cy="160" r="1.5" fill="rgba(255,255,255,0.25)"/>
+            <circle cx="250" cy="190" r="1" fill="rgba(255,255,255,0.2)"/>
+            <circle cx="180" cy="200" r="1.5" fill="rgba(255,255,255,0.2)"/>
+          </svg>
+          <div class="quote">The best furniture is the kind you never notice — because it simply works, every day, for decades.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="inquiry" class="cta">
+    <div class="container">
+      <span class="eyebrow fade-in">Begin a Conversation</span>
+      <h2 class="fade-in fade-in-delay-1">Let's design something that lasts.</h2>
+      <p class="lead fade-in fade-in-delay-2">Tell us about your space, your materials, and your timeline. We'll respond within two working days with a tailored proposal.</p>
+      <form class="cta-form fade-in fade-in-delay-3" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.btn').textContent='Sent ✓';">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit" class="btn btn-primary">Inquire</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">FURNITURE <span>/ Showroom</span></a>
+          <p>Objects of permanence for modern living. Handcrafted in Copenhagen and Kyoto since 2012.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#collections">Collections</a>
+          <a href="#materials">Materials</a>
+          <a href="#product">Featured Piece</a>
+          <a href="#story">Our Story</a>
+        </div>
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <a href="#">Copenhagen Studio</a>
+          <a href="#">Kyoto Atelier</a>
+          <a href="#">Book an Appointment</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#">Instagram</a>
+          <a href="#">Pinterest</a>
+          <a href="#">Newsletter</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 FURNITURE / SHOWROOM. All rights reserved.</span>
+        <span>Designed with intention. Built to last.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    // Close menu on link click
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

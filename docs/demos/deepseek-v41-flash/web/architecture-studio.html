@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORM/NOIR — Architecture Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --warm-white: #f5f2ed;
+    --stone: #b8b0a4;
+    --stone-dark: #6b655c;
+    --stone-light: #d9d3c9;
+    --accent: #c4a882;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: difference;
+  }
+
+  .logo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--warm-white);
+    text-transform: uppercase;
+  }
+
+  .logo span { font-weight: 300; }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--warm-white);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--warm-white);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(10,10,10,0.8) 0%, transparent 100%);
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(72px, 10vw, 160px);
+    line-height: 0.85;
+    color: var(--warm-white);
+    letter-spacing: -4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-title .italic {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--stone);
+  }
+
+  .hero-subtitle {
+    margin-top: 32px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--stone);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--stone-light);
+  }
+
+  /* Abstract architectural composition */
+  .arch-composition {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .arch-shape {
+    position: absolute;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .arch-shape-1 {
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .arch-shape-2 {
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 55%;
+    background: linear-gradient(180deg, #d9d3c9 0%, #b8b0a4 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .arch-shape-3 {
+    bottom: 0;
+    right: 0;
+    width: 55%;
+    height: 50%;
+    background: linear-gradient(225deg, #c4a882 0%, #a89070 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .arch-shape-4 {
+    top: 20%;
+    left: 15%;
+    width: 30%;
+    height: 60%;
+    background: linear-gradient(180deg, rgba(245,242,237,0.15) 0%, rgba(245,242,237,0.05) 100%);
+    border: 1px solid rgba(245,242,237,0.2);
+    backdrop-filter: blur(2px);
+  }
+
+  .arch-shape-5 {
+    top: 35%;
+    left: 25%;
+    width: 20%;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(196,168,130,0.3) 0%, rgba(196,168,130,0.1) 100%);
+    border: 1px solid rgba(196,168,130,0.3);
+  }
+
+  .arch-shape-6 {
+    top: 10%;
+    right: 10%;
+    width: 15%;
+    height: 30%;
+    background: linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.1) 100%);
+    border: 1px solid rgba(10,10,10,0.2);
+  }
+
+  .arch-shape-7 {
+    bottom: 15%;
+    left: 5%;
+    width: 25%;
+    height: 20%;
+    background: linear-gradient(90deg, rgba(245,242,237,0.1) 0%, rgba(245,242,237,0.05) 100%);
+    border: 1px solid rgba(245,242,237,0.15);
+  }
+
+  .hero-right:hover .arch-shape-1 { transform: translateX(-8px); }
+  .hero-right:hover .arch-shape-2 { transform: translateY(-8px); }
+  .hero-right:hover .arch-shape-3 { transform: translateX(8px); }
+  .hero-right:hover .arch-shape-4 { transform: translate(-4px, -4px); }
+  .hero-right:hover .arch-shape-5 { transform: translate(4px, 4px); }
+  .hero-right:hover .arch-shape-6 { transform: translateY(-6px); }
+  .hero-right:hover .arch-shape-7 { transform: translateX(6px); }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: var(--stone);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--warm-white);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { left: -100%; }
+    50% { left: 0; }
+    100% { left: 100%; }
+  }
+
+  .scroll-text {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ─── PROJECTS SECTION ─── */
+  .projects {
+    padding: 120px 48px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--stone-light);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: var(--black);
+  }
+
+  .section-title .italic {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--stone-dark);
+  }
+
+  /* ─── PROJECT GRID ─── */
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px 60px;
+  }
+
+  .project-card {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .project-card:nth-child(2) {
+    margin-top: 120px;
+  }
+
+  .project-card:nth-child(3) {
+    margin-top: -60px;
+  }
+
+  .project-card:nth-child(4) {
+    margin-top: 60px;
+  }
+
+  .project-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    position: relative;
+    overflow: hidden;
+    background: var(--stone-light);
+  }
+
+  .project-card:nth-child(2) .project-image {
+    aspect-ratio: 3/4;
+  }
+
+  .project-card:nth-child(3) .project-image {
+    aspect-ratio: 1/1;
+  }
+
+  .project-card:nth-child(4) .project-image {
+    aspect-ratio: 4/5;
+  }
+
+  /* Abstract project visuals */
+  .proj-visual {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .project-card:hover .proj-visual {
+    transform: scale(1.05);
+  }
+
+  /* Project 1 — Monolith */
+  .proj-1 {
+    background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+
+  .proj-1::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 60%;
+    height: 70%;
+    background: linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .proj-1::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    width: 40%;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(196,168,130,0.4) 0%, rgba(196,168,130,0.1) 100%);
+    border: 1px solid rgba(196,168,130,0.3);
+  }
+
+  /* Project 2 — Horizon */
+  .proj-2 {
+    background: linear-gradient(180deg, #d9d3c9 0%, #b8b0a4 100%);
+  }
+
+  .proj-2::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+
+  .proj-2::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 30%;
+    background: linear-gradient(90deg, rgba(196,168,130,0.5) 0%, rgba(196,168,130,0.1) 100%);
+    border: 1px solid rgba(196,168,130,0.3);
+  }
+
+  /* Project 3 — Void */
+  .proj-3 {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+
+  .proj-3::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    background: linear-gradient(180deg, #d9d3c9 0%, #b8b0a4 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .proj-3::after {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+    height: 30%;
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  }
+
+  /* Project 4 — Strata */
+  .proj-4 {
+    background: linear-gradient(180deg, #c4a882 0%, #a89070 100%);
+  }
+
+  .proj-4::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  }
+
+  .proj-4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, #d9d3c9 0%, #b8b0a4 100%);
+  }
+
+  .project-info {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--black);
+    transition: color 0.3s ease;
+  }
+
+  .project-card:hover .project-name {
+    color: var(--stone-dark);
+  }
+
+  .project-meta {
+    text-align: right;
+  }
+
+  .project-location {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    font-weight: 500;
+  }
+
+  .project-year {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 4px;
+  }
+
+  .project-index {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--warm-white);
+    font-weight: 500;
+    z-index: 2;
+    mix-blend-mode: difference;
+  }
+
+  /* ─── PHILOSOPHY SECTION ─── */
+  .philosophy {
+    background: var(--black);
+    color: var(--warm-white);
+    padding: 160px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(196,168,130,0.05) 0%, rgba(196,168,130,0.02) 100%);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .philosophy-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .philosophy-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--stone);
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  .philosophy-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -1px;
+  }
+
+  .philosophy-text .italic {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .philosophy-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .philosophy-detail p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--stone);
+    max-width: 400px;
+  }
+
+  .philosophy-detail p + p {
+    margin-top: 24px;
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 80px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(245,242,237,0.1);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--warm-white);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 8px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--warm-white);
+    padding: 80px 48px 48px;
+    border-top: 1px solid var(--stone-light);
+  }
+
+  .footer-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+  }
+
+  .footer-brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -1px;
+    color: var(--black);
+  }
+
+  .footer-brand span { font-weight: 300; }
+
+  .footer-links {
+    display: flex;
+    gap: 60px;
+  }
+
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .footer-col a {
+    display: block;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-col a:hover { color: var(--stone-dark); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--stone-light);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--stone-dark);
+    letter-spacing: 1px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-social a {
+    color: var(--stone-dark);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .footer-social a:hover { color: var(--black); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { min-height: 60vh; }
+    .hero-right { min-height: 40vh; }
+    .project-grid { grid-template-columns: 1fr; gap: 60px; }
+    .project-card:nth-child(2),
+    .project-card:nth-child(3),
+    .project-card:nth-child(4) { margin-top: 0; }
+    .philosophy-inner { grid-template-columns: 1fr; gap: 48px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { flex-direction: column; gap: 48px; }
+    .footer-links { flex-wrap: wrap; gap: 40px; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 10px; letter-spacing: 1px; }
+    .hero-left { padding: 0 24px 60px; }
+    .hero-title { letter-spacing: -2px; }
+    .projects { padding: 80px 24px; }
+    .philosophy { padding: 100px 24px; }
+    footer { padding: 60px 24px 32px; }
+    .stats { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat-number { font-size: 32px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .footer-bottom { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">FORM<span>/</span>NOIR</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#philosophy">Studio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <h1 class="hero-title">
+      FORM<br>
+      <span class="italic">&amp;</span><br>
+      NOIR
+    </h1>
+    <p class="hero-subtitle">Architecture Studio — Est. 2012</p>
+  </div>
+  <div class="hero-right">
+    <div class="arch-composition">
+      <div class="arch-shape arch-shape-1"></div>
+      <div class="arch-shape arch-shape-2"></div>
+      <div class="arch-shape arch-shape-3"></div>
+      <div class="arch-shape arch-shape-4"></div>
+      <div class="arch-shape arch-shape-5"></div>
+      <div class="arch-shape arch-shape-6"></div>
+      <div class="arch-shape arch-shape-7"></div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-header">
+    <span class="section-label">Selected Works</span>
+    <h2 class="section-title">Recent <span class="italic">Projects</span></h2>
+  </div>
+
+  <div class="project-grid">
+    <!-- Project 1 -->
+    <article class="project-card">
+      <div class="project-image">
+        <span class="project-index">01</span>
+        <div class="proj-visual proj-1"></div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">Monolith House</h3>
+        <div class="project-meta">
+          <div class="project-location">Kyoto, Japan</div>
+          <div class="project-year">2024</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="project-card">
+      <div class="project-image">
+        <span class="project-index">02</span>
+        <div class="proj-visual proj-2"></div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">Horizon Pavilion</h3>
+        <div class="project-meta">
+          <div class="project-location">Lisbon, Portugal</div>
+          <div class="project-year">2023</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 3 -->
+    <article class="project-card">
+      <div class="project-image">
+        <span class="project-index">03</span>
+        <div class="proj-visual proj-3"></div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">Void Chapel</h3>
+        <div class="project-meta">
+          <div class="project-location">Marrakech, Morocco</div>
+          <div class="project-year">2023</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 4 -->
+    <article class="project-card">
+      <div class="project-image">
+        <span class="project-index">04</span>
+        <div class="proj-visual proj-4"></div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">Strata Museum</h3>
+        <div class="project-meta">
+          <div class="project-location">Copenhagen, Denmark</div>
+          <div class="project-year">2022</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-inner">
+    <div>
+      <div class="philosophy-label">Our Approach</div>
+      <h2 class="philosophy-text">
+        We design spaces that <span class="italic">breathe</span> — where light, material, and silence converge.
+      </h2>
+    </div>
+    <div class="philosophy-detail">
+      <p>FORM/NOIR is an architecture studio based in Copenhagen and Kyoto. We believe that architecture is not about filling space, but about framing it — creating moments of pause, reflection, and clarity.</p>
+      <p>Our work spans residential, cultural, and public projects across four continents. Each project begins with a single question: what does this place need to become?</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div>
+      <div class="stat-number">48</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div>
+      <div class="stat-number">12</div>
+      <div class="stat-label">Countries</div>
+    </div>
+    <div>
+      <div class="stat-number">9</div>
+      <div class="stat-label">Design Awards</div>
+    </div>
+    <div>
+      <div class="stat-number">14</div>
+      <div class="stat-label">Years of Practice</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">FORM<span>/</span>NOIR</div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="#">About</a>
+          <a href="#">Team</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Work</h4>
+          <a href="#">Residential</a>
+          <a href="#">Cultural</a>
+          <a href="#">Public</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="#">hello@formnoir.studio</a>
+          <a href="#">+45 33 12 45 67</a>
+          <a href="#">Copenhagen, DK</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 FORM/NOIR. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Journal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

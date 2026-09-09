@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMAIL / CLIENT — inbox reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0C0F14;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #E8EDF2;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ---------- MAIN APP SHELL ---------- */
+    .app {
+      width: 100%;
+      max-width: 1440px;
+      height: 900px;
+      background: #13181F;
+      border-radius: 32px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
+
+    /* ---------- SIDEBAR (FOLDERS) ---------- */
+    .sidebar {
+      width: 260px;
+      background: #0F131A;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 16px 20px 16px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px 28px 8px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #FF7A5C, #FFB347);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #0C0F14;
+      box-shadow: 0 4px 12px rgba(255, 122, 92, 0.3);
+    }
+
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .logo-text span {
+      color: #FF7A5C;
+      font-weight: 700;
+    }
+
+    .compose-btn {
+      background: linear-gradient(135deg, #FF7A5C, #FF9F5A);
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: #0C0F14;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 20px -6px rgba(255, 122, 92, 0.4);
+      margin-bottom: 32px;
+      letter-spacing: -0.01em;
+    }
+
+    .compose-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px rgba(255, 122, 92, 0.5);
+    }
+
+    .compose-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #0C0F14;
+      stroke-width: 2.2;
+    }
+
+    .folder-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .folder-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #9AA6B5;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: -0.01em;
+    }
+
+    .folder-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #E8EDF2;
+    }
+
+    .folder-item.active {
+      background: rgba(255, 122, 92, 0.12);
+      color: #FF7A5C;
+      font-weight: 600;
+    }
+
+    .folder-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .folder-item .badge {
+      margin-left: auto;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #9AA6B5;
+    }
+
+    .folder-item.active .badge {
+      background: rgba(255, 122, 92, 0.2);
+      color: #FF7A5C;
+    }
+
+    .folder-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.04);
+      margin: 16px 8px;
+    }
+
+    .label-section {
+      padding: 0 8px;
+    }
+
+    .label-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #5A6675;
+      margin-bottom: 12px;
+    }
+
+    .label-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .label-chip {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.04);
+      color: #B0BCC9;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+
+    .label-chip:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #E8EDF2;
+    }
+
+    .label-chip.work {
+      background: rgba(94, 234, 212, 0.12);
+      color: #5EEAD4;
+      border-color: rgba(94, 234, 212, 0.2);
+    }
+
+    .label-chip.personal {
+      background: rgba(196, 181, 253, 0.12);
+      color: #C4B5FD;
+      border-color: rgba(196, 181, 253, 0.2);
+    }
+
+    .label-chip.urgent {
+      background: rgba(255, 122, 92, 0.12);
+      color: #FF7A5C;
+      border-color: rgba(255, 122, 92, 0.2);
+    }
+
+    .label-chip.finance {
+      background: rgba(253, 224, 71, 0.12);
+      color: #FDE047;
+      border-color: rgba(253, 224, 71, 0.2);
+    }
+
+    /* ---------- MAIN CONTENT (INBOX + READING PANE) ---------- */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #13181F;
+    }
+
+    /* ---------- TOP BAR (SEARCH + CALENDAR TEASER) ---------- */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      flex-shrink: 0;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      position: relative;
+      max-width: 480px;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: #5A6675;
+      stroke-width: 2;
+      fill: none;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 12px 16px 12px 44px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #E8EDF2;
+      outline: none;
+      transition: all 0.2s ease;
+      letter-spacing: -0.01em;
+    }
+
+    .search-input::placeholder {
+      color: #5A6675;
+    }
+
+    .search-input:focus {
+      border-color: rgba(255, 122, 92, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 0 3px rgba(255, 122, 92, 0.1);
+    }
+
+    .calendar-teaser {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 8px 16px 8px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .calendar-teaser:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .calendar-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #5EEAD4, #2DD4BF);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: #0C0F14;
+      flex-shrink: 0;
+    }
+
+    .calendar-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+
+    .calendar-info .day {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8EDF2;
+    }
+
+    .calendar-info .event {
+      font-size: 11px;
+      color: #9AA6B5;
+      font-weight: 400;
+    }
+
+    .calendar-info .event strong {
+      color: #5EEAD4;
+      font-weight: 600;
+    }
+
+    /* ---------- INBOX + READING PANE SPLIT ---------- */
+    .content-split {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ---------- INBOX LIST ---------- */
+    .inbox {
+      width: 420px;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      background: #13181F;
+    }
+
+    .inbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 12px 24px;
+      flex-shrink: 0;
+    }
+
+    .inbox-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .inbox-header .count {
+      font-size: 13px;
+      color: #5A6675;
+      font-weight: 500;
+    }
+
+    .inbox-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 12px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .inbox-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .inbox-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .inbox-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+    }
+
+    .mail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .mail-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mail-row.active {
+      background: rgba(255, 122, 92, 0.08);
+      box-shadow: inset 3px 0 0 #FF7A5C;
+    }
+
+    .mail-row.unread .mail-sender {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .mail-row.unread .mail-subject {
+      color: #E8EDF2;
+      font-weight: 500;
+    }
+
+    .mail-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+      color: #0C0F14;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #FF7A5C, #FFB347);
+    }
+
+    .mail-avatar.blue {
+      background: linear-gradient(135deg, #60A5FA, #3B82F6);
+    }
+
+    .mail-avatar.green {
+      background: linear-gradient(135deg, #5EEAD4, #2DD4BF);
+    }
+
+    .mail-avatar.purple {
+      background: linear-gradient(135deg, #C4B5FD, #A78BFA);
+    }
+
+    .mail-avatar.yellow {
+      background: linear-gradient(135deg, #FDE047, #FACC15);
+    }
+
+    .mail-avatar.pink {
+      background: linear-gradient(135deg, #F9A8D4, #EC4899);
+    }
+
+    .mail-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mail-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .mail-sender {
+      font-size: 14px;
+      font-weight: 500;
+      color: #B0BCC9;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mail-time {
+      font-size: 12px;
+      color: #5A6675;
+      font-weight: 400;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .mail-subject {
+      font-size: 13px;
+      font-weight: 400;
+      color: #9AA6B5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .mail-preview {
+      font-size: 12px;
+      color: #5A6675;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.4;
+    }
+
+    .mail-labels {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .mail-label {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .mail-label.work {
+      background: rgba(94, 234, 212, 0.12);
+      color: #5EEAD4;
+    }
+
+    .mail-label.urgent {
+      background: rgba(255, 122, 92, 0.12);
+      color: #FF7A5C;
+    }
+
+    .mail-label.personal {
+      background: rgba(196, 181, 253, 0.12);
+      color: #C4B5FD;
+    }
+
+    .mail-label.finance {
+      background: rgba(253, 224, 71, 0.12);
+      color: #FDE047;
+    }
+
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FF7A5C;
+      flex-shrink: 0;
+      margin-top: 6px;
+      box-shadow: 0 0 8px rgba(255, 122, 92, 0.5);
+    }
+
+    /* ---------- READING PANE ---------- */
+    .reading-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #13181F;
+    }
+
+    .reading-header {
+      padding: 24px 32px 16px 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      flex-shrink: 0;
+    }
+
+    .reading-subject {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .reading-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reading-sender {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reading-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #60A5FA, #3B82F6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #0C0F14;
+      flex-shrink: 0;
+    }
+
+    .reading-sender-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+
+    .reading-sender-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #E8EDF2;
+    }
+
+    .reading-sender-email {
+      font-size: 12px;
+      color: #5A6675;
+    }
+
+    .reading-date {
+      font-size: 13px;
+      color: #5A6675;
+      margin-left: auto;
+    }
+
+    .reading-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #B0BCC9;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #E8EDF2;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .action-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .action-btn.primary {
+      background: rgba(255, 122, 92, 0.12);
+      border-color: rgba(255, 122, 92, 0.2);
+      color: #FF7A5C;
+    }
+
+    .action-btn.primary:hover {
+      background: rgba(255, 122, 92, 0.2);
+    }
+
+    .reading-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px 32px 32px;
+    }
+
+    .reading-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .reading-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .reading-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+    }
+
+    .reading-body p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #B0BCC9;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .reading-body p strong {
+      color: #E8EDF2;
+      font-weight: 600;
+    }
+
+    .reading-body .highlight {
+      background: rgba(255, 122, 92, 0.1);
+      border-left: 3px solid #FF7A5C;
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 24px 0;
+    }
+
+    .reading-body .highlight p {
+      margin-bottom: 0;
+      color: #E8EDF2;
+      font-weight: 500;
+    }
+
+    .reading-body .signature {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .reading-body .signature p {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .reading-body .signature .name {
+      color: #E8EDF2;
+      font-weight: 600;
+    }
+
+    .reading-body .signature .role {
+      color: #5A6675;
+      font-size: 13px;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .inbox {
+        width: 360px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .app {
+        height: auto;
+        min-height: 900px;
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 20px 16px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo {
+        padding: 0 8px 0 8px;
+        margin-right: auto;
+      }
+
+      .compose-btn {
+        margin-bottom: 0;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .folder-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+        flex: 0 0 100%;
+        order: 3;
+      }
+
+      .folder-item {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .folder-divider {
+        display: none;
+      }
+
+      .label-section {
+        display: none;
+      }
+
+      .content-split {
+        flex-direction: column;
+      }
+
+      .inbox {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        max-height: 400px;
+      }
+
+      .reading-pane {
+        min-height: 400px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .app {
+        border-radius: 20px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 20px;
+        gap: 12px;
+      }
+
+      .search-wrapper {
+        max-width: none;
+      }
+
+      .calendar-teaser {
+        justify-content: center;
+      }
+
+      .reading-header {
+        padding: 20px 20px 12px 20px;
+      }
+
+      .reading-body {
+        padding: 20px 20px 24px 20px;
+      }
+
+      .reading-subject {
+        font-size: 18px;
+      }
+
+      .reading-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .reading-date {
+        margin-left: 0;
+      }
+
+      .reading-actions {
+        flex-wrap: wrap;
+      }
+
+      .inbox-header {
+        padding: 16px 20px 8px 20px;
+      }
+
+      .inbox-list {
+        padding: 0 8px 8px 8px;
+      }
+
+      .mail-row {
+        padding: 12px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">E</div>
+        <div class="logo-text">EMAIL<span>/</span>CLIENT</div>
+      </div>
+
+      <button class="compose-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Compose
+      </button>
+
+      <ul class="folder-list">
+        <li class="folder-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
+            <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+          Inbox
+          <span class="badge">12</span>
+        </li>
+        <li class="folder-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          Starred
+        </li>
+        <li class="folder-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/>
+            <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
+          Sent
+        </li>
+        <li class="folder-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Drafts
+          <span class="badge">3</span>
+        </li>
+        <li class="folder-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          Trash
+        </li>
+        <li class="folder-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Snoozed
+        </li>
+      </ul>
+
+      <div class="folder-divider"></div>
+
+      <div class="label-section">
+        <div class="label-title">Labels</div>
+        <div class="label-list">
+          <span class="label-chip work">Work</span>
+          <span class="label-chip personal">Personal</span>
+          <span class="label-chip urgent">Urgent</span>
+          <span class="label-chip finance">Finance</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- TOP BAR -->
+      <div class="top-bar">
+        <div class="search-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" class="search-input" placeholder="Search emails, people, or labels…" value="">
+        </div>
+
+        <div class="calendar-teaser">
+          <div class="calendar-icon">14</div>
+          <div class="calendar-info">
+            <span class="day">Thursday, Nov 14</span>
+            <span class="event"><strong>2:30 PM</strong> — Design sync</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT SPLIT -->
+      <div class="content-split">
+        <!-- INBOX LIST -->
+        <section class="inbox">
+          <div class="inbox-header">
+            <h2>Inbox</h2>
+            <span class="count">12 messages</span>
+          </div>
+
+          <div class="inbox-list">
+            <!-- Row 1 (active) -->
+            <div class="mail-row active unread">
+              <div class="mail-avatar blue">MK</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Maya Krishnan</span>
+                  <span class="mail-time">10:42 AM</span>
+                </div>
+                <div class="mail-subject">Q4 roadmap review — final deck</div>
+                <div class="mail-preview">Hey team, attached is the final version of the Q4 roadmap. I've incorporated all the feedback from…</div>
+                <div class="mail-labels">
+                  <span class="mail-label work">Work</span>
+                  <span class="mail-label urgent">Urgent</span>
+                </div>
+              </div>
+              <div class="unread-dot"></div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="mail-row unread">
+              <div class="mail-avatar green">JT</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">James Thornton</span>
+                  <span class="mail-time">9:18 AM</span>
+                </div>
+                <div class="mail-subject">Re: Partnership proposal with Northwind</div>
+                <div class="mail-preview">Thanks for sending this over. I've reviewed the terms and have a few questions about the revenue…</div>
+                <div class="mail-labels">
+                  <span class="mail-label work">Work</span>
+                </div>
+              </div>
+              <div class="unread-dot"></div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="mail-row">
+              <div class="mail-avatar purple">SR</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Sofia Ramirez</span>
+                  <span class="mail-time">Yesterday</span>
+                </div>
+                <div class="mail-subject">Dinner this weekend?</div>
+                <div class="mail-preview">Hey! It's been way too long. Are you free Saturday evening? There's a new place on 5th…</div>
+                <div class="mail-labels">
+                  <span class="mail-label personal">Personal</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="mail-row">
+              <div class="mail-avatar yellow">AL</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Alex Liu</span>
+                  <span class="mail-time">Yesterday</span>
+                </div>
+                <div class="mail-subject">Invoice #INV-2847 — payment confirmation</div>
+                <div class="mail-preview">This is a confirmation that payment for invoice #INV-2847 has been processed successfully…</div>
+                <div class="mail-labels">
+                  <span class="mail-label finance">Finance</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="mail-row">
+              <div class="mail-avatar pink">NP</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Nina Patel</span>
+                  <span class="mail-time">Mon</span>
+                </div>
+                <div class="mail-subject">Design system — component library update</div>
+                <div class="mail-preview">The new component library is live! We've added 12 new components and updated the color tokens…</div>
+                <div class="mail-labels">
+                  <span class="mail-label work">Work</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="mail-row">
+              <div class="mail-avatar">DR</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Daniel Rivera</span>
+                  <span class="mail-time">Mon</span>
+                </div>
+                <div class="mail-subject">Weekly metrics report — week 45</div>
+                <div class="mail-preview">Please find attached the weekly metrics report for week 45. Key highlights: DAU up 8.2%…</div>
+                <div class="mail-labels">
+                  <span class="mail-label work">Work</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="mail-row">
+              <div class="mail-avatar green">EW</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Emma Wilson</span>
+                  <span class="mail-time">Sun</span>
+                </div>
+                <div class="mail-subject">Book club — next pick</div>
+                <div class="mail-preview">Hi everyone! For next month, I'm proposing we read "The Midnight Library" by Matt Haig…</div>
+                <div class="mail-labels">
+                  <span class="mail-label personal">Personal</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="mail-row">
+              <div class="mail-avatar blue">TC</div>
+              <div class="mail-content">
+                <div class="mail-top">
+                  <span class="mail-sender">Tom Chen</span>
+                  <span class="mail-time">Sat</span>
+                </div>
+                <div class="mail-subject">Server migration — maintenance window</div>
+                <div class="mail-preview">Heads up: we'll be migrating the primary database this Saturday from 2:00 AM to 6:00 AM UTC…</div>
+                <div class="mail-labels">
+                  <span class="mail-label work">Work</span>
+                  <span class="mail-label urgent">Urgent</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- READING PANE -->
+        <section class="reading-pane">
+          <div class="reading-header">
+            <h1 class="reading-subject">Q4 roadmap review — final deck</h1>
+            <div class="reading-meta">
+              <div class="reading-sender">
+                <div class="reading-avatar">MK</div>
+                <div class="reading-sender-info">
+                  <span class="reading-sender-name">Maya Krishnan</span>
+                  <span class="reading-sender-email">maya@northwind.io</span>
+                </div>
+              </div>
+              <span class="reading-date">Nov 14, 2024 at 10:42 AM</span>
+            </div>
+            <div class="reading-actions">
+              <button class="action-btn primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 17 4 12 9 7"/>
+                  <path d="M20 18v-2a4 4 0 0 0-4-4H4"/>
+                </svg>
+                Reply
+              </button>
+              <button class="action-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 17 20 12 15 7"/>
+                  <path d="M4 18v-2a4 4 0 0 1 4-4h12"/>
+                </svg>
+                Forward
+              </button>
+              <button class="action-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="1"/>
+                  <circle cx="19" cy="12" r="1"/>
+                  <circle cx="5" cy="12" r="1"/>
+                </svg>
+                More
+              </button>
+            </div>
+          </div>
+
+          <div class="reading-body">
+            <p>Hey team,</p>
+
+            <p>Attached is the final version of the Q4 roadmap. I've incorporated all the feedback from last week's workshop and aligned the milestones with the revised budget.</p>
+
+            <div class="highlight">
+              <p>Key change: We're moving the analytics dashboard launch to early December to give the data team more time for QA.</p>
+            </div>
+
+            <p>Here's a quick summary of the major workstreams:</p>
+
+            <p><strong>1. Platform migration</strong> — On track for mid-November. Tom is leading the cutover and will share the runbook by Friday.</p>
+
+            <p><strong>2. Design system v2</strong> — Nina's team has shipped the component library. Adoption across product teams is at 68% and climbing.</p>
+
+            <p><strong>3. Enterprise onboarding</strong> — We've signed 4 new logos this quarter. The customer success team is fully staffed and ready for the influx.</p>
+
+            <p>Please review the deck before our sync on Thursday. If you have any blocking concerns, drop them in the #q4-roadmap channel so we can address them live.</p>
+
+            <p>Thanks for all the hard work — this is going to be a strong finish to the year.</p>
+
+            <div class="signature">
+              <p class="name">Maya Krishnan</p>
+              <p class="role">VP of Product · Northwind</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

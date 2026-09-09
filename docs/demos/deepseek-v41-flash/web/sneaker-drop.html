@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNEAKER / DROP — AERO GLIDE 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface-2: #1a1a26;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --text-dim: #8888a0;
+      --accent: #ff4d2e;
+      --accent-2: #00e5a0;
+      --accent-3: #ffd60a;
+      --glow: rgba(255, 77, 46, 0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .mono {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: #ff6b4a;
+      box-shadow: 0 0 24px var(--glow);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 48px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(255, 77, 46, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 229, 160, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 5.5vw, 76px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .outline {
+      -webkit-text-stroke: 1.5px var(--text);
+      color: transparent;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 440px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .cd-unit {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px 18px;
+      min-width: 76px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cd-unit::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .cd-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .cd-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      background: #ff6b4a;
+      box-shadow: 0 0 32px var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 16px 36px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text);
+      background: var(--surface);
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .shoe-stage {
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shoe-glow {
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(255, 77, 46, 0.25) 0%, transparent 65%);
+      filter: blur(40px);
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .shoe-svg {
+      width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-16px) rotate(-2deg); }
+    }
+
+    .shoe-ring {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      animation: spin 30s linear infinite;
+    }
+
+    .shoe-ring::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .shoe-ring-2 {
+      width: 70%;
+      height: 70%;
+      border-style: dashed;
+      animation-direction: reverse;
+      animation-duration: 45s;
+    }
+
+    .shoe-ring-2::before { background: var(--accent-2); box-shadow: 0 0 12px var(--accent-2); }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 100px 48px;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      color: var(--text-dim);
+      max-width: 560px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── COLORWAYS ── */
+    .colorways {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .colorways-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .colorway-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .cw-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cw-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .cw-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 12px 40px rgba(255, 77, 46, 0.15);
+    }
+
+    .cw-card.active::before {
+      content: 'SELECTED';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .cw-swatch {
+      width: 100%;
+      aspect-ratio: 1;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cw-swatch svg {
+      width: 90%;
+      height: auto;
+      transition: transform 0.3s;
+    }
+
+    .cw-card:hover .cw-swatch svg { transform: scale(1.08) rotate(-3deg); }
+
+    .cw-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .cw-code {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TECH SPECS ── */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .spec-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .spec-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .spec-item:hover {
+      padding-left: 12px;
+      border-color: var(--accent);
+    }
+
+    .spec-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .spec-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .spec-value {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-align: right;
+      letter-spacing: 0.05em;
+    }
+
+    .spec-visual {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .spec-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, var(--border) 49.5%, var(--border) 50.5%, transparent 50.5%);
+      opacity: 0.5;
+    }
+
+    .spec-visual svg {
+      width: 70%;
+      height: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .spec-tag {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ── STORY ── */
+    .story {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .story-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .story-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--accent);
+    }
+
+    .story-quote .accent { color: var(--accent); }
+
+    .story-body p {
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .story-meta {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .story-meta-item .label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .story-meta-item .value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* ── SIZE SELECTOR ── */
+    .size-section {
+      text-align: center;
+    }
+
+    .size-section .section-label {
+      justify-content: center;
+    }
+
+    .size-section .section-label::before { display: none; }
+
+    .size-section .section-desc {
+      margin: 0 auto 48px;
+    }
+
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      max-width: 900px;
+      margin: 0 auto 32px;
+    }
+
+    .size-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 18px 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .size-btn:hover:not(.sold-out) {
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+
+    .size-btn.selected {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .size-btn.sold-out {
+      color: var(--text-dim);
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .size-btn.sold-out::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: var(--text-dim);
+      transform: rotate(-20deg);
+    }
+
+    .size-note {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 40px;
+    }
+
+    .size-note a { color: var(--accent); text-decoration: none; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 77, 46, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-section > * { position: relative; z-index: 2; }
+
+    .cta-title {
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .cta-title .accent { color: var(--accent); }
+
+    .cta-sub {
+      color: var(--text-dim);
+      font-size: 17px;
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-top: 32px;
+      letter-spacing: 0.1em;
+    }
+
+    .cta-price strong {
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; padding: 120px 32px 60px; }
+      .hero-visual { margin-top: 40px; }
+      .specs-grid { grid-template-columns: 1fr; gap: 48px; }
+      .story-grid { grid-template-columns: 1fr; gap: 48px; }
+      .colorway-grid { grid-template-columns: repeat(2, 1fr); }
+      .size-grid { grid-template-columns: repeat(4, 1fr); }
+      nav { padding: 16px 32px; }
+      section { padding: 80px 32px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 40px; }
+      .hero h1 { font-size: 44px; }
+      .countdown { flex-wrap: wrap; }
+      .cd-unit { min-width: 64px; padding: 12px 14px; }
+      .cd-num { font-size: 22px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-ghost { width: 100%; text-align: center; }
+      section { padding: 64px 20px; }
+      .colorway-grid { grid-template-columns: 1fr; }
+      .size-grid { grid-template-columns: repeat(3, 1fr); }
+      .story-meta { flex-direction: column; gap: 20px; }
+      footer { flex-direction: column; text-align: center; padding: 32px 20px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .cta-section { padding: 80px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SNEAKER<span>/</span>DROP</div>
+    <ul class="nav-links">
+      <li><a href="#colorways">Colorways</a></li>
+      <li><a href="#specs">Tech</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#sizes">Sizes</a></li>
+    </ul>
+    <button class="nav-cta">Notify Me</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Drop 01 — Limited Release</div>
+      <h1>AERO<br><span class="outline">GLIDE</span><br><span class="accent">01</span></h1>
+      <p class="hero-sub">Engineered for velocity. A featherweight silhouette built on our proprietary AirFrame™ sole unit, wrapped in a seamless knit upper that moves with you.</p>
+
+      <div class="countdown" id="countdown">
+        <div class="cd-unit">
+          <div class="cd-num" id="cd-days">00</div>
+          <div class="cd-label">Days</div>
+        </div>
+        <div class="cd-unit">
+          <div class="cd-num" id="cd-hours">00</div>
+          <div class="cd-label">Hours</div>
+        </div>
+        <div class="cd-unit">
+          <div class="cd-num" id="cd-mins">00</div>
+          <div class="cd-label">Mins</div>
+        </div>
+        <div class="cd-unit">
+          <div class="cd-num" id="cd-secs">00</div>
+          <div class="cd-label">Secs</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <button class="btn-primary">Secure Your Pair</button>
+        <button class="btn-ghost">View Details</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="shoe-stage">
+        <div class="shoe-glow"></div>
+        <div class="shoe-ring"></div>
+        <div class="shoe-ring shoe-ring-2"></div>
+        <svg class="shoe-svg" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sole -->
+          <path d="M40 200 Q30 200 28 190 L25 175 Q22 160 35 155 L340 155 Q360 155 365 170 L370 185 Q372 200 355 200 Z" fill="#1a1a26" stroke="#2a2a3a" stroke-width="1.5"/>
+          <path d="M40 200 Q30 200 28 190 L25 175 Q22 160 35 155 L340 155 Q360 155 365 170 L370 185 Q372 200 355 200 Z" fill="url(#soleGrad)"/>
+          <!-- Sole accent -->
+          <path d="M35 155 L340 155 Q360 155 365 170 L370 185 Q372 200 355 200 L40 200 Q30 200 28 190 L25 175 Q22 160 35 155 Z" fill="none" stroke="#ff4d2e" stroke-width="1" opacity="0.6"/>
+          <!-- Midsole -->
+          <path d="M45 155 L335 155 Q350 155 355 165 L358 175 L42 175 Z" fill="#ff4d2e" opacity="0.9"/>
+          <!-- Upper body -->
+          <path d="M50 155 Q55 100 90 80 Q130 60 180 65 Q230 70 270 90 Q310 110 335 155 Z" fill="#e8e8f0"/>
+          <path d="M50 155 Q55 100 90 80 Q130 60 180 65 Q230 70 270 90 Q310 110 335 155 Z" fill="url(#upperGrad)"/>
+          <!-- Toe cap -->
+          <path d="M50 155 Q55 100 90 80 Q110 72 130 70 L135 155 Z" fill="#d0d0dc"/>
+          <!-- Heel -->
+          <path d="M280 95 Q310 110 335 155 L290 155 Q285 120 280 95 Z" fill="#c8c8d4"/>
+          <!-- Swoosh / accent -->
+          <path d="M100 140 Q160 110 240 120 Q280 125 310 145" stroke="#ff4d2e" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <!-- Laces -->
+          <line x1="140" y1="90" x2="160" y2="105" stroke="#8888a0" stroke-width="2"/>
+          <line x1="155" y1="85" x2="175" y2="100" stroke="#8888a0" stroke-width="2"/>
+          <line x1="170" y1="82" x2="190" y2="97" stroke="#8888a0" stroke-width="2"/>
+          <line x1="185" y1="80" x2="205" y2="95" stroke="#8888a0" stroke-width="2"/>
+          <!-- Collar -->
+          <path d="M250 85 Q270 80 285 90 Q295 100 290 115" stroke="#8888a0" stroke-width="2" fill="none"/>
+          <!-- Tongue -->
+          <path d="M200 70 Q210 60 225 65 Q235 70 230 85" fill="#d0d0dc" stroke="#2a2a3a" stroke-width="1"/>
+          <!-- Air unit -->
+          <ellipse cx="300" cy="165" rx="20" ry="8" fill="#00e5a0" opacity="0.3"/>
+          <ellipse cx="300" cy="165" rx="20" ry="8" fill="none" stroke="#00e5a0" stroke-width="1" opacity="0.6"/>
+          <!-- Stitching -->
+          <path d="M60 150 Q100 130 150 125" stroke="#8888a0" stroke-width="1" stroke-dasharray="3 3" fill="none"/>
+          <defs>
+            <linearGradient id="soleGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2a2a3a"/>
+              <stop offset="100%" stop-color="#0a0a0f"/>
+            </linearGradient>
+            <linearGradient id="upperGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.1"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORWAYS -->
+  <section class="colorways" id="colorways">
+    <div class="colorways-header">
+      <div>
+        <div class="section-label">Colorways</div>
+        <h2 class="section-title">Four ways to<br>make an entrance.</h2>
+      </div>
+      <p class="section-desc" style="max-width: 360px;">Each colorway is produced in a strictly limited run. Once they're gone, they're gone for good.</p>
+    </div>
+
+    <div class="colorway-grid">
+      <div class="cw-card active" data-color="ember">
+        <div class="cw-swatch" style="background: linear-gradient(135deg, #1a1a26, #2a1a1a);">
+          <svg viewBox="0 0 200 130" fill="none">
+            <path d="M20 100 Q15 100 14 95 L12 88 Q11 80 18 78 L170 78 Q180 78 182 85 L185 93 Q186 100 178 100 Z" fill="#1a1a26"/>
+            <path d="M25 78 L168 78 Q178 78 180 85 L183 93 L22 93 Z" fill="#ff4d2e"/>
+            <path d="M25 78 Q28 50 45 40 Q65 30 90 33 Q115 35 135 45 Q155 55 168 78 Z" fill="#e8e8f0"/>
+            <path d="M50 70 Q80 55 120 60 Q140 63 155 73" stroke="#ff4d2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="150" cy="83" rx="10" ry="4" fill="#00e5a0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="cw-name">Ember</div>
+        <div class="cw-code">AD-01-EMB</div>
+      </div>
+
+      <div class="cw-card" data-color="mint">
+        <div class="cw-swatch" style="background: linear-gradient(135deg, #1a1a26, #1a2a26);">
+          <svg viewBox="0 0 200 130" fill="none">
+            <path d="M20 100 Q15 100 14 95 L12 88 Q11 80 18 78 L170 78 Q180 78 182 85 L185 93 Q186 100 178 100 Z" fill="#1a1a26"/>
+            <path d="M25 78 L168 78 Q178 78 180 85 L183 93 L22 93 Z" fill="#00e5a0"/>
+            <path d="M25 78 Q28 50 45 40 Q65 30 90 33 Q115 35 135 45 Q155 55 168 78 Z" fill="#e8e8f0"/>
+            <path d="M50 70 Q80 55 120 60 Q140 63 155 73" stroke="#00e5a0" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="150" cy="83" rx="10" ry="4" fill="#00e5a0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="cw-name">Mint</div>
+        <div class="cw-code">AD-01-MNT</div>
+      </div>
+
+      <div class="cw-card" data-color="solar">
+        <div class="cw-swatch" style="background: linear-gradient(135deg, #1a1a26, #2a2a1a);">
+          <svg viewBox="0 0 200 130" fill="none">
+            <path d="M20 100 Q15 100 14 95 L12 88 Q11 80 18 78 L170 78 Q180 78 182 85 L185 93 Q186 100 178 100 Z" fill="#1a1a26"/>
+            <path d="M25 78 L168 78 Q178 78 180 85 L183 93 L22 93 Z" fill="#ffd60a"/>
+            <path d="M25 78 Q28 50 45 40 Q65 30 90 33 Q115 35 135 45 Q155 55 168 78 Z" fill="#e8e8f0"/>
+            <path d="M50 70 Q80 55 120 60 Q140 63 155 73" stroke="#ffd60a" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="150" cy="83" rx="10" ry="4" fill="#00e5a0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="cw-name">Solar</div>
+        <div class="cw-code">AD-01-SLR</div>
+      </div>
+
+      <div class="cw-card" data-color="void">
+        <div class="cw-swatch" style="background: linear-gradient(135deg, #0a0a0f, #1a1a26);">
+          <svg viewBox="0 0 200 130" fill="none">
+            <path d="M20 100 Q15 100 14 95 L12 88 Q11 80 18 78 L170 78 Q180 78 182 85 L185 93 Q186 100 178 100 Z" fill="#0a0a0f"/>
+            <path d="M25 78 L168 78 Q178 78 180 85 L183 93 L22 93 Z" fill="#2a2a3a"/>
+            <path d="M25 78 Q28 50 45 40 Q65 30 90 33 Q115 35 135 45 Q155 55 168 78 Z" fill="#2a2a3a"/>
+            <path d="M50 70 Q80 55 120 60 Q140 63 155 73" stroke="#ff4d2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <ellipse cx="150" cy="83" rx="10" ry="4" fill="#00e5a0" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="cw-name">Void</div>
+        <div class="cw-code">AD-01-VOI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH SPECS -->
+  <section id="specs">
+    <div class="section-label">Technical Details</div>
+    <h2 class="section-title">Built different.<br>Literally.</h2>
+    <p class="section-desc" style="margin-bottom: 64px;">Every component of the AERO GLIDE 01 was re-engineered from the ground up. No legacy parts. No compromises.</p>
+
+    <div class="specs-grid">
+      <div class="spec-list">
+        <div class="spec-item">
+          <div class="spec-num">01</div>
+          <div class="spec-name">AirFrame™ Sole Unit</div>
+          <div class="spec-value">Nitrogen-infused foam</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-num">02</div>
+          <div class="spec-name">Seamless Knit Upper</div>
+          <div class="spec-value">Recycled FlyKnit 2.0</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-num">03</div>
+          <div class="spec-name">Carbon Heel Plate</div>
+          <div class="spec-value">3K twill weave</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-num">04</div>
+          <div class="spec-name">Weight</div>
+          <div class="spec-value">218g (US 9)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-num">05</div>
+          <div class="spec-name">Drop Height</div>
+          <div class="spec-value">6mm offset</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-num">06</div>
+          <div class="spec-name">Outsole</div>
+          <div class="spec-value">Abrasion-resistant rubber</div>
+        </div>
+      </div>
+
+      <div class="spec-visual">
+        <svg viewBox="0 0 300 300" fill="none">
+          <!-- Cross-section diagram -->
+          <circle cx="150" cy="150" r="120" stroke="#2a2a3a" stroke-width="1" fill="none"/>
+          <circle cx="150" cy="150" r="90" stroke="#2a2a3a" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
+          <circle cx="150" cy="150" r="60" stroke="#2a2a3a" stroke-width="1" fill="none"/>
+          <!-- Sole layers -->
+          <path d="M60 180 Q60 160 80 155 L220 155 Q240 160 240 180 Q240 200 220 205 L80 205 Q60 200 60 180 Z" fill="#1a1a26" stroke="#2a2a3a" stroke-width="1"/>
+          <path d="M65 175 L235 175 L235 185 L65 185 Z" fill="#ff4d2e" opacity="0.8"/>
+          <path d="M70 185 L230 185 L230 195 L70 195 Z" fill="#00e5a0" opacity="0.4"/>
+          <!-- Upper -->
+          <path d="M80 155 Q85 110 110 95 Q140 80 170 85 Q200 90 220 155 Z" fill="#e8e8f0" opacity="0.15" stroke="#e8e8f0" stroke-width="1"/>
+          <!-- Labels -->
+          <line x1="240" y1="180" x2="270" y2="180" stroke="#ff4d2e" stroke-width="1"/>
+          <text x="275" y="183" fill="#ff4d2e" font-family="Space Grotesk" font-size="9" letter-spacing="1">AIRFRAME</text>
+          <line x1="240" y1="190" x2="270" y2="190" stroke="#00e5a0" stroke-width="1"/>
+          <text x="275" y="193" fill="#00e5a0" font-family="Space Grotesk" font-size="9" letter-spacing="1">CARBON</text>
+          <line x1="60" y1="120" x2="30" y2="120" stroke="#e8e8f0" stroke-width="1"/>
+          <text x="5" y="123" fill="#e8e8f0" font-family="Space Grotesk" font-size="9" letter-spacing="1">KNIT</text>
+        </svg>
+        <div class="spec-tag">Cross-section / 01</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="story-grid">
+      <div>
+        <div class="section-label">The Story</div>
+        <div class="story-quote">"We didn't set out to make a sneaker. We set out to make a <span class="accent">feeling</span>."</div>
+        <div class="story-meta">
+          <div class="story-meta-item">
+            <div class="label">Designer</div>
+            <div class="value">Mara Chen</div>
+          </div>
+          <div class="story-meta-item">
+            <div class="label">Development</div>
+            <div class="value">18 months</div>
+          </div>
+          <div class="story-meta-item">
+            <div class="label">Prototypes</div>
+            <div class="value">47 iterations</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-body">
+        <p>The AERO GLIDE 01 began as a sketch on a napkin during a red-eye flight from Tokyo to Portland. Mara Chen, our lead designer, was frustrated. Every sneaker on the market felt like a compromise — too heavy, too stiff, too safe.</p>
+        <p>She wanted something that felt like running on air. Something that disappeared on your foot the moment you laced up. Something that looked as fast as it felt.</p>
+        <p>Eighteen months and forty-seven prototypes later, the AERO GLIDE 01 was born. It's not just a sneaker. It's a statement. It's a refusal to accept the status quo. It's the feeling of flight, captured in 218 grams of engineered perfection.</p>
+        <p>This is Drop 01. There will be others. But there will never be another first.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZE SELECTOR -->
+  <section class="size-section" id="sizes">
+    <div class="section-label">Select Your Size</div>
+    <h2 class="section-title">Find your fit.</h2>
+    <p class="section-desc">The AERO GLIDE 01 runs true to size. If you're between sizes, we recommend sizing up for a more relaxed fit.</p>
+
+    <div class="size-grid" id="sizeGrid">
+      <button class="size-btn" data-size="6">US 6</button>
+      <button class="size-btn" data-size="6.5">US 6.5</button>
+      <button class="size-btn" data-size="7">US 7</button>
+      <button class="size-btn" data-size="7.5">US 7.5</button>
+      <button class="size-btn" data-size="8">US 8</button>
+      <button class="size-btn" data-size="8.5">US 8.5</button>
+      <button class="size-btn" data-size="9">US 9</button>
+      <button class="size-btn" data-size="9.5">US 9.5</button>
+      <button class="size-btn" data-size="10">US 10</button>
+      <button class="size-btn" data-size="10.5">US 10.5</button>
+      <button class="size-btn" data-size="11">US 11</button>
+      <button class="size-btn" data-size="11.5">US 11.5</button>
+      <button class="size-btn" data-size="12">US 12</button>
+      <button class="size-btn sold-out" data-size="12.5">US 12.5</button>
+      <button class="size-btn sold-out" data-size="13">US 13</button>
+      <button class="size-btn sold-out" data-size="14">US 14</button>
+    </div>
+
+    <p class="size-note">Not sure about your size? <a href="#">View our sizing guide</a></p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to <span class="accent">fly</span>?</h2>
+    <p class="cta-sub">Drop 01 is limited to 500 pairs worldwide. Secure your pair before they're gone. Shipping begins March 15.</p>
+    <div class="cta-actions">
+      <button class="btn-primary">Add to Cart — $220</button>
+      <button class="btn-ghost">Notify Me</button>
+    </div>
+    <div class="cta-price">Free shipping on orders over <strong>$150</strong> · 30-day returns</div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">SNEAKER<span>/</span>DROP</div>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Support</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 SNEAKER/DROP. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // ── COUNTDOWN ──
+    const dropDate = new Date();
+    dropDate.setDate(dropDate.getDate() + 14);
+    dropDate.setHours(10, 0, 0, 0);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = dropDate.getTime() - now;
+
+      if (distance < 0) {
+        document.getElementById('countdown').innerHTML = '<div style="font-family: Space Grotesk; font-size: 24px; font-weight: 700; color: var(--accent);">DROP IS LIVE</div>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ── COLORWAY SELECTION ──
+    document.querySelectorAll('.cw-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.cw-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
+    // ── SIZE SELECTION ──
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('sold-out')) return;
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+    });
+
+    // ── SMOOTH SCROLL FOR NAV LINKS ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

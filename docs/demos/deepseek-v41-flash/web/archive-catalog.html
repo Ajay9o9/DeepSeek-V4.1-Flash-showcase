@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE / CATALOG — A Living Index of Material Memory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f4efe6;
+    --paper-warm: #ebe4d6;
+    --paper-deep: #ddd3bf;
+    --rust: #b8442a;
+    --rust-deep: #8a2f1c;
+    --moss: #4a5d3a;
+    --gold: #c89b3c;
+    --line: #2a241d;
+    --muted: #6b6258;
+    --shadow: rgba(26, 22, 18, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(200, 155, 60, 0.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(184, 68, 42, 0.05), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  /* Paper grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .mono { font-family: 'DM Mono', monospace; }
+  .serif { font-family: 'Instrument Serif', serif; }
+
+  /* ============ HEADER ============ */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244, 239, 230, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-bottom: 1px solid rgba(42, 36, 29, 0.15);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .topbar-left { display: flex; gap: 24px; align-items: center; }
+  .topbar-left span:first-child { color: var(--rust); }
+  .topbar-right { display: flex; gap: 20px; align-items: center; }
+  .topbar-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .topbar-right a:hover { color: var(--ink); }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo .slash { color: var(--rust); font-style: italic; }
+  .logo .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-left: 4px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--rust);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--rust); }
+  .nav-cta::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 56px 40px 40px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 60px;
+    align-items: end;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .hero-left { max-width: 640px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 24px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 5.4vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    max-width: 520px;
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 4px 4px 4px 18px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .search:focus-within {
+    border-color: var(--rust);
+    box-shadow: 0 0 0 3px rgba(184, 68, 42, 0.12);
+  }
+  .search svg { flex-shrink: 0; color: var(--muted); }
+  .search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 14px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+  }
+  .search input::placeholder { color: var(--muted); opacity: 0.7; }
+  .search button {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .search button:hover { background: var(--rust); }
+
+  .search-hints {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .search-hints span { padding-top: 4px; }
+  .search-hints a {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid rgba(42, 36, 29, 0.25);
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .search-hints a:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* Hero right — featured object */
+  .hero-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .featured-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .featured-label .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--rust);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .object-frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG illustration of an antique object — a brass astrolabe / compass */
+  .object-frame svg {
+    width: 78%;
+    height: 78%;
+    filter: drop-shadow(0 8px 20px rgba(26, 22, 18, 0.25));
+  }
+
+  .object-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 60%);
+    pointer-events: none;
+  }
+
+  .object-meta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+  .object-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .object-title em { font-style: italic; color: var(--rust); }
+  .object-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+  .object-id strong { color: var(--ink); display: block; font-weight: 500; }
+
+  /* ============ FILTER BAR ============ */
+  .filters {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-warm);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .filter-list {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    flex-shrink: 0;
+  }
+  .filter-list button {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 7px 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-list button:hover { background: rgba(42, 36, 29, 0.06); }
+  .filter-list button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .filter-list button .count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    opacity: 0.6;
+    margin-left: 6px;
+  }
+
+  .filter-sort {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .filter-sort select {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  /* ============ CATALOG GRID ============ */
+  .catalog {
+    padding: 48px 40px 64px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 32px;
+    letter-spacing: -0.01em;
+  }
+  .section-head h2 em { font-style: italic; color: var(--rust); }
+  .section-head .meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px 24px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .card:hover { transform: translateY(-4px); }
+
+  .card-visual {
+    aspect-ratio: 1;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .card-visual svg {
+    width: 70%;
+    height: 70%;
+    transition: transform 0.5s;
+  }
+  .card:hover .card-visual svg { transform: scale(1.06) rotate(-2deg); }
+
+  .card-visual .tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper);
+    padding: 3px 7px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .card-visual .tag.rare { background: var(--rust); color: var(--paper); border-color: var(--rust); }
+  .card-visual .tag.new { background: var(--moss); color: var(--paper); border-color: var(--moss); }
+
+  .card-visual .num {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .card-title em { font-style: italic; }
+  .card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* ============ METADATA PANEL ============ */
+  .metadata {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metadata::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200, 155, 60, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .meta-left .eyebrow { color: var(--gold); }
+  .meta-left .eyebrow::before { background: var(--gold); }
+  .meta-left h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .meta-left h2 em { font-style: italic; color: var(--gold); }
+  .meta-left p {
+    color: rgba(244, 239, 230, 0.7);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 380px;
+  }
+
+  .meta-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid rgba(244, 239, 230, 0.15);
+  }
+  .meta-row {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(244, 239, 230, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .meta-row:nth-child(odd) { padding-right: 32px; border-right: 1px solid rgba(244, 239, 230, 0.15); }
+  .meta-row:nth-child(even) { padding-left: 32px; }
+  .meta-row .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .meta-row .v {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--paper);
+  }
+  .meta-row .v small {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(244, 239, 230, 0.5);
+    margin-left: 6px;
+  }
+
+  /* ============ DIGITIZATION STORY ============ */
+  .story {
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .story-visual {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .story-visual svg { width: 100%; height: 100%; display: block; }
+
+  .story-content .eyebrow { color: var(--moss); }
+  .story-content .eyebrow::before { background: var(--moss); }
+  .story-content h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+  .story-content h2 em { font-style: italic; color: var(--rust); }
+  .story-content p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    max-width: 520px;
+  }
+
+  .story-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .stat .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .stat .num em { font-style: italic; color: var(--rust); }
+  .stat .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============ VISIT CTA ============ */
+  .visit {
+    padding: 80px 40px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .visit h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .visit h2 em { font-style: italic; color: var(--rust); }
+  .visit p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: 460px;
+    margin-bottom: 32px;
+  }
+
+  .visit-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid var(--ink);
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--rust); border-color: var(--rust); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+  .btn svg { transition: transform 0.2s; }
+  .btn:hover svg { transform: translateX(3px); }
+
+  .visit-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .info-block {
+    padding: 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .info-block .k {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .info-block .v {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .info-block .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 48px 40px 32px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(244, 239, 230, 0.15);
+  }
+  .footer-brand .logo { color: var(--paper); margin-bottom: 16px; }
+  .footer-brand p {
+    color: rgba(244, 239, 230, 0.6);
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 300px;
+  }
+  .footer-col h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: rgba(244, 239, 230, 0.75);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--paper); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.5);
+  }
+  .footer-bottom .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-bottom .status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #6fbf73;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #6fbf73;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .metadata { grid-template-columns: 1fr; gap: 40px; }
+    .story { grid-template-columns: 1fr; gap: 40px; }
+    .visit { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 760px) {
+    .topbar { padding: 12px 20px; font-size: 10px; }
+    .topbar-left span:not(:first-child) { display: none; }
+    .topbar-right a:not(:last-child) { display: none; }
+    .nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 40px 20px 32px; }
+    .filters { padding: 16px 20px; gap: 16px; }
+    .catalog { padding: 32px 20px 48px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+    .metadata { padding: 48px 20px; }
+    .meta-right { grid-template-columns: 1fr; }
+    .meta-row:nth-child(odd) { padding-right: 0; border-right: none; }
+    .meta-row:nth-child(even) { padding-left: 0; }
+    .story { padding: 48px 20px; }
+    .story-stats { grid-template-columns: 1fr; gap: 20px; }
+    .visit { padding: 48px 20px; }
+    .visit-info { grid-template-columns: 1fr; }
+    .visit h2 { font-size: 38px; }
+    footer { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    h1 { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="topbar-left">
+      <span>● Open Access</span>
+      <span>Reading Room: Tue–Sat, 10–18</span>
+      <span>Est. 1892 · Reykjavík</span>
+    </div>
+    <div class="topbar-right">
+      <a href="#">Sign in</a>
+      <a href="#">Request a scan</a>
+      <a href="#">EN / IS</a>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="#" class="logo">
+      ARCHIVE <span class="slash">/</span> CATALOG
+      <span class="sub">Vol. XXXI</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#catalog">Browse</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#story">Digitization</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="#visit" class="nav-cta">Plan a visit</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Featured this week · Object 04.218</div>
+    <h1>A living index of <em>material memory</em>, kept in the open.</h1>
+    <p class="hero-desc">
+      Over 214,000 catalogued objects — from 9th-century vellum to mid-century
+      industrial prototypes. Search the full collection, request high-resolution
+      scans, or come sit with the originals in our reading room.
+    </p>
+
+    <div class="search-wrap">
+      <form class="search" onsubmit="event.preventDefault();">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="m20 20-3.5-3.5"/>
+        </svg>
+        <input type="text" placeholder="Search by title, maker, period, or accession number…" aria-label="Search the catalog">
+        <button type="submit">Search</button>
+      </form>
+      <div class="search-hints">
+        <span>Try:</span>
+        <a href="#">Icelandic cartography</a>
+        <a href="#">Brass instruments</a>
+        <a href="#">Pre-1600 manuscripts</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="featured-label">
+      <span><span class="dot"></span>Now on view · Reading Room A</span>
+      <span>04 / 218</span>
+    </div>
+    <div class="object-frame">
+      <!-- SVG: brass astrolabe / compass -->
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="brass" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stop-color="#e8c98a"/>
+            <stop offset="45%" stop-color="#c89b3c"/>
+            <stop offset="100%" stop-color="#7a5a1e"/>
+          </radialGradient>
+          <radialGradient id="brass2" cx="40%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#f0d9a0"/>
+            <stop offset="60%" stop-color="#b8892e"/>
+            <stop offset="100%" stop-color="#5c4218"/>
+          </radialGradient>
+          <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f4e0a8"/>
+            <stop offset="50%" stop-color="#a87a24"/>
+            <stop offset="100%" stop-color="#6b4a14"/>
+          </linearGradient>
+        </defs>
+        <!-- outer ring -->
+        <circle cx="150" cy="150" r="130" fill="url(#brass)" stroke="#5c4218" stroke-width="2"/>
+        <circle cx="150" cy="150" r="122" fill="none" stroke="#5c4218" stroke-width="1"/>
+        <circle cx="150" cy="150" r="118" fill="none" stroke="#5c4218" stroke-width="0.5"/>
+        <!-- degree ticks -->
+        <g stroke="#3d2c0e" stroke-width="1">
+          <line x1="150" y1="22" x2="150" y2="34"/>
+          <line x1="150" y1="266" x2="150" y2="278"/>
+          <line x1="22" y1="150" x2="34" y2="150"/>
+          <line x1="266" y1="150" x2="278" y2="150"/>
+          <line x1="60" y1="60" x2="68" y2="68"/>
+          <line x1="240" y1="60" x2="232" y2="68"/>
+          <line x1="60" y1="240" x2="68" y2="232"/>
+          <line x1="240" y1="240" x2="232" y2="232"/>
+        </g>
+        <!-- inner disc -->
+        <circle cx="150" cy="150" r="95" fill="url(#brass2)" stroke="#5c4218" stroke-width="1.5"/>
+        <!-- concentric rings -->
+        <circle cx="150" cy="150" r="80" fill="none" stroke="#3d2c0e" stroke-width="0.8"/>
+        <circle cx="150" cy="150" r="60" fill="none" stroke="#3d2c0e" stroke-width="0.8"/>
+        <circle cx="150" cy="150" r="40" fill="none" stroke="#3d2c0e" stroke-width="0.8"/>
+        <!-- cross lines -->
+        <line x1="150" y1="55" x2="150" y2="245" stroke="#3d2c0e" stroke-width="0.8"/>
+        <line x1="55" y1="150" x2="245" y2="150" stroke="#3d2c0e" stroke-width="0.8"/>
+        <!-- diagonal lines -->
+        <line x1="82" y1="82" x2="218" y2="218" stroke="#3d2c0e" stroke-width="0.5"/>
+        <line x1="218" y1="82" x2="82" y2="218" stroke="#3d2c0e" stroke-width="0.5"/>
+        <!-- center pivot -->
+        <circle cx="150" cy="150" r="10" fill="url(#rim)" stroke="#3d2c0e" stroke-width="1.5"/>
+        <circle cx="150" cy="150" r="4" fill="#3d2c0e"/>
+        <!-- alidade (rotating arm) -->
+        <g transform="rotate(35 150 150)">
+          <rect x="148" y="30" width="4" height="240" fill="url(#rim)" stroke="#3d2c0e" stroke-width="0.8"/>
+          <circle cx="150" cy="30" r="4" fill="#3d2c0e"/>
+          <circle cx="150" cy="270" r="4" fill="#3d2c0e"/>
+        </g>
+        <!-- small decorative marks -->
+        <g fill="#3d2c0e" font-family="serif" font-size="8" text-anchor="middle">
+          <text x="150" y="48">N</text>
+          <text x="150" y="262">S</text>
+          <text x="42" y="153">W</text>
+          <text x="258" y="153">E</text>
+        </g>
+        <!-- highlight -->
+        <ellipse cx="110" cy="100" rx="40" ry="20" fill="rgba(255,255,255,0.25)" transform="rotate(-30 110 100)"/>
+      </svg>
+    </div>
+    <div class="object-meta">
+      <div class="object-title">
+        Planispheric astrolabe, <em>unsigned</em>, likely Córdoba, c. 1180
+      </div>
+      <div class="object-id">
+        <strong>ACC. 04.218</strong>
+        Brass · 218 mm
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<section class="filters" id="collections">
+  <span class="filter-label">Filter by collection</span>
+  <ul class="filter-list">
+    <li><button class="active">All objects <span class="count">214,382</span></button></li>
+    <li><button>Manuscripts <span class="count">18,204</span></button></li>
+    <li><button>Cartography <span class="count">6,891</span></button></li>
+    <li><button>Scientific instruments <span class="count">4,127</span></button></li>
+    <li><button>Photography <span class="count">92,540</span></button></li>
+    <li><button>Ephemera <span class="count">41,308</span></button></li>
+    <li><button>Sound recordings <span class="count">12,116</span></button></li>
+    <li><button>Industrial design <span class="count">3,204</span></button></li>
+  </ul>
+  <div class="filter-sort">
+    <span>Sort</span>
+    <select>
+      <option>Recently catalogued</option>
+      <option>Oldest first</option>
+      <option>Rarest</option>
+      <option>Most viewed</option>
+    </select>
+  </div>
+</section>
+
+<!-- CATALOG GRID -->
+<section class="catalog" id="catalog">
+  <div class="section-head">
+    <h2>Recent <em>acquisitions</em> &amp; rediscoveries</h2>
+    <div class="meta">Showing 8 of 214,382 · Updated 14 min ago</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Card 1: Manuscript -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="tag rare">Rare</span>
+        <span class="num">01 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="40" width="140" height="120" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5"/>
+          <rect x="30" y="40" width="140" height="120" fill="none" stroke="#3d2c0e" stroke-width="0.5" transform="translate(3,3)"/>
+          <line x1="100" y1="40" x2="100" y2="160" stroke="#3d2c0e" stroke-width="1"/>
+          <g stroke="#8a2f1c" stroke-width="0.8" fill="none">
+            <path d="M45 60 Q60 55 75 60 T90 60"/>
+            <path d="M45 75 Q60 70 75 75 T90 75"/>
+            <path d="M45 90 Q60 85 75 90 T90 90"/>
+            <path d="M45 105 Q60 100 75 105 T90 105"/>
+            <path d="M45 120 Q60 115 75 120 T90 120"/>
+            <path d="M110 60 Q125 55 140 60 T155 60"/>
+            <path d="M110 75 Q125 70 140 75 T155 75"/>
+            <path d="M110 90 Q125 85 140 90 T155 90"/>
+            <path d="M110 105 Q125 100 140 105 T155 105"/>
+            <path d="M110 120 Q125 115 140 120 T155 120"/>
+          </g>
+          <circle cx="100" cy="100" r="6" fill="#c89b3c" stroke="#3d2c0e" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <h3 class="card-title">Illuminated psalter, <em>fragment</em></h3>
+      <div class="card-meta">
+        <span>ACC. 12.041</span>
+        <span>c. 1240</span>
+      </div>
+    </article>
+
+    <!-- Card 2: Map -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="tag new">New</span>
+        <span class="num">02 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="160" height="140" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5"/>
+          <path d="M30 60 Q60 50 90 65 T150 60 L170 70 L165 130 Q140 140 110 130 T50 140 L30 130 Z" fill="#c9b88a" stroke="#3d2c0e" stroke-width="0.8"/>
+          <path d="M40 90 Q70 85 100 95 T160 90" fill="none" stroke="#8a2f1c" stroke-width="0.6"/>
+          <path d="M40 110 Q70 105 100 115 T160 110" fill="none" stroke="#8a2f1c" stroke-width="0.6"/>
+          <g fill="#3d2c0e">
+            <circle cx="60" cy="80" r="2"/>
+            <circle cx="100" cy="100" r="2"/>
+            <circle cx="140" cy="90" r="2"/>
+            <circle cx="80" cy="120" r="2"/>
+            <circle cx="130" cy="125" r="2"/>
+          </g>
+          <text x="100" y="45" font-family="serif" font-size="10" text-anchor="middle" fill="#3d2c0e" font-style="italic">Mare Nostrum</text>
+          <circle cx="100" cy="100" r="20" fill="none" stroke="#8a2f1c" stroke-width="0.5" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <h3 class="card-title">Portolan chart of the <em>North Atlantic</em></h3>
+      <div class="card-meta">
+        <span>ACC. 06.891</span>
+        <span>c. 1520</span>
+      </div>
+    </article>
+
+    <!-- Card 3: Instrument -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="num">03 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="brass3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e8c98a"/>
+              <stop offset="100%" stop-color="#7a5a1e"/>
+            </linearGradient>
+          </defs>
+          <rect x="40" y="60" width="120" height="80" fill="url(#brass3)" stroke="#3d2c0e" stroke-width="1.5"/>
+          <rect x="50" y="70" width="100" height="60" fill="#f4efe6" stroke="#3d2c0e" stroke-width="0.8"/>
+          <g stroke="#3d2c0e" stroke-width="0.5">
+            <line x1="50" y1="80" x2="150" y2="80"/>
+            <line x1="50" y1="90" x2="150" y2="90"/>
+            <line x1="50" y1="100" x2="150" y2="100"/>
+            <line x1="50" y1="110" x2="150" y2="110"/>
+            <line x1="50" y1="120" x2="150" y2="120"/>
+          </g>
+          <g stroke="#8a2f1c" stroke-width="1.2" fill="none">
+            <path d="M55 115 Q70 100 85 105 T115 95 T145 100"/>
+          </g>
+          <circle cx="100" cy="100" r="3" fill="#3d2c0e"/>
+          <text x="100" y="55" font-family="serif" font-size="9" text-anchor="middle" fill="#3d2c0e" font-style="italic">Barometer</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Mercury barometer, <em>signed</em> Nairne</h3>
+      <div class="card-meta">
+        <span>ACC. 04.127</span>
+        <span>c. 1770</span>
+      </div>
+    </article>
+
+    <!-- Card 4: Photograph -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="num">04 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="40" width="140" height="120" fill="#2a241d" stroke="#3d2c0e" stroke-width="1.5"/>
+          <rect x="40" y="50" width="120" height="100" fill="#8a7a5a"/>
+          <path d="M40 130 L70 100 L100 120 L130 90 L160 130 L160 150 L40 150 Z" fill="#4a3d28"/>
+          <circle cx="140" cy="70" r="10" fill="#e8dcc0" opacity="0.7"/>
+          <rect x="40" y="50" width="120" height="100" fill="none" stroke="#3d2c0e" stroke-width="0.8"/>
+          <text x="100" y="175" font-family="monospace" font-size="8" text-anchor="middle" fill="#3d2c0e">PLATE 14 · 1897</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Glass plate negative, <em>Reykjavík harbour</em></h3>
+      <div class="card-meta">
+        <span>ACC. 92.540</span>
+        <span>1897</span>
+      </div>
+    </article>
+
+    <!-- Card 5: Ephemera -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="num">05 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="35" y="35" width="130" height="130" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5" transform="rotate(-3 100 100)"/>
+          <rect x="45" y="45" width="110" height="110" fill="none" stroke="#8a2f1c" stroke-width="0.8" transform="rotate(-3 100 100)"/>
+          <text x="100" y="75" font-family="serif" font-size="14" text-anchor="middle" fill="#3d2c0e" font-style="italic" transform="rotate(-3 100 100)">Playbill</text>
+          <line x1="60" y1="85" x2="140" y2="85" stroke="#3d2c0e" stroke-width="0.5" transform="rotate(-3 100 100)"/>
+          <text x="100" y="105" font-family="serif" font-size="9" text-anchor="middle" fill="#3d2c0e" transform="rotate(-3 100 100)">Theatre Royal</text>
+          <text x="100" y="120" font-family="serif" font-size="9" text-anchor="middle" fill="#3d2c0e" transform="rotate(-3 100 100)">Friday Evening</text>
+          <text x="100" y="140" font-family="monospace" font-size="7" text-anchor="middle" fill="#8a2f1c" transform="rotate(-3 100 100)">MDCCCLXXXIV</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Theatre playbill, <em>hand-set</em></h3>
+      <div class="card-meta">
+        <span>ACC. 41.308</span>
+        <span>1884</span>
+      </div>
+    </article>
+
+    <!-- Card 6: Sound -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="tag new">New</span>
+        <span class="num">06 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="70" fill="#2a241d" stroke="#3d2c0e" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="60" fill="none" stroke="#8a7a5a" stroke-width="0.5"/>
+          <circle cx="100" cy="100" r="50" fill="none" stroke="#8a7a5a" stroke-width="0.5"/>
+          <circle cx="100" cy="100" r="40" fill="none" stroke="#8a7a5a" stroke-width="0.5"/>
+          <circle cx="100" cy="100" r="30" fill="none" stroke="#8a7a5a" stroke-width="0.5"/>
+          <circle cx="100" cy="100" r="20" fill="#c89b3c" stroke="#3d2c0e" stroke-width="0.8"/>
+          <circle cx="100" cy="100" r="4" fill="#3d2c0e"/>
+          <text x="100" y="185" font-family="monospace" font-size="8" text-anchor="middle" fill="#3d2c0e">78 RPM · SHELLAC</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Wax cylinder, <em>field recording</em></h3>
+      <div class="card-meta">
+        <span>ACC. 12.116</span>
+        <span>1911</span>
+      </div>
+    </article>
+
+    <!-- Card 7: Industrial -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="num">07 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="50" y="50" width="100" height="100" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="35" fill="none" stroke="#3d2c0e" stroke-width="1"/>
+          <circle cx="100" cy="100" r="25" fill="none" stroke="#3d2c0e" stroke-width="0.8"/>
+          <circle cx="100" cy="100" r="15" fill="#c89b3c" stroke="#3d2c0e" stroke-width="0.8"/>
+          <g stroke="#3d2c0e" stroke-width="0.8">
+            <line x1="100" y1="65" x2="100" y2="135"/>
+            <line x1="65" y1="100" x2="135" y2="100"/>
+            <line x1="75" y1="75" x2="125" y2="125"/>
+            <line x1="125" y1="75" x2="75" y2="125"/>
+          </g>
+          <circle cx="100" cy="100" r="4" fill="#3d2c0e"/>
+          <text x="100" y="170" font-family="monospace" font-size="8" text-anchor="middle" fill="#3d2c0e">PATENT 1934</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Prototype gear assembly, <em>patent model</em></h3>
+      <div class="card-meta">
+        <span>ACC. 03.204</span>
+        <span>1934</span>
+      </div>
+    </article>
+
+    <!-- Card 8: Manuscript -->
+    <article class="card">
+      <div class="card-visual">
+        <span class="tag rare">Rare</span>
+        <span class="num">08 / 08</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="30" width="120" height="140" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5"/>
+          <rect x="50" y="40" width="100" height="120" fill="none" stroke="#8a2f1c" stroke-width="0.8"/>
+          <g stroke="#3d2c0e" stroke-width="0.5" fill="none">
+            <path d="M60 55 Q80 50 100 55 T140 55"/>
+            <path d="M60 70 Q80 65 100 70 T140 70"/>
+            <path d="M60 85 Q80 80 100 85 T140 85"/>
+            <path d="M60 100 Q80 95 100 100 T140 100"/>
+            <path d="M60 115 Q80 110 100 115 T140 115"/>
+            <path d="M60 130 Q80 125 100 130 T140 130"/>
+            <path d="M60 145 Q80 140 100 145 T140 145"/>
+          </g>
+          <circle cx="100" cy="100" r="8" fill="#c89b3c" stroke="#3d2c0e" stroke-width="0.8"/>
+          <text x="100" y="185" font-family="monospace" font-size="8" text-anchor="middle" fill="#3d2c0e">FOL. 12R</text>
+        </svg>
+      </div>
+      <h3 class="card-title">Cartulary of <em>Skálholt</em>, folio 12r</h3>
+      <div class="card-meta">
+        <span>ACC. 18.204</span>
+        <span>c. 1360</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- METADATA PANEL -->
+<section class="metadata">
+  <div class="meta-left">
+    <div class="eyebrow">Object record · ACC. 04.218</div>
+    <h2>Every object carries <em>its own weather</em>.</h2>
+    <p>
+      Our metadata is written by hand, then verified against three independent
+      sources. We record not only what an object is, but how it came to us,
+      who handled it, and what remains uncertain. Doubt is part of the record.
+    </p>
+  </div>
+
+  <div class="meta-right">
+    <div class="meta-row">
+      <span class="k">Maker</span>
+      <span class="v">Unsigned <small>attributed</small></span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Date</span>
+      <span class="v">c. 1180 <small>± 20 yrs</small></span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Material</span>
+      <span class="v">Brass, engraved</span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Dimensions</span>
+      <span class="v">218 mm <small>diameter</small></span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Provenance</span>
+      <span class="v">Bequest, 1962</span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Condition</span>
+      <span class="v">Stable <small>minor wear</small></span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Digitized</span>
+      <span class="v">2023 <small>12,400 dpi</small></span>
+    </div>
+    <div class="meta-row">
+      <span class="k">Rights</span>
+      <span class="v">Public domain</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITIZATION STORY -->
+<section class="story" id="story">
+  <div class="story-visual">
+    <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b8442a" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#b8442a" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#b8442a" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="lamp" cx="50%" cy="0%" r="80%">
+          <stop offset="0%" stop-color="#f4e0a8" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#f4e0a8" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="500" height="400" fill="#ddd3bf"/>
+      <!-- light cone -->
+      <path d="M250 0 L100 400 L400 400 Z" fill="url(#lamp)"/>
+      <!-- scanner rig -->
+      <rect x="180" y="20" width="140" height="30" fill="#2a241d"/>
+      <rect x="200" y="50" width="100" height="15" fill="#3d2c0e"/>
+      <circle cx="250" cy="35" r="6" fill="#c89b3c"/>
+      <!-- object on table -->
+      <ellipse cx="250" cy="330" rx="120" ry="20" fill="#2a241d" opacity="0.15"/>
+      <rect x="180" y="240" width="140" height="90" fill="#e8dcc0" stroke="#3d2c0e" stroke-width="1.5"/>
+      <g stroke="#8a2f1c" stroke-width="0.8" fill="none">
+        <path d="M195 260 Q220 255 245 260 T295 260"/>
+        <path d="M195 275 Q220 270 245 275 T295 275"/>
+        <path d="M195 290 Q220 285 245 290 T295 290"/>
+        <path d="M195 305 Q220 300 245 305 T295 305"/>
+      </g>
+      <!-- scan line -->
+      <rect x="180" y="200" width="140" height="4" fill="url(#scan)">
+        <animate attributeName="y" values="240;330;240" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <!-- grid overlay -->
+      <g stroke="#3d2c0e" stroke-width="0.3" opacity="0.3">
+        <line x1="0" y1="100" x2="500" y2="100"/>
+        <line x1="0" y1="200" x2="500" y2="200"/>
+        <line x1="0" y1="300" x2="500" y2="300"/>
+        <line x1="100" y1="0" x2="100" y2="400"/>
+        <line x1="200" y1="0" x2="200" y2="400"/>
+        <line x1="300" y1="0" x2="300" y2="400"/>
+        <line x1="400" y1="0" x2="400" y2="400"/>
+      </g>
+      <!-- corner marks -->
+      <g stroke="#b8442a" stroke-width="2" fill="none">
+        <path d="M20 20 L20 40 M20 20 L40 20"/>
+        <path d="M480 20 L480 40 M480 20 L460 20"/>
+        <path d="M20 380 L20 360 M20 380 L40 380"/>
+        <path d="M480 380 L480 360 M480 380 L460 380"/>
+      </g>
+      <text x="250" y="385" font-family="monospace" font-size="10" text-anchor="middle" fill="#3d2c0e" letter-spacing="2">SCAN · 12,400 DPI · 16-BIT</text>
+    </svg>
+  </div>
+
+  <div class="story-content">
+    <div class="eyebrow">Digitization programme</div>
+    <h2>We photograph the <em>whole object</em>, not just its face.</h2>
+    <p>
+      Since 2019, our conservation imaging lab has been capturing every
+      catalogued object at archival resolution — recto, verso, edges, and
+      raking-light detail. Each scan is colour-managed, embedded with
+      technical metadata, and released under an open licence.
+    </p>
+    <p>
+      The result is a public record that can be studied, cited, and re-used
+      without ever touching the original. Where the original is too fragile
+      to travel, the scan travels for it.
+    </p>
+
+    <div class="story-stats">
+      <div class="stat">
+        <div class="num">214<em>k</em></div>
+        <div class="lbl">Objects catalogued</div>
+      </div>
+      <div class="stat">
+        <div class="num">87<em>%</em></div>
+        <div class="lbl">Digitized to date</div>
+      </div>
+      <div class="stat">
+        <div class="num">1.2<em>PB</em></div>
+        <div class="lbl">Archival storage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT CTA -->
+<section class="visit" id="visit">
+  <div>
+    <div class="eyebrow">Visit the reading room</div>
+    <h2>Come sit with the <em>originals</em>.</h2>
+    <p>
+      The reading room is open to anyone with a research question — no
+      institutional affiliation required. Request up to five objects per
+      session, and our staff will have them waiting on the table.
+    </p>
+    <div class="visit-actions">
+      <a href="#" class="btn btn-primary">
+        Book a session
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+      <a href="#" class="btn btn-ghost">Request a scan</a>
+    </div>
+  </div>
+
+  <div class="visit-info">
+    <div class="info-block">
+      <div class="k">Location</div>
+      <div class="v">Hverfisgata 14</div>
+      <div class="sub">101 Reykjavík, Iceland<br>Second floor, east wing</div>
+    </div>
+    <div class="info-block">
+      <div class="k">Hours</div>
+      <div class="v">Tue – Sat</div>
+      <div class="sub">10:00 – 18:00<br>Closed Sundays &amp; Mondays</div>
+    </div>
+    <div class="info-block">
+      <div class="k">Contact</div>
+      <div class="v">+354 5 12 1892</div>
+      <div class="sub">readingroom@archive.catalog<br>Response within 2 working days</div>
+    </div>
+    <div class="info-block">
+      <div class="k">Access</div>
+      <div class="v">Free entry</div>
+      <div class="sub">Photo ID required<br>Lockers provided</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        ARCHIVE <span class="slash">/</span> CATALOG
+      </a>
+      <p>
+        A public index of material memory, kept in the open since 1892.
+        Every object catalogued, every record shared.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Browse</h4>
+      <ul>
+        <li><a href="#">All collections</a></li>
+        <li><a href="#">Recent acquisitions</a></li>
+        <li><a href="#">On view now</a></li>
+        <li><a href="#">Digitized highlights</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Use the archive</h4>
+      <ul>
+        <li><a href="#">Request a scan</a></li>
+        <li><a href="#">Book a session</a></li>
+        <li><a href="#">Rights &amp; licensing</a></li>
+        <li><a href="#">API access</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#">Our history</a></li>
+        <li><a href="#">Conservation lab</a></li>
+        <li><a href="#">Staff &amp; fellows</a></li>
+        <li><a href="#">Support the archive</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 1892–2025 ARCHIVE / CATALOG · Reykjavík</div>
+    <div class="status">All systems operational · Last sync 14 min ago</div>
+  </div>
+</footer>
+
+<script>
+  // Filter buttons
+  document.querySelectorAll('.filter-list button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-list button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Card hover — subtle parallax on the SVG
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const svg = card.querySelector('svg');
+      if (svg) svg.style.transform = `scale(1.06) rotate(${x * 4}deg) translate(${x * 4}px, ${y * 4}px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      const svg = card.querySelector('svg');
+      if (svg) svg.style.transform = '';
+    });
+  });
+</script>
+
+</body>
+</html>

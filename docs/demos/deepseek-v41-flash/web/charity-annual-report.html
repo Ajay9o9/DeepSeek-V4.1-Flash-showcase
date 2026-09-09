@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARITY / ANNUAL / REPORT — 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f0e8;
+    --paper-warm: #ede5d8;
+    --accent: #d94f2b;
+    --accent-deep: #a83a1e;
+    --sage: #6b7f5e;
+    --gold: #c9a227;
+    --muted: #6b6357;
+    --line: #d4c9b5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 240, 232, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+    display: inline-block;
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 48px 60px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(56px, 7.2vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+  .hero h1 .slash {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .btn-primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* Hero right — abstract SVG composition */
+  .hero-right {
+    position: relative;
+    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-art {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .hero-art svg { width: 100%; height: 100%; }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.15);
+  }
+  .hero-badge .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .hero-badge .lbl {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* MARQUEE */
+  .marquee {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 22px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 60px;
+    animation: scroll 40s linear infinite;
+    padding-right: 60px;
+  }
+  .marquee-track span {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    display: inline-flex;
+    align-items: center;
+    gap: 60px;
+  }
+  .marquee-track span::after {
+    content: '✦';
+    color: var(--accent);
+    font-style: normal;
+    font-size: 20px;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 48px; position: relative; }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 72px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin-top: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 420px;
+  }
+
+  /* IMPACT METRICS */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .metric {
+    padding: 40px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .metric:hover { background: var(--paper-warm); }
+  .metric-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .metric-num .unit {
+    font-size: 0.5em;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .metric-label {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .metric-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .metric-index {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* STORIES */
+  .stories {
+    background: var(--paper-warm);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .story-card {
+    background: var(--paper);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .story-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.2);
+  }
+  .story-visual {
+    height: 260px;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-visual svg { width: 100%; height: 100%; display: block; }
+  .story-tag {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--paper);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .story-body {
+    padding: 28px 28px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .story-meta {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .story-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .story-excerpt {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .story-link {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .story-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+  .story-card:hover .story-link svg { transform: translateX(4px); }
+
+  /* FINANCIALS */
+  .financials {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .financials .section-label { color: rgba(245,240,232,0.6); }
+  .financials .section-label::before { background: var(--accent); }
+  .financials .section-title { color: var(--paper); }
+  .financials .section-title em { color: var(--gold); }
+  .financials .section-desc { color: rgba(245,240,232,0.7); }
+  .financials .section-head { border-bottom-color: rgba(245,240,232,0.15); }
+
+  .fin-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .fin-chart {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .fin-chart svg { width: 100%; height: 100%; }
+  .fin-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .fin-center .big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .fin-center .small {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.6);
+    margin-top: 8px;
+  }
+
+  .fin-list { list-style: none; }
+  .fin-item {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(245,240,232,0.12);
+  }
+  .fin-item:last-child { border-bottom: none; }
+  .fin-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+  }
+  .fin-name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .fin-name small {
+    display: block;
+    font-size: 12px;
+    color: rgba(245,240,232,0.5);
+    font-weight: 400;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .fin-pct {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--paper);
+  }
+
+  /* SUPPORTERS */
+  .supporters {
+    background: var(--paper);
+  }
+  .supporters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .supporter {
+    padding: 40px 24px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    transition: background 0.3s;
+  }
+  .supporter:hover { background: var(--paper-warm); }
+  .supporter svg { max-width: 100%; height: auto; }
+
+  .quote-block {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: center;
+    padding: 60px;
+    background: var(--paper-warm);
+    border-radius: 4px;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: 20px; left: 40px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.3;
+  }
+  .quote-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    color: var(--paper);
+    margin: 0 auto;
+  }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+  .quote-text em { font-style: italic; color: var(--accent); }
+  .quote-author {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .quote-author span { color: var(--ink); }
+
+  /* DONATE CTA */
+  .donate {
+    background: var(--accent);
+    color: var(--paper);
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .donate::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  }
+  .donate-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .donate h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .donate h2 em { font-style: italic; color: var(--ink); }
+  .donate p {
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 480px;
+    margin-bottom: 40px;
+    color: rgba(245,240,232,0.9);
+  }
+  .donate-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-light {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .btn-light:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+  .btn-outline-light {
+    background: transparent;
+    color: var(--paper);
+    border-color: var(--paper);
+  }
+  .btn-outline-light:hover {
+    background: var(--paper);
+    color: var(--accent);
+  }
+
+  .donate-amounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .amount {
+    background: rgba(245,240,232,0.1);
+    border: 1px solid rgba(245,240,232,0.25);
+    padding: 24px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+  }
+  .amount:hover, .amount.active {
+    background: var(--paper);
+    color: var(--accent);
+    border-color: var(--paper);
+  }
+  .amount .amt {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .amount .desc {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(245,240,232,0.15);
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .footer-brand em { font-style: italic; color: var(--accent); }
+  .footer-desc {
+    font-size: 14px;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-col h4 {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 120px 24px 60px; grid-template-columns: 1fr; gap: 40px; }
+    .hero-right { height: 400px; }
+    .section-head { grid-template-columns: 1fr; gap: 24px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .story-grid { grid-template-columns: 1fr; }
+    .fin-grid { grid-template-columns: 1fr; gap: 40px; }
+    .supporters-grid { grid-template-columns: repeat(2, 1fr); }
+    .quote-block { grid-template-columns: 1fr; padding: 40px 24px; text-align: center; }
+    .donate-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 52px; }
+    .metrics { grid-template-columns: 1fr; }
+    .supporters-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .donate-amounts { grid-template-columns: 1fr; }
+    .quote-text { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <span class="logo-mark"></span>
+    Charity / Annual / Report
+  </div>
+  <ul class="nav-links">
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#stories">Stories</a></li>
+    <li><a href="#financials">Financials</a></li>
+    <li><a href="#supporters">Supporters</a></li>
+  </ul>
+  <a href="#donate" class="nav-cta">Donate</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Annual Report · 2024</div>
+    <h1>
+      Every <em>number</em><br>
+      is a <span class="slash">/</span> life<br>
+      changed.
+    </h1>
+    <p class="hero-sub">
+      A year of quiet, deliberate work — told through the people we walked beside, the communities we invested in, and the transparency you deserve.
+    </p>
+    <div class="hero-actions">
+      <a href="#donate" class="btn btn-primary">
+        Support our work
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#impact" class="btn btn-ghost">
+        Read the report
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-art">
+      <svg viewBox="0 0 500 560" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d94f2b" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#d94f2b" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6b7f5e"/>
+            <stop offset="100%" stop-color="#c9a227"/>
+          </linearGradient>
+          <linearGradient id="g3" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a1a1a"/>
+            <stop offset="100%" stop-color="#a83a1e"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Background circle -->
+        <circle cx="250" cy="280" r="220" fill="#ede5d8"/>
+        <circle cx="250" cy="280" r="220" fill="none" stroke="#d4c9b5" stroke-width="1"/>
+
+        <!-- Concentric rings -->
+        <circle cx="250" cy="280" r="180" fill="none" stroke="#d4c9b5" stroke-width="1" stroke-dasharray="2 6"/>
+        <circle cx="250" cy="280" r="140" fill="none" stroke="#d4c9b5" stroke-width="1"/>
+
+        <!-- Big accent circle -->
+        <circle cx="250" cy="280" r="100" fill="url(#g1)"/>
+        <circle cx="250" cy="280" r="100" fill="none" stroke="#d94f2b" stroke-width="1.5"/>
+
+        <!-- Overlapping shapes -->
+        <path d="M 250 180 A 100 100 0 0 1 350 280 L 250 280 Z" fill="#d94f2b" opacity="0.85"/>
+        <path d="M 250 380 A 100 100 0 0 1 150 280 L 250 280 Z" fill="#1a1a1a" opacity="0.9"/>
+
+        <!-- Small dots -->
+        <circle cx="120" cy="180" r="6" fill="#c9a227"/>
+        <circle cx="380" cy="200" r="4" fill="#6b7f5e"/>
+        <circle cx="400" cy="380" r="8" fill="#d94f2b"/>
+        <circle cx="100" cy="400" r="5" fill="#1a1a1a"/>
+
+        <!-- Lines -->
+        <line x1="60" y1="280" x2="440" y2="280" stroke="#1a1a1a" stroke-width="0.5" opacity="0.3"/>
+        <line x1="250" y1="60" x2="250" y2="500" stroke="#1a1a1a" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- Center mark -->
+        <circle cx="250" cy="280" r="8" fill="#f5f0e8"/>
+        <circle cx="250" cy="280" r="4" fill="#1a1a1a"/>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <div class="num">94¢</div>
+      <div class="lbl">of every $1 to programs</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Transparency</span>
+    <span>Dignity</span>
+    <span>Long-term partnership</span>
+    <span>Community-led</span>
+    <span>Accountability</span>
+    <span>Transparency</span>
+    <span>Dignity</span>
+    <span>Long-term partnership</span>
+    <span>Community-led</span>
+    <span>Accountability</span>
+  </div>
+</div>
+
+<!-- IMPACT METRICS -->
+<section id="impact">
+  <div class="section-head">
+    <div>
+      <div class="section-label">01 — Impact</div>
+      <h2 class="section-title">The year in <em>numbers</em>.</h2>
+    </div>
+    <p class="section-desc">
+      Behind every figure is a person, a family, a neighborhood. These are the outcomes our partners measured alongside us across 14 countries.
+    </p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-index">01 / 04</div>
+      <div class="metric-num">2.4<span class="unit">M</span></div>
+      <div class="metric-label">People reached</div>
+      <div class="metric-desc">Direct participants in programs across health, education, and livelihoods.</div>
+    </div>
+    <div class="metric">
+      <div class="metric-index">02 / 04</div>
+      <div class="metric-num">318<span class="unit">k</span></div>
+      <div class="metric-label">Meals served</div>
+      <div class="metric-desc">Through 42 community kitchens and school feeding partnerships.</div>
+    </div>
+    <div class="metric">
+      <div class="metric-index">03 / 04</div>
+      <div class="metric-num">1,204</div>
+      <div class="metric-label">Scholarships</div>
+      <div class="metric-desc">Full-cycle education grants for girls and first-generation students.</div>
+    </div>
+    <div class="metric">
+      <div class="metric-index">04 / 04</div>
+      <div class="metric-num">94<span class="unit">%</span></div>
+      <div class="metric-label">Program efficiency</div>
+      <div class="metric-desc">Of every dollar donated, 94 cents went directly to programs.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" class="stories">
+  <div class="section-head">
+    <div>
+      <div class="section-label">02 — Stories</div>
+      <h2 class="section-title">Lives, not <em>case studies</em>.</h2>
+    </div>
+    <p class="section-desc">
+      Three stories from the field — chosen not because they are exceptional, but because they are ordinary. This is what your support makes possible.
+    </p>
+  </div>
+
+  <div class="story-grid">
+    <article class="story-card">
+      <div class="story-visual">
+        <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#d94f2b"/>
+              <stop offset="100%" stop-color="#a83a1e"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="260" fill="url(#s1)"/>
+          <circle cx="320" cy="60" r="80" fill="#f5f0e8" opacity="0.15"/>
+          <circle cx="80" cy="220" r="100" fill="#1a1a1a" opacity="0.2"/>
+          <path d="M 0 200 Q 100 160 200 200 T 400 180 L 400 260 L 0 260 Z" fill="#1a1a1a" opacity="0.3"/>
+          <circle cx="200" cy="130" r="40" fill="#f5f0e8" opacity="0.9"/>
+          <circle cx="200" cy="130" r="40" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+          <path d="M 180 130 Q 200 110 220 130 Q 200 150 180 130 Z" fill="#d94f2b"/>
+        </svg>
+        <div class="story-tag">Education</div>
+      </div>
+      <div class="story-body">
+        <div class="story-meta">Nairobi, Kenya · March 2024</div>
+        <h3 class="story-title">Amina's classroom, rebuilt in 90 days.</h3>
+        <p class="story-excerpt">
+          When the floods took the roof, 240 students lost their school. Nine weeks later, they walked back through a door built by their own community.
+        </p>
+        <a href="#" class="story-link">
+          Read Amina's story
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="story-card">
+      <div class="story-visual">
+        <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="s2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#6b7f5e"/>
+              <stop offset="100%" stop-color="#1a1a1a"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="260" fill="url(#s2)"/>
+          <circle cx="100" cy="80" r="60" fill="#c9a227" opacity="0.4"/>
+          <circle cx="300" cy="180" r="90" fill="#f5f0e8" opacity="0.1"/>
+          <path d="M 0 180 L 100 140 L 200 170 L 300 120 L 400 160 L 400 260 L 0 260 Z" fill="#1a1a1a" opacity="0.4"/>
+          <path d="M 0 220 L 100 190 L 200 210 L 300 180 L 400 200 L 400 260 L 0 260 Z" fill="#1a1a1a" opacity="0.6"/>
+          <circle cx="200" cy="100" r="30" fill="#f5f0e8" opacity="0.9"/>
+          <path d="M 185 100 L 215 100 M 200 85 L 200 115" stroke="#6b7f5e" stroke-width="3"/>
+        </svg>
+        <div class="story-tag">Livelihoods</div>
+      </div>
+      <div class="story-body">
+        <div class="story-meta">Cusco, Peru · July 2024</div>
+        <h3 class="story-title">The weavers who built a cooperative.</h3>
+        <p class="story-excerpt">
+          Forty-two women, one shared loom, and a business model that now supports 180 families. This is what patient capital looks like.
+        </p>
+        <a href="#" class="story-link">
+          Read their story
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="story-card">
+      <div class="story-visual">
+        <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="s3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#c9a227"/>
+              <stop offset="100%" stop-color="#d94f2b"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="260" fill="url(#s3)"/>
+          <circle cx="200" cy="130" r="100" fill="#f5f0e8" opacity="0.15"/>
+          <circle cx="200" cy="130" r="70" fill="#f5f0e8" opacity="0.2"/>
+          <circle cx="200" cy="130" r="40" fill="#f5f0e8" opacity="0.9"/>
+          <path d="M 180 130 Q 200 110 220 130 Q 200 150 180 130 Z" fill="#1a1a1a"/>
+          <circle cx="60" cy="60" r="20" fill="#1a1a1a" opacity="0.3"/>
+          <circle cx="340" cy="200" r="30" fill="#1a1a1a" opacity="0.3"/>
+        </svg>
+        <div class="story-tag">Health</div>
+      </div>
+      <div class="story-body">
+        <div class="story-meta">Sylhet, Bangladesh · October 2024</div>
+        <h3 class="story-title">A clinic that never closes.</h3>
+        <p class="story-excerpt">
+          Twelve months ago, the nearest doctor was a four-hour walk. Today, 8,000 people have a clinic open seven days a week.
+        </p>
+        <a href="#" class="story-link">
+          Read the story
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section id="financials" class="financials">
+  <div class="section-head">
+    <div>
+      <div class="section-label">03 — Financials</div>
+      <h2 class="section-title">Where every <em>dollar</em> goes.</h2>
+    </div>
+    <p class="section-desc">
+      Full audited statements are available on request. We believe transparency is not a report — it is a relationship.
+    </p>
+  </div>
+
+  <div class="fin-grid">
+    <div class="fin-chart">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(245,240,232,0.1)" stroke-width="20"/>
+        <!-- Programs 78% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#d94f2b" stroke-width="20"
+          stroke-dasharray="392 502" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+        <!-- Operations 12% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#c9a227" stroke-width="20"
+          stroke-dasharray="60 502" stroke-dashoffset="-392" transform="rotate(-90 100 100)"/>
+        <!-- Fundraising 10% -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#6b7f5e" stroke-width="20"
+          stroke-dasharray="50 502" stroke-dashoffset="-452" transform="rotate(-90 100 100)"/>
+      </svg>
+      <div class="fin-center">
+        <div class="big">$48.2M</div>
+        <div class="small">Total deployed · 2024</div>
+      </div>
+    </div>
+
+    <ul class="fin-list">
+      <li class="fin-item">
+        <span class="fin-dot" style="background:#d94f2b"></span>
+        <div class="fin-name">
+          Programs & Field Work
+          <small>Direct delivery across 14 countries</small>
+        </div>
+        <div class="fin-pct">78%</div>
+      </li>
+      <li class="fin-item">
+        <span class="fin-dot" style="background:#c9a227"></span>
+        <div class="fin-name">
+          Operations
+          <small>Staff, systems, and infrastructure</small>
+        </div>
+        <div class="fin-pct">12%</div>
+      </li>
+      <li class="fin-item">
+        <span class="fin-dot" style="background:#6b7f5e"></span>
+        <div class="fin-name">
+          Fundraising
+          <small>Donor stewardship and communications</small>
+        </div>
+        <div class="fin-pct">10%</div>
+      </li>
+      <li class="fin-item">
+        <span class="fin-dot" style="background:rgba(245,240,232,0.3)"></span>
+        <div class="fin-name">
+          Reserves & Endowment
+          <small>Building long-term resilience</small>
+        </div>
+        <div class="fin-pct">—</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUPPORTERS -->
+<section id="supporters" class="supporters">
+  <div class="section-head">
+    <div>
+      <div class="section-label">04 — Supporters</div>
+      <h2 class="section-title">We do not do this <em>alone</em>.</h2>
+    </div>
+    <p class="section-desc">
+      Foundations, corporations, and 41,000 individual donors who chose to trust us with their generosity this year.
+    </p>
+  </div>
+
+  <div class="supporters-grid">
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <circle cx="20" cy="20" r="14" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+        <circle cx="20" cy="20" r="6" fill="#d94f2b"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Meridian</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <rect x="6" y="10" width="20" height="20" fill="#6b7f5e"/>
+        <rect x="14" y="6" width="20" height="20" fill="#c9a227" opacity="0.7"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Northwind</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <path d="M 6 30 L 16 10 L 26 30 Z" fill="#d94f2b"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Aperture</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <circle cx="16" cy="20" r="10" fill="#1a1a1a"/>
+        <circle cx="26" cy="20" r="10" fill="#d94f2b" opacity="0.7"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Halcyon</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <rect x="6" y="14" width="24" height="12" fill="#c9a227"/>
+        <rect x="10" y="10" width="16" height="20" fill="#1a1a1a"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Verdant</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <path d="M 6 20 Q 16 6 26 20 Q 16 34 6 20 Z" fill="#6b7f5e"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Solstice</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <circle cx="16" cy="20" r="12" fill="none" stroke="#d94f2b" stroke-width="2"/>
+        <circle cx="16" cy="20" r="4" fill="#d94f2b"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Kestrel</text>
+      </svg>
+    </div>
+    <div class="supporter">
+      <svg viewBox="0 0 160 40" width="140">
+        <rect x="6" y="6" width="10" height="28" fill="#1a1a1a"/>
+        <rect x="18" y="6" width="10" height="28" fill="#c9a227"/>
+        <text x="44" y="26" font-family="DM Serif Display, serif" font-size="18" fill="#1a1a1a">Lumen</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-avatar">M</div>
+    <div>
+      <p class="quote-text">
+        We have supported many organizations. This is the first one that showed us <em>exactly</em> where our money went — and then introduced us to the people it reached.
+      </p>
+      <div class="quote-author">
+        <span>Maya Okonkwo</span> · Trustee, Meridian Foundation
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE CTA -->
+<section id="donate" class="donate">
+  <div class="donate-inner">
+    <div>
+      <h2>Your gift, <em>multiplied</em>.</h2>
+      <p>
+        Every contribution is matched by our partner foundations up to $250,000 through December. Choose an amount — or give what you can.
+      </p>
+      <div class="donate-actions">
+        <a href="#" class="btn btn-light">
+          Donate now
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="btn btn-outline-light">
+          Monthly giving
+        </a>
+      </div>
+    </div>
+
+    <div class="donate-amounts">
+      <button class="amount">
+        <div class="amt">$25</div>
+        <div class="desc">School supplies for one child</div>
+      </button>
+      <button class="amount active">
+        <div class="amt">$75</div>
+        <div class="desc">A week of meals for a family</div>
+      </button>
+      <button class="amount">
+        <div class="amt">$250</div>
+        <div class="desc">A month of clinic access</div>
+      </button>
+      <button class="amount">
+        <div class="amt">$1,000</div>
+        <div class="desc">A full scholarship year</div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Charity / Annual / <em>Report</em></div>
+      <p class="footer-desc">
+        A registered 501(c)(3) nonprofit. Our full audited financials, program evaluations, and impact methodology are available on request.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Report</h4>
+      <ul>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#financials">Financials</a></li>
+        <li><a href="#supporters">Supporters</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Organization</h4>
+      <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Leadership</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2024 Charity / Annual / Report. All rights reserved.</div>
+    <div>EIN 12-3456789 · Audited by Halstead & Co.</div>
+  </div>
+</footer>
+
+<script>
+  // Donate amount selection
+  document.querySelectorAll('.amount').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.amount').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Subtle parallax on hero art
+  const heroArt = document.querySelector('.hero-art');
+  if (heroArt) {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 12;
+      const y = (e.clientY / window.innerHeight - 0.5) * 12;
+      heroArt.style.transform = `translate(${x}px, ${y}px)`;
+      heroArt.style.transition = 'transform 0.4s ease-out';
+    });
+  }
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.metric, .story-card, .fin-item, .supporter').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

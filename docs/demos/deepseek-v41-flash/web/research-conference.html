@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESEARCH / CONFERENCE — 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0e0e0e;
+      --paper: #f4f1ea;
+      --paper-2: #ebe6db;
+      --accent: #ff4d1c;
+      --accent-2: #1a3a8f;
+      --muted: #6b6659;
+      --line: #d9d3c4;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'Space Grotesk', system-ui, sans-serif;
+      --mono: 'DM Mono', ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(244, 241, 234, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 22px; height: 22px;
+      background: var(--ink);
+      border-radius: 50%;
+      position: relative;
+      display: inline-block;
+    }
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links a {
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 18px;
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      border-radius: 100px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 40px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(56px, 7.5vw, 112px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    h1 .slash {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    h1 .sub {
+      display: block;
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 24px;
+      font-style: normal;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      line-height: 1.55;
+      max-width: 480px;
+      color: #2a2a2a;
+      margin-bottom: 40px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      max-width: 480px;
+    }
+
+    .meta-item .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .meta-item .value {
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    /* HERO RIGHT — abstract SVG composition */
+    .hero-right {
+      position: relative;
+      height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-art {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .hero-art svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      padding: 12px;
+      animation: spin 20s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-badge span {
+      animation: spin-reverse 20s linear infinite;
+      display: block;
+    }
+    @keyframes spin-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* MARQUEE */
+    .marquee {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 20px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+      font-family: var(--serif);
+      font-size: 32px;
+      font-style: italic;
+    }
+
+    .marquee-track span {
+      margin: 0 40px;
+    }
+    .marquee-track .dot {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 120px 40px;
+      position: relative;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      margin-bottom: 80px;
+      align-items: end;
+    }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-num::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* KEYNOTES */
+    .keynotes {
+      background: var(--paper-2);
+    }
+
+    .speakers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .speaker {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .speaker:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(0,0,0,0.15);
+    }
+
+    .speaker-portrait {
+      aspect-ratio: 1;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .speaker-portrait svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .speaker-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .speaker-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .speaker-topic {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #2a2a2a;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      margin-top: auto;
+    }
+
+    .speaker-topic strong {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    /* CFP */
+    .cfp {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .cfp .section-num { color: #999; }
+    .cfp h2 em { color: var(--accent); }
+
+    .cfp-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .cfp-text p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #d4d0c4;
+      margin-bottom: 24px;
+      max-width: 560px;
+    }
+
+    .cfp-text p:first-of-type {
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.35;
+      color: var(--paper);
+      margin-bottom: 32px;
+    }
+
+    .cfp-dates {
+      border-top: 1px solid #333;
+    }
+
+    .cfp-date {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid #333;
+      align-items: baseline;
+    }
+
+    .cfp-date .d-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+    }
+
+    .cfp-date .d-value {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--paper);
+    }
+
+    .cfp-date .d-value.highlight {
+      color: var(--accent);
+    }
+
+    .cfp-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      padding: 18px 32px;
+      background: var(--accent);
+      color: var(--paper);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 100px;
+      transition: transform 0.2s;
+    }
+    .cfp-cta:hover { transform: translateX(4px); }
+    .cfp-cta::after { content: '→'; }
+
+    /* SCHEDULE */
+    .schedule-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .day {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+
+    .day-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      position: sticky;
+      top: 100px;
+    }
+
+    .day-label strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 32px;
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .events {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 24px;
+      align-items: baseline;
+      padding: 12px 0;
+    }
+
+    .event-time {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    .event-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .event-title small {
+      display: block;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-style: normal;
+    }
+
+    .event-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      color: var(--muted);
+    }
+
+    /* TRACKS */
+    .tracks {
+      background: var(--paper-2);
+    }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .track {
+      padding: 40px 32px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .track:hover {
+      background: var(--paper);
+    }
+
+    .track-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .track-name {
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .track-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-top: auto;
+    }
+
+    /* VENUE */
+    .venue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .venue-art {
+      aspect-ratio: 4/5;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .venue-art svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .venue-info h3 {
+      font-family: var(--serif);
+      font-size: 40px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .venue-info p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #2a2a2a;
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+
+    .venue-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .venue-detail .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .venue-detail .value {
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    /* REGISTER CTA */
+    .register {
+      background: var(--accent);
+      color: var(--paper);
+      padding: 120px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(0,0,0,0.15) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .register-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .register h2 {
+      font-size: clamp(48px, 7vw, 96px);
+      margin-bottom: 32px;
+    }
+
+    .register h2 em {
+      color: var(--ink);
+    }
+
+    .register p {
+      font-size: 20px;
+      line-height: 1.5;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      color: rgba(244, 241, 234, 0.9);
+    }
+
+    .register-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+      font-family: var(--mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 20px 36px;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn-primary:hover { background: #000; transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--paper);
+      border: 1px solid rgba(244, 241, 234, 0.4);
+    }
+    .btn-secondary:hover { border-color: var(--paper); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 80px 40px 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 32px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .footer-brand .slash { color: var(--accent); font-style: italic; }
+
+    .footer-desc {
+      color: #999;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      color: var(--paper);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #666;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; padding-top: 100px; }
+      .hero-right { height: 400px; }
+      .section-head { grid-template-columns: 1fr; gap: 24px; }
+      .speakers { grid-template-columns: 1fr 1fr; }
+      .cfp-grid { grid-template-columns: 1fr; gap: 60px; }
+      .tracks-grid { grid-template-columns: 1fr 1fr; }
+      .venue-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 80px 20px; }
+      .hero { padding: 100px 20px 40px; }
+      .speakers { grid-template-columns: 1fr; }
+      .tracks-grid { grid-template-columns: 1fr; }
+      .day { grid-template-columns: 1fr; gap: 20px; }
+      .day-label { position: static; }
+      .event { grid-template-columns: 80px 1fr; }
+      .event-tag { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; }
+      .hero-meta { flex-wrap: wrap; gap: 24px; }
+      .venue-details { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <span class="logo-mark"></span>
+    RESEARCH / CONFERENCE
+  </div>
+  <ul class="nav-links">
+    <li><a href="#keynotes">Keynotes</a></li>
+    <li><a href="#cfp">Call for Papers</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#venue">Venue</a></li>
+  </ul>
+  <a href="#register" class="nav-cta">Register →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Edition 07 · October 14–17, 2025</div>
+    <h1>
+      Research<br>
+      <span class="slash">/</span> Conference
+      <span class="sub">Where inquiry meets practice</span>
+    </h1>
+    <p class="hero-desc">
+      A four-day gathering of scholars, engineers, and designers working at the edges of computation, cognition, and culture. Held in Lisbon, streamed worldwide.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="label">Location</div>
+        <div class="value">Lisbon, PT</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Speakers</div>
+        <div class="value">42</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Tracks</div>
+        <div class="value">08</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-art">
+      <svg viewBox="0 0 500 620" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff4d1c"/>
+            <stop offset="100%" stop-color="#1a3a8f"/>
+          </linearGradient>
+          <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="#0e0e0e" opacity="0.15"/>
+          </pattern>
+        </defs>
+
+        <!-- Background grid -->
+        <rect x="0" y="0" width="500" height="620" fill="url(#dots)"/>
+
+        <!-- Large circle -->
+        <circle cx="250" cy="310" r="200" fill="none" stroke="#0e0e0e" stroke-width="1"/>
+        <circle cx="250" cy="310" r="160" fill="none" stroke="#0e0e0e" stroke-width="1" stroke-dasharray="2 4"/>
+
+        <!-- Rotating arcs -->
+        <g transform="translate(250 310)">
+          <path d="M -200 0 A 200 200 0 0 1 200 0" fill="none" stroke="#ff4d1c" stroke-width="2"/>
+          <path d="M 0 -200 A 200 200 0 0 1 0 200" fill="none" stroke="#1a3a8f" stroke-width="2"/>
+        </g>
+
+        <!-- Central shape -->
+        <g transform="translate(250 310)">
+          <polygon points="0,-90 78,-45 78,45 0,90 -78,45 -78,-45" fill="url(#g1)"/>
+          <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#f4f1ea"/>
+          <circle cx="0" cy="0" r="20" fill="#0e0e0e"/>
+          <circle cx="0" cy="0" r="8" fill="#ff4d1c"/>
+        </g>
+
+        <!-- Orbiting dots -->
+        <g>
+          <circle cx="250" cy="110" r="6" fill="#0e0e0e"/>
+          <circle cx="450" cy="310" r="6" fill="#ff4d1c"/>
+          <circle cx="250" cy="510" r="6" fill="#1a3a8f"/>
+          <circle cx="50" cy="310" r="6" fill="#0e0e0e"/>
+        </g>
+
+        <!-- Corner marks -->
+        <g stroke="#0e0e0e" stroke-width="1.5" fill="none">
+          <path d="M 20 20 L 20 40 M 20 20 L 40 20"/>
+          <path d="M 480 20 L 480 40 M 480 20 L 460 20"/>
+          <path d="M 20 600 L 20 580 M 20 600 L 40 600"/>
+          <path d="M 480 600 L 480 580 M 480 600 L 460 600"/>
+        </g>
+
+        <!-- Small labels -->
+        <text x="30" y="70" font-family="DM Mono, monospace" font-size="10" fill="#6b6659" letter-spacing="1">N 38.7223°</text>
+        <text x="30" y="86" font-family="DM Mono, monospace" font-size="10" fill="#6b6659" letter-spacing="1">W 9.1393°</text>
+      </svg>
+    </div>
+    <div class="hero-badge">
+      <span>Lisbon · 2025 · Edition 07 ·</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Computation</span><span class="dot">◆</span>
+    <span>Cognition</span><span class="dot">◆</span>
+    <span>Culture</span><span class="dot">◆</span>
+    <span>Climate</span><span class="dot">◆</span>
+    <span>Care</span><span class="dot">◆</span>
+    <span>Computation</span><span class="dot">◆</span>
+    <span>Cognition</span><span class="dot">◆</span>
+    <span>Culture</span><span class="dot">◆</span>
+    <span>Climate</span><span class="dot">◆</span>
+    <span>Care</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- KEYNOTES -->
+<section class="keynotes" id="keynotes">
+  <div class="section-head">
+    <div class="section-num">01 / Keynotes</div>
+    <h2>Voices shaping the <em>next decade</em> of research.</h2>
+  </div>
+
+  <div class="speakers">
+    <article class="speaker">
+      <div class="speaker-portrait">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="300" height="300" fill="#1a3a8f"/>
+          <circle cx="150" cy="120" r="60" fill="#f4f1ea"/>
+          <path d="M 60 300 Q 150 180 240 300 Z" fill="#f4f1ea"/>
+          <circle cx="130" cy="115" r="4" fill="#0e0e0e"/>
+          <circle cx="170" cy="115" r="4" fill="#0e0e0e"/>
+          <path d="M 130 145 Q 150 155 170 145" stroke="#0e0e0e" stroke-width="2" fill="none"/>
+          <rect x="0" y="0" width="300" height="300" fill="none" stroke="#ff4d1c" stroke-width="2" stroke-dasharray="4 8"/>
+        </svg>
+      </div>
+      <h3 class="speaker-name">Dr. Amara Okonkwo</h3>
+      <div class="speaker-role">MIT Media Lab · Director</div>
+      <div class="speaker-topic">
+        <strong>Opening Keynote</strong>
+        On the entanglement of machine learning and civic infrastructure.
+      </div>
+    </article>
+
+    <article class="speaker">
+      <div class="speaker-portrait">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="300" height="300" fill="#ff4d1c"/>
+          <circle cx="150" cy="120" r="60" fill="#0e0e0e"/>
+          <path d="M 60 300 Q 150 180 240 300 Z" fill="#0e0e0e"/>
+          <circle cx="130" cy="115" r="4" fill="#f4f1ea"/>
+          <circle cx="170" cy="115" r="4" fill="#f4f1ea"/>
+          <path d="M 130 145 Q 150 155 170 145" stroke="#f4f1ea" stroke-width="2" fill="none"/>
+          <circle cx="150" cy="150" r="80" fill="none" stroke="#f4f1ea" stroke-width="1" opacity="0.4"/>
+        </svg>
+      </div>
+      <h3 class="speaker-name">Prof. Kenji Tanaka</h3>
+      <div class="speaker-role">University of Tokyo · Cognitive Science</div>
+      <div class="speaker-topic">
+        <strong>Day 2 Keynote</strong>
+        Embodied cognition and the limits of symbolic reasoning.
+      </div>
+    </article>
+
+    <article class="speaker">
+      <div class="speaker-portrait">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="300" height="300" fill="#0e0e0e"/>
+          <circle cx="150" cy="120" r="60" fill="#f4f1ea"/>
+          <path d="M 60 300 Q 150 180 240 300 Z" fill="#f4f1ea"/>
+          <circle cx="130" cy="115" r="4" fill="#0e0e0e"/>
+          <circle cx="170" cy="115" r="4" fill="#0e0e0e"/>
+          <path d="M 130 145 Q 150 155 170 145" stroke="#0e0e0e" stroke-width="2" fill="none"/>
+          <path d="M 0 0 L 300 300 M 300 0 L 0 300" stroke="#ff4d1c" stroke-width="1" opacity="0.3"/>
+        </svg>
+      </div>
+      <h3 class="speaker-name">Dr. Sofia Marchetti</h3>
+      <div class="speaker-role">CERN · Theoretical Physics</div>
+      <div class="speaker-topic">
+        <strong>Closing Keynote</strong>
+        What particle physics teaches us about uncertainty in research.
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CFP -->
+<section class="cfp" id="cfp">
+  <div class="section-head">
+    <div class="section-num">02 / Call for Papers</div>
+    <h2>Submit your work. <em>Shape the conversation.</em></h2>
+  </div>
+
+  <div class="cfp-grid">
+    <div class="cfp-text">
+      <p>We invite original research, position papers, and provocations across eight interdisciplinary tracks. Submissions are peer-reviewed by a panel of 60 researchers from 22 countries.</p>
+      <p>We welcome work in progress, negative results, and methodological reflections alongside traditional papers. Extended abstracts of 1,500 words are due by June 30, 2025. Accepted contributions will be published in the open-access proceedings.</p>
+      <a href="#" class="cfp-cta">Submit a paper</a>
+    </div>
+
+    <div class="cfp-dates">
+      <div class="cfp-date">
+        <div class="d-label">Abstract Deadline</div>
+        <div class="d-value highlight">June 30, 2025</div>
+      </div>
+      <div class="cfp-date">
+        <div class="d-label">Notification</div>
+        <div class="d-value">August 15, 2025</div>
+      </div>
+      <div class="cfp-date">
+        <div class="d-label">Camera-Ready</div>
+        <div class="d-value">September 12, 2025</div>
+      </div>
+      <div class="cfp-date">
+        <div class="d-label">Conference</div>
+        <div class="d-value">October 14–17, 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="section-head">
+    <div class="section-num">03 / Schedule</div>
+    <h2>Four days. <em>One conversation.</em></h2>
+  </div>
+
+  <div class="schedule-list">
+    <div class="day">
+      <div class="day-label">
+        <strong>Day 01</strong>
+        Tuesday · Oct 14
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event-time">09:00</div>
+          <div class="event-title">Opening Remarks & Keynote<small>Dr. Amara Okonkwo — Machine learning and civic infrastructure</small></div>
+          <div class="event-tag">Plenary</div>
+        </div>
+        <div class="event">
+          <div class="event-time">11:30</div>
+          <div class="event-title">Paper Session A<small>Computation & Society · 6 papers</small></div>
+          <div class="event-tag">Parallel</div>
+        </div>
+        <div class="event">
+          <div class="event-time">14:00</div>
+          <div class="event-title">Workshop: Reproducibility in Practice<small>Hands-on session with the Open Science Collective</small></div>
+          <div class="event-tag">Workshop</div>
+        </div>
+        <div class="event">
+          <div class="event-time">18:00</div>
+          <div class="event-title">Welcome Reception<small>Rooftop terrace · LX Factory</small></div>
+          <div class="event-tag">Social</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-label">
+        <strong>Day 02</strong>
+        Wednesday · Oct 15
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event-time">09:30</div>
+          <div class="event-title">Keynote: Prof. Kenji Tanaka<small>Embodied cognition and the limits of symbolic reasoning</small></div>
+          <div class="event-tag">Plenary</div>
+        </div>
+        <div class="event">
+          <div class="event-time">11:00</div>
+          <div class="event-title">Paper Session B<small>Cognition & Learning · 8 papers</small></div>
+          <div class="event-tag">Parallel</div>
+        </div>
+        <div class="event">
+          <div class="event-time">15:00</div>
+          <div class="event-title">Panel: The Future of Peer Review<small>Moderated by Dr. Sofia Marchetti</small></div>
+          <div class="event-tag">Panel</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-label">
+        <strong>Day 03</strong>
+        Thursday · Oct 16
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event-time">09:30</div>
+          <div class="event-title">Paper Session C<small>Climate & Environment · 7 papers</small></div>
+          <div class="event-tag">Parallel</div>
+        </div>
+        <div class="event">
+          <div class="event-time">13:00</div>
+          <div class="event-title">Poster Session & Lunch<small>Atrium · 40 posters</small></div>
+          <div class="event-tag">Social</div>
+        </div>
+        <div class="event">
+          <div class="event-time">16:00</div>
+          <div class="event-title">Doctoral Consortium<small>Mentorship roundtables with senior researchers</small></div>
+          <div class="event-tag">Workshop</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-label">
+        <strong>Day 04</strong>
+        Friday · Oct 17
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event-time">10:00</div>
+          <div class="event-title">Closing Keynote: Dr. Sofia Marchetti<small>Uncertainty as method</small></div>
+          <div class="event-tag">Plenary</div>
+        </div>
+        <div class="event">
+          <div class="event-time">12:00</div>
+          <div class="event-title">Best Paper Awards<small>Announcement and closing remarks</small></div>
+          <div class="event-tag">Plenary</div>
+        </div>
+        <div class="event">
+          <div class="event-time">14:00</div>
+          <div class="event-title">Farewell Lunch<small>Garden courtyard</small></div>
+          <div class="event-tag">Social</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section class="tracks" id="tracks">
+  <div class="section-head">
+    <div class="section-num">04 / Tracks</div>
+    <h2>Eight tracks. <em>One shared question.</em></h2>
+  </div>
+
+  <div class="tracks-grid">
+    <div class="track">
+      <div class="track-num">01</div>
+      <div class="track-name">Computation & Society</div>
+      <div class="track-desc">Algorithms, power, and the infrastructures that shape public life.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">02</div>
+      <div class="track-name">Cognition & Learning</div>
+      <div class="track-desc">How minds, machines, and institutions come to know things.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">03</div>
+      <div class="track-name">Climate & Environment</div>
+      <div class="track-desc">Modeling, mitigation, and the politics of planetary data.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">04</div>
+      <div class="track-name">Health & Care</div>
+      <div class="track-desc">Clinical research, care ethics, and the design of healing systems.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">05</div>
+      <div class="track-name">Language & Meaning</div>
+      <div class="track-desc">Linguistics, semiotics, and the computational turn in the humanities.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">06</div>
+      <div class="track-name">Materials & Making</div>
+      <div class="track-desc">Fabrication, sustainability, and the craft of new matter.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">07</div>
+      <div class="track-name">Governance & Policy</div>
+      <div class="track-desc">Regulation, participation, and the future of democratic institutions.</div>
+    </div>
+    <div class="track">
+      <div class="track-num">08</div>
+      <div class="track-name">Open Methods</div>
+      <div class="track-desc">Reproducibility, data stewardship, and the ethics of openness.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section id="venue">
+  <div class="section-head">
+    <div class="section-num">05 / Venue</div>
+    <h2>Lisbon. <em>Where the Atlantic meets the Tagus.</em></h2>
+  </div>
+
+  <div class="venue-grid">
+    <div class="venue-art">
+      <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a3a8f"/>
+            <stop offset="60%" stop-color="#ff4d1c"/>
+            <stop offset="100%" stop-color="#f4f1ea"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="500" fill="url(#sky)"/>
+        <circle cx="200" cy="280" r="60" fill="#f4f1ea" opacity="0.9"/>
+        <path d="M 0 380 L 60 340 L 100 360 L 160 320 L 220 350 L 280 310 L 340 340 L 400 320 L 400 500 L 0 500 Z" fill="#0e0e0e"/>
+        <path d="M 0 420 L 80 400 L 140 410 L 200 390 L 260 405 L 320 385 L 400 400 L 400 500 L 0 500 Z" fill="#0e0e0e" opacity="0.7"/>
+        <g stroke="#f4f1ea" stroke-width="1" opacity="0.4">
+          <line x1="0" y1="450" x2="400" y2="450"/>
+          <line x1="0" y1="470" x2="400" y2="470"/>
+          <line x1="0" y1="490" x2="400" y2="490"/>
+        </g>
+        <text x="20" y="30" font-family="DM Mono, monospace" font-size="11" fill="#f4f1ea" letter-spacing="2">LX FACTORY · ALCÂNTARA</text>
+      </svg>
+    </div>
+
+    <div class="venue-info">
+      <h3>LX Factory, Alcântara</h3>
+      <p>An industrial complex turned creative hub on the banks of the Tagus. The conference occupies three converted warehouses, a rooftop terrace, and a garden courtyard — all within walking distance of Lisbon's historic center.</p>
+      <div class="venue-details">
+        <div class="venue-detail">
+          <div class="label">Address</div>
+          <div class="value">R. Rodrigues de Faria 103<br>1300-501 Lisboa</div>
+        </div>
+        <div class="venue-detail">
+          <div class="label">Getting There</div>
+          <div class="value">15 min from Cais do Sodré<br>by tram or train</div>
+        </div>
+        <div class="venue-detail">
+          <div class="label">Accessibility</div>
+          <div class="value">Fully accessible<br>venues & transport</div>
+        </div>
+        <div class="venue-detail">
+          <div class="label">Streaming</div>
+          <div class="value">All plenaries<br>streamed live</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="register" id="register">
+  <div class="register-inner">
+    <h2>Join us in <em>Lisbon.</em></h2>
+    <p>Early-bird registration is open until August 31, 2025. Student and low-income rates available. Virtual attendance is free for all accepted authors.</p>
+    <div class="register-actions">
+      <a href="#" class="btn-primary">Register now →</a>
+      <a href="#" class="btn-secondary">Download program (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Research <span class="slash">/</span> Conference</div>
+      <p class="footer-desc">An annual gathering for interdisciplinary inquiry. Organized by the Open Research Collective since 2019.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Conference</h4>
+      <ul>
+        <li><a href="#keynotes">Keynotes</a></li>
+        <li><a href="#cfp">Call for Papers</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#tracks">Tracks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Attend</h4>
+      <ul>
+        <li><a href="#register">Registration</a></li>
+        <li><a href="#venue">Venue & Travel</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Code of Conduct</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Mastodon</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Press Kit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Open Research Collective</div>
+    <div>Lisbon · Portugal · 38.7223° N, 9.1393° W</div>
+  </div>
+</footer>
+
+<script>
+  // Subtle parallax on hero art
+  const heroArt = document.querySelector('.hero-art');
+  if (heroArt) {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      heroArt.style.transform = `translate(${x}px, ${y}px)`;
+      heroArt.style.transition = 'transform 0.4s ease-out';
+    });
+  }
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.speaker, .track, .day, .cfp-date').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

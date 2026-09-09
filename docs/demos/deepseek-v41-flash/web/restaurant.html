@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASA ORO · Mediterranean fine dining</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #faf7f0;  /* warm cream */
+      color: #2c2b26;             /* charcoal */
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- typography ---------- */
+    h1, h2, h3, .serif {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 5.6rem);
+      line-height: 1.1;
+      font-weight: 500;
+      color: #2c2b26;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      line-height: 1.2;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .sans {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    .small-caps {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6b6a5e;
+    }
+
+    /* ---------- layout & spacing ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* ---------- header / nav ---------- */
+    .site-header {
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(44, 43, 38, 0.08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #2c2b26;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #7a7b4e; /* olive accent */
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2b26;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #7a7b4e;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #2c2b26;
+      color: #faf7f0;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #2c2b26;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: transparent;
+      color: #2c2b26;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #2c2b26;
+    }
+
+    .btn-outline:hover {
+      background-color: #2c2b26;
+      color: #faf7f0;
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 4rem 0 6rem;
+    }
+
+    .hero-content {
+      max-width: 540px;
+    }
+
+    .hero-content .small-caps {
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin: 1.8rem 0 2.5rem;
+      color: #4a4942;
+      max-width: 440px;
+    }
+
+    .hero-illustration {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ---------- menu highlights ---------- */
+    .menu-section {
+      background-color: #f3efe6; /* slightly deeper cream */
+      padding: 6rem 0;
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .menu-header h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .menu-item {
+      background: #faf7f0;
+      padding: 2.2rem 2rem;
+      border: 1px solid rgba(44, 43, 38, 0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(44, 43, 38, 0.06);
+    }
+
+    .menu-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .menu-item .price {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      color: #7a7b4e;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .menu-item p {
+      font-size: 0.95rem;
+      color: #5e5d55;
+      line-height: 1.5;
+    }
+
+    /* ---------- chef ---------- */
+    .chef-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .chef-illustration {
+      display: flex;
+      justify-content: center;
+    }
+
+    .chef-content .small-caps {
+      margin-bottom: 1rem;
+    }
+
+    .chef-content h2 {
+      margin-bottom: 1.2rem;
+    }
+
+    .chef-content p {
+      font-size: 1.05rem;
+      color: #4a4942;
+      margin-bottom: 1.5rem;
+      max-width: 480px;
+    }
+
+    .chef-signature {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: #7a7b4e;
+      margin-top: 1rem;
+    }
+
+    /* ---------- reservation CTA ---------- */
+    .reservation-section {
+      background-color: #2c2b26;
+      color: #faf7f0;
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .reservation-section h2 {
+      color: #faf7f0;
+      margin-bottom: 1rem;
+    }
+
+    .reservation-section p {
+      color: #cbc9c0;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .reservation-section .btn {
+      background-color: #faf7f0;
+      color: #2c2b26;
+      border-color: #faf7f0;
+    }
+
+    .reservation-section .btn:hover {
+      background-color: transparent;
+      color: #faf7f0;
+    }
+
+    /* ---------- location & hours ---------- */
+    .location-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .location-info h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .location-info p {
+      font-size: 1.05rem;
+      color: #4a4942;
+      margin-bottom: 0.5rem;
+    }
+
+    .hours-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(44, 43, 38, 0.08);
+      font-size: 1rem;
+    }
+
+    .hours-list li span:first-child {
+      font-weight: 400;
+    }
+
+    .hours-list li span:last-child {
+      color: #5e5d55;
+    }
+
+    .map-illustration {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    /* ---------- footer ---------- */
+    .site-footer {
+      background-color: #f3efe6;
+      padding: 4rem 0 2rem;
+      border-top: 1px solid rgba(44, 43, 38, 0.06);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .logo {
+      font-size: 1.6rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      color: #5e5d55;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #2c2b26;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-col a {
+      text-decoration: none;
+      color: #5e5d55;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: #7a7b4e;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(44, 43, 38, 0.08);
+      font-size: 0.85rem;
+      color: #6b6a5e;
+    }
+
+    .footer-bottom a {
+      color: #6b6a5e;
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: #7a7b4e;
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .chef-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .chef-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .location-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hours-list li {
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .site-header {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="container site-header">
+    <a href="#" class="logo">CASA <span>ORO</span></a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#chef">Chef</a></li>
+        <li><a href="#reservations">Reservations</a></li>
+        <li><a href="#location">Location</a></li>
+      </ul>
+    </nav>
+    <a href="#reservations" class="btn btn-outline">Book a table</a>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="container hero">
+    <div class="hero-content">
+      <div class="small-caps">Mediterranean fine dining · Est. 2018</div>
+      <h1>Where the sea meets the table.</h1>
+      <p>Seasonal ingredients, coastal traditions, and a quiet reverence for the craft. Casa Oro is a place to linger.</p>
+      <a href="#reservations" class="btn">Reserve your evening</a>
+    </div>
+    <div class="hero-illustration">
+      <!-- simple SVG illustration: olive branch & sun -->
+      <svg width="380" height="380" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- sun / circle -->
+        <circle cx="190" cy="190" r="120" stroke="#7a7b4e" stroke-width="1.2" stroke-dasharray="4 6" opacity="0.5"/>
+        <circle cx="190" cy="190" r="80" stroke="#7a7b4e" stroke-width="1.2" opacity="0.3"/>
+        <!-- olive branch -->
+        <path d="M120 260 Q 160 200, 220 160 Q 260 130, 300 120" stroke="#7a7b4e" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M220 160 Q 230 140, 250 135" stroke="#7a7b4e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M250 135 Q 260 120, 280 115" stroke="#7a7b4e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- leaves -->
+        <ellipse cx="235" cy="148" rx="12" ry="6" transform="rotate(-30 235 148)" fill="#7a7b4e" opacity="0.7"/>
+        <ellipse cx="265" cy="125" rx="12" ry="6" transform="rotate(-20 265 125)" fill="#7a7b4e" opacity="0.7"/>
+        <ellipse cx="295" cy="115" rx="10" ry="5" transform="rotate(-10 295 115)" fill="#7a7b4e" opacity="0.7"/>
+        <ellipse cx="205" cy="175" rx="10" ry="5" transform="rotate(-40 205 175)" fill="#7a7b4e" opacity="0.5"/>
+        <!-- small olive -->
+        <circle cx="280" cy="118" r="5" fill="#7a7b4e" opacity="0.8"/>
+        <circle cx="260" cy="130" r="4" fill="#7a7b4e" opacity="0.6"/>
+        <!-- abstract wave / sea -->
+        <path d="M80 300 Q 130 280, 180 300 T 280 300" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <path d="M100 320 Q 150 300, 200 320 T 300 320" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========== MENU HIGHLIGHTS ========== -->
+  <section id="menu" class="menu-section">
+    <div class="container">
+      <div class="menu-header">
+        <div class="small-caps">From the kitchen</div>
+        <h2>Menu highlights</h2>
+        <p style="color: #5e5d55; max-width: 520px; margin: 0 auto;">A rotating selection of dishes that reflect the season and the coast.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <h3>Crudo di Mare</h3>
+          <span class="price">€24</span>
+          <p>Line-caught sea bass, blood orange, fennel pollen, and a touch of Sicilian olive oil.</p>
+        </div>
+        <div class="menu-item">
+          <h3>Risotto al Tartufo</h3>
+          <span class="price">€32</span>
+          <p>Carnaroli rice, aged parmesan, black truffle shaved at the table, and a whisper of thyme.</p>
+        </div>
+        <div class="menu-item">
+          <h3>Agnello alla Brace</h3>
+          <span class="price">€38</span>
+          <p>Grilled lamb loin, smoked aubergine purée, preserved lemon, and salsa verde.</p>
+        </div>
+        <div class="menu-item">
+          <h3>Paccheri al Pomodoro</h3>
+          <span class="price">€26</span>
+          <p>Slow-cooked San Marzano tomatoes, basil, and a generous grating of pecorino.</p>
+        </div>
+        <div class="menu-item">
+          <h3>Branzino al Forno</h3>
+          <span class="price">€34</span>
+          <p>Whole roasted sea bream, capers, Taggiasca olives, and roasted fennel.</p>
+        </div>
+        <div class="menu-item">
+          <h3>Tiramisù della Casa</h3>
+          <span class="price">€14</span>
+          <p>Espresso-soaked savoiardi, mascarpone cream, and a dusting of Valrhona cocoa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CHEF INTRODUCTION ========== -->
+  <section id="chef" class="container chef-section">
+    <div class="chef-illustration">
+      <!-- simple SVG portrait / abstract chef figure -->
+      <svg width="320" height="380" viewBox="0 0 320 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- background circle -->
+        <circle cx="160" cy="190" r="140" fill="#f3efe6" opacity="0.6"/>
+        <!-- abstract figure: head -->
+        <circle cx="160" cy="140" r="48" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <!-- shoulders / body -->
+        <path d="M80 280 Q 160 200, 240 280" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <!-- chef hat -->
+        <path d="M120 100 Q 160 60, 200 100" stroke="#7a7b4e" stroke-width="1.8" fill="none"/>
+        <path d="M130 100 L 190 100" stroke="#7a7b4e" stroke-width="1.8" fill="none"/>
+        <!-- eyes (minimal) -->
+        <circle cx="145" cy="135" r="3" fill="#2c2b26"/>
+        <circle cx="175" cy="135" r="3" fill="#2c2b26"/>
+        <!-- smile -->
+        <path d="M150 155 Q 160 165, 170 155" stroke="#2c2b26" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- apron detail -->
+        <path d="M120 240 L 200 240" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <path d="M130 260 L 190 260" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <!-- small olive branch accent -->
+        <path d="M240 300 Q 260 280, 280 290" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.5"/>
+        <ellipse cx="270" cy="285" rx="8" ry="4" transform="rotate(-20 270 285)" fill="#7a7b4e" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="chef-content">
+      <div class="small-caps">Meet the chef</div>
+      <h2>Elena Marchetti</h2>
+      <p>Born in Puglia and trained in Modena, Chef Elena brings a deep respect for simplicity and the seasons. Her cooking is rooted in memory — the scent of olive groves, the sound of the Adriatic, the generosity of the table.</p>
+      <p>At Casa Oro, she works with a small team of artisans to source the finest ingredients from local producers and small family farms across the Mediterranean.</p>
+      <div class="chef-signature">Elena Marchetti</div>
+    </div>
+  </section>
+
+  <!-- ========== RESERVATION CTA ========== -->
+  <section id="reservations" class="reservation-section">
+    <div class="container">
+      <div class="small-caps" style="color: #cbc9c0;">Reservations</div>
+      <h2>Join us for dinner.</h2>
+      <p>We welcome you to experience an evening of thoughtful food and warm hospitality. Tables are limited — we recommend booking in advance.</p>
+      <a href="#" class="btn">Book a table</a>
+    </div>
+  </section>
+
+  <!-- ========== LOCATION & HOURS ========== -->
+  <section id="location" class="container location-section">
+    <div class="location-info">
+      <div class="small-caps">Find us</div>
+      <h2>Location & hours</h2>
+      <p>Via del Mare 42, 00186 Roma, Italia</p>
+      <p>+39 06 1234 5678</p>
+      <p>hello@casaoro.com</p>
+      <ul class="hours-list">
+        <li><span>Tuesday – Thursday</span> <span>18:00 – 23:00</span></li>
+        <li><span>Friday – Saturday</span> <span>18:00 – 00:00</span></li>
+        <li><span>Sunday</span> <span>12:00 – 15:00</span></li>
+        <li><span>Monday</span> <span>Closed</span></li>
+      </ul>
+    </div>
+    <div class="map-illustration">
+      <!-- simple SVG map / compass illustration -->
+      <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- outer circle -->
+        <circle cx="160" cy="160" r="130" stroke="#7a7b4e" stroke-width="1.2" fill="none" opacity="0.4"/>
+        <circle cx="160" cy="160" r="100" stroke="#7a7b4e" stroke-width="1" fill="none" opacity="0.3"/>
+        <!-- compass points -->
+        <path d="M160 30 L 160 60" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <path d="M160 260 L 160 290" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <path d="M30 160 L 60 160" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <path d="M260 160 L 290 160" stroke="#2c2b26" stroke-width="1.5" fill="none"/>
+        <!-- N S E W labels -->
+        <text x="160" y="22" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#2c2b26" letter-spacing="0.1em">N</text>
+        <text x="160" y="308" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#2c2b26" letter-spacing="0.1em">S</text>
+        <text x="22" y="164" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#2c2b26" letter-spacing="0.1em">W</text>
+        <text x="298" y="164" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#2c2b26" letter-spacing="0.1em">E</text>
+        <!-- inner star / rose -->
+        <path d="M160 100 L 180 160 L 160 220 L 140 160 Z" fill="#7a7b4e" opacity="0.15"/>
+        <path d="M100 160 L 160 140 L 220 160 L 160 180 Z" fill="#7a7b4e" opacity="0.15"/>
+        <!-- small dot for location -->
+        <circle cx="160" cy="160" r="6" fill="#7a7b4e"/>
+        <circle cx="160" cy="160" r="12" stroke="#7a7b4e" stroke-width="1" fill="none" opacity="0.5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">CASA <span>ORO</span></a>
+          <p>Contemporary Mediterranean fine dining in the heart of Rome. A place for long dinners and good company.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#chef">Chef</a></li>
+            <li><a href="#reservations">Reservations</a></li>
+            <li><a href="#location">Location</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+390612345678">+39 06 1234 5678</a></li>
+            <li><a href="mailto:hello@casaoro.com">hello@casaoro.com</a></li>
+            <li><a href="#">Via del Mare 42, Roma</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Casa Oro. All rights reserved.</span>
+        <span><a href="#">Privacy</a> · <a href="#">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

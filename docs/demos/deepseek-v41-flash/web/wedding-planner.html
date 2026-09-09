@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEDDING / PLANNER — Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f5f1ea;
+      --paper-2: #ebe5da;
+      --rose: #d97a7a;
+      --rose-deep: #b85a5a;
+      --sage: #7a8b6f;
+      --gold: #c9a961;
+      --line: #d9d2c4;
+      --muted: #6b6558;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(217,122,122,0.06), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(122,139,111,0.06), transparent 45%);
+      min-height: 100vh;
+    }
+
+    .serif { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+
+    /* ---------- NAV ---------- */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: rgba(245,241,234,0.92);
+      backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--rose);
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      font-size: 16px;
+      font-style: italic;
+    }
+    .brand-mark::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(245,241,234,0.5);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 34px;
+      list-style: none;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .nav-links a { color: inherit; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links .active { color: var(--ink); }
+
+    .nav-cta {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--paper); }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 60px;
+      padding: 56px 48px 40px;
+      align-items: center;
+      min-height: calc(100vh - 79px);
+    }
+
+    .hero-left { max-width: 640px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--rose);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 5.4vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      margin-bottom: 26px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--rose-deep);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+    .hero-meta div span {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .hero-meta div strong {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    /* ---------- COUNTDOWN CARD ---------- */
+    .countdown-card {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 24px;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -30px rgba(26,26,26,0.4);
+    }
+    .countdown-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,122,122,0.35), transparent 70%);
+    }
+    .countdown-card::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,97,0.25), transparent 70%);
+    }
+
+    .cd-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .cd-head .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,241,234,0.55);
+      margin-bottom: 8px;
+    }
+    .cd-head .date {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .cd-head .date em { font-style: italic; color: var(--gold); }
+
+    .cd-badge {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 1px solid rgba(245,241,234,0.25);
+      border-radius: 999px;
+      color: rgba(245,241,234,0.8);
+    }
+
+    .cd-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .cd-cell {
+      background: rgba(245,241,234,0.06);
+      border: 1px solid rgba(245,241,234,0.1);
+      border-radius: 14px;
+      padding: 18px 8px;
+      text-align: center;
+    }
+    .cd-cell .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 40px;
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .cd-cell .unit {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,234,0.55);
+    }
+
+    .cd-foot {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(245,241,234,0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(245,241,234,0.6);
+      position: relative;
+      z-index: 1;
+    }
+    .cd-foot strong { color: var(--paper); font-weight: 500; }
+
+    /* ---------- SECTION SHELL ---------- */
+    section { padding: 72px 48px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .section-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 3.4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .section-head h2 em { font-style: italic; color: var(--rose-deep); }
+    .section-head p {
+      color: var(--muted);
+      max-width: 380px;
+      font-size: 14px;
+    }
+    .section-num {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--rose);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* ---------- DASHBOARD GRID ---------- */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .panel-head h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    .panel-head .tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Checklist */
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--line);
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li.done { opacity: 0.5; }
+    .checklist li.done .task-name { text-decoration: line-through; }
+
+    .check {
+      width: 22px; height: 22px;
+      border: 1.5px solid var(--line);
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+      background: var(--paper);
+    }
+    .checklist li.done .check {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    .check svg { opacity: 0; transition: opacity .2s; }
+    .checklist li.done .check svg { opacity: 1; }
+
+    .task-name { flex: 1; font-size: 14px; }
+    .task-meta {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .task-meta.urgent { color: var(--rose-deep); }
+
+    /* Guest summary */
+    .guest-total {
+      font-family: 'DM Serif Display', serif;
+      font-size: 64px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .guest-total em { font-style: italic; color: var(--rose); }
+    .guest-label {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .guest-bars { display: flex; flex-direction: column; gap: 18px; }
+    .guest-row { display: flex; flex-direction: column; gap: 8px; }
+    .guest-row .row-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .guest-row .row-top span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .bar {
+      height: 6px;
+      background: var(--paper-2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar > i {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+    .bar .fill-rose { background: var(--rose); }
+    .bar .fill-sage { background: var(--sage); }
+    .bar .fill-gold { background: var(--gold); }
+
+    /* ---------- BUDGET ---------- */
+    .budget-panel {
+      background: linear-gradient(135deg, #fff 0%, #faf6ee 100%);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .budget-amount {
+      font-family: 'DM Serif Display', serif;
+      font-size: 44px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .budget-amount em { font-style: italic; color: var(--sage); }
+    .budget-sub {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+    .budget-bar {
+      height: 12px;
+      background: var(--paper-2);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .budget-bar > i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--sage), var(--gold));
+      border-radius: 999px;
+      transition: width 1.4s cubic-bezier(.2,.8,.2,1);
+    }
+    .budget-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .budget-legend strong { color: var(--ink); font-weight: 500; }
+
+    .budget-cats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 24px;
+      padding-top: 22px;
+      border-top: 1px dashed var(--line);
+    }
+    .budget-cats div {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .budget-cats div span:first-child { color: var(--muted); }
+    .budget-cats div span:last-child { font-variant-numeric: tabular-nums; }
+
+    /* ---------- VENDORS ---------- */
+    .vendors {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .vendor {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      cursor: pointer;
+    }
+    .vendor:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(26,26,26,0.2);
+    }
+    .vendor-art {
+      height: 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .vendor-art svg { width: 100%; height: 100%; display: block; }
+    .vendor-body { padding: 20px; }
+    .vendor-cat {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose-deep);
+      margin-bottom: 8px;
+    }
+    .vendor-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+    .vendor-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .vendor-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .vendor-foot .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--sage);
+    }
+    .vendor-foot .status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+    .vendor-foot .status.pending { color: var(--gold); }
+    .vendor-foot .status.pending::before { background: var(--gold); }
+    .vendor-foot .price { font-variant-numeric: tabular-nums; color: var(--muted); }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline-wrap {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 24px;
+      padding: 56px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,122,122,0.18), transparent 70%);
+    }
+    .timeline-wrap .section-head h2 { color: var(--paper); }
+    .timeline-wrap .section-head h2 em { color: var(--gold); }
+    .timeline-wrap .section-head p { color: rgba(245,241,234,0.6); }
+    .timeline-wrap .section-num { color: var(--gold); }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 20px;
+    }
+    .tl-item:first-child { padding-left: 0; }
+    .tl-item:last-child { padding-right: 0; }
+    .tl-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--paper);
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+    }
+    .tl-item.done .tl-dot { background: var(--gold); }
+    .tl-item.current .tl-dot {
+      background: var(--rose);
+      box-shadow: 0 0 0 6px rgba(217,122,122,0.2);
+    }
+    .tl-line {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(245,241,234,0.15);
+      z-index: 1;
+    }
+    .tl-item:first-child .tl-line { left: 50%; }
+    .tl-item:last-child .tl-line { right: 50%; }
+    .tl-item.done .tl-line { background: var(--gold); }
+
+    .tl-date {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,241,234,0.5);
+      margin-bottom: 8px;
+    }
+    .tl-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .tl-desc {
+      font-size: 12.5px;
+      color: rgba(245,241,234,0.6);
+      line-height: 1.5;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .brand { font-size: 16px; }
+    footer .brand-mark { width: 26px; height: 26px; font-size: 13px; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 32px; min-height: auto; }
+      .dashboard { grid-template-columns: 1fr; }
+      .vendors { grid-template-columns: repeat(2, 1fr); }
+      .timeline { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+      .tl-item { padding: 0 16px; }
+      .tl-line { display: none; }
+      section { padding: 56px 32px; }
+      nav { padding: 18px 32px; }
+      .nav-links { display: none; }
+      .timeline-wrap { padding: 40px 32px; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 32px 20px; }
+      section { padding: 48px 20px; }
+      nav { padding: 16px 20px; }
+      .cd-grid { grid-template-columns: repeat(2, 1fr); }
+      .vendors { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .hero-meta { flex-wrap: wrap; gap: 24px; }
+      .budget-cats { grid-template-columns: 1fr; }
+      footer { padding: 32px 20px; }
+      .timeline-wrap { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <span>Wedding / Planner</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Dashboard</a></li>
+      <li><a href="#">Vendors</a></li>
+      <li><a href="#">Guests</a></li>
+      <li><a href="#">Budget</a></li>
+      <li><a href="#">Timeline</a></li>
+    </ul>
+    <button class="nav-cta">Book a Call</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Amelia &amp; Theodore · Autumn 2025</div>
+      <h1>The day we've <em>imagined</em>, carefully planned.</h1>
+      <p class="hero-sub">A quiet, considered celebration at Villa Serena — olive groves, long tables, and the people who matter most. Every detail is being shaped with intention.</p>
+      <div class="hero-meta">
+        <div>
+          <span>Venue</span>
+          <strong>Villa Serena</strong>
+        </div>
+        <div>
+          <span>Location</span>
+          <strong>Tuscany, Italy</strong>
+        </div>
+        <div>
+          <span>Guests</span>
+          <strong>128 confirmed</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="countdown-card">
+      <div class="cd-head">
+        <div>
+          <div class="label">Counting down to</div>
+          <div class="date">Saturday, <em>September 20</em></div>
+        </div>
+        <div class="cd-badge">On Track</div>
+      </div>
+      <div class="cd-grid" id="countdown">
+        <div class="cd-cell"><span class="num" id="cd-days">—</span><span class="unit">Days</span></div>
+        <div class="cd-cell"><span class="num" id="cd-hours">—</span><span class="unit">Hours</span></div>
+        <div class="cd-cell"><span class="num" id="cd-mins">—</span><span class="unit">Minutes</span></div>
+        <div class="cd-cell"><span class="num" id="cd-secs">—</span><span class="unit">Seconds</span></div>
+      </div>
+      <div class="cd-foot">
+        <span>Ceremony begins at <strong>4:30 PM</strong></span>
+        <span>Planner: <strong>Elena Rossi</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section>
+    <div class="section-head">
+      <div>
+        <span class="section-num">— 01 / Overview</span>
+        <h2>Where we are <em>today</em>.</h2>
+      </div>
+      <p>A living snapshot of the planning process — tasks, guests, and the numbers that keep everything honest.</p>
+    </div>
+
+    <div class="dashboard">
+      <!-- Checklist -->
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Planning Checklist</h3>
+          <span class="tag">7 of 12 complete</span>
+        </div>
+        <ul class="checklist" id="checklist">
+          <li class="done">
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Book ceremony venue &amp; reception space</span>
+            <span class="task-meta">Done</span>
+          </li>
+          <li class="done">
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Confirm photographer &amp; videographer</span>
+            <span class="task-meta">Done</span>
+          </li>
+          <li class="done">
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Send save-the-dates to all guests</span>
+            <span class="task-meta">Done</span>
+          </li>
+          <li>
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Finalize menu tasting with chef</span>
+            <span class="task-meta urgent">Due in 4 days</span>
+          </li>
+          <li>
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Order wedding rings &amp; engraving</span>
+            <span class="task-meta">Due in 2 weeks</span>
+          </li>
+          <li>
+            <span class="check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#f5f1ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="task-name">Arrange guest shuttle from Florence</span>
+            <span class="task-meta">Due in 3 weeks</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Guest summary -->
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Guest Summary</h3>
+          <span class="tag">Updated today</span>
+        </div>
+        <div class="guest-total">128<em> / 150</em></div>
+        <div class="guest-label">Confirmed of invited</div>
+        <div class="guest-bars">
+          <div class="guest-row">
+            <div class="row-top"><span>Attending</span><span>128</span></div>
+            <div class="bar"><i class="fill-rose" style="width: 85%"></i></div>
+          </div>
+          <div class="guest-row">
+            <div class="row-top"><span>Awaiting reply</span><span>14</span></div>
+            <div class="bar"><i class="fill-gold" style="width: 9%"></i></div>
+          </div>
+          <div class="guest-row">
+            <div class="row-top"><span>Declined</span><span>8</span></div>
+            <div class="bar"><i class="fill-sage" style="width: 5%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUDGET + VENDORS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <span class="section-num">— 02 / Budget &amp; Vendors</span>
+        <h2>Every euro, <em>accounted for</em>.</h2>
+      </div>
+      <p>Transparent tracking across every category, with the vendors we've chosen to bring the vision to life.</p>
+    </div>
+
+    <div class="dashboard" style="margin-bottom: 24px;">
+      <div class="budget-panel">
+        <div>
+          <div class="budget-amount">€ 68,400<em> / € 85,000</em></div>
+          <div class="budget-sub">Committed of total budget</div>
+          <div class="budget-bar"><i id="budget-fill"></i></div>
+          <div class="budget-legend">
+            <span><strong>80%</strong> allocated</span>
+            <span>€ 16,600 remaining</span>
+          </div>
+        </div>
+        <div class="budget-cats">
+          <div><span>Venue &amp; catering</span><span>€ 32,000</span></div>
+          <div><span>Photography</span><span>€ 6,800</span></div>
+          <div><span>Florals &amp; décor</span><span>€ 9,500</span></div>
+          <div><span>Music &amp; entertainment</span><span>€ 4,200</span></div>
+          <div><span>Attire &amp; beauty</span><span>€ 7,900</span></div>
+          <div><span>Stationery &amp; extras</span><span>€ 8,000</span></div>
+        </div>
+      </div>
+
+      <div class="panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="panel-head">
+            <h3>Next Payment</h3>
+            <span class="tag">Due soon</span>
+          </div>
+          <div class="budget-amount" style="font-size: 38px;">€ 12,500</div>
+          <div class="budget-sub">Villa Serena · Final installment</div>
+          <p style="font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-top: 8px;">Scheduled for <strong style="color: var(--ink);">August 15, 2025</strong>. A reminder will be sent to your inbox one week prior.</p>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 24px;">
+          <button class="nav-cta" style="flex: 1; padding: 12px;">Pay Now</button>
+          <button class="nav-cta" style="flex: 1; padding: 12px; background: transparent; color: var(--muted); border-color: var(--line);">View Invoice</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="vendors">
+      <div class="vendor">
+        <div class="vendor-art">
+          <svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="v1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#d97a7a"/>
+                <stop offset="1" stop-color="#b85a5a"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="140" fill="url(#v1)"/>
+            <circle cx="150" cy="70" r="42" fill="none" stroke="rgba(245,241,234,0.4)" stroke-width="1"/>
+            <circle cx="150" cy="70" r="28" fill="none" stroke="rgba(245,241,234,0.6)" stroke-width="1"/>
+            <circle cx="150" cy="70" r="14" fill="rgba(245,241,234,0.9)"/>
+          </svg>
+        </div>
+        <div class="vendor-body">
+          <div class="vendor-cat">Photography</div>
+          <div class="vendor-name">Studio Lumen</div>
+          <div class="vendor-desc">Documentary-style storytelling with a soft, filmic palette.</div>
+          <div class="vendor-foot">
+            <span class="status">Booked</span>
+            <span class="price">€ 6,800</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor">
+        <div class="vendor-art">
+          <svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="v2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7a8b6f"/>
+                <stop offset="1" stop-color="#5a6b52"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="140" fill="url(#v2)"/>
+            <path d="M0 100 Q75 60 150 90 T300 80 L300 140 L0 140 Z" fill="rgba(245,241,234,0.15)"/>
+            <path d="M0 120 Q75 90 150 110 T300 100 L300 140 L0 140 Z" fill="rgba(245,241,234,0.25)"/>
+            <circle cx="230" cy="40" r="18" fill="rgba(245,241,234,0.5)"/>
+          </svg>
+        </div>
+        <div class="vendor-body">
+          <div class="vendor-cat">Florals</div>
+          <div class="vendor-name">Fiori di Campo</div>
+          <div class="vendor-desc">Wild, seasonal arrangements sourced from local Tuscan growers.</div>
+          <div class="vendor-foot">
+            <span class="status">Booked</span>
+            <span class="price">€ 9,500</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor">
+        <div class="vendor-art">
+          <svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="v3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#c9a961"/>
+                <stop offset="1" stop-color="#a88840"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="140" fill="url(#v3)"/>
+            <g stroke="rgba(245,241,234,0.5)" stroke-width="1" fill="none">
+              <path d="M40 70 Q80 30 120 70 T200 70 T280 70"/>
+              <path d="M40 90 Q80 50 120 90 T200 90 T280 90"/>
+            </g>
+            <circle cx="150" cy="70" r="6" fill="rgba(245,241,234,0.9)"/>
+          </svg>
+        </div>
+        <div class="vendor-body">
+          <div class="vendor-cat">Music</div>
+          <div class="vendor-name">The Olive Quartet</div>
+          <div class="vendor-desc">Strings for the ceremony, followed by a jazz trio at aperitivo.</div>
+          <div class="vendor-foot">
+            <span class="status pending">Pending</span>
+            <span class="price">€ 4,200</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vendor">
+        <div class="vendor-art">
+          <svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="v4" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1a1a1a"/>
+                <stop offset="1" stop-color="#3a3a3a"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="140" fill="url(#v4)"/>
+            <g fill="rgba(245,241,234,0.7)">
+              <circle cx="80" cy="70" r="3"/>
+              <circle cx="120" cy="50" r="3"/>
+              <circle cx="160" cy="80" r="3"/>
+              <circle cx="200" cy="55" r="3"/>
+              <circle cx="240" cy="75" r="3"/>
+            </g>
+            <path d="M60 100 Q150 60 240 100" stroke="rgba(201,169,97,0.6)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="vendor-body">
+          <div class="vendor-cat">Catering</div>
+          <div class="vendor-name">Cucina Bianca</div>
+          <div class="vendor-desc">Farm-to-table Tuscan menu with a modern, seasonal sensibility.</div>
+          <div class="vendor-foot">
+            <span class="status">Booked</span>
+            <span class="price">€ 32,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="timeline-wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-num">— 03 / Timeline</span>
+          <h2>The road to <em>September</em>.</h2>
+        </div>
+        <p>Five milestones between now and the day itself — each one a small, deliberate step toward the celebration.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item done">
+          <div class="tl-line"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-date">March 2025</div>
+          <div class="tl-title">Venue secured</div>
+          <div class="tl-desc">Villa Serena booked for the full weekend, including the olive grove ceremony.</div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-line"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-date">May 2025</div>
+          <div class="tl-title">Vendor team complete</div>
+          <div class="tl-desc">Photographer, florist, and caterer confirmed. Contracts signed and deposits paid.</div>
+        </div>
+        <div class="tl-item current">
+          <div class="tl-line"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-date">July 2025</div>
+          <div class="tl-title">Menu &amp; tasting</div>
+          <div class="tl-desc">Final tasting with Chef Bianca, followed by wine pairings and dietary review.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-line"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-date">August 2025</div>
+          <div class="tl-title">Final walkthrough</div>
+          <div class="tl-desc">On-site rehearsal with the planner, officiant, and key vendors to lock the flow.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-line"></div>
+          <div class="tl-dot"></div>
+          <div class="tl-date">September 20</div>
+          <div class="tl-title">The day itself</div>
+          <div class="tl-desc">Ceremony at 4:30 PM, followed by dinner under the stars and dancing until late.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <span>Wedding / Planner</span>
+    </div>
+    <div>© 2025 Wedding / Planner Studio · Crafted with care in Florence</div>
+    <div>hello@weddingplanner.studio</div>
+  </footer>
+
+  <script>
+    // Countdown to September 20, 2025, 16:30 local
+    const target = new Date('2025-09-20T16:30:00').getTime();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+      const days = Math.floor(diff / 86400000); diff -= days * 86400000;
+      const hours = Math.floor(diff / 3600000); diff -= hours * 3600000;
+      const mins = Math.floor(diff / 60000); diff -= mins * 60000;
+      const secs = Math.floor(diff / 1000);
+
+      document.getElementById('cd-days').textContent = pad(days);
+      document.getElementById('cd-hours').textContent = pad(hours);
+      document.getElementById('cd-mins').textContent = pad(mins);
+      document.getElementById('cd-secs').textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Animate budget bar on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('budget-fill').style.width = '80%';
+      }, 200);
+    });
+
+    // Checklist toggle
+    document.querySelectorAll('#checklist li').forEach(li => {
+      li.addEventListener('click', () => li.classList.toggle('done'));
+    });
+  </script>
+</body>
+</html>

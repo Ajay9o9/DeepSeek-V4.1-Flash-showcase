@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INCIDENT / RESPONSE — active incident</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0b0e14;
+      --surface: #131820;
+      --surface-2: #1a212c;
+      --border: #2a3342;
+      --text: #e6edf3;
+      --text-dim: #8b98a9;
+      --text-faint: #5a6778;
+      --accent: #ff6b4a;
+      --accent-glow: rgba(255, 107, 74, 0.25);
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+      --blue: #58a6ff;
+      --purple: #bc8cff;
+      --radius: 10px;
+      --font-sans: 'Space Grotesk', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- utility ---------- */
+    .mono { font-family: var(--font-mono); }
+    .dim { color: var(--text-dim); }
+    .faint { color: var(--text-faint); }
+    .accent { color: var(--accent); }
+    .green { color: var(--green); }
+    .yellow { color: var(--yellow); }
+    .red { color: var(--red); }
+    .blue { color: var(--blue); }
+    .purple { color: var(--purple); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+    .badge--critical { background: rgba(248, 81, 73, 0.15); color: var(--red); border: 1px solid rgba(248, 81, 73, 0.3); }
+    .badge--major { background: rgba(210, 153, 34, 0.15); color: var(--yellow); border: 1px solid rgba(210, 153, 34, 0.3); }
+    .badge--minor { background: rgba(88, 166, 255, 0.12); color: var(--blue); border: 1px solid rgba(88, 166, 255, 0.25); }
+    .badge--resolved { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid rgba(63, 185, 80, 0.25); }
+    .badge--active { background: rgba(255, 107, 74, 0.15); color: var(--accent); border: 1px solid rgba(255, 107, 74, 0.35); }
+
+    /* ---------- layout ---------- */
+    .app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 32px;
+    }
+
+    /* ---------- header ---------- */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 16px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .header__brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header__mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), #ff3d1f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .header__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .header__title span { color: var(--text-dim); font-weight: 400; }
+
+    .header__meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .header__meta .mono { font-size: 0.75rem; }
+
+    .header__avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ---------- incident banner ---------- */
+    .banner {
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(255, 107, 74, 0.12), rgba(255, 61, 31, 0.06));
+      border: 1px solid rgba(255, 107, 74, 0.3);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .banner__left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .banner__pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 8px transparent; }
+    }
+
+    .banner__text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .banner__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .banner__sub {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .banner__right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { background: #232c3a; border-color: #3a4556; }
+    .btn--accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn--accent:hover { background: #ff5533; border-color: #ff5533; }
+    .btn--ghost { background: transparent; border-color: transparent; color: var(--text-dim); }
+    .btn--ghost:hover { color: var(--text); background: var(--surface-2); }
+
+    /* ---------- main grid ---------- */
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      padding: 24px 0 32px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    .col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    /* ---------- cards ---------- */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card__title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card__title svg { opacity: 0.6; }
+
+    .card__body {
+      padding: 20px;
+    }
+
+    /* ---------- service health map ---------- */
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .health-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.15s ease;
+      cursor: default;
+    }
+    .health-item:hover { border-color: #3a4556; }
+
+    .health-item__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .health-item__name {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .health-item__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .health-item__dot--green { background: var(--green); box-shadow: 0 0 8px rgba(63, 185, 80, 0.4); }
+    .health-item__dot--yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(210, 153, 34, 0.4); }
+    .health-item__dot--red { background: var(--red); box-shadow: 0 0 8px rgba(248, 81, 73, 0.4); }
+    .health-item__dot--blue { background: var(--blue); box-shadow: 0 0 8px rgba(88, 166, 255, 0.4); }
+
+    .health-item__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-faint);
+    }
+
+    .health-item__bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      overflow: hidden;
+    }
+    .health-item__bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+    .health-item__bar-fill--green { background: var(--green); }
+    .health-item__bar-fill--yellow { background: var(--yellow); }
+    .health-item__bar-fill--red { background: var(--red); }
+    .health-item__bar-fill--blue { background: var(--blue); }
+
+    /* ---------- timeline ---------- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline__item {
+      display: flex;
+      gap: 16px;
+      padding: 12px 0;
+      position: relative;
+    }
+    .timeline__item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 32px;
+      bottom: -4px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline__dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+      margin-top: 3px;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline__dot--accent { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+    .timeline__dot--green { border-color: var(--green); background: var(--green); }
+    .timeline__dot--blue { border-color: var(--blue); background: var(--blue); }
+    .timeline__dot--yellow { border-color: var(--yellow); background: var(--yellow); }
+
+    .timeline__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .timeline__time {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-faint);
+      margin-bottom: 2px;
+    }
+
+    .timeline__text {
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    .timeline__text strong { font-weight: 600; }
+
+    .timeline__tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--surface-2);
+      color: var(--text-dim);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ---------- logs ---------- */
+    .logs {
+      background: #0a0d12;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      line-height: 1.7;
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+    }
+    .logs::-webkit-scrollbar { width: 6px; }
+    .logs::-webkit-scrollbar-track { background: transparent; }
+    .logs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .log-line {
+      display: flex;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    .log-line__time { color: var(--text-faint); flex-shrink: 0; }
+    .log-line__level { flex-shrink: 0; width: 48px; font-weight: 600; }
+    .log-line__level--error { color: var(--red); }
+    .log-line__level--warn { color: var(--yellow); }
+    .log-line__level--info { color: var(--blue); }
+    .log-line__level--debug { color: var(--text-faint); }
+    .log-line__msg { color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; }
+    .log-line__msg em { color: var(--text); font-style: normal; }
+
+    /* ---------- owners ---------- */
+    .owners {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .owner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .owner__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .owner__avatar--1 { background: linear-gradient(135deg, var(--purple), #7c3aed); }
+    .owner__avatar--2 { background: linear-gradient(135deg, var(--blue), #1d4ed8); }
+    .owner__avatar--3 { background: linear-gradient(135deg, var(--green), #15803d); }
+    .owner__avatar--4 { background: linear-gradient(135deg, var(--yellow), #b45309); }
+
+    .owner__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .owner__name {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .owner__role {
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+    }
+
+    .owner__status {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: 100px;
+      background: var(--surface-2);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .owner__status--oncall { color: var(--green); border-color: rgba(63, 185, 80, 0.3); background: rgba(63, 185, 80, 0.08); }
+
+    /* ---------- severity controls ---------- */
+    .severity {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .severity__option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .severity__option:hover { border-color: #3a4556; }
+    .severity__option--active {
+      border-color: var(--accent);
+      background: rgba(255, 107, 74, 0.08);
+      box-shadow: 0 0 0 1px rgba(255, 107, 74, 0.2);
+    }
+
+    .severity__radio {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color 0.15s ease;
+    }
+    .severity__option--active .severity__radio {
+      border-color: var(--accent);
+    }
+    .severity__option--active .severity__radio::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .severity__label {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .severity__desc {
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+    }
+
+    /* ---------- postmortem link ---------- */
+    .postmortem {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+    .postmortem:hover {
+      border-color: var(--blue);
+      background: rgba(88, 166, 255, 0.04);
+    }
+
+    .postmortem__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(88, 166, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .postmortem__text {
+      flex: 1;
+      min-width: 0;
+    }
+    .postmortem__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .postmortem__sub {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+    }
+
+    .postmortem__arrow {
+      color: var(--text-faint);
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+    .postmortem:hover .postmortem__arrow {
+      transform: translateX(3px);
+      color: var(--blue);
+    }
+
+    /* ---------- footer ---------- */
+    .footer {
+      padding: 16px 0 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1100px) {
+      .main { grid-template-columns: 1fr; }
+      .health-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .app { padding: 0 16px; }
+      .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .header__meta { width: 100%; justify-content: space-between; }
+      .banner { flex-direction: column; align-items: flex-start; }
+      .banner__right { width: 100%; }
+      .banner__right .btn { flex: 1; justify-content: center; }
+      .health-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .header__meta .mono { display: none; }
+      .banner__title { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+      <div class="header__brand">
+        <div class="header__mark">IR</div>
+        <div class="header__title">INCIDENT <span>/</span> RESPONSE</div>
+      </div>
+      <div class="header__meta">
+        <span class="mono">INC-2024-0847</span>
+        <span class="mono">2024-12-09 14:32 UTC</span>
+        <div class="header__avatar">AK</div>
+      </div>
+    </header>
+
+    <!-- ========== ACTIVE INCIDENT BANNER ========== -->
+    <div class="banner">
+      <div class="banner__left">
+        <div class="banner__pulse"></div>
+        <div class="banner__text">
+          <div class="banner__title">Elevated error rates on payment-gateway &amp; checkout-api</div>
+          <div class="banner__sub">SEV-1 · 47 min elapsed · 3 services affected · 4 responders</div>
+        </div>
+      </div>
+      <div class="banner__right">
+        <span class="badge badge--active">Active</span>
+        <button class="btn btn--accent">Acknowledge</button>
+        <button class="btn btn--ghost">Escalate</button>
+      </div>
+    </div>
+
+    <!-- ========== MAIN GRID ========== -->
+    <div class="main">
+      <!-- LEFT COLUMN -->
+      <div class="col-left">
+        <!-- SERVICE HEALTH MAP -->
+        <div class="card">
+          <div class="card__header">
+            <div class="card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              Service health map
+            </div>
+            <span class="mono faint" style="font-size:0.7rem;">12 services · 3 degraded</span>
+          </div>
+          <div class="card__body">
+            <div class="health-grid">
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">payment-gateway</span>
+                  <span class="health-item__dot health-item__dot--red"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--red" style="width:34%"></div></div>
+                <div class="health-item__meta"><span>34% success</span><span>p99 2.4s</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">checkout-api</span>
+                  <span class="health-item__dot health-item__dot--red"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--red" style="width:41%"></div></div>
+                <div class="health-item__meta"><span>41% success</span><span>p99 1.8s</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">order-service</span>
+                  <span class="health-item__dot health-item__dot--yellow"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--yellow" style="width:72%"></div></div>
+                <div class="health-item__meta"><span>72% success</span><span>p99 890ms</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">auth-service</span>
+                  <span class="health-item__dot health-item__dot--green"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--green" style="width:99%"></div></div>
+                <div class="health-item__meta"><span>99.9% success</span><span>p99 120ms</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">user-profile</span>
+                  <span class="health-item__dot health-item__dot--green"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--green" style="width:99%"></div></div>
+                <div class="health-item__meta"><span>99.8% success</span><span>p99 95ms</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">notification-svc</span>
+                  <span class="health-item__dot health-item__dot--green"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--green" style="width:98%"></div></div>
+                <div class="health-item__meta"><span>98.7% success</span><span>p99 210ms</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">inventory-db</span>
+                  <span class="health-item__dot health-item__dot--blue"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--blue" style="width:95%"></div></div>
+                <div class="health-item__meta"><span>95.2% success</span><span>p99 340ms</span></div>
+              </div>
+              <div class="health-item">
+                <div class="health-item__top">
+                  <span class="health-item__name">cdn-edge</span>
+                  <span class="health-item__dot health-item__dot--green"></span>
+                </div>
+                <div class="health-item__bar"><div class="health-item__bar-fill health-item__bar-fill--green" style="width:100%"></div></div>
+                <div class="health-item__meta"><span>100% success</span><span>p99 45ms</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="card">
+          <div class="card__header">
+            <div class="card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Incident timeline
+            </div>
+            <span class="mono faint" style="font-size:0.7rem;">8 events</span>
+          </div>
+          <div class="card__body">
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--accent"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">14:32 UTC</div>
+                  <div class="timeline__text"><strong>Incident declared</strong> — SEV-1. Payment-gateway error rate crossed 60% threshold. <span class="timeline__tag">auto</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--blue"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">14:35 UTC</div>
+                  <div class="timeline__text"><strong>Incident commander assigned</strong> — Alex Kim (on-call SRE). <span class="timeline__tag">manual</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--yellow"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">14:41 UTC</div>
+                  <div class="timeline__text"><strong>Checkout-api degradation confirmed</strong> — 41% success rate, p99 latency 1.8s. <span class="timeline__tag">monitoring</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--blue"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">14:48 UTC</div>
+                  <div class="timeline__text"><strong>Database connection pool exhausted</strong> — inventory-db max_connections reached. <span class="timeline__tag">diagnosis</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--yellow"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">15:02 UTC</div>
+                  <div class="timeline__text"><strong>Mitigation applied</strong> — connection pool limit raised from 200 to 500. <span class="timeline__tag">action</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--green"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">15:08 UTC</div>
+                  <div class="timeline__text"><strong>Error rates trending down</strong> — payment-gateway at 34%, checkout-api at 41%. <span class="timeline__tag">monitoring</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--blue"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">15:15 UTC</div>
+                  <div class="timeline__text"><strong>Root cause identified</strong> — connection leak in order-service v2.4.1. <span class="timeline__tag">diagnosis</span></div>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--accent"></div>
+                <div class="timeline__content">
+                  <div class="timeline__time">15:19 UTC</div>
+                  <div class="timeline__text"><strong>Rollback initiated</strong> — order-service v2.4.0 being deployed to all regions. <span class="timeline__tag">action</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGS -->
+        <div class="card">
+          <div class="card__header">
+            <div class="card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              Live logs
+            </div>
+            <span class="mono faint" style="font-size:0.7rem;">streaming · 2.4k lines/min</span>
+          </div>
+          <div class="card__body" style="padding: 12px;">
+            <div class="logs">
+              <div class="log-line"><span class="log-line__time">15:19:42</span><span class="log-line__level log-line__level--error">ERROR</span><span class="log-line__msg">payment-gateway: upstream timeout after 5000ms — <em>order-service:8080</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:41</span><span class="log-line__level log-line__level--warn">WARN</span><span class="log-line__msg">checkout-api: circuit breaker half-open, retry attempt 3/5</span></div>
+              <div class="log-line"><span class="log-line__time">15:19:40</span><span class="log-line__level log-line__level--error">ERROR</span><span class="log-line__msg">order-service: connection pool exhausted — <em>active=500, idle=0, waiting=47</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:38</span><span class="log-line__level log-line__level--info">INFO</span><span class="log-line__msg">deploy: order-service v2.4.0 rolling out to us-east-1 (3/12 pods)</span></div>
+              <div class="log-line"><span class="log-line__time">15:19:35</span><span class="log-line__level log-line__level--warn">WARN</span><span class="log-line__msg">inventory-db: replication lag 2.4s — <em>threshold 1.0s</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:33</span><span class="log-line__level log-line__level--error">ERROR</span><span class="log-line__msg">payment-gateway: 503 from order-service — <em>retryable=true</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:30</span><span class="log-line__level log-line__level--info">INFO</span><span class="log-line__msg">incident-bot: severity confirmed SEV-1 by alex.kim</span></div>
+              <div class="log-line"><span class="log-line__time">15:19:28</span><span class="log-line__level log-line__level--debug">DEBUG</span><span class="log-line__msg">auth-service: token validation 12ms — <em>healthy</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:25</span><span class="log-line__level log-line__level--warn">WARN</span><span class="log-line__msg">checkout-api: p99 latency 1.8s — <em>threshold 500ms</em></span></div>
+              <div class="log-line"><span class="log-line__time">15:19:22</span><span class="log-line__level log-line__level--error">ERROR</span><span class="log-line__msg">order-service: connection leak detected — <em>v2.4.1</em></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-right">
+        <!-- OWNERS -->
+        <div class="card">
+          <div class="card__header">
+            <div class="card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Responders
+            </div>
+            <span class="mono faint" style="font-size:0.7rem;">4 assigned</span>
+          </div>
+          <div class="card__body">
+            <div class="owners">
+              <div class="owner">
+                <div class="owner__avatar owner__avatar--1">AK</div>
+                <div class="owner__info">
+                  <div class="owner__name">Alex Kim</div>
+                  <div class="owner__role">Incident Commander · SRE</div>
+                </div>
+                <span class="owner__status owner__status--oncall">On-call</span>
+              </div>
+              <div class="owner">
+                <div class="owner__avatar owner__avatar--2">MJ</div>
+                <div class="owner__info">
+                  <div class="owner__name">Maya Johnson</div>
+                  <div class="owner__role">Comms Lead · Product</div>
+                </div>
+                <span class="owner__status">Active</span>
+              </div>
+              <div class="owner">
+                <div class="owner__avatar owner__avatar--3">RS</div>
+                <div class="owner__info">
+                  <div class="owner__name">Ravi Shah</div>
+                  <div class="owner__role">Ops Lead · Platform</div>
+                </div>
+                <span class="owner__status">Active</span>
+              </div>
+              <div class="owner">
+                <div class="owner__avatar owner__avatar--4">LT</div>
+                <div class="owner__info">
+                  <div class="owner__name">Lena Torres</div>
+                  <div class="owner__role">Scribe · Engineering</div>
+                </div>
+                <span class="owner__status">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEVERITY CONTROLS -->
+        <div class="card">
+          <div class="card__header">
+            <div class="card__title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Severity
+            </div>
+            <span class="badge badge--critical">SEV-1</span>
+          </div>
+          <div class="card__body">
+            <div class="severity">
+              <div class="severity__option severity__option--active">
+                <div class="severity__radio"></div>
+                <div>
+                  <div class="severity__label">SEV-1 · Critical</div>
+                  <div class="severity__desc">Full outage or data loss</div>
+                </div>
+              </div>
+              <div class="severity__option">
+                <div class="severity__radio"></div>
+                <div>
+                  <div class="severity__label">SEV-2 · Major</div>
+                  <div class="severity__desc">Significant degradation</div>
+                </div>
+              </div>
+              <div class="severity__option">
+                <div class="severity__radio"></div>
+                <div>
+                  <div class="severity__label">SEV-3 · Minor</div>
+                  <div class="severity__desc">Limited impact</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POSTMORTEM LINK -->
+        <a href="#" class="postmortem">
+          <div class="postmortem__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="postmortem__text">
+            <div class="postmortem__title">Postmortem draft</div>
+            <div class="postmortem__sub">INC-2024-0847 · last edited 12 min ago</div>
+          </div>
+          <svg class="postmortem__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <span>INCIDENT / RESPONSE · internal tooling</span>
+      <span>last sync 15:19:42 UTC · all systems nominal</span>
+    </footer>
+  </div>
+
+  <script>
+    // ---------- severity toggle ----------
+    document.querySelectorAll('.severity__option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.severity__option').forEach(o => o.classList.remove('severity__option--active'));
+        option.classList.add('severity__option--active');
+      });
+    });
+
+    // ---------- live log ticker (simulated) ----------
+    const logsContainer = document.querySelector('.logs');
+    const logMessages = [
+      { level: 'ERROR', msg: 'payment-gateway: upstream timeout after 5000ms — <em>order-service:8080</em>' },
+      { level: 'WARN', msg: 'checkout-api: circuit breaker half-open, retry attempt 4/5' },
+      { level: 'INFO', msg: 'deploy: order-service v2.4.0 rolling out to us-east-1 (5/12 pods)' },
+      { level: 'ERROR', msg: 'order-service: connection pool exhausted — <em>active=500, idle=0, waiting=52</em>' },
+      { level: 'DEBUG', msg: 'auth-service: token validation 11ms — <em>healthy</em>' },
+      { level: 'WARN', msg: 'inventory-db: replication lag 2.1s — <em>threshold 1.0s</em>' },
+      { level: 'INFO', msg: 'incident-bot: status update posted to #inc-2024-0847' },
+      { level: 'ERROR', msg: 'payment-gateway: 503 from order-service — <em>retryable=true</em>' },
+    ];
+
+    function addLogLine() {
+      const now = new Date();
+      const time = now.toISOString().slice(11, 19);
+      const entry = logMessages[Math.floor(Math.random() * logMessages.length)];
+      const levelClass = entry.level.toLowerCase();
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="log-line__time">${time}</span><span class="log-line__level log-line__level--${levelClass}">${entry.level}</span><span class="log-line__msg">${entry.msg}</span>`;
+      logsContainer.appendChild(line);
+      if (logsContainer.children.length > 30) {
+        logsContainer.removeChild(logsContainer.firstChild);
+      }
+      logsContainer.scrollTop = logsContainer.scrollHeight;
+    }
+
+    // add a new log line every 4-7 seconds
+    setInterval(addLogLine, 5000 + Math.random() * 2000);
+
+    // ---------- acknowledge button feedback ----------
+    document.querySelector('.btn--accent').addEventListener('click', function() {
+      this.textContent = 'Acknowledged ✓';
+      this.style.background = 'var(--green)';
+      this.style.borderColor = 'var(--green)';
+      this.disabled = true;
+      setTimeout(() => {
+        this.textContent = 'Acknowledge';
+        this.style.background = '';
+        this.style.borderColor = '';
+        this.disabled = false;
+      }, 3000);
+    });
+
+    // ---------- escalate button feedback ----------
+    document.querySelector('.btn--ghost').addEventListener('click', function() {
+      this.textContent = 'Escalated ↑';
+      this.style.color = 'var(--yellow)';
+      setTimeout(() => {
+        this.textContent = 'Escalate';
+        this.style.color = '';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

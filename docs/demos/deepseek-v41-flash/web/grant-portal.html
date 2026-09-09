@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRANT / PORTAL — application dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f3f0e9;
+      font-family: 'Inter', sans-serif;
+      color: #1e2b2e;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ---------- main container ---------- */
+    .portal {
+      max-width: 1440px;
+      width: 100%;
+      background: #fefcf8;
+      border-radius: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      padding: 32px 36px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: all 0.2s;
+    }
+
+    /* ---------- header ---------- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: #1e2b2e;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fefcf8;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      color: #1e2b2e;
+    }
+
+    .logo-text span {
+      color: #b65f3b;
+      font-style: italic;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .badge {
+      background: #e8e2d7;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #3d4e52;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge svg {
+      width: 16px;
+      height: 16px;
+      stroke: #b65f3b;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      background: #d9cfc0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #1e2b2e;
+      font-size: 16px;
+      border: 2px solid #fefcf8;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* ---------- progress bar ---------- */
+    .progress-section {
+      background: #f8f5ef;
+      border-radius: 24px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 1px solid #e8e2d7;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7b7e;
+    }
+
+    .progress-stats {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+      color: #3d4e52;
+    }
+
+    .progress-stats strong {
+      color: #1e2b2e;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e0d9ce;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #b65f3b;
+      border-radius: 20px 0 0 20px;
+      width: 68%;
+      transition: width 0.3s;
+    }
+
+    .progress-fill-secondary {
+      height: 100%;
+      background: #d9b382;
+      width: 12%;
+    }
+
+    .progress-fill-tertiary {
+      height: 100%;
+      background: #c0b4a2;
+      width: 20%;
+    }
+
+    /* ---------- grid layout ---------- */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr 0.9fr;
+      gap: 24px;
+    }
+
+    /* ---------- cards ---------- */
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 0 0 1px #ede8e0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 0 0 1px #e0d9ce;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #1e2b2e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title svg {
+      width: 20px;
+      height: 20px;
+      stroke: #b65f3b;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .card-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: #b65f3b;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .card-link:hover {
+      border-bottom-color: #b65f3b;
+    }
+
+    /* ---------- deadlines ---------- */
+    .deadline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .deadline-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .deadline-date {
+      background: #f8f5ef;
+      border-radius: 14px;
+      padding: 8px 12px;
+      text-align: center;
+      min-width: 64px;
+      border: 1px solid #ede8e0;
+    }
+
+    .deadline-day {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e2b2e;
+      line-height: 1.2;
+    }
+
+    .deadline-month {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b7b7e;
+    }
+
+    .deadline-info {
+      flex: 1;
+    }
+
+    .deadline-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: #1e2b2e;
+      margin-bottom: 2px;
+    }
+
+    .deadline-meta {
+      font-size: 13px;
+      color: #6b7b7e;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .deadline-meta svg {
+      width: 14px;
+      height: 14px;
+      stroke: #b65f3b;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .deadline-status {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 40px;
+      background: #f8f5ef;
+      color: #3d4e52;
+      white-space: nowrap;
+    }
+
+    .deadline-status.urgent {
+      background: #fce9e0;
+      color: #b65f3b;
+    }
+
+    /* ---------- checklist ---------- */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0ebe3;
+    }
+
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+
+    .checklist-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .checklist-icon.done {
+      background: #1e2b2e;
+    }
+
+    .checklist-icon.done svg {
+      stroke: #fefcf8;
+      stroke-width: 3;
+      fill: none;
+      width: 14px;
+      height: 14px;
+    }
+
+    .checklist-icon.pending {
+      background: #f8f5ef;
+      border: 1.5px solid #d9cfc0;
+    }
+
+    .checklist-icon.pending svg {
+      stroke: #b0a89c;
+      stroke-width: 2;
+      fill: none;
+      width: 14px;
+      height: 14px;
+    }
+
+    .checklist-text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1e2b2e;
+    }
+
+    .checklist-text.completed {
+      color: #6b7b7e;
+      text-decoration: line-through;
+      text-decoration-color: #b0a89c;
+    }
+
+    .checklist-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 40px;
+      background: #f8f5ef;
+      color: #6b7b7e;
+    }
+
+    /* ---------- reviewer messages ---------- */
+    .message-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .message-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #d9cfc0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #1e2b2e;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      flex: 1;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .message-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1e2b2e;
+    }
+
+    .message-time {
+      font-size: 12px;
+      color: #8f9b9e;
+    }
+
+    .message-text {
+      font-size: 14px;
+      color: #3d4e52;
+      line-height: 1.5;
+      background: #f8f5ef;
+      padding: 12px 14px;
+      border-radius: 16px 16px 16px 4px;
+    }
+
+    .message-text strong {
+      color: #b65f3b;
+      font-weight: 600;
+    }
+
+    /* ---------- budget summary ---------- */
+    .budget-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .budget-label {
+      color: #3d4e52;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .budget-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: #b65f3b;
+    }
+
+    .budget-dot.secondary {
+      background: #d9b382;
+    }
+
+    .budget-dot.tertiary {
+      background: #c0b4a2;
+    }
+
+    .budget-value {
+      font-weight: 600;
+      color: #1e2b2e;
+    }
+
+    .budget-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 2px solid #ede8e0;
+      font-weight: 700;
+      font-size: 16px;
+      color: #1e2b2e;
+    }
+
+    .budget-total span:last-child {
+      color: #b65f3b;
+    }
+
+    /* ---------- help panel ---------- */
+    .help-panel {
+      background: #1e2b2e;
+      border-radius: 24px;
+      padding: 24px;
+      color: #fefcf8;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      grid-column: span 3;
+      margin-top: 4px;
+    }
+
+    .help-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .help-title {
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .help-title svg {
+      width: 20px;
+      height: 20px;
+      stroke: #d9b382;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .help-close {
+      background: none;
+      border: none;
+      color: #8f9b9e;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+
+    .help-close:hover {
+      color: #fefcf8;
+    }
+
+    .help-content {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .help-item {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      gap: 14px;
+    }
+
+    .help-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .help-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #d9b382;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .help-text h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #fefcf8;
+    }
+
+    .help-text p {
+      font-size: 13px;
+      color: #b0b8b9;
+      line-height: 1.5;
+    }
+
+    .help-text a {
+      color: #d9b382;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .help-text a:hover {
+      border-bottom-color: #d9b382;
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1100px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .help-panel {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 12px;
+      }
+      .portal {
+        padding: 20px;
+        border-radius: 28px;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .help-panel {
+        grid-column: span 1;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .progress-stats {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .help-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .portal {
+        padding: 16px;
+        border-radius: 24px;
+      }
+      .card {
+        padding: 18px;
+      }
+      .deadline-item {
+        flex-wrap: wrap;
+      }
+      .deadline-status {
+        margin-left: 78px;
+      }
+    }
+
+    /* ---------- decorative svg pattern ---------- */
+    .pattern-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.03;
+      z-index: 0;
+      overflow: hidden;
+      border-radius: 40px;
+    }
+
+    .portal {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal > * {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <!-- decorative pattern -->
+    <svg class="pattern-bg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <defs>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1e2b2e" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="1440" height="900" fill="url(#grid)"/>
+    </svg>
+
+    <!-- header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-mark">G/P</div>
+        <div class="logo-text">GRANT <span>/</span> PORTAL</div>
+      </div>
+      <div class="header-actions">
+        <div class="badge">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Cycle 2025–26
+        </div>
+        <div class="avatar">AK</div>
+      </div>
+    </header>
+
+    <!-- progress -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Application progress</span>
+        <div class="progress-stats">
+          <span><strong>68%</strong> complete</span>
+          <span><strong>4</strong> of 6 sections</span>
+          <span><strong>2</strong> pending review</span>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: 68%;"></div>
+        <div class="progress-fill-secondary" style="width: 12%;"></div>
+        <div class="progress-fill-tertiary" style="width: 20%;"></div>
+      </div>
+    </div>
+
+    <!-- dashboard grid -->
+    <div class="dashboard-grid">
+      <!-- deadlines card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            Upcoming deadlines
+          </div>
+          <a href="#" class="card-link">View all</a>
+        </div>
+        <div class="deadline-list">
+          <div class="deadline-item">
+            <div class="deadline-date">
+              <div class="deadline-day">14</div>
+              <div class="deadline-month">Mar</div>
+            </div>
+            <div class="deadline-info">
+              <div class="deadline-title">Budget narrative submission</div>
+              <div class="deadline-meta">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Due in 3 days
+              </div>
+            </div>
+            <div class="deadline-status urgent">Urgent</div>
+          </div>
+          <div class="deadline-item">
+            <div class="deadline-date">
+              <div class="deadline-day">22</div>
+              <div class="deadline-month">Mar</div>
+            </div>
+            <div class="deadline-info">
+              <div class="deadline-title">Letters of support upload</div>
+              <div class="deadline-meta">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Due in 11 days
+              </div>
+            </div>
+            <div class="deadline-status">Open</div>
+          </div>
+          <div class="deadline-item">
+            <div class="deadline-date">
+              <div class="deadline-day">05</div>
+              <div class="deadline-month">Apr</div>
+            </div>
+            <div class="deadline-info">
+              <div class="deadline-title">Final review &amp; sign-off</div>
+              <div class="deadline-meta">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Due in 25 days
+              </div>
+            </div>
+            <div class="deadline-status">Open</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- checklist card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Document checklist
+          </div>
+          <a href="#" class="card-link">Manage</a>
+        </div>
+        <div class="checklist">
+          <div class="checklist-item">
+            <div class="checklist-icon done">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="checklist-text completed">Project narrative</span>
+            <span class="checklist-badge">PDF</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon done">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="checklist-text completed">Organisational chart</span>
+            <span class="checklist-badge">PDF</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon done">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="checklist-text completed">Financial statements 2024</span>
+            <span class="checklist-badge">XLS</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon pending">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            </div>
+            <span class="checklist-text">Budget narrative</span>
+            <span class="checklist-badge">Draft</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon pending">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            </div>
+            <span class="checklist-text">Letters of support</span>
+            <span class="checklist-badge">2 of 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- reviewer messages card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Reviewer messages
+          </div>
+          <a href="#" class="card-link">Inbox</a>
+        </div>
+        <div class="message-list">
+          <div class="message-item">
+            <div class="message-avatar">MR</div>
+            <div class="message-content">
+              <div class="message-header">
+                <span class="message-name">Dr. Maya Rivera</span>
+                <span class="message-time">2h ago</span>
+              </div>
+              <div class="message-text">
+                Your project narrative is strong. Please <strong>expand the evaluation section</strong> with measurable outcomes.
+              </div>
+            </div>
+          </div>
+          <div class="message-item">
+            <div class="message-avatar">JC</div>
+            <div class="message-content">
+              <div class="message-header">
+                <span class="message-name">James Chen</span>
+                <span class="message-time">Yesterday</span>
+              </div>
+              <div class="message-text">
+                Budget looks reasonable. I've flagged <strong>line item 4.2</strong> for clarification — see comments.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- budget summary + help panel row -->
+    <div class="dashboard-grid" style="margin-top: 0;">
+      <!-- budget summary card -->
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Budget summary
+          </div>
+          <a href="#" class="card-link">Edit budget</a>
+        </div>
+        <div class="budget-list">
+          <div class="budget-row">
+            <span class="budget-label"><span class="budget-dot"></span> Personnel</span>
+            <span class="budget-value">€ 84,200</span>
+          </div>
+          <div class="budget-row">
+            <span class="budget-label"><span class="budget-dot secondary"></span> Equipment &amp; materials</span>
+            <span class="budget-value">€ 32,500</span>
+          </div>
+          <div class="budget-row">
+            <span class="budget-label"><span class="budget-dot tertiary"></span> Travel &amp; subsistence</span>
+            <span class="budget-value">€ 12,800</span>
+          </div>
+          <div class="budget-row">
+            <span class="budget-label"><span class="budget-dot" style="background: #8f9b9e;"></span> Administrative costs</span>
+            <span class="budget-value">€ 18,400</span>
+          </div>
+          <div class="budget-total">
+            <span>Total requested</span>
+            <span>€ 147,900</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- help panel -->
+      <div class="help-panel">
+        <div class="help-header">
+          <div class="help-title">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            Help &amp; support
+          </div>
+          <button class="help-close" aria-label="Close help panel">×</button>
+        </div>
+        <div class="help-content">
+          <div class="help-item">
+            <div class="help-icon">
+              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="help-text">
+              <h4>Application guide</h4>
+              <p>Step-by-step instructions and eligibility criteria. <a href="#">Read the guide →</a></p>
+            </div>
+          </div>
+          <div class="help-item">
+            <div class="help-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="help-text">
+              <h4>Contact your reviewer</h4>
+              <p>Questions about feedback? <a href="#">Send a message →</a></p>
+            </div>
+          </div>
+          <div class="help-item">
+            <div class="help-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="help-text">
+              <h4>Deadline calendar</h4>
+              <p>Sync all key dates to your calendar. <a href="#">Download .ics →</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // subtle interactive: close help panel
+    document.querySelector('.help-close')?.addEventListener('click', function() {
+      const panel = this.closest('.help-panel');
+      if (panel) {
+        panel.style.transition = 'opacity 0.2s, transform 0.2s';
+        panel.style.opacity = '0';
+        panel.style.transform = 'translateY(8px)';
+        setTimeout(() => {
+          panel.style.display = 'none';
+        }, 200);
+      }
+    });
+
+    // progress bar animation on load
+    window.addEventListener('load', () => {
+      const fill = document.querySelector('.progress-fill');
+      if (fill) {
+        fill.style.width = '0%';
+        setTimeout(() => {
+          fill.style.width = '68%';
+        }, 100);
+      }
+    });
+  </script>
+</body>
+</html>

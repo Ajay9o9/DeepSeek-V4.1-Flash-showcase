@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIDE / TURN — Turn the Tide on Ocean Pollution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d2b2e;
+    --ink-soft: #2a4a4d;
+    --sea: #1a5f6b;
+    --sea-deep: #0a3a44;
+    --foam: #f4f1e8;
+    --sand: #e8dfc9;
+    --coral: #e26a4a;
+    --coral-deep: #c14a2c;
+    --kelp: #6b8f5e;
+    --sky: #cfe3e0;
+    --line: rgba(13, 43, 46, 0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--foam);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: rgba(244, 241, 232, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--sea), var(--sea-deep));
+    position: relative;
+    overflow: hidden;
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, var(--coral) 55%, var(--coral) 62%, transparent 62%);
+  }
+  .nav-links {
+    display: flex;
+    gap: 34px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--coral); }
+  .nav-cta {
+    background: var(--ink);
+    color: var(--foam);
+    padding: 11px 22px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--coral); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 160px 0 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--sky) 0%, #e6efec 55%, var(--foam) 100%);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sea);
+    margin-bottom: 28px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--sea);
+  }
+  .hero h1 {
+    font-size: clamp(48px, 6.2vw, 88px);
+    font-weight: 300;
+    line-height: 0.98;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--sea);
+  }
+  .hero h1 .turn {
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .turn::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 6px;
+    height: 12px;
+    background: var(--coral);
+    opacity: 0.35;
+    z-index: -1;
+    border-radius: 2px;
+  }
+  .hero-lede {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 40px;
+    line-height: 1.55;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--coral);
+    color: #fff;
+    padding: 18px 34px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(226, 106, 74, 0.28);
+  }
+  .btn-primary:hover {
+    background: var(--coral-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(226, 106, 74, 0.4);
+  }
+  .btn-primary svg { transition: transform 0.25s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+  .btn-ghost {
+    color: var(--ink);
+    padding: 18px 26px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--coral); border-color: var(--coral); }
+
+  /* Hero illustration */
+  .hero-art {
+    position: relative;
+    height: 480px;
+  }
+  .hero-art svg { width: 100%; height: 100%; }
+
+  /* Shoreline wave at bottom of hero */
+  .shoreline {
+    position: relative;
+    margin-top: 80px;
+    height: 120px;
+    width: 100%;
+  }
+  .shoreline svg { width: 100%; height: 100%; display: block; }
+
+  /* ---------- PROGRESS ---------- */
+  .progress-section {
+    background: var(--ink);
+    color: var(--foam);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(226, 106, 74, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .progress-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .progress-section h2 {
+    color: var(--foam);
+    font-size: clamp(32px, 3.6vw, 48px);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .progress-section h2 em { font-style: italic; color: var(--coral); }
+  .progress-section p {
+    color: rgba(244, 241, 232, 0.7);
+    font-size: 16px;
+    max-width: 380px;
+  }
+  .progress-bar-wrap {
+    background: rgba(244, 241, 232, 0.08);
+    border-radius: 100px;
+    height: 14px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--coral), #f0a07a);
+    border-radius: 100px;
+    width: 0;
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+  }
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+    border-radius: 100px;
+  }
+  .progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .progress-raised {
+    font-family: 'Fraunces', serif;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--foam);
+    letter-spacing: -0.02em;
+  }
+  .progress-goal {
+    font-size: 15px;
+    color: rgba(244, 241, 232, 0.6);
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(244, 241, 232, 0.55);
+    margin-top: 12px;
+  }
+
+  /* ---------- IMPACT METRICS ---------- */
+  .metrics {
+    padding: 120px 0 100px;
+    background: var(--foam);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 70px;
+  }
+  .section-head h2 {
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: 300;
+  }
+  .section-head h2 em { font-style: italic; color: var(--sea); }
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 460px;
+    justify-self: end;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .metric {
+    padding: 44px 32px 44px 0;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .metric:last-child { border-right: none; }
+  .metric:not(:first-child) { padding-left: 32px; }
+  .metric-num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--sea);
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .metric-num .unit {
+    font-size: 26px;
+    color: var(--coral);
+    font-weight: 400;
+  }
+  .metric-label {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 200px;
+  }
+  .metric-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--kelp);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  /* ---------- PROJECT STORIES ---------- */
+  .stories {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--foam) 0%, #eef0e8 100%);
+  }
+  .stories-head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 70px;
+  }
+  .stories-head .eyebrow { justify-content: center; }
+  .stories-head .eyebrow::before { display: none; }
+  .stories-head h2 {
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .stories-head h2 em { font-style: italic; color: var(--sea); }
+  .stories-head p { color: var(--ink-soft); font-size: 17px; }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+  }
+  .story-card {
+    background: var(--foam);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .story-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(13, 43, 46, 0.1);
+  }
+  .story-art {
+    height: 260px;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-art svg { width: 100%; height: 100%; display: block; }
+  .story-body { padding: 32px 34px 36px; flex: 1; display: flex; flex-direction: column; }
+  .story-meta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+  .story-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-soft); opacity: 0.4; }
+  .story-meta .loc { color: var(--ink-soft); }
+  .story-card h3 {
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 14px;
+    line-height: 1.15;
+  }
+  .story-card p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .story-link {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .story-link:hover { color: var(--coral); border-color: var(--coral); }
+
+  .story-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 32px;
+  }
+  .story-mini {
+    background: var(--foam);
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    padding: 30px 32px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .story-mini:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(13, 43, 46, 0.1);
+  }
+  .story-mini .story-meta { margin-bottom: 12px; }
+  .story-mini h3 { font-size: 21px; margin-bottom: 10px; }
+  .story-mini p { font-size: 14px; color: var(--ink-soft); margin-bottom: 18px; flex: 1; }
+
+  /* ---------- VOLUNTEER ---------- */
+  .volunteer {
+    padding: 120px 0;
+    background: var(--ink);
+    color: var(--foam);
+    position: relative;
+    overflow: hidden;
+  }
+  .volunteer::before {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(107, 143, 94, 0.2), transparent 70%);
+  }
+  .volunteer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .volunteer h2 {
+    color: var(--foam);
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .volunteer h2 em { font-style: italic; color: var(--coral); }
+  .volunteer p {
+    color: rgba(244, 241, 232, 0.72);
+    font-size: 17px;
+    margin-bottom: 36px;
+    max-width: 440px;
+  }
+  .volunteer .eyebrow { color: var(--coral); }
+  .volunteer .eyebrow::before { background: var(--coral); }
+
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .action-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(244, 241, 232, 0.12);
+    text-decoration: none;
+    color: var(--foam);
+    transition: padding 0.3s;
+  }
+  .action-item:first-child { border-top: 1px solid rgba(244, 241, 232, 0.12); }
+  .action-item:hover { padding-left: 12px; }
+  .action-num {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--coral);
+    font-weight: 400;
+  }
+  .action-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .action-desc {
+    font-size: 14px;
+    color: rgba(244, 241, 232, 0.6);
+  }
+  .action-arrow {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(244, 241, 232, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .action-item:hover .action-arrow {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: rotate(-45deg);
+  }
+
+  /* ---------- FIELD NOTES ---------- */
+  .field-notes {
+    padding: 120px 0;
+    background: var(--foam);
+  }
+  .notes-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .notes-head h2 {
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 300;
+  }
+  .notes-head h2 em { font-style: italic; color: var(--sea); }
+  .notes-head .eyebrow { margin-bottom: 20px; }
+  .notes-head .eyebrow::before { display: none; }
+  .notes-head p { color: var(--ink-soft); max-width: 380px; font-size: 16px; }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .note {
+    display: flex;
+    flex-direction: column;
+  }
+  .note-art {
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .note-art svg { width: 100%; height: 100%; display: block; }
+  .note-date {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+  }
+  .note h3 {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .note p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .note-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .note-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sea), var(--kelp));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--foam);
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .note-author strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- DONATE CTA ---------- */
+  .donate {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--foam) 0%, var(--sand) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .donate-card {
+    background: var(--ink);
+    border-radius: 28px;
+    padding: 80px 70px;
+    color: var(--foam);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .donate-card::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(226, 106, 74, 0.25), transparent 70%);
+  }
+  .donate-card::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(107, 143, 94, 0.2), transparent 70%);
+  }
+  .donate-content { position: relative; z-index: 1; }
+  .donate-content .eyebrow { color: var(--coral); }
+  .donate-content .eyebrow::before { background: var(--coral); }
+  .donate-content h2 {
+    color: var(--foam);
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .donate-content h2 em { font-style: italic; color: var(--coral); }
+  .donate-content p {
+    color: rgba(244, 241, 232, 0.72);
+    font-size: 17px;
+    margin-bottom: 36px;
+    max-width: 460px;
+  }
+  .donate-amounts {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .amount-btn {
+    background: rgba(244, 241, 232, 0.08);
+    border: 1px solid rgba(244, 241, 232, 0.18);
+    color: var(--foam);
+    padding: 14px 24px;
+    border-radius: 100px;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .amount-btn:hover, .amount-btn.active {
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+  .amount-btn small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+  .donate-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .donate-note {
+    font-size: 13px;
+    color: rgba(244, 241, 232, 0.5);
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--foam);
+    padding: 80px 0 40px;
+    border-top: 1px solid rgba(244, 241, 232, 0.08);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(244, 241, 232, 0.1);
+  }
+  .footer-brand .logo { color: var(--foam); margin-bottom: 20px; }
+  .footer-brand p {
+    color: rgba(244, 241, 232, 0.6);
+    font-size: 14px;
+    max-width: 300px;
+    margin-bottom: 24px;
+  }
+  .footer-col h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: rgba(244, 241, 232, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--foam); }
+
+  .partners {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(244, 241, 232, 0.1);
+  }
+  .partners-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 241, 232, 0.4);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .partners-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+  .partner {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(244, 241, 232, 0.55);
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .partner:hover { color: var(--foam); }
+  .partner svg { opacity: 0.7; }
+
+  .footer-bottom {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: rgba(244, 241, 232, 0.5);
+  }
+  .footer-bottom a { color: rgba(244, 241, 232, 0.5); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--foam); }
+  .footer-social { display: flex; gap: 16px; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(244, 241, 232, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .footer-social a:hover { background: var(--coral); border-color: var(--coral); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 960px) {
+    .wrap { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero-grid, .progress-grid, .section-head, .story-grid, .volunteer-grid, .donate-card, .footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero-art { height: 320px; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .metric { border-right: none; border-bottom: 1px solid var(--line); padding: 32px 0; }
+    .metric:not(:first-child) { padding-left: 0; }
+    .metric:nth-child(odd) { padding-right: 24px; border-right: 1px solid var(--line); }
+    .notes-grid { grid-template-columns: 1fr; }
+    .donate-card { padding: 50px 32px; }
+    .section-head p { justify-self: start; }
+    .story-side { grid-template-rows: auto; }
+  }
+  @media (max-width: 600px) {
+    .metrics-grid { grid-template-columns: 1fr; }
+    .metric:nth-child(odd) { border-right: none; padding-right: 0; }
+    .hero h1 { font-size: 44px; }
+    .progress-raised { font-size: 34px; }
+    .metric-num { font-size: 48px; }
+  }
+
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      TIDE / TURN
+    </a>
+    <ul class="nav-links">
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#stories">Projects</a></li>
+      <li><a href="#volunteer">Volunteer</a></li>
+      <li><a href="#notes">Field Notes</a></li>
+    </ul>
+    <a href="#donate" class="nav-cta">Donate</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="eyebrow">A global movement for our oceans</div>
+        <h1>Turn the <span class="turn">tide</span> before it <em>turns on us.</em></h1>
+        <p class="hero-lede">Every coastline tells a story of what we've done — and what we can still undo. TIDE / TURN funds frontline restoration, community science, and the people who refuse to let the sea go quiet.</p>
+        <div class="hero-actions">
+          <a href="#donate" class="btn-primary">
+            Donate now
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#stories" class="btn-ghost">See our projects</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#cfe3e0"/>
+              <stop offset="100%" stop-color="#e6efec"/>
+            </linearGradient>
+            <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a5f6b"/>
+              <stop offset="100%" stop-color="#0a3a44"/>
+            </linearGradient>
+            <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f0a07a"/>
+              <stop offset="100%" stop-color="#e26a4a"/>
+            </linearGradient>
+          </defs>
+          <!-- Sun -->
+          <circle cx="280" cy="140" r="52" fill="url(#sunGrad)" opacity="0.9"/>
+          <circle cx="280" cy="140" r="72" fill="url(#sunGrad)" opacity="0.15"/>
+          <!-- Horizon line -->
+          <line x1="0" y1="240" x2="400" y2="240" stroke="#0a3a44" stroke-width="0.5" opacity="0.3"/>
+          <!-- Sea -->
+          <path d="M0 240 Q100 230 200 240 T400 240 L400 480 L0 480 Z" fill="url(#seaGrad)"/>
+          <!-- Waves -->
+          <path d="M0 280 Q50 270 100 280 T200 280 T300 280 T400 280" stroke="#f4f1e8" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <path d="M0 320 Q50 310 100 320 T200 320 T300 320 T400 320" stroke="#f4f1e8" stroke-width="1.5" fill="none" opacity="0.2"/>
+          <path d="M0 360 Q50 350 100 360 T200 360 T300 360 T400 360" stroke="#f4f1e8" stroke-width="1.5" fill="none" opacity="0.15"/>
+          <!-- Sun reflection -->
+          <ellipse cx="280" cy="260" rx="40" ry="6" fill="#f0a07a" opacity="0.4"/>
+          <ellipse cx="280" cy="290" rx="30" ry="4" fill="#f0a07a" opacity="0.3"/>
+          <ellipse cx="280" cy="320" rx="20" ry="3" fill="#f0a07a" opacity="0.2"/>
+          <!-- Birds -->
+          <path d="M80 100 Q90 92 100 100" stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <path d="M110 120 Q118 114 126 120" stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M60 140 Q68 134 76 140" stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <!-- Boat -->
+          <path d="M140 300 L180 300 L170 315 L150 315 Z" fill="#0d2b2e" opacity="0.7"/>
+          <line x1="160" y1="300" x2="160" y2="270" stroke="#0d2b2e" stroke-width="1.5" opacity="0.7"/>
+          <path d="M160 270 L160 295 L180 295 Z" fill="#f4f1e8" opacity="0.8"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="shoreline">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M0 60 Q180 20 360 60 T720 60 T1080 60 T1440 60 L1440 120 L0 120 Z" fill="#f4f1e8"/>
+      <path d="M0 80 Q180 50 360 80 T720 80 T1080 80 T1440 80 L1440 120 L0 120 Z" fill="#f4f1e8" opacity="0.6"/>
+    </svg>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<section class="progress-section" id="impact">
+  <div class="wrap">
+    <div class="progress-grid">
+      <div class="reveal">
+        <div class="progress-label">2025 Restoration Fund</div>
+        <h2>We're <em>73%</em> of the way to our annual goal.</h2>
+        <p>Every dollar is tracked to a specific project — from mangrove nurseries in the Philippines to kelp forest monitoring off the California coast.</p>
+      </div>
+      <div class="reveal">
+        <div class="progress-stats">
+          <div class="progress-raised">$2,184,500</div>
+          <div class="progress-goal">of $3,000,000</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-meta">
+          <span>12,847 donors</span>
+          <span>Ends Dec 31, 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT METRICS -->
+<section class="metrics">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>What your support <em>actually</em> does.</h2>
+      <p>We measure impact in hectares restored, species recovered, and communities strengthened — not press releases.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric reveal">
+        <span class="metric-tag">Since 2019</span>
+        <div class="metric-num">14,200<span class="unit">ha</span></div>
+        <div class="metric-label">Coastal habitat restored across 23 countries</div>
+      </div>
+      <div class="metric reveal">
+        <span class="metric-tag">2024</span>
+        <div class="metric-num">892<span class="unit">t</span></div>
+        <div class="metric-label">Plastic removed from beaches and river mouths</div>
+      </div>
+      <div class="metric reveal">
+        <span class="metric-tag">Ongoing</span>
+        <div class="metric-num">47<span class="unit">spp</span></div>
+        <div class="metric-label">Threatened species under active monitoring</div>
+      </div>
+      <div class="metric reveal">
+        <span class="metric-tag">Community</span>
+        <div class="metric-num">3,100<span class="unit">+</span></div>
+        <div class="metric-label">Local volunteers trained and equipped</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT STORIES -->
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="stories-head reveal">
+      <div class="eyebrow">Project stories</div>
+      <h2>Where the work <em>meets the water.</em></h2>
+      <p>Three projects, three coastlines, one shared belief: restoration works when it's led by the people who live there.</p>
+    </div>
+    <div class="story-grid">
+      <article class="story-card reveal">
+        <div class="story-art">
+          <svg viewBox="0 0 600 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="mangroveSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cfe3e0"/>
+                <stop offset="100%" stop-color="#e6efec"/>
+              </linearGradient>
+              <linearGradient id="mangroveWater" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a5f6b"/>
+                <stop offset="100%" stop-color="#0a3a44"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="260" fill="url(#mangroveSky)"/>
+            <circle cx="480" cy="80" r="40" fill="#f0a07a" opacity="0.7"/>
+            <path d="M0 160 Q150 150 300 160 T600 160 L600 260 L0 260 Z" fill="url(#mangroveWater)"/>
+            <!-- Mangroves -->
+            <g stroke="#0d2b2e" stroke-width="2" fill="none" opacity="0.85">
+              <path d="M100 160 L100 100 M100 120 L80 100 M100 120 L120 100 M100 140 L85 125 M100 140 L115 125"/>
+              <path d="M180 160 L180 90 M180 110 L155 90 M180 110 L205 90 M180 130 L160 115 M180 130 L200 115"/>
+              <path d="M260 160 L260 105 M260 125 L240 105 M260 125 L280 105"/>
+            </g>
+            <g fill="#6b8f5e" opacity="0.9">
+              <circle cx="100" cy="95" r="14"/>
+              <circle cx="180" cy="85" r="16"/>
+              <circle cx="260" cy="100" r="12"/>
+            </g>
+            <!-- Reflection -->
+            <path d="M0 200 Q150 195 300 200 T600 200" stroke="#f4f1e8" stroke-width="1" fill="none" opacity="0.3"/>
+            <path d="M0 220 Q150 215 300 220 T600 220" stroke="#f4f1e8" stroke-width="1" fill="none" opacity="0.2"/>
+          </svg>
+        </div>
+        <div class="story-body">
+          <div class="story-meta">
+            <span>Restoration</span>
+            <span class="dot"></span>
+            <span class="loc">Palawan, Philippines</span>
+          </div>
+          <h3>Rebuilding the mangrove nursery that saved a village</h3>
+          <p>After Typhoon Odette flattened 40 hectares of protective mangrove, a women-led cooperative replanted 120,000 seedlings — and cut storm surge damage by an estimated 60% in the next season.</p>
+          <a href="#" class="story-link">Read the full story →</a>
+        </div>
+      </article>
+      <div class="story-side">
+        <article class="story-mini reveal">
+          <div class="story-meta">
+            <span>Science</span>
+            <span class="dot"></span>
+            <span class="loc">Monterey Bay, CA</span>
+          </div>
+          <h3>Kelp forests are coming back</h3>
+          <p>Three years of urchin removal and kelp outplanting have restored 340 hectares of canopy — and the sea otters noticed.</p>
+          <a href="#" class="story-link">Read more →</a>
+        </article>
+        <article class="story-mini reveal">
+          <div class="story-meta">
+            <span>Community</span>
+            <span class="dot"></span>
+            <span class="loc">Accra, Ghana</span>
+          </div>
+          <h3>The beach school teaching kids to fish plastic</h3>
+          <p>Every Saturday, 80 children learn to identify, sort, and upcycle ocean plastic — and their parents are joining in.</p>
+          <a href="#" class="story-link">Read more →</a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section class="volunteer" id="volunteer">
+  <div class="wrap">
+    <div class="volunteer-grid">
+      <div class="reveal">
+        <div class="eyebrow">Get involved</div>
+        <h2>You don't need to be a scientist to <em>save a coastline.</em></h2>
+        <p>Whether you have an hour or a whole summer, there's a place for you on the shore. Choose how you want to show up.</p>
+        <a href="#" class="btn-primary">
+          Join a cleanup
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="action-list reveal">
+        <a href="#" class="action-item">
+          <span class="action-num">01</span>
+          <div>
+            <div class="action-title">Join a beach cleanup</div>
+            <div class="action-desc">Find a cleanup near you — 340 events this month</div>
+          </div>
+          <span class="action-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <a href="#" class="action-item">
+          <span class="action-num">02</span>
+          <div>
+            <div class="action-title">Become a citizen scientist</div>
+            <div class="action-desc">Log water quality, wildlife, and debris data</div>
+          </div>
+          <span class="action-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <a href="#" class="action-item">
+          <span class="action-num">03</span>
+          <div>
+            <div class="action-title">Adopt a mangrove</div>
+            <div class="action-desc">Fund a seedling and track its growth for 5 years</div>
+          </div>
+          <span class="action-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <a href="#" class="action-item">
+          <span class="action-num">04</span>
+          <div>
+            <div class="action-title">Host a fundraiser</div>
+            <div class="action-desc">Turn your birthday, run, or dinner party into impact</div>
+          </div>
+          <span class="action-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIELD NOTES -->
+<section class="field-notes" id="notes">
+  <div class="wrap">
+    <div class="notes-head reveal">
+      <div>
+        <div class="eyebrow">Field notes</div>
+        <h2>Dispatches from <em>the shoreline.</em></h2>
+      </div>
+      <p>Stories, observations, and small victories from our teams and volunteers around the world.</p>
+    </div>
+    <div class="notes-grid">
+      <article class="note reveal">
+        <div class="note-art">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="note1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cfe3e0"/>
+                <stop offset="100%" stop-color="#1a5f6b"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#note1)"/>
+            <circle cx="320" cy="60" r="30" fill="#f0a07a" opacity="0.8"/>
+            <path d="M0 130 Q100 120 200 130 T400 130 L400 200 L0 200 Z" fill="#0a3a44"/>
+            <path d="M0 150 Q100 145 200 150 T400 150" stroke="#f4f1e8" stroke-width="1" fill="none" opacity="0.3"/>
+            <path d="M0 170 Q100 165 200 170 T400 170" stroke="#f4f1e8" stroke-width="1" fill="none" opacity="0.2"/>
+            <!-- Bird -->
+            <path d="M60 60 Q70 52 80 60" stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M90 75 Q98 69 106 75" stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="note-date">March 14, 2025</div>
+        <h3>The morning the dolphins came back</h3>
+        <p>For the first time in eleven years, our team in Cebu recorded a pod of spinner dolphins inside the bay. A small sign, but a real one.</p>
+        <div class="note-author">
+          <div class="note-avatar">M</div>
+          <div><strong>Maya Reyes</strong> · Field Lead, Philippines</div>
+        </div>
+      </article>
+      <article class="note reveal">
+        <div class="note-art">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="note2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8dfc9"/>
+                <stop offset="100%" stop-color="#6b8f5e"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#note2)"/>
+            <!-- Sand -->
+            <path d="M0 140 Q100 130 200 140 T400 140 L400 200 L0 200 Z" fill="#e8dfc9"/>
+            <!-- Grass -->
+            <g stroke="#0d2b2e" stroke-width="1.5" fill="none" opacity="0.7">
+              <path d="M50 140 L50 110 M50 120 L40 110 M50 120 L60 110"/>
+              <path d="M80 140 L80 115 M80 125 L72 115 M80 125 L88 115"/>
+              <path d="M110 140 L110 120 M110 128 L104 120 M110 128 L116 120"/>
+            </g>
+            <!-- Shell -->
+            <ellipse cx="300" cy="160" rx="14" ry="10" fill="#f4f1e8" opacity="0.8"/>
+            <path d="M300 150 L300 170 M290 160 L310 160" stroke="#0d2b2e" stroke-width="0.8" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="note-date">February 28, 2025</div>
+        <h3>What 200 volunteers can do in one weekend</h3>
+        <p>Our Accra team cleared 4.2 tonnes of plastic from a single stretch of beach. The photos are beautiful. The reality is sobering.</p>
+        <div class="note-author">
+          <div class="note-avatar">K</div>
+          <div><strong>Kwame Asante</strong> · Community Organizer, Ghana</div>
+        </div>
+      </article>
+      <article class="note reveal">
+        <div class="note-art">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="note3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0a3a44"/>
+                <stop offset="100%" stop-color="#1a5f6b"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#note3)"/>
+            <!-- Kelp -->
+            <g stroke="#6b8f5e" stroke-width="3" fill="none" opacity="0.8">
+              <path d="M100 200 Q90 160 100 120 Q110 80 100 40"/>
+              <path d="M140 200 Q150 160 140 120 Q130 80 140 40"/>
+              <path d="M180 200 Q170 160 180 120 Q190 80 180 40"/>
+            </g>
+            <!-- Fish -->
+            <g fill="#f0a07a" opacity="0.8">
+              <ellipse cx="280" cy="100" rx="14" ry="7"/>
+              <path d="M294 100 L304 94 L304 106 Z"/>
+              <ellipse cx="320" cy="130" rx="10" ry="5"/>
+              <path d="M330 130 L338 126 L338 134 Z"/>
+            </g>
+            <!-- Bubbles -->
+            <circle cx="260" cy="80" r="3" fill="#f4f1e8" opacity="0.5"/>
+            <circle cx="270" cy="70" r="2" fill="#f4f1e8" opacity="0.4"/>
+            <circle cx="255" cy="60" r="2.5" fill="#f4f1e8" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="note-date">February 10, 2025</div>
+        <h3>Kelp is the quiet hero of carbon capture</h3>
+        <p>Our Monterey team published new data showing restored kelp forests sequester up to 20x more carbon per acre than land forests.</p>
+        <div class="note-author">
+          <div class="note-avatar">S</div>
+          <div><strong>Dr. Sarah Chen</strong> · Marine Ecologist, California</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE CTA -->
+<section class="donate" id="donate">
+  <div class="wrap">
+    <div class="donate-card reveal">
+      <div class="donate-content">
+        <div class="eyebrow">Make a difference today</div>
+        <h2>Your gift becomes <em>a living coastline.</em></h2>
+        <p>Choose an amount below. Every dollar goes directly to restoration, science, and the communities doing the work on the ground.</p>
+        <div class="donate-amounts">
+          <button class="amount-btn">$25<small>1 seedling</small></button>
+          <button class="amount-btn active">$75<small>5 seedlings</small></button>
+          <button class="amount-btn">$150<small>1 cleanup kit</small></button>
+          <button class="amount-btn">$500<small>1 hectare</small></button>
+        </div>
+        <div class="donate-actions">
+          <a href="#" class="btn-primary">
+            Donate $75
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" class="btn-ghost" style="color: var(--foam); border-color: rgba(244,241,232,0.4);">Give monthly</a>
+        </div>
+        <p class="donate-note">Secure payment · Tax-deductible · Cancel anytime</p>
+      </div>
+      <div class="donate-art">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#e26a4a" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#e26a4a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="150" cy="150" r="140" fill="url(#glow)"/>
+          <!-- Wave circle -->
+          <circle cx="150" cy="150" r="100" fill="none" stroke="#f4f1e8" stroke-width="1" opacity="0.2"/>
+          <circle cx="150" cy="150" r="70" fill="none" stroke="#f4f1e8" stroke-width="1" opacity="0.3"/>
+          <circle cx="150" cy="150" r="40" fill="none" stroke="#f4f1e8" stroke-width="1" opacity="0.4"/>
+          <!-- Wave paths -->
+          <path d="M50 150 Q80 130 110 150 T170 150 T230 150 T290 150" stroke="#f0a07a" stroke-width="2" fill="none" opacity="0.8"/>
+          <path d="M50 170 Q80 150 110 170 T170 170 T230 170 T290 170" stroke="#f0a07a" stroke-width="2" fill="none" opacity="0.5"/>
+          <path d="M50 190 Q80 170 110 190 T170 190 T230 190 T290 190" stroke="#f0a07a" stroke-width="2" fill="none" opacity="0.3"/>
+          <!-- Heart -->
+          <path d="M150 130 C150 120 140 110 130 110 C118 110 110 120 110 130 C110 145 150 170 150 170 C150 170 190 145 190 130 C190 120 182 110 170 110 C160 110 150 120 150 130 Z" fill="#e26a4a" opacity="0.9"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark"></span>
+          TIDE / TURN
+        </a>
+        <p>A global movement to restore the ocean — one coastline, one community, one tide at a time.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="4" r="0.8" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 4.5c-.4.2-.9.3-1.4.4.5-.3.9-.8 1.1-1.4-.5.3-1 .5-1.6.6-.5-.5-1.1-.8-1.8-.8-1.4 0-2.5 1.1-2.5 2.5 0 .2 0 .4.1.6-2.1-.1-3.9-1.1-5.1-2.6-.2.4-.3.8-.3 1.3 0 .9.4 1.6 1.1 2.1-.4 0-.8-.1-1.1-.3v.1c0 1.2.9 2.2 2 2.4-.2.1-.4.1-.7.1-.2 0-.3 0-.5-.1.3 1 1.3 1.7 2.4 1.7-.9.7-2 1.1-3.2 1.1-.2 0-.4 0-.6 0 1.1.7 2.5 1.1 3.9 1.1 4.7 0 7.3-3.9 7.3-7.3v-.3c.5-.4.9-.8 1.2-1.3z" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 7v4M5 5v.01M8 11V8.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5V11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Our Work</h4>
+        <ul>
+          <li><a href="#">Restoration projects</a></li>
+          <li><a href="#">Science & research</a></li>
+          <li><a href="#">Community programs</a></li>
+          <li><a href="#">Policy advocacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get Involved</h4>
+        <ul>
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Donate</a></li>
+          <li><a href="#">Fundraise</a></li>
+          <li><a href="#">Partner with us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Our story</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Annual report</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="partners">
+      <div class="partners-label">Trusted by partners who share our vision</div>
+      <div class="partners-row">
+        <div class="partner">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 10 Q10 6 14 10" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          Oceanic Trust
+        </div>
+        <div class="partner">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2 L18 10 L10 18 L2 10 Z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          Blue Horizon
+        </div>
+        <div class="partner">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 15 Q10 5 17 15" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="10" cy="8" r="2" fill="currentColor"/></svg>
+          Coastal Alliance
+        </div>
+        <div class="partner">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 10 L10 7 L13 10 L10 13 Z" fill="currentColor"/></svg>
+          Marine Fund
+        </div>
+        <div class="partner">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3 L12 8 L17 8 L13 11 L15 16 L10 13 L5 16 L7 11 L3 8 L8 8 Z" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+          Sea Change
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 TIDE / TURN. A registered 501(c)(3) nonprofit. EIN 84-2917563.</div>
+      <div style="display: flex; gap: 24px;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Financials</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Progress bar animation
+  const progressBar = document.getElementById('progressBar');
+  const progressSection = document.querySelector('.progress-section');
+  let animated = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        setTimeout(() => {
+          progressBar.style.width = '73%';
+        }, 200);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (progressSection) observer.observe(progressSection);
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Donate amount buttons
+  document.querySelectorAll('.amount-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const amount = btn.textContent.match(/\$(\d+)/)[1];
+      const donateBtn = document.querySelector('.donate-actions .btn-primary');
+      donateBtn.innerHTML = `Donate $${amount} <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    });
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

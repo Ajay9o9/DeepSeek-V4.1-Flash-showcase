@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SECURITY / CONSOLE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0a0c0f;
+      --bg-surface: #11161c;
+      --bg-elevated: #1a2129;
+      --border-subtle: #2a3440;
+      --border-strong: #3e4d5e;
+      --text-primary: #eef2f6;
+      --text-secondary: #9aa9b9;
+      --text-muted: #5f6f80;
+      --accent-cyan: #00e5c7;
+      --accent-amber: #ffb347;
+      --accent-red: #ff4d6d;
+      --accent-blue: #4d9fff;
+      --accent-purple: #b794f4;
+      --glow-cyan: rgba(0, 229, 199, 0.15);
+      --glow-red: rgba(255, 77, 109, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- SCROLLBAR ---------- */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ---------- TOP BAR ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border-subtle);
+    }
+
+    .topbar-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .topbar-nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-nav a:hover,
+    .topbar-nav a.active {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+
+    .topbar-nav a.active {
+      color: var(--accent-cyan);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      background: rgba(0, 229, 199, 0.08);
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid rgba(0, 229, 199, 0.2);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      border: 2px solid var(--border-subtle);
+      transition: border-color 0.15s;
+    }
+
+    .avatar:hover {
+      border-color: var(--accent-cyan);
+    }
+
+    /* ---------- MAIN GRID ---------- */
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .main-left {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 20px 24px;
+      gap: 20px;
+    }
+
+    .main-right {
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .section-action {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent-cyan);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      letter-spacing: 0.02em;
+      transition: opacity 0.15s;
+    }
+
+    .section-action:hover {
+      opacity: 0.7;
+    }
+
+    /* ---------- THREAT OVERVIEW CARDS ---------- */
+    .threat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .threat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .threat-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .threat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--card-accent, var(--accent-cyan));
+      opacity: 0.6;
+    }
+
+    .threat-card[data-severity="critical"] { --card-accent: var(--accent-red); }
+    .threat-card[data-severity="high"] { --card-accent: var(--accent-amber); }
+    .threat-card[data-severity="medium"] { --card-accent: var(--accent-blue); }
+    .threat-card[data-severity="low"] { --card-accent: var(--accent-cyan); }
+
+    .threat-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .threat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .threat-card[data-severity="critical"] .threat-value { color: var(--accent-red); }
+    .threat-card[data-severity="high"] .threat-value { color: var(--accent-amber); }
+    .threat-card[data-severity="medium"] .threat-value { color: var(--accent-blue); }
+    .threat-card[data-severity="low"] .threat-value { color: var(--accent-cyan); }
+
+    .threat-trend {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trend-up { color: var(--accent-red); }
+    .trend-down { color: var(--accent-cyan); }
+
+    /* ---------- SEVERITY FILTERS ---------- */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .filter-chip.active {
+      background: var(--bg-elevated);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .filter-chip .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .filter-chip[data-filter="critical"] .chip-dot { background: var(--accent-red); }
+    .filter-chip[data-filter="high"] .chip-dot { background: var(--accent-amber); }
+    .filter-chip[data-filter="medium"] .chip-dot { background: var(--accent-blue); }
+    .filter-chip[data-filter="low"] .chip-dot { background: var(--accent-cyan); }
+
+    .filter-chip[data-filter="critical"].active { border-color: var(--accent-red); color: var(--accent-red); }
+    .filter-chip[data-filter="high"].active { border-color: var(--accent-amber); color: var(--accent-amber); }
+    .filter-chip[data-filter="medium"].active { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .filter-chip[data-filter="low"].active { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+    /* ---------- EVENT TIMELINE ---------- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      align-items: start;
+      transition: background 0.15s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+
+    .timeline-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .timeline-item.selected {
+      background: rgba(0, 229, 199, 0.04);
+    }
+
+    .timeline-item.selected::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent-cyan);
+    }
+
+    .timeline-time {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+
+    .timeline-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timeline-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .timeline-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .severity-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .severity-badge.critical {
+      background: rgba(255, 77, 109, 0.15);
+      color: var(--accent-red);
+      border: 1px solid rgba(255, 77, 109, 0.25);
+    }
+
+    .severity-badge.high {
+      background: rgba(255, 179, 71, 0.12);
+      color: var(--accent-amber);
+      border: 1px solid rgba(255, 179, 71, 0.2);
+    }
+
+    .severity-badge.medium {
+      background: rgba(77, 159, 255, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(77, 159, 255, 0.2);
+    }
+
+    .severity-badge.low {
+      background: rgba(0, 229, 199, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 229, 199, 0.2);
+    }
+
+    .timeline-source {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .timeline-arrow {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding-top: 2px;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .timeline-item:hover .timeline-arrow {
+      color: var(--accent-cyan);
+      transform: translateX(2px);
+    }
+
+    /* ---------- ENDPOINT HEALTH ---------- */
+    .endpoint-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .endpoint-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .endpoint-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .endpoint-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .endpoint-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .endpoint-status.healthy { background: var(--accent-cyan); box-shadow: 0 0 6px var(--glow-cyan); }
+    .endpoint-status.warning { background: var(--accent-amber); box-shadow: 0 0 6px rgba(255, 179, 71, 0.3); }
+    .endpoint-status.critical { background: var(--accent-red); box-shadow: 0 0 6px var(--glow-red); }
+
+    .endpoint-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .endpoint-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+    }
+
+    .metric-label {
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .metric-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--bg-elevated);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .metric-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+
+    .metric-bar-fill.healthy { background: var(--accent-cyan); }
+    .metric-bar-fill.warning { background: var(--accent-amber); }
+    .metric-bar-fill.critical { background: var(--accent-red); }
+
+    /* ---------- ACCESS ALERTS ---------- */
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .alert-item:hover {
+      border-color: var(--border-strong);
+    }
+
+    .alert-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+    }
+
+    .alert-icon.denied {
+      background: rgba(255, 77, 109, 0.12);
+      color: var(--accent-red);
+    }
+
+    .alert-icon.granted {
+      background: rgba(0, 229, 199, 0.1);
+      color: var(--accent-cyan);
+    }
+
+    .alert-icon.review {
+      background: rgba(255, 179, 71, 0.1);
+      color: var(--accent-amber);
+    }
+
+    .alert-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .alert-detail {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .alert-time {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ---------- INVESTIGATION PANEL ---------- */
+    .investigation-panel {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .investigation-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .investigation-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .investigation-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .investigation-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+
+    .investigation-close:hover {
+      color: var(--text-primary);
+    }
+
+    .investigation-case {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .investigation-id {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .investigation-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .investigation-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .investigation-section-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .investigation-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .investigation-field:last-child {
+      border-bottom: none;
+    }
+
+    .field-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .field-value {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .field-value.severity-critical { color: var(--accent-red); }
+    .field-value.severity-high { color: var(--accent-amber); }
+
+    .investigation-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+      border-color: var(--accent-cyan);
+    }
+
+    .btn-primary:hover {
+      background: #00ccb0;
+      border-color: #00ccb0;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--accent-red);
+      border-color: rgba(255, 77, 109, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: rgba(255, 77, 109, 0.1);
+      border-color: var(--accent-red);
+    }
+
+    /* ---------- ACTIVITY SPARKLINE ---------- */
+    .sparkline-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sparkline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .sparkline-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .sparkline-legend {
+      display: flex;
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .sparkline-svg {
+      width: 100%;
+      height: 60px;
+      display: block;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .main {
+        grid-template-columns: 1fr 300px;
+      }
+      .threat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .endpoint-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+      .main-right {
+        display: none;
+      }
+      .topbar-nav {
+        display: none;
+      }
+      .threat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .endpoint-grid {
+        grid-template-columns: 1fr;
+      }
+      .timeline-item {
+        grid-template-columns: 60px 1fr auto;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-left {
+        padding: 12px 16px;
+      }
+      .threat-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .threat-card {
+        padding: 12px;
+      }
+      .threat-value {
+        font-size: 1.3rem;
+      }
+      .topbar {
+        padding: 0 16px;
+      }
+      .filter-bar {
+        gap: 6px;
+      }
+      .filter-chip {
+        font-size: 0.6rem;
+        padding: 4px 8px;
+      }
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .threat-card, .endpoint-card, .alert-item, .timeline-item {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .threat-card:nth-child(1) { animation-delay: 0.02s; }
+    .threat-card:nth-child(2) { animation-delay: 0.04s; }
+    .threat-card:nth-child(3) { animation-delay: 0.06s; }
+    .threat-card:nth-child(4) { animation-delay: 0.08s; }
+
+    /* ---------- UTILITY ---------- */
+    .mono { font-family: var(--font-mono); }
+    .text-muted { color: var(--text-muted); }
+    .text-secondary { color: var(--text-secondary); }
+    .text-cyan { color: var(--accent-cyan); }
+    .text-red { color: var(--accent-red); }
+    .text-amber { color: var(--accent-amber); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2L25 7V14C25 20.5 20.5 25.5 14 27C7.5 25.5 3 20.5 3 14V7L14 2Z" stroke="#00e5c7" stroke-width="1.5" fill="none"/>
+              <path d="M14 8V14L18 17" stroke="#00e5c7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="14" cy="14" r="1.5" fill="#00e5c7"/>
+            </svg>
+          </div>
+          <span>SECURITY / CONSOLE</span>
+        </div>
+        <div class="logo-divider"></div>
+        <nav class="topbar-nav">
+          <a href="#" class="active">Overview</a>
+          <a href="#">Threats</a>
+          <a href="#">Endpoints</a>
+          <a href="#">Access</a>
+          <a href="#">Reports</a>
+        </nav>
+      </div>
+      <div class="topbar-right">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Live
+        </div>
+        <div class="avatar">JD</div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <!-- LEFT COLUMN -->
+      <div class="main-left">
+        <!-- THREAT OVERVIEW -->
+        <section>
+          <div class="section-header">
+            <h2 class="section-title">Threat Overview</h2>
+            <button class="section-action">View all →</button>
+          </div>
+          <div class="threat-grid">
+            <div class="threat-card" data-severity="critical">
+              <div class="threat-label">Critical</div>
+              <div class="threat-value">3</div>
+              <div class="threat-trend">
+                <span class="trend-up">↑ 2</span> since yesterday
+              </div>
+            </div>
+            <div class="threat-card" data-severity="high">
+              <div class="threat-label">High</div>
+              <div class="threat-value">12</div>
+              <div class="threat-trend">
+                <span class="trend-up">↑ 5</span> since yesterday
+              </div>
+            </div>
+            <div class="threat-card" data-severity="medium">
+              <div class="threat-label">Medium</div>
+              <div class="threat-value">28</div>
+              <div class="threat-trend">
+                <span class="trend-down">↓ 3</span> since yesterday
+              </div>
+            </div>
+            <div class="threat-card" data-severity="low">
+              <div class="threat-label">Low</div>
+              <div class="threat-value">47</div>
+              <div class="threat-trend">
+                <span class="trend-down">↓ 8</span> since yesterday
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEVERITY FILTERS -->
+        <section>
+          <div class="section-header">
+            <h2 class="section-title">Filter by Severity</h2>
+          </div>
+          <div class="filter-bar">
+            <button class="filter-chip active" data-filter="critical">
+              <span class="chip-dot"></span> Critical
+            </button>
+            <button class="filter-chip active" data-filter="high">
+              <span class="chip-dot"></span> High
+            </button>
+            <button class="filter-chip active" data-filter="medium">
+              <span class="chip-dot"></span> Medium
+            </button>
+            <button class="filter-chip active" data-filter="low">
+              <span class="chip-dot"></span> Low
+            </button>
+          </div>
+        </section>
+
+        <!-- EVENT TIMELINE -->
+        <section>
+          <div class="section-header">
+            <h2 class="section-title">Event Timeline</h2>
+            <button class="section-action">Export log →</button>
+          </div>
+          <div class="timeline" id="timeline">
+            <div class="timeline-item selected" data-severity="critical">
+              <div class="timeline-time">14:32:08</div>
+              <div class="timeline-content">
+                <div class="timeline-title">Unauthorized access attempt blocked</div>
+                <div class="timeline-desc">Multiple failed SSH login attempts from 185.220.101.42 targeting prod-db-01</div>
+                <div class="timeline-meta">
+                  <span class="severity-badge critical">Critical</span>
+                  <span class="timeline-source">firewall-edge-03</span>
+                </div>
+              </div>
+              <div class="timeline-arrow">→</div>
+            </div>
+            <div class="timeline-item" data-severity="high">
+              <div class="timeline-time">14:28:45</div>
+              <div class="timeline-content">
+                <div class="timeline-title">Suspicious process detected</div>
+                <div class="timeline-desc">Encoded PowerShell command executed on workstation WKS-042 by user m.chen</div>
+                <div class="timeline-meta">
+                  <span class="severity-badge high">High</span>
+                  <span class="timeline-source">edr-agent-042</span>
+                </div>
+              </div>
+              <div class="timeline-arrow">→</div>
+            </div>
+            <div class="timeline-item" data-severity="medium">
+              <div class="timeline-time">14:15:22</div>
+              <div class="timeline-content">
+                <div class="timeline-title">TLS certificate expiring soon</div>
+                <div class="timeline-desc">Certificate for api.internal.corp expires in 7 days. Renewal required.</div>
+                <div class="timeline-meta">
+                  <span class="severity-badge medium">Medium</span>
+                  <span class="timeline-source">cert-monitor</span>
+                </div>
+              </div>
+              <div class="timeline-arrow">→</div>
+            </div>
+            <div class="timeline-item" data-severity="low">
+              <div class="timeline-time">13:58:11</div>
+              <div class="timeline-content">
+                <div class="timeline-title">New device enrolled</div>
+                <div class="timeline-desc">MacBook Pro (M3) enrolled by user s.rodriguez. Compliance check passed.</div>
+                <div class="timeline-meta">
+                  <span class="severity-badge low">Low</span>
+                  <span class="timeline-source">mdm-service</span>
+                </div>
+              </div>
+              <div class="timeline-arrow">→</div>
+            </div>
+            <div class="timeline-item" data-severity="high">
+              <div class="timeline-time">13:42:03</div>
+              <div class="timeline-content">
+                <div class="timeline-title">Data exfiltration pattern detected</div>
+                <div class="timeline-desc">Unusual outbound transfer of 2.4 GB to unknown IP 91.234.56.78 from build-server-02</div>
+                <div class="timeline-meta">
+                  <span class="severity-badge high">High</span>
+                  <span class="timeline-source">ndr-sensor-07</span>
+                </div>
+              </div>
+              <div class="timeline-arrow">→</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ENDPOINT HEALTH -->
+        <section>
+          <div class="section-header">
+            <h2 class="section-title">Endpoint Health</h2>
+            <button class="section-action">Manage →</button>
+          </div>
+          <div class="endpoint-grid">
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="endpoint-name">prod-db-01</span>
+                <span class="endpoint-status critical"></span>
+              </div>
+              <div class="endpoint-metrics">
+                <div class="endpoint-metric">
+                  <span class="metric-label">CPU</span>
+                  <span class="metric-value">94%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill critical" style="width: 94%"></div>
+                </div>
+                <div class="endpoint-metric">
+                  <span class="metric-label">Memory</span>
+                  <span class="metric-value">87%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill warning" style="width: 87%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="endpoint-name">web-lb-02</span>
+                <span class="endpoint-status healthy"></span>
+              </div>
+              <div class="endpoint-metrics">
+                <div class="endpoint-metric">
+                  <span class="metric-label">CPU</span>
+                  <span class="metric-value">23%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill healthy" style="width: 23%"></div>
+                </div>
+                <div class="endpoint-metric">
+                  <span class="metric-label">Memory</span>
+                  <span class="metric-value">41%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill healthy" style="width: 41%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="endpoint-card">
+              <div class="endpoint-header">
+                <span class="endpoint-name">build-server-02</span>
+                <span class="endpoint-status warning"></span>
+              </div>
+              <div class="endpoint-metrics">
+                <div class="endpoint-metric">
+                  <span class="metric-label">CPU</span>
+                  <span class="metric-value">67%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill warning" style="width: 67%"></div>
+                </div>
+                <div class="endpoint-metric">
+                  <span class="metric-label">Memory</span>
+                  <span class="metric-value">72%</span>
+                </div>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill warning" style="width: 72%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACCESS ALERTS -->
+        <section>
+          <div class="section-header">
+            <h2 class="section-title">Access Alerts</h2>
+            <button class="section-action">View all →</button>
+          </div>
+          <div class="alert-list">
+            <div class="alert-item">
+              <div class="alert-icon denied">✕</div>
+              <div class="alert-content">
+                <div class="alert-title">Access denied — admin panel</div>
+                <div class="alert-detail">user: j.wilson · ip: 10.0.4.112 · role: viewer</div>
+              </div>
+              <div class="alert-time">14:31</div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon review">!</div>
+              <div class="alert-content">
+                <div class="alert-title">MFA challenge failed — 3 attempts</div>
+                <div class="alert-detail">user: a.patel · ip: 192.168.1.45 · method: TOTP</div>
+              </div>
+              <div class="alert-time">14:22</div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon granted">✓</div>
+              <div class="alert-content">
+                <div class="alert-title">Privileged access granted — root</div>
+                <div class="alert-detail">user: s.rodriguez · ip: 10.0.2.88 · duration: 30m</div>
+              </div>
+              <div class="alert-time">14:05</div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon denied">✕</div>
+              <div class="alert-content">
+                <div class="alert-title">Access denied — production database</div>
+                <div class="alert-detail">user: m.chen · ip: 10.0.1.33 · role: developer</div>
+              </div>
+              <div class="alert-time">13:48</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ACTIVITY SPARKLINE -->
+        <section>
+          <div class="sparkline-container">
+            <div class="sparkline-header">
+              <span class="sparkline-title">Event Volume — Last 24h</span>
+              <div class="sparkline-legend">
+                <div class="legend-item">
+                  <span class="legend-dot" style="background: var(--accent-red);"></span> Critical
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background: var(--accent-amber);"></span> High
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background: var(--accent-cyan);"></span> Total
+                </div>
+              </div>
+            </div>
+            <svg class="sparkline-svg" viewBox="0 0 600 60" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="0" y1="15" x2="600" y2="15" stroke="#2a3440" stroke-width="0.5"/>
+              <line x1="0" y1="30" x2="600" y2="30" stroke="#2a3440" stroke-width="0.5"/>
+              <line x1="0" y1="45" x2="600" y2="45" stroke="#2a3440" stroke-width="0.5"/>
+              <!-- Total events area -->
+              <path d="M0,50 L25,48 L50,45 L75,42 L100,38 L125,35 L150,30 L175,28 L200,25 L225,22 L250,20 L275,18 L300,15 L325,12 L350,10 L375,8 L400,12 L425,15 L450,18 L475,22 L500,25 L525,28 L550,30 L575,32 L600,35 L600,60 L0,60 Z" fill="rgba(0, 229, 199, 0.08)"/>
+              <path d="M0,50 L25,48 L50,45 L75,42 L100,38 L125,35 L150,30 L175,28 L200,25 L225,22 L250,20 L275,18 L300,15 L325,12 L350,10 L375,8 L400,12 L425,15 L450,18 L475,22 L500,25 L525,28 L550,30 L575,32 L600,35" fill="none" stroke="#00e5c7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- High events -->
+              <path d="M0,55 L25,54 L50,52 L75,50 L100,48 L125,46 L150,44 L175,42 L200,40 L225,38 L250,36 L275,34 L300,32 L325,30 L350,28 L375,26 L400,28 L425,30 L450,32 L475,34 L500,36 L525,38 L550,40 L575,42 L600,44" fill="none" stroke="#ffb347" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+              <!-- Critical events -->
+              <path d="M0,58 L25,58 L50,57 L75,57 L100,56 L125,56 L150,55 L175,55 L200,54 L225,54 L250,53 L275,53 L300,52 L325,52 L350,51 L375,51 L400,52 L425,52 L450,53 L475,53 L500,54 L525,54 L550,55 L575,55 L600,56" fill="none" stroke="#ff4d6d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+            </svg>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN — INVESTIGATION PANEL -->
+      <div class="main-right">
+        <div class="investigation-panel">
+          <div class="investigation-header">
+            <div class="investigation-header-top">
+              <span class="investigation-title">Investigation</span>
+              <button class="investigation-close">✕</button>
+            </div>
+            <div class="investigation-case">Unauthorized access attempt blocked</div>
+            <div class="investigation-id">CASE-2024-0847 · Opened 14:32:08</div>
+          </div>
+          <div class="investigation-body">
+            <div class="investigation-section">
+              <div class="investigation-section-title">Event Details</div>
+              <div class="investigation-field">
+                <span class="field-label">Severity</span>
+                <span class="field-value severity-critical">Critical</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Source</span>
+                <span class="field-value">firewall-edge-03</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Source IP</span>
+                <span class="field-value">185.220.101.42</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Target</span>
+                <span class="field-value">prod-db-01</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Protocol</span>
+                <span class="field-value">SSH (TCP/22)</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Attempts</span>
+                <span class="field-value">47</span>
+              </div>
+            </div>
+
+            <div class="investigation-section">
+              <div class="investigation-section-title">Threat Intelligence</div>
+              <div class="investigation-field">
+                <span class="field-label">IP Reputation</span>
+                <span class="field-value severity-critical">Malicious</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Known Actor</span>
+                <span class="field-value">APT-29 (Cozy Bear)</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">Campaign</span>
+                <span class="field-value">Operation DarkHarbor</span>
+              </div>
+              <div class="investigation-field">
+                <span class="field-label">First Seen</span>
+                <span class="field-value">2024-01-15</span>
+              </div>
+            </div>
+
+            <div class="investigation-section">
+              <div class="investigation-section-title">Recommended Actions</div>
+              <div class="investigation-actions">
+                <button class="btn btn-primary">Block IP</button>
+                <button class="btn btn-secondary">Isolate</button>
+              </div>
+              <div class="investigation-actions">
+                <button class="btn btn-danger">Escalate</button>
+                <button class="btn btn-secondary">Dismiss</button>
+              </div>
+            </div>
+
+            <div class="investigation-section">
+              <div class="investigation-section-title">Notes</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; padding: 8px 0;">
+                Repeated SSH brute-force attempts from known APT-29 infrastructure. Firewall rules successfully blocked all attempts. No successful authentication observed. Recommend permanent IP block and review of SSH key rotation policy.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- SEVERITY FILTERS ----------
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('active');
+        applyFilters();
+      });
+    });
+
+    function applyFilters() {
+      const activeFilters = Array.from(document.querySelectorAll('.filter-chip.active'))
+        .map(chip => chip.dataset.filter);
+
+      timelineItems.forEach(item => {
+        const severity = item.dataset.severity;
+        if (activeFilters.includes(severity)) {
+          item.style.display = 'grid';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // ---------- TIMELINE SELECTION ----------
+    timelineItems.forEach(item => {
+      item.addEventListener('click', () => {
+        timelineItems.forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+      });
+    });
+
+    // ---------- INVESTIGATION PANEL CLOSE ----------
+    const closeBtn = document.querySelector('.investigation-close');
+    const panel = document.querySelector('.main-right');
+
+    closeBtn.addEventListener('click', () => {
+      panel.style.display = 'none';
+      document.querySelector('.main').style.gridTemplateColumns = '1fr';
+    });
+
+    // ---------- LIVE CLOCK (subtle) ----------
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+      // Could update a clock element if present
+    }
+    setInterval(updateClock, 1000);
+
+    // ---------- SPARKLINE ANIMATION ----------
+    // Subtle pulse on the sparkline paths
+    const sparklinePaths = document.querySelectorAll('.sparkline-svg path');
+    let pulsePhase = 0;
+    function animateSparkline() {
+      pulsePhase += 0.02;
+      const opacity = 0.7 + Math.sin(pulsePhase) * 0.15;
+      sparklinePaths.forEach((path, i) => {
+        if (i > 0) {
+          path.style.opacity = opacity;
+        }
+      });
+      requestAnimationFrame(animateSparkline);
+    }
+    animateSparkline();
+  </script>
+</body>
+</html>

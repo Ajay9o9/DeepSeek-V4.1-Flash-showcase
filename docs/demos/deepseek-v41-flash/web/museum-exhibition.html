@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUSEUM / EXHIBITION — The Shape of Silence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f4f1ea;
+      --paper-warm: #ebe6db;
+      --accent: #c8472b;
+      --accent-deep: #8f2f1a;
+      --muted: #6b6659;
+      --line: #d4cec0;
+      --gold: #b8894a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      background: rgba(244, 241, 234, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-brand {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-brand span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 10px 20px;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      padding: 140px 48px 60px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(64px, 8.5vw, 132px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 32px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-meta-item .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-meta-item .value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    /* Hero visual */
+    .hero-right {
+      position: relative;
+      height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-art {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 520px;
+    }
+
+    .hero-art svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hero-caption {
+      position: absolute;
+      bottom: -8px;
+      right: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* ---------- SECTION SHARED ---------- */
+    section {
+      padding: 120px 48px;
+      position: relative;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      margin-bottom: 72px;
+      align-items: end;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 5vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+      font-weight: 400;
+    }
+
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* ---------- ARTIST STATEMENT ---------- */
+    .statement {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .statement .section-label { color: var(--gold); }
+    .statement .section-label::before { background: var(--gold); }
+    .statement .section-title em { color: var(--gold); }
+
+    .statement-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+    }
+
+    .statement-portrait {
+      position: relative;
+    }
+
+    .statement-portrait svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .statement-portrait .name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      margin-top: 24px;
+      color: var(--paper);
+    }
+
+    .statement-portrait .role {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 6px;
+    }
+
+    .statement-body p {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.4;
+      color: var(--paper);
+      margin-bottom: 28px;
+      letter-spacing: -0.005em;
+    }
+
+    .statement-body p:first-child::first-letter {
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.85;
+      padding: 6px 14px 0 0;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .statement-body p.small {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #b8b3a6;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid #3a3a3a;
+    }
+
+    /* ---------- ARTWORK GRID ---------- */
+    .artwork-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .art-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--paper-warm);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .art-card:hover { transform: translateY(-6px); }
+
+    .art-card .art-visual {
+      width: 100%;
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .art-card .art-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .art-card:hover .art-visual svg { transform: scale(1.04); }
+
+    .art-card .art-info {
+      padding: 20px 4px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .art-card .art-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .art-card .art-title em { font-style: italic; }
+
+    .art-card .art-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .art-card .art-medium {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Grid spans */
+    .art-card.span-5 { grid-column: span 5; }
+    .art-card.span-4 { grid-column: span 4; }
+    .art-card.span-3 { grid-column: span 3; }
+    .art-card.span-6 { grid-column: span 6; }
+    .art-card.span-7 { grid-column: span 7; }
+
+    .art-card.tall .art-visual { aspect-ratio: 3/4; }
+    .art-card.wide .art-visual { aspect-ratio: 16/10; }
+
+    /* ---------- VISIT DETAILS ---------- */
+    .visit {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .visit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .visit-item {
+      padding: 40px 32px 40px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .visit-item:last-child { border-right: none; }
+    .visit-item:not(:first-child) { padding-left: 32px; }
+
+    .visit-item .num {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .visit-item h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .visit-item p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .visit-item p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ---------- PROGRAMS ---------- */
+    .programs-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .program-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 200px 120px;
+      gap: 32px;
+      align-items: center;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.3s, padding 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .program-row:hover {
+      background: var(--paper-warm);
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .program-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .program-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .program-title em { font-style: italic; }
+
+    .program-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .program-arrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 20px;
+      text-align: right;
+      color: var(--muted);
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .program-row:hover .program-arrow {
+      transform: translateX(6px);
+      color: var(--accent);
+    }
+
+    /* ---------- TICKET CTA ---------- */
+    .cta {
+      background: var(--accent);
+      color: var(--paper);
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .cta h2 em { font-style: italic; color: var(--ink); }
+
+    .cta p {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 480px;
+      color: rgba(244, 241, 234, 0.85);
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--paper);
+      border-color: rgba(244, 241, 234, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: var(--paper);
+      color: var(--accent);
+      border-color: var(--paper);
+    }
+
+    .btn .arrow {
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover .arrow { transform: translateX(6px); }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 80px 48px 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid #333;
+    }
+
+    .footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 40px;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .footer-brand em { font-style: italic; color: var(--gold); }
+
+    .footer-tagline {
+      font-size: 15px;
+      color: #999;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.25s;
+    }
+
+    .footer-col a:hover { color: var(--paper); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #777;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 60px; grid-template-columns: 1fr; gap: 40px; }
+      .hero-right { height: 420px; }
+      section { padding: 80px 28px; }
+      .section-head { grid-template-columns: 1fr; gap: 24px; }
+      .statement-grid { grid-template-columns: 1fr; gap: 40px; }
+      .statement-portrait { max-width: 320px; }
+      .visit-grid { grid-template-columns: repeat(2, 1fr); }
+      .visit-item { border-right: none; border-bottom: 1px solid var(--line); padding: 32px 0; }
+      .visit-item:not(:first-child) { padding-left: 0; }
+      .visit-item:nth-child(odd) { padding-right: 24px; border-right: 1px solid var(--line); }
+      .visit-item:nth-child(even) { padding-left: 24px; }
+      .program-row { grid-template-columns: 100px 1fr 40px; gap: 20px; }
+      .program-type { display: none; }
+      .cta-inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .art-card.span-5, .art-card.span-4, .art-card.span-3,
+      .art-card.span-6, .art-card.span-7 { grid-column: span 6; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-brand { font-size: 11px; }
+      .nav-cta { padding: 8px 14px; font-size: 11px; }
+      .hero { padding: 100px 20px 40px; }
+      .hero-title { font-size: 56px; }
+      .hero-meta { flex-direction: column; gap: 20px; }
+      section { padding: 64px 20px; }
+      .artwork-grid { gap: 16px; }
+      .art-card.span-5, .art-card.span-4, .art-card.span-3,
+      .art-card.span-6, .art-card.span-7 { grid-column: span 12; }
+      .visit-grid { grid-template-columns: 1fr; }
+      .visit-item:nth-child(odd) { padding-right: 0; border-right: none; }
+      .visit-item:nth-child(even) { padding-left: 0; }
+      .program-row { grid-template-columns: 1fr 40px; gap: 12px; padding: 24px 0; }
+      .program-date { grid-column: 1 / -1; margin-bottom: 4px; }
+      .program-title { font-size: 22px; }
+      .cta { padding: 80px 20px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 60px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">MUSEUM <span>/</span> EXHIBITION</div>
+    <ul class="nav-links">
+      <li><a href="#statement">Statement</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#programs">Programs</a></li>
+    </ul>
+    <a href="#tickets" class="nav-cta">Tickets</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Solo Exhibition · Hall C</div>
+      <h1 class="hero-title">The Shape<br>of <em>Silence</em></h1>
+      <p class="hero-sub">A decade of work by ceramicist and installation artist <strong>Mira Okonkwo</strong>, tracing the quiet architectures of memory, absence, and the spaces between words.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="label">Dates</div>
+          <div class="value">14 Sep — 22 Feb</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Curated by</div>
+          <div class="value">Dr. Elias Vance</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">Works</div>
+          <div class="value">42 pieces</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-art">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-label="Abstract ceramic form">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#c8472b"/>
+              <stop offset="100%" stop-color="#8f2f1a"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ebe6db"/>
+              <stop offset="100%" stop-color="#d4cec0"/>
+            </linearGradient>
+            <radialGradient id="g3" cx="0.4" cy="0.3" r="0.8">
+              <stop offset="0%" stop-color="#f4f1ea"/>
+              <stop offset="100%" stop-color="#b8894a"/>
+            </radialGradient>
+          </defs>
+          <!-- Background circle -->
+          <circle cx="200" cy="250" r="180" fill="url(#g2)"/>
+          <!-- Large vessel -->
+          <path d="M 130 180 Q 110 260 130 340 Q 150 400 200 400 Q 250 400 270 340 Q 290 260 270 180 Q 250 140 200 140 Q 150 140 130 180 Z" fill="url(#g1)"/>
+          <!-- Vessel opening -->
+          <ellipse cx="200" cy="160" rx="55" ry="14" fill="#1a1a1a" opacity="0.85"/>
+          <ellipse cx="200" cy="160" rx="55" ry="14" fill="none" stroke="#f4f1ea" stroke-width="1.5" opacity="0.4"/>
+          <!-- Highlight -->
+          <path d="M 155 200 Q 145 260 155 320" stroke="#f4f1ea" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round"/>
+          <!-- Small sphere -->
+          <circle cx="290" cy="380" r="42" fill="url(#g3)"/>
+          <circle cx="290" cy="380" r="42" fill="none" stroke="#1a1a1a" stroke-width="1" opacity="0.2"/>
+          <!-- Thin line -->
+          <line x1="60" y1="440" x2="340" y2="440" stroke="#1a1a1a" stroke-width="1" opacity="0.3"/>
+          <!-- Small mark -->
+          <circle cx="90" cy="120" r="6" fill="#c8472b"/>
+        </svg>
+        <div class="hero-caption">
+          Fig. 01 — <em>Vessel for Unspoken Things</em><br>
+          Stoneware, 2023
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ARTIST STATEMENT -->
+  <section class="statement" id="statement">
+    <div class="section-head">
+      <div class="section-label">Artist Statement</div>
+      <h2 class="section-title">On making room<br>for what <em>isn't said</em>.</h2>
+    </div>
+
+    <div class="statement-grid">
+      <div class="statement-portrait">
+        <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" aria-label="Portrait of Mira Okonkwo">
+          <defs>
+            <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3a3a3a"/>
+              <stop offset="100%" stop-color="#1a1a1a"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="380" fill="url(#pg)"/>
+          <!-- Abstract portrait -->
+          <circle cx="150" cy="150" r="70" fill="#b8894a" opacity="0.9"/>
+          <path d="M 80 150 Q 80 90 150 90 Q 220 90 220 150 Q 220 200 200 220 L 100 220 Q 80 200 80 150 Z" fill="#1a1a1a"/>
+          <circle cx="130" cy="150" r="6" fill="#f4f1ea"/>
+          <circle cx="170" cy="150" r="6" fill="#f4f1ea"/>
+          <path d="M 130 185 Q 150 195 170 185" stroke="#f4f1ea" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Shoulders -->
+          <path d="M 60 380 Q 60 260 150 260 Q 240 260 240 380 Z" fill="#c8472b"/>
+          <!-- Neck -->
+          <rect x="130" y="210" width="40" height="60" fill="#b8894a"/>
+          <!-- Hair -->
+          <path d="M 80 130 Q 80 70 150 70 Q 220 70 220 130 Q 220 100 200 90 Q 150 80 100 90 Q 80 100 80 130 Z" fill="#1a1a1a"/>
+          <!-- Grain lines -->
+          <line x1="0" y1="300" x2="300" y2="300" stroke="#f4f1ea" stroke-width="0.5" opacity="0.15"/>
+          <line x1="0" y1="320" x2="300" y2="320" stroke="#f4f1ea" stroke-width="0.5" opacity="0.15"/>
+        </svg>
+        <div class="name">Mira Okonkwo</div>
+        <div class="role">b. 1985, Enugu · Lives in Lisbon</div>
+      </div>
+
+      <div class="statement-body">
+        <p>I work with clay because it remembers. Every fold, every thumbprint, every hesitation in the wrist is preserved — a fossil of a moment that would otherwise be lost.</p>
+        <p>This exhibition gathers ten years of that remembering. The vessels are not containers; they are witnesses. They hold the shape of the silence that surrounded their making.</p>
+        <p class="small">Mira Okonkwo's practice spans ceramics, installation, and sound. Her work has been shown at the Venice Biennale, the Serralves Museum, and the Metropolitan Museum of Art. She is the recipient of the 2022 Joan Miró Prize and a 2024 MacArthur Fellowship. <em>The Shape of Silence</em> is her first major solo exhibition in North America.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTWORK GRID -->
+  <section id="works">
+    <div class="section-head">
+      <div class="section-label">Selected Works</div>
+      <h2 class="section-title">Forty-two pieces,<br>one <em>quiet</em> conversation.</h2>
+    </div>
+
+    <div class="artwork-grid">
+      <!-- 1 -->
+      <div class="art-card span-5 tall">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="a1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#c8472b"/>
+                <stop offset="100%" stop-color="#8f2f1a"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="#ebe6db"/>
+            <ellipse cx="200" cy="380" rx="140" ry="30" fill="#1a1a1a" opacity="0.08"/>
+            <path d="M 120 200 Q 100 300 130 380 Q 160 440 200 440 Q 240 440 270 380 Q 300 300 280 200 Q 260 160 200 160 Q 140 160 120 200 Z" fill="url(#a1)"/>
+            <ellipse cx="200" cy="180" rx="60" ry="16" fill="#1a1a1a"/>
+            <ellipse cx="200" cy="180" rx="60" ry="16" fill="none" stroke="#f4f1ea" stroke-width="1.5" opacity="0.5"/>
+            <path d="M 150 240 Q 145 300 155 360" stroke="#f4f1ea" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
+            <circle cx="320" cy="120" r="8" fill="#b8894a"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Vessel for Unspoken Things</em></div>
+            <div class="art-medium">Stoneware, ash glaze</div>
+          </div>
+          <div class="art-year">2023</div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="art-card span-4">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#1a1a1a"/>
+            <circle cx="200" cy="250" r="120" fill="none" stroke="#b8894a" stroke-width="1"/>
+            <circle cx="200" cy="250" r="90" fill="none" stroke="#b8894a" stroke-width="1" opacity="0.7"/>
+            <circle cx="200" cy="250" r="60" fill="none" stroke="#b8894a" stroke-width="1" opacity="0.5"/>
+            <circle cx="200" cy="250" r="30" fill="#c8472b"/>
+            <line x1="0" y1="250" x2="400" y2="250" stroke="#f4f1ea" stroke-width="0.5" opacity="0.3"/>
+            <line x1="200" y1="0" x2="200" y2="500" stroke="#f4f1ea" stroke-width="0.5" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Concentric</em></div>
+            <div class="art-medium">Pigment on linen</div>
+          </div>
+          <div class="art-year">2022</div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="art-card span-3">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#f4f1ea"/>
+            <path d="M 0 400 Q 100 350 200 400 T 400 400 L 400 500 L 0 500 Z" fill="#c8472b"/>
+            <path d="M 0 420 Q 100 380 200 420 T 400 420 L 400 500 L 0 500 Z" fill="#8f2f1a"/>
+            <circle cx="200" cy="180" r="70" fill="#b8894a"/>
+            <circle cx="200" cy="180" r="70" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+            <path d="M 130 180 Q 200 130 270 180" stroke="#1a1a1a" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Horizon Study</em></div>
+            <div class="art-medium">Oil on panel</div>
+          </div>
+          <div class="art-year">2024</div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="art-card span-7 wide">
+        <div class="art-visual">
+          <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg">
+            <rect width="700" height="440" fill="#ebe6db"/>
+            <g opacity="0.9">
+              <rect x="60" y="80" width="80" height="280" fill="#c8472b"/>
+              <rect x="160" y="140" width="80" height="220" fill="#8f2f1a"/>
+              <rect x="260" y="60" width="80" height="300" fill="#b8894a"/>
+              <rect x="360" y="180" width="80" height="180" fill="#1a1a1a"/>
+              <rect x="460" y="100" width="80" height="260" fill="#c8472b" opacity="0.7"/>
+              <rect x="560" y="200" width="80" height="160" fill="#8f2f1a" opacity="0.8"/>
+            </g>
+            <line x1="0" y1="360" x2="700" y2="360" stroke="#1a1a1a" stroke-width="1"/>
+            <circle cx="620" cy="60" r="20" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Six Silences</em></div>
+            <div class="art-medium">Installation, mixed media</div>
+          </div>
+          <div class="art-year">2024</div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="art-card span-4">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#1a1a1a"/>
+            <path d="M 100 100 Q 200 50 300 100 Q 350 200 300 300 Q 200 350 100 300 Q 50 200 100 100 Z" fill="none" stroke="#b8894a" stroke-width="1.5"/>
+            <path d="M 130 130 Q 200 90 270 130 Q 310 200 270 270 Q 200 310 130 270 Q 90 200 130 130 Z" fill="none" stroke="#c8472b" stroke-width="1.5"/>
+            <path d="M 160 160 Q 200 130 240 160 Q 270 200 240 240 Q 200 270 160 240 Q 130 200 160 160 Z" fill="#f4f1ea"/>
+            <circle cx="200" cy="200" r="15" fill="#c8472b"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Nest</em></div>
+            <div class="art-medium">Bronze, patina</div>
+          </div>
+          <div class="art-year">2021</div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="art-card span-5">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#f4f1ea"/>
+            <g stroke="#1a1a1a" stroke-width="1" fill="none">
+              <path d="M 50 100 Q 200 80 350 100"/>
+              <path d="M 50 140 Q 200 120 350 140"/>
+              <path d="M 50 180 Q 200 160 350 180"/>
+              <path d="M 50 220 Q 200 200 350 220"/>
+              <path d="M 50 260 Q 200 240 350 260"/>
+              <path d="M 50 300 Q 200 280 350 300"/>
+              <path d="M 50 340 Q 200 320 350 340"/>
+              <path d="M 50 380 Q 200 360 350 380"/>
+            </g>
+            <circle cx="200" cy="240" r="60" fill="#c8472b" opacity="0.9"/>
+            <circle cx="200" cy="240" r="60" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Breath Lines</em></div>
+            <div class="art-medium">Ink on paper</div>
+          </div>
+          <div class="art-year">2023</div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="art-card span-3">
+        <div class="art-visual">
+          <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#b8894a"/>
+            <path d="M 0 250 Q 100 200 200 250 T 400 250 L 400 500 L 0 500 Z" fill="#1a1a1a"/>
+            <circle cx="200" cy="150" r="50" fill="#f4f1ea"/>
+            <circle cx="200" cy="150" r="50" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+            <line x1="200" y1="100" x2="200" y2="200" stroke="#1a1a1a" stroke-width="1"/>
+            <line x1="150" y1="150" x2="250" y2="150" stroke="#1a1a1a" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="art-info">
+          <div>
+            <div class="art-title"><em>Compass</em></div>
+            <div class="art-medium">Terracotta</div>
+          </div>
+          <div class="art-year">2022</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT DETAILS -->
+  <section class="visit" id="visit">
+    <div class="section-head">
+      <div class="section-label">Plan Your Visit</div>
+      <h2 class="section-title">Everything you need<br>to <em>find us</em>.</h2>
+    </div>
+
+    <div class="visit-grid">
+      <div class="visit-item">
+        <div class="num">01 / Hours</div>
+        <h3>Open daily</h3>
+        <p><strong>Tue — Sun</strong><br>10:00 — 18:00<br><strong>Late Thursdays</strong><br>until 21:00</p>
+      </div>
+      <div class="visit-item">
+        <div class="num">02 / Location</div>
+        <h3>Hall C, East Wing</h3>
+        <p>Museum of Contemporary Craft<br>128 Meridian Avenue<br>Portland, OR 97205</p>
+      </div>
+      <div class="visit-item">
+        <div class="num">03 / Admission</div>
+        <h3>Tickets</h3>
+        <p><strong>General</strong> $24<br><strong>Students & Seniors</strong> $16<br><strong>Members</strong> Free<br><strong>Under 12</strong> Free</p>
+      </div>
+      <div class="visit-item">
+        <div class="num">04 / Access</div>
+        <h3>Fully accessible</h3>
+        <p>Wheelchair access, ASL interpretation on Saturdays, and audio guides in six languages. Service animals welcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section id="programs">
+    <div class="section-head">
+      <div class="section-label">Current Programs</div>
+      <h2 class="section-title">Talks, tours,<br>and <em>quiet hours</em>.</h2>
+    </div>
+
+    <div class="programs-list">
+      <div class="program-row">
+        <div class="program-date">Sat · 21 Sep</div>
+        <div class="program-title">Opening <em>Conversation</em> with Mira Okonkwo</div>
+        <div class="program-type">Artist Talk</div>
+        <div class="program-arrow">→</div>
+      </div>
+      <div class="program-row">
+        <div class="program-date">Thu · 26 Sep</div>
+        <div class="program-title">Curator's <em>Walkthrough</em> with Dr. Elias Vance</div>
+        <div class="program-type">Guided Tour</div>
+        <div class="program-arrow">→</div>
+      </div>
+      <div class="program-row">
+        <div class="program-date">Sun · 06 Oct</div>
+        <div class="program-title">Clay <em>Workshop</em>: Hand-building the Vessel</div>
+        <div class="program-type">Workshop</div>
+        <div class="program-arrow">→</div>
+      </div>
+      <div class="program-row">
+        <div class="program-date">Thu · 17 Oct</div>
+        <div class="program-title">Quiet Hours: <em>Sound Bath</em> in the Gallery</div>
+        <div class="program-type">Performance</div>
+        <div class="program-arrow">→</div>
+      </div>
+      <div class="program-row">
+        <div class="program-date">Sat · 02 Nov</div>
+        <div class="program-title">Panel: <em>Material Memory</em> in Contemporary Craft</div>
+        <div class="program-type">Panel</div>
+        <div class="program-arrow">→</div>
+      </div>
+      <div class="program-row">
+        <div class="program-date">Sun · 15 Dec</div>
+        <div class="program-title">Family Day: <em>Make Your Own</em> Museum</div>
+        <div class="program-type">Family</div>
+        <div class="program-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKET CTA -->
+  <section class="cta" id="tickets">
+    <div class="cta-inner">
+      <div>
+        <h2>Come sit with<br>the <em>silence</em>.</h2>
+        <p>Tickets are timed-entry and released every Monday at 10:00. Members receive priority booking and unlimited access to all programs.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary">
+          <span>Book General Admission</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="#" class="btn btn-secondary">
+          <span>Become a Member</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="#" class="btn btn-secondary">
+          <span>Group & School Visits</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Museum <em>/</em> Exhibition</div>
+        <p class="footer-tagline">A home for contemporary craft in the Pacific Northwest. Open to all, always.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#">Hours & Admission</a></li>
+          <li><a href="#">Directions</a></li>
+          <li><a href="#">Accessibility</a></li>
+          <li><a href="#">Group Visits</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Exhibitions</a></li>
+          <li><a href="#">Collection</a></li>
+          <li><a href="#">Programs</a></li>
+          <li><a href="#">Library</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Museum of Contemporary Craft</div>
+      <div>128 Meridian Ave · Portland, OR</div>
+    </div>
+  </footer>
+
+</body>
+</html>

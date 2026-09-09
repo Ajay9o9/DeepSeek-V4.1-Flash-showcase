@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME / RENOVATION — Crafted transformations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1E1C1A;
+      --paper: #F7F4EF;
+      --clay: #B86B4A;
+      --clay-light: #D9A68B;
+      --sage: #7A8B7A;
+      --stone: #D9D2C5;
+      --charcoal: #2C2A28;
+      --gold: #C9A87C;
+      --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 8px 20px -8px rgba(0, 0, 0, 0.08);
+      --radius-card: 24px;
+      --radius-btn: 40px;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 5.6rem);
+      line-height: 1.05;
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .text-muted {
+      color: #5F5A54;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      padding: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .logo span {
+      color: var(--clay);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--clay);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--ink);
+      color: var(--paper);
+      padding: 0.8rem 2rem;
+      border-radius: var(--radius-btn);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--clay);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 3rem 0 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 560px;
+    }
+
+    .hero-content h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #4A4540;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 480px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      background: #E8E2D9;
+    }
+
+    /* CSS-only architectural illustration */
+    .hero-illustration {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #E8E2D9 0%, #D9D2C5 100%);
+    }
+
+    .hero-illustration .wall {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #C4B9A8;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .hero-illustration .window {
+      position: absolute;
+      top: 15%;
+      left: 20%;
+      width: 35%;
+      height: 40%;
+      background: #F7F4EF;
+      border: 6px solid #A89B8A;
+      box-shadow: inset 0 0 0 2px #D9D2C5;
+    }
+
+    .hero-illustration .window::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #A89B8A;
+      transform: translateY(-50%);
+    }
+
+    .hero-illustration .window::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 100%;
+      background: #A89B8A;
+      transform: translateX(-50%);
+    }
+
+    .hero-illustration .beam {
+      position: absolute;
+      top: 0;
+      left: 60%;
+      width: 8px;
+      height: 100%;
+      background: #A89B8A;
+      opacity: 0.3;
+    }
+
+    .hero-illustration .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 15%;
+      background: #B8AFA0;
+    }
+
+    .hero-illustration .plant {
+      position: absolute;
+      bottom: 15%;
+      right: 15%;
+      width: 60px;
+      height: 100px;
+    }
+
+    .hero-illustration .plant .pot {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 30px;
+      background: #B86B4A;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .hero-illustration .plant .leaf {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 60px;
+      background: #7A8B7A;
+      border-radius: 4px;
+    }
+
+    .hero-illustration .plant .leaf::before,
+    .hero-illustration .plant .leaf::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 12px;
+      background: #7A8B7A;
+      border-radius: 50%;
+    }
+
+    .hero-illustration .plant .leaf::before {
+      top: 10px;
+      left: -18px;
+      transform: rotate(-30deg);
+    }
+
+    .hero-illustration .plant .leaf::after {
+      top: 25px;
+      right: -18px;
+      transform: rotate(30deg);
+    }
+
+    .hero-illustration .rug {
+      position: absolute;
+      bottom: 15%;
+      left: 10%;
+      width: 40%;
+      height: 8%;
+      background: #D9A68B;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    /* ---------- BEFORE / AFTER GALLERY ---------- */
+    .gallery-section {
+      background: #F0EBE3;
+      border-radius: 48px 48px 0 0;
+      padding: 6rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: #5F5A54;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .gallery-card {
+      background: var(--paper);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .gallery-visual {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-visual .before,
+    .gallery-visual .after {
+      position: absolute;
+      inset: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .gallery-visual .before {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .gallery-visual .after {
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .gallery-visual:hover .before {
+      opacity: 0;
+    }
+
+    .gallery-visual:hover .after {
+      opacity: 1;
+    }
+
+    /* Before states — CSS illustrations */
+    .before-1 {
+      background: #D9D2C5;
+      position: relative;
+    }
+
+    .before-1 .wall {
+      position: absolute;
+      inset: 0;
+      background: #C4B9A8;
+    }
+
+    .before-1 .window {
+      position: absolute;
+      top: 20%;
+      left: 15%;
+      width: 30%;
+      height: 35%;
+      background: #B8AFA0;
+      border: 4px solid #A89B8A;
+    }
+
+    .before-1 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #B8AFA0;
+    }
+
+    .before-1 .crack {
+      position: absolute;
+      top: 40%;
+      left: 60%;
+      width: 2px;
+      height: 30%;
+      background: #A89B8A;
+      transform: rotate(15deg);
+    }
+
+    .before-2 {
+      background: #D9D2C5;
+      position: relative;
+    }
+
+    .before-2 .wall {
+      position: absolute;
+      inset: 0;
+      background: #C4B9A8;
+    }
+
+    .before-2 .cabinet {
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      width: 40%;
+      height: 30%;
+      background: #A89B8A;
+      border-radius: 4px;
+    }
+
+    .before-2 .counter {
+      position: absolute;
+      bottom: 50%;
+      left: 10%;
+      width: 40%;
+      height: 4px;
+      background: #8A7F70;
+    }
+
+    .before-2 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #B8AFA0;
+    }
+
+    .before-3 {
+      background: #D9D2C5;
+      position: relative;
+    }
+
+    .before-3 .wall {
+      position: absolute;
+      inset: 0;
+      background: #C4B9A8;
+    }
+
+    .before-3 .bed {
+      position: absolute;
+      bottom: 20%;
+      left: 20%;
+      width: 50%;
+      height: 25%;
+      background: #A89B8A;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .before-3 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #B8AFA0;
+    }
+
+    /* After states — CSS illustrations */
+    .after-1 {
+      background: #F7F4EF;
+      position: relative;
+    }
+
+    .after-1 .wall {
+      position: absolute;
+      inset: 0;
+      background: #F7F4EF;
+    }
+
+    .after-1 .window {
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      width: 30%;
+      height: 40%;
+      background: #E8E2D9;
+      border: 6px solid #D9D2C5;
+      box-shadow: inset 0 0 0 2px #F7F4EF;
+    }
+
+    .after-1 .window::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #D9D2C5;
+      transform: translateY(-50%);
+    }
+
+    .after-1 .window::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 3px;
+      height: 100%;
+      background: #D9D2C5;
+      transform: translateX(-50%);
+    }
+
+    .after-1 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #D9D2C5;
+    }
+
+    .after-1 .rug {
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      width: 40%;
+      height: 8%;
+      background: #D9A68B;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    .after-1 .plant {
+      position: absolute;
+      bottom: 20%;
+      right: 15%;
+      width: 40px;
+      height: 70px;
+    }
+
+    .after-1 .plant .pot {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 20px;
+      background: #B86B4A;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .after-1 .plant .leaf {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 40px;
+      background: #7A8B7A;
+      border-radius: 3px;
+    }
+
+    .after-1 .plant .leaf::before,
+    .after-1 .plant .leaf::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 8px;
+      background: #7A8B7A;
+      border-radius: 50%;
+    }
+
+    .after-1 .plant .leaf::before {
+      top: 8px;
+      left: -12px;
+      transform: rotate(-30deg);
+    }
+
+    .after-1 .plant .leaf::after {
+      top: 18px;
+      right: -12px;
+      transform: rotate(30deg);
+    }
+
+    .after-2 {
+      background: #F7F4EF;
+      position: relative;
+    }
+
+    .after-2 .wall {
+      position: absolute;
+      inset: 0;
+      background: #F7F4EF;
+    }
+
+    .after-2 .cabinet {
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      width: 40%;
+      height: 30%;
+      background: #D9D2C5;
+      border-radius: 4px;
+    }
+
+    .after-2 .counter {
+      position: absolute;
+      bottom: 50%;
+      left: 10%;
+      width: 40%;
+      height: 4px;
+      background: #B86B4A;
+    }
+
+    .after-2 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #D9D2C5;
+    }
+
+    .after-2 .backsplash {
+      position: absolute;
+      bottom: 50%;
+      left: 10%;
+      width: 40%;
+      height: 15%;
+      background: #E8E2D9;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .after-3 {
+      background: #F7F4EF;
+      position: relative;
+    }
+
+    .after-3 .wall {
+      position: absolute;
+      inset: 0;
+      background: #F7F4EF;
+    }
+
+    .after-3 .bed {
+      position: absolute;
+      bottom: 20%;
+      left: 20%;
+      width: 50%;
+      height: 25%;
+      background: #D9D2C5;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .after-3 .pillow {
+      position: absolute;
+      bottom: 45%;
+      left: 25%;
+      width: 15%;
+      height: 8%;
+      background: #F7F4EF;
+      border-radius: 4px;
+    }
+
+    .after-3 .floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background: #D9D2C5;
+    }
+
+    .after-3 .rug {
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      width: 40%;
+      height: 8%;
+      background: #D9A68B;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    .gallery-label {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-label h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .gallery-label span {
+      font-size: 0.8rem;
+      color: var(--clay);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--paper);
+      border-radius: var(--radius-card);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #F0EBE3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      color: #5F5A54;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ---------- PROCESS TIMELINE ---------- */
+    .process-section {
+      background: var(--charcoal);
+      color: var(--paper);
+      border-radius: 48px;
+      margin: 0 2rem;
+      padding: 6rem 0;
+    }
+
+    .process-section .eyebrow {
+      color: var(--clay-light);
+    }
+
+    .process-section h2 {
+      color: var(--paper);
+    }
+
+    .process-section .section-header p {
+      color: #B8AFA0;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      width: 80%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .timeline-step {
+      position: relative;
+      text-align: center;
+    }
+
+    .timeline-step .number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--clay);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+      border: 4px solid var(--charcoal);
+    }
+
+    .timeline-step h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--paper);
+    }
+
+    .timeline-step p {
+      font-size: 0.9rem;
+      color: #B8AFA0;
+      line-height: 1.6;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+
+    /* ---------- MATERIALS ---------- */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .material-card {
+      background: var(--paper);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .material-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .material-swatch {
+      height: 160px;
+      position: relative;
+    }
+
+    .swatch-1 {
+      background: linear-gradient(135deg, #B86B4A 0%, #D9A68B 100%);
+    }
+
+    .swatch-2 {
+      background: linear-gradient(135deg, #7A8B7A 0%, #A8B8A8 100%);
+    }
+
+    .swatch-3 {
+      background: linear-gradient(135deg, #C9A87C 0%, #E8D5B8 100%);
+    }
+
+    .swatch-4 {
+      background: linear-gradient(135deg, #2C2A28 0%, #5F5A54 100%);
+    }
+
+    .material-info {
+      padding: 1.25rem;
+    }
+
+    .material-info h4 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .material-info p {
+      font-size: 0.8rem;
+      color: #5F5A54;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta-section {
+      padding: 6rem 0;
+    }
+
+    .cta-card {
+      background: linear-gradient(145deg, #B86B4A 0%, #A85A3A 100%);
+      border-radius: 48px;
+      padding: 5rem 4rem;
+      text-align: center;
+      color: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+
+    .cta-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+    }
+
+    .cta-card h2 {
+      color: var(--paper);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card .btn {
+      background: var(--paper);
+      color: var(--ink);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card .btn:hover {
+      background: var(--charcoal);
+      color: var(--paper);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .site-footer p {
+      font-size: 0.85rem;
+      color: #5F5A54;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #5F5A54;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--clay);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-visual {
+        height: 400px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .timeline {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+      }
+
+      .timeline::before {
+        display: none;
+      }
+
+      .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .site-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 2rem 0 3rem;
+      }
+
+      .hero-visual {
+        height: 300px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .materials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-section {
+        margin: 0 1rem;
+        border-radius: 32px;
+        padding: 4rem 0;
+      }
+
+      .cta-card {
+        padding: 3rem 1.5rem;
+        border-radius: 32px;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="container">
+    <div class="site-header">
+      <a href="#" class="logo">HOME <span>/</span> RENOVATION</a>
+      <nav class="nav-links">
+        <a href="#gallery">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#materials">Materials</a>
+        <a href="#consultation" class="btn">Book a consult</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero container">
+    <div class="hero-content">
+      <span class="eyebrow">Crafted transformations</span>
+      <h1>We shape spaces that feel like home.</h1>
+      <p>From tired rooms to timeless interiors — our renovation studio blends architectural precision with warm, livable design.</p>
+      <div class="hero-actions">
+        <a href="#gallery" class="btn">View our work</a>
+        <a href="#consultation" class="btn btn-outline">Start a project</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-illustration">
+        <div class="wall"></div>
+        <div class="window"></div>
+        <div class="beam"></div>
+        <div class="floor"></div>
+        <div class="rug"></div>
+        <div class="plant">
+          <div class="pot"></div>
+          <div class="leaf"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER GALLERY -->
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Before & after</span>
+        <h2>See the difference</h2>
+        <p>Hover over each project to reveal the transformation. Every detail is considered — from the first sketch to the final finish.</p>
+      </div>
+      <div class="gallery-grid">
+        <!-- Card 1 -->
+        <div class="gallery-card">
+          <div class="gallery-visual">
+            <div class="before before-1">
+              <div class="wall"></div>
+              <div class="window"></div>
+              <div class="floor"></div>
+              <div class="crack"></div>
+            </div>
+            <div class="after after-1">
+              <div class="wall"></div>
+              <div class="window"></div>
+              <div class="floor"></div>
+              <div class="rug"></div>
+              <div class="plant">
+                <div class="pot"></div>
+                <div class="leaf"></div>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-label">
+            <h4>Living room · Portland</h4>
+            <span>Before / After</span>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="gallery-card">
+          <div class="gallery-visual">
+            <div class="before before-2">
+              <div class="wall"></div>
+              <div class="cabinet"></div>
+              <div class="counter"></div>
+              <div class="floor"></div>
+            </div>
+            <div class="after after-2">
+              <div class="wall"></div>
+              <div class="cabinet"></div>
+              <div class="counter"></div>
+              <div class="backsplash"></div>
+              <div class="floor"></div>
+            </div>
+          </div>
+          <div class="gallery-label">
+            <h4>Kitchen · Austin</h4>
+            <span>Before / After</span>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="gallery-card">
+          <div class="gallery-visual">
+            <div class="before before-3">
+              <div class="wall"></div>
+              <div class="bed"></div>
+              <div class="floor"></div>
+            </div>
+            <div class="after after-3">
+              <div class="wall"></div>
+              <div class="bed"></div>
+              <div class="pillow"></div>
+              <div class="floor"></div>
+              <div class="rug"></div>
+            </div>
+          </div>
+          <div class="gallery-label">
+            <h4>Bedroom · Seattle</h4>
+            <span>Before / After</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="container">
+    <div class="section-header">
+      <span class="eyebrow">What we do</span>
+      <h2>Full-service renovation</h2>
+      <p>We handle every phase — design, permits, construction, and styling — so you can focus on the excitement of your new space.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Whole-home remodels</h3>
+        <p>Complete transformations that reimagine flow, light, and function — from structural changes to the final coat of paint.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🍳</div>
+        <h3>Kitchen & bath</h3>
+        <p>High-impact spaces designed for daily life. Custom cabinetry, premium fixtures, and layouts that work beautifully.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📐</div>
+        <h3>Design & planning</h3>
+        <p>Concept boards, 3D renderings, and material selections — all before a single hammer swings. Clarity from day one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS TIMELINE -->
+  <section id="process" class="process-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">How it works</span>
+        <h2>Our process</h2>
+        <p>Four clear phases. No surprises, no guesswork — just steady progress and open communication.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="number">1</div>
+          <h4>Consultation</h4>
+          <p>We listen to your vision, assess the space, and define the scope together.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="number">2</div>
+          <h4>Design</h4>
+          <p>Detailed plans, 3D visuals, and material samples bring the concept to life.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="number">3</div>
+          <h4>Build</h4>
+          <p>Our trusted craftspeople execute with precision, keeping you updated weekly.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="number">4</div>
+          <h4>Reveal</h4>
+          <p>Final styling, walkthrough, and a home that feels entirely new — yet entirely yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section id="materials" class="container">
+    <div class="section-header">
+      <span class="eyebrow">Material library</span>
+      <h2>Curated finishes</h2>
+      <p>We source honest, durable materials that age gracefully — from reclaimed timber to hand-glazed tile.</p>
+    </div>
+    <div class="materials-grid">
+      <div class="material-card">
+        <div class="material-swatch swatch-1"></div>
+        <div class="material-info">
+          <h4>Terracotta clay</h4>
+          <p>Handmade tiles with warm, earthy tones.</p>
+        </div>
+      </div>
+      <div class="material-card">
+        <div class="material-swatch swatch-2"></div>
+        <div class="material-info">
+          <h4>Sage stone</h4>
+          <p>Natural quartzite with soft green veining.</p>
+        </div>
+      </div>
+      <div class="material-card">
+        <div class="material-swatch swatch-3"></div>
+        <div class="material-info">
+          <h4>White oak</h4>
+          <p>FSC-certified timber, brushed and oiled.</p>
+        </div>
+      </div>
+      <div class="material-card">
+        <div class="material-swatch swatch-4"></div>
+        <div class="material-info">
+          <h4>Charcoal slate</h4>
+          <p>Matte, durable, and beautifully textured.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="consultation" class="cta-section container">
+    <div class="cta-card">
+      <h2>Ready to transform your home?</h2>
+      <p>Book a free 30-minute consultation. We'll discuss your space, your budget, and the possibilities.</p>
+      <a href="#" class="btn">Book your consultation</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <div class="site-footer">
+      <p>© 2025 HOME / RENOVATION. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

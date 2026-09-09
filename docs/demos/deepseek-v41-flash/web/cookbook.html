@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIGITAL / COOKBOOK — A modern kitchen companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --paper:#f4efe6;
+    --paper-2:#ebe4d6;
+    --tomato:#e94b2c;
+    --tomato-deep:#c53a1f;
+    --olive:#5b6b3a;
+    --mustard:#e8b53a;
+    --plum:#3d1f2e;
+    --line:#1a1a1a;
+    --muted:#6b6357;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(233,75,44,.06), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(91,107,58,.07), transparent 45%);
+    min-height:100vh;
+  }
+  .wrap{max-width:1440px;margin:0 auto;padding:0 48px}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,239,230,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(26,26,26,.12);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-weight:900;letter-spacing:-.02em;font-size:20px}
+  .brand .mark{
+    width:34px;height:34px;border-radius:50%;
+    background:conic-gradient(from 210deg, var(--tomato), var(--mustard), var(--olive), var(--plum), var(--tomato));
+    position:relative;flex:none;
+  }
+  .brand .mark::after{
+    content:"";position:absolute;inset:6px;border-radius:50%;background:var(--paper);
+  }
+  .brand .mark::before{
+    content:"";position:absolute;inset:12px;border-radius:50%;background:var(--ink);z-index:2;
+  }
+  .brand span.slash{color:var(--tomato);font-weight:500;font-style:italic}
+  nav ul{display:flex;gap:34px;list-style:none;font-size:13.5px;font-weight:500;letter-spacing:.02em}
+  nav a{color:var(--ink);text-decoration:none;position:relative;padding:6px 0}
+  nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--tomato);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  nav a:hover::after{transform:scaleX(1)}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:var(--paper);
+    padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;
+    text-decoration:none;transition:transform .2s ease, background .2s ease;
+  }
+  .nav-cta:hover{background:var(--tomato);transform:translateY(-1px)}
+  .nav-cta svg{width:14px;height:14px}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:56px 0 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--tomato-deep);margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:28px;height:1.5px;background:var(--tomato-deep)}
+  h1{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:clamp(48px, 6.4vw, 92px);
+    line-height:.94;letter-spacing:-.035em;
+    margin-bottom:26px;
+  }
+  h1 em{font-style:italic;font-weight:400;color:var(--tomato);font-family:'Fraunces',serif}
+  h1 .slash{color:var(--olive);font-weight:300}
+  .lede{font-size:17px;line-height:1.6;color:var(--muted);max-width:520px;margin-bottom:34px}
+  .hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 26px;border-radius:999px;font-size:14px;font-weight:600;
+    text-decoration:none;border:1.5px solid var(--ink);cursor:pointer;
+    transition:all .25s ease;font-family:inherit;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{background:var(--tomato);border-color:var(--tomato);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn svg{width:16px;height:16px}
+
+  .hero-stats{display:flex;gap:36px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(26,26,26,.15)}
+  .stat .num{font-family:'Fraunces',serif;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .stat .lbl{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  /* Hero visual — CSS/SVG plate */
+  .hero-visual{position:relative;aspect-ratio:1/1;max-width:520px;justify-self:end;width:100%}
+  .plate{
+    position:absolute;inset:0;border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, #fff8ec 0%, #f0e6d2 55%, #d9cbb0 100%);
+    box-shadow:
+      0 30px 60px -20px rgba(61,31,46,.35),
+      inset 0 0 0 1px rgba(26,26,26,.08),
+      inset 0 -20px 40px rgba(61,31,46,.08);
+  }
+  .plate::before{
+    content:"";position:absolute;inset:8%;border-radius:50%;
+    border:1px dashed rgba(26,26,26,.18);
+  }
+  .plate::after{
+    content:"";position:absolute;inset:22%;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #f7d9a8, #e8b53a 60%, #c98a1e 100%);
+    box-shadow:inset 0 -10px 20px rgba(120,60,10,.25);
+  }
+  .plate .garnish{position:absolute;inset:0;pointer-events:none}
+  .plate .garnish svg{width:100%;height:100%}
+  .badge{
+    position:absolute;background:var(--paper);border:1.5px solid var(--ink);
+    border-radius:999px;padding:10px 16px;font-size:12px;font-weight:600;
+    display:flex;align-items:center;gap:8px;box-shadow:4px 4px 0 var(--ink);
+  }
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--tomato)}
+  .badge.b1{top:6%;left:-4%;transform:rotate(-4deg)}
+  .badge.b2{bottom:10%;right:-6%;transform:rotate(3deg);background:var(--mustard)}
+  .badge.b3{bottom:-2%;left:14%;transform:rotate(-2deg);background:var(--olive);color:var(--paper);border-color:var(--olive);box-shadow:4px 4px 0 var(--plum)}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+    background:var(--ink);color:var(--paper);overflow:hidden;padding:14px 0;
+    margin:20px 0 0;
+  }
+  .marquee-track{display:flex;gap:48px;white-space:nowrap;animation:scroll 32s linear infinite;font-family:'Fraunces',serif;font-style:italic;font-size:20px;font-weight:400}
+  .marquee-track span{display:inline-flex;align-items:center;gap:48px}
+  .marquee-track span::after{content:"✦";color:var(--mustard);font-style:normal}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:88px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:44px;flex-wrap:wrap}
+  .sec-head h2{
+    font-family:'Fraunces',serif;font-weight:700;font-size:clamp(34px,4vw,52px);
+    letter-spacing:-.03em;line-height:1;max-width:640px;
+  }
+  .sec-head h2 em{font-style:italic;font-weight:400;color:var(--tomato)}
+  .sec-head p{color:var(--muted);font-size:15px;max-width:380px;line-height:1.6}
+  .sec-num{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--tomato);letter-spacing:.1em;margin-bottom:14px;display:block}
+
+  /* ---------- FEATURED RECIPE ---------- */
+  .featured{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1.5px solid var(--ink);border-radius:24px;overflow:hidden;
+    background:var(--paper-2);
+  }
+  .feat-visual{
+    position:relative;min-height:520px;
+    background:
+      radial-gradient(circle at 30% 20%, #f7d9a8, transparent 55%),
+      radial-gradient(circle at 70% 80%, #e94b2c, transparent 50%),
+      linear-gradient(135deg, #3d1f2e, #5b6b3a);
+    overflow:hidden;
+  }
+  .feat-visual svg{position:absolute;inset:0;width:100%;height:100%}
+  .feat-visual .tag{
+    position:absolute;top:24px;left:24px;background:var(--paper);color:var(--ink);
+    padding:8px 14px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    border:1.5px solid var(--ink);
+  }
+  .feat-visual .time{
+    position:absolute;bottom:24px;left:24px;color:var(--paper);
+    font-family:'Fraunces',serif;font-style:italic;font-size:15px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .feat-visual .time::before{content:"";width:24px;height:1.5px;background:var(--paper)}
+  .feat-body{padding:52px 48px;display:flex;flex-direction:column;justify-content:center}
+  .feat-body .kicker{font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--tomato-deep);font-weight:600;margin-bottom:18px}
+  .feat-body h3{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(30px,3.4vw,44px);line-height:1.02;letter-spacing:-.025em;margin-bottom:20px}
+  .feat-body h3 em{font-style:italic;font-weight:400;color:var(--olive)}
+  .feat-body p{color:var(--muted);font-size:15.5px;line-height:1.65;margin-bottom:28px}
+  .feat-meta{display:flex;gap:28px;padding:22px 0;border-top:1px solid rgba(26,26,26,.15);border-bottom:1px solid rgba(26,26,26,.15);margin-bottom:28px}
+  .feat-meta div .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .feat-meta div .v{font-family:'Fraunces',serif;font-size:18px;font-weight:500}
+  .feat-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+  /* ---------- COLLECTIONS ---------- */
+  .collections{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .coll{
+    position:relative;border-radius:20px;overflow:hidden;min-height:340px;
+    padding:28px;display:flex;flex-direction:column;justify-content:space-between;
+    color:var(--paper);cursor:pointer;transition:transform .35s ease;
+    border:1.5px solid var(--ink);
+  }
+  .coll:hover{transform:translateY(-6px)}
+  .coll::before{content:"";position:absolute;inset:0;z-index:0;transition:transform .6s ease}
+  .coll:hover::before{transform:scale(1.06)}
+  .coll > *{position:relative;z-index:1}
+  .coll.c1::before{background:radial-gradient(circle at 30% 20%, #f7d9a8, transparent 50%), linear-gradient(160deg, #e94b2c, #c53a1f 60%, #3d1f2e)}
+  .coll.c2::before{background:radial-gradient(circle at 70% 30%, #e8b53a, transparent 55%), linear-gradient(160deg, #5b6b3a, #2f3a1c)}
+  .coll.c3::before{background:radial-gradient(circle at 40% 70%, #e94b2c, transparent 50%), linear-gradient(160deg, #3d1f2e, #1a1a1a)}
+  .coll .num{font-family:'Fraunces',serif;font-style:italic;font-size:14px;opacity:.85}
+  .coll h4{font-family:'Fraunces',serif;font-weight:700;font-size:30px;line-height:1.02;letter-spacing:-.02em;margin-bottom:10px}
+  .coll h4 em{font-style:italic;font-weight:400}
+  .coll .desc{font-size:13.5px;line-height:1.55;opacity:.85;max-width:280px}
+  .coll .arrow{
+    width:44px;height:44px;border-radius:50%;background:var(--paper);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;margin-top:20px;
+    transition:transform .3s ease;
+  }
+  .coll:hover .arrow{transform:rotate(-45deg)}
+  .coll .arrow svg{width:18px;height:18px}
+
+  /* ---------- INGREDIENT SEARCH ---------- */
+  .search-band{
+    background:var(--ink);color:var(--paper);border-radius:24px;padding:56px 48px;
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .search-band::before{
+    content:"";position:absolute;top:-40%;right:-10%;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(233,75,44,.35), transparent 65%);
+  }
+  .search-band::after{
+    content:"";position:absolute;bottom:-30%;left:-5%;width:400px;height:400px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,181,58,.25), transparent 65%);
+  }
+  .search-band > *{position:relative;z-index:1}
+  .search-band h2{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(32px,3.6vw,46px);line-height:1.02;letter-spacing:-.03em;margin-bottom:16px}
+  .search-band h2 em{font-style:italic;font-weight:400;color:var(--mustard)}
+  .search-band p{color:rgba(244,239,230,.7);font-size:15px;line-height:1.6;max-width:420px}
+  .search-box{position:relative}
+  .search-box input{
+    width:100%;padding:22px 60px 22px 24px;border-radius:16px;border:1.5px solid rgba(244,239,230,.25);
+    background:rgba(244,239,230,.06);color:var(--paper);font-size:16px;font-family:inherit;
+    outline:none;transition:border-color .2s ease, background .2s ease;
+  }
+  .search-box input::placeholder{color:rgba(244,239,230,.45)}
+  .search-box input:focus{border-color:var(--mustard);background:rgba(244,239,230,.1)}
+  .search-box button{
+    position:absolute;right:8px;top:8px;bottom:8px;width:48px;border-radius:12px;
+    background:var(--tomato);border:none;color:var(--paper);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:background .2s ease;
+  }
+  .search-box button:hover{background:var(--mustard);color:var(--ink)}
+  .search-box button svg{width:20px;height:20px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{
+    padding:8px 14px;border-radius:999px;border:1px solid rgba(244,239,230,.25);
+    font-size:12.5px;color:rgba(244,239,230,.85);cursor:pointer;transition:all .2s ease;
+    background:transparent;font-family:inherit;
+  }
+  .chip:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+
+  /* ---------- RECIPE CARDS ---------- */
+  .recipes{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .card{
+    background:var(--paper-2);border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .3s ease, box-shadow .3s ease;
+    cursor:pointer;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:8px 8px 0 var(--ink)}
+  .card .thumb{aspect-ratio:4/3;position:relative;overflow:hidden}
+  .card .thumb svg{width:100%;height:100%;display:block}
+  .card .thumb .pill{
+    position:absolute;top:12px;left:12px;background:var(--paper);color:var(--ink);
+    padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid var(--ink);
+  }
+  .card .body{padding:20px;display:flex;flex-direction:column;flex:1}
+  .card h4{font-family:'Fraunces',serif;font-weight:700;font-size:20px;line-height:1.15;letter-spacing:-.015em;margin-bottom:8px}
+  .card .desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px;flex:1}
+  .card .foot{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(26,26,26,.12);font-size:12px;color:var(--muted)}
+  .card .foot .diff{display:flex;gap:3px}
+  .card .foot .diff i{width:6px;height:6px;border-radius:50%;background:rgba(26,26,26,.2);display:block}
+  .card .foot .diff i.on{background:var(--tomato)}
+
+  /* ---------- SHOPPING LIST + AUTHOR ---------- */
+  .split{display:grid;grid-template-columns:1.1fr .9fr;gap:32px}
+  .shop{
+    background:var(--paper-2);border:1.5px solid var(--ink);border-radius:24px;padding:44px;
+    position:relative;overflow:hidden;
+  }
+  .shop::before{
+    content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,181,58,.4), transparent 70%);
+  }
+  .shop > *{position:relative;z-index:1}
+  .shop h3{font-family:'Fraunces',serif;font-weight:700;font-size:32px;letter-spacing:-.025em;line-height:1.05;margin-bottom:8px}
+  .shop h3 em{font-style:italic;font-weight:400;color:var(--tomato)}
+  .shop .sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .shop-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .shop-list li{
+    display:flex;align-items:center;gap:14px;padding:14px 4px;
+    border-bottom:1px dashed rgba(26,26,26,.18);font-size:15px;
+    cursor:pointer;transition:padding .2s ease;
+  }
+  .shop-list li:hover{padding-left:10px}
+  .shop-list li:last-child{border-bottom:none}
+  .shop-list .box{
+    width:20px;height:20px;border:1.5px solid var(--ink);border-radius:5px;flex:none;
+    display:flex;align-items:center;justify-content:center;transition:all .2s ease;
+  }
+  .shop-list li.done .box{background:var(--tomato);border-color:var(--tomato)}
+  .shop-list li.done .box svg{opacity:1}
+  .shop-list .box svg{width:12px;height:12px;color:var(--paper);opacity:0;transition:opacity .2s ease}
+  .shop-list li.done .name{text-decoration:line-through;color:var(--muted)}
+  .shop-list .name{flex:1}
+  .shop-list .qty{font-family:'Fraunces',serif;font-style:italic;color:var(--muted);font-size:14px}
+  .shop-foot{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1.5px solid var(--ink)}
+  .shop-foot .count{font-family:'Fraunces',serif;font-size:15px}
+  .shop-foot .count b{color:var(--tomato)}
+
+  .author{
+    background:var(--plum);color:var(--paper);border-radius:24px;padding:44px;
+    display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;
+  }
+  .author::before{
+    content:"";position:absolute;bottom:-80px;right:-80px;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle, rgba(233,75,44,.4), transparent 70%);
+  }
+  .author > *{position:relative;z-index:1}
+  .author .quote{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:24px;line-height:1.35;letter-spacing:-.01em;margin-bottom:32px}
+  .author .quote::before{content:"“";font-size:60px;line-height:0;vertical-align:-20px;color:var(--mustard);margin-right:6px}
+  .author .who{display:flex;align-items:center;gap:16px}
+  .author .avatar{
+    width:56px;height:56px;border-radius:50%;flex:none;
+    background:conic-gradient(from 45deg, var(--mustard), var(--tomato), var(--olive), var(--mustard));
+    position:relative;
+  }
+  .author .avatar::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--plum)}
+  .author .avatar::before{
+    content:"";position:absolute;inset:14px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #f7d9a8, #c98a1e);
+    z-index:2;
+  }
+  .author .who .name{font-family:'Fraunces',serif;font-weight:700;font-size:17px}
+  .author .who .role{font-size:12.5px;color:rgba(244,239,230,.65);margin-top:2px}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1.5px solid var(--ink);padding:56px 0 40px;margin-top:40px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+  .foot-brand .brand{margin-bottom:16px}
+  .foot-brand p{color:var(--muted);font-size:14px;line-height:1.6;max-width:300px}
+  .foot-col h5{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;font-weight:600}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .foot-col a{color:var(--ink);text-decoration:none;font-size:14px;transition:color .2s ease}
+  .foot-col a:hover{color:var(--tomato)}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(26,26,26,.15);font-size:12.5px;color:var(--muted);flex-wrap:wrap;gap:16px}
+  .foot-bottom .socials{display:flex;gap:10px}
+  .foot-bottom .socials a{
+    width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;color:var(--ink);
+    transition:all .2s ease;
+  }
+  .foot-bottom .socials a:hover{background:var(--ink);color:var(--paper)}
+  .foot-bottom .socials svg{width:15px;height:15px}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1100px){
+    .hero{grid-template-columns:1fr;gap:40px}
+    .hero-visual{justify-self:center;max-width:420px}
+    .featured{grid-template-columns:1fr}
+    .feat-visual{min-height:340px}
+    .collections{grid-template-columns:1fr 1fr}
+    .recipes{grid-template-columns:1fr 1fr}
+    .search-band{grid-template-columns:1fr;gap:32px}
+    .split{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:720px){
+    .wrap{padding:0 22px}
+    nav ul{display:none}
+    .hero{padding:36px 0 24px}
+    .hero-stats{gap:22px;flex-wrap:wrap}
+    .collections{grid-template-columns:1fr}
+    .recipes{grid-template-columns:1fr}
+    .feat-body{padding:32px 26px}
+    .search-band{padding:36px 26px}
+    .shop,.author{padding:30px 24px}
+    .foot-grid{grid-template-columns:1fr}
+    section{padding:60px 0}
+    .badge.b1{left:0}
+    .badge.b2{right:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <span class="mark"></span>
+      DIGITAL <span class="slash">/</span> COOKBOOK
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#featured">Featured</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#recipes">Recipes</a></li>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#list">Shopping</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="nav-cta">
+      Get the app
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero wrap" style="padding-top:56px">
+    <div>
+      <span class="eyebrow">Issue 04 · Autumn Kitchen</span>
+      <h1>Cook with <em>intention</em>,<br>eat with <span class="slash">/</span> joy.</h1>
+      <p class="lede">A living digital cookbook — 240 tested recipes, seasonal collections, and a smart shopping list that syncs to your kitchen. No ads, no fluff, just food that works.</p>
+      <div class="hero-actions">
+        <a href="#featured" class="btn btn-primary">
+          Start cooking
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#collections" class="btn btn-ghost">Browse collections</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">240</div><div class="lbl">Tested recipes</div></div>
+        <div class="stat"><div class="num">12</div><div class="lbl">Seasonal collections</div></div>
+        <div class="stat"><div class="num">4.9</div><div class="lbl">Reader rating</div></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="plate">
+        <div class="garnish">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+            <!-- herbs -->
+            <g fill="#5b6b3a" opacity=".9">
+              <ellipse cx="200" cy="120" rx="14" ry="6" transform="rotate(-30 200 120)"/>
+              <ellipse cx="230" cy="140" rx="14" ry="6" transform="rotate(20 230 140)"/>
+              <ellipse cx="170" cy="150" rx="14" ry="6" transform="rotate(-60 170 150)"/>
+              <ellipse cx="215" cy="270" rx="14" ry="6" transform="rotate(40 215 270)"/>
+              <ellipse cx="180" cy="260" rx="14" ry="6" transform="rotate(-20 180 260)"/>
+            </g>
+            <!-- tomato slices -->
+            <g>
+              <circle cx="150" cy="200" r="22" fill="#e94b2c"/>
+              <circle cx="150" cy="200" r="16" fill="#c53a1f"/>
+              <circle cx="150" cy="200" r="6" fill="#f7d9a8"/>
+              <circle cx="250" cy="220" r="18" fill="#e94b2c"/>
+              <circle cx="250" cy="220" r="12" fill="#c53a1f"/>
+              <circle cx="250" cy="220" r="4" fill="#f7d9a8"/>
+            </g>
+            <!-- seeds -->
+            <g fill="#3d1f2e" opacity=".7">
+              <circle cx="200" cy="180" r="2.5"/>
+              <circle cx="215" cy="195" r="2"/>
+              <circle cx="185" cy="210" r="2.5"/>
+              <circle cx="205" cy="230" r="2"/>
+              <circle cx="195" cy="245" r="2.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="badge b1"><span class="dot"></span> 25 min · One pan</div>
+      <div class="badge b2">★ Editor's pick</div>
+      <div class="badge b3">Seasonal · Autumn</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Slow-roasted tomatoes</span>
+      <span>Brown butter everything</span>
+      <span>Weeknight pasta</span>
+      <span>Sunday braises</span>
+      <span>Citrus season</span>
+      <span>Slow-roasted tomatoes</span>
+      <span>Brown butter everything</span>
+      <span>Weeknight pasta</span>
+      <span>Sunday braises</span>
+      <span>Citrus season</span>
+    </div>
+  </div>
+
+  <!-- FEATURED RECIPE -->
+  <section id="featured" class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">— 01 / Featured this week</span>
+        <h2>The recipe we can't <em>stop</em> making.</h2>
+      </div>
+      <p>Every Thursday we cook one dish on repeat. This week: a deeply savory braise that tastes like a Sunday, but comes together on a Tuesday.</p>
+    </div>
+
+    <div class="featured">
+      <div class="feat-visual">
+        <span class="tag">Main · Serves 4</span>
+        <svg viewBox="0 0 600 520" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="pot" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#f7d9a8"/>
+              <stop offset="60%" stop-color="#c98a1e"/>
+              <stop offset="100%" stop-color="#7a4a10"/>
+            </radialGradient>
+          </defs>
+          <!-- pot -->
+          <ellipse cx="300" cy="380" rx="220" ry="60" fill="#1a1a1a" opacity=".35"/>
+          <path d="M120 260 Q120 400 300 400 Q480 400 480 260 L480 240 Q480 220 460 220 L140 220 Q120 220 120 240 Z" fill="#2a2a2a"/>
+          <ellipse cx="300" cy="220" rx="180" ry="34" fill="#3a3a3a"/>
+          <ellipse cx="300" cy="220" rx="160" ry="26" fill="url(#pot)"/>
+          <!-- steam -->
+          <g stroke="#f4efe6" stroke-width="3" fill="none" opacity=".5" stroke-linecap="round">
+            <path d="M240 180 q-10 -30 5 -55 q15 -25 0 -50"/>
+            <path d="M300 170 q-10 -35 5 -60 q15 -25 0 -55"/>
+            <path d="M360 180 q-10 -30 5 -55 q15 -25 0 -50"/>
+          </g>
+          <!-- herbs on top -->
+          <g fill="#5b6b3a">
+            <ellipse cx="260" cy="215" rx="16" ry="6" transform="rotate(-20 260 215)"/>
+            <ellipse cx="330" cy="220" rx="16" ry="6" transform="rotate(15 330 220)"/>
+            <ellipse cx="300" cy="210" rx="14" ry="5" transform="rotate(-40 300 210)"/>
+          </g>
+          <!-- tomato chunks -->
+          <g fill="#e94b2c">
+            <circle cx="280" cy="225" r="8"/>
+            <circle cx="320" cy="218" r="7"/>
+            <circle cx="350" cy="228" r="6"/>
+            <circle cx="250" cy="228" r="6"/>
+          </g>
+        </svg>
+        <div class="time">45 min active · 2 hr total</div>
+      </div>
+
+      <div class="feat-body">
+        <span class="kicker">Recipe No. 187</span>
+        <h3>Slow-braised short ribs with <em>star anise</em> &amp; orange.</h3>
+        <p>Deeply caramelized, fall-off-the-bone tender, and finished with a bright citrus gremolata that cuts through the richness. The kind of dish that makes a Tuesday feel like a celebration.</p>
+
+        <div class="feat-meta">
+          <div><div class="k">Prep</div><div class="v">20 min</div></div>
+          <div><div class="k">Cook</div><div class="v">2 hr 15</div></div>
+          <div><div class="k">Serves</div><div class="v">4–6</div></div>
+          <div><div class="k">Level</div><div class="v">Easy</div></div>
+        </div>
+
+        <div class="feat-actions">
+          <a href="#" class="btn btn-primary">
+            View recipe
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#list" class="btn btn-ghost">Add to list</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS -->
+  <section id="collections" class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">— 02 / Seasonal collections</span>
+        <h2>Cook with the <em>calendar</em>, not the algorithm.</h2>
+      </div>
+      <p>Three curated collections, updated every season. Each one is built around what's actually good at the market right now.</p>
+    </div>
+
+    <div class="collections">
+      <article class="coll c1">
+        <div>
+          <div class="num">Collection 01</div>
+          <h4>Late <em>summer</em> tomatoes</h4>
+          <p class="desc">18 recipes for the last, best weeks of tomato season — from no-cook sauces to slow-roasted preserves.</p>
+        </div>
+        <div class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="coll c2">
+        <div>
+          <div class="num">Collection 02</div>
+          <h4>Autumn <em>roots</em> &amp; grains</h4>
+          <p class="desc">22 warming recipes built on squash, parsnips, farro and rye — the kind of food that makes a cold night feel generous.</p>
+        </div>
+        <div class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="coll c3">
+        <div>
+          <div class="num">Collection 03</div>
+          <h4>Winter <em>citrus</em> &amp; spice</h4>
+          <p class="desc">16 recipes that lean on blood orange, meyer lemon, and warm spice — bright enough to cut through the darkest months.</p>
+        </div>
+        <div class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- INGREDIENT SEARCH -->
+  <section id="search" class="wrap">
+    <div class="search-band">
+      <div>
+        <span class="sec-num" style="color:var(--mustard)">— 03 / Ingredient search</span>
+        <h2>What's in your <em>fridge</em> right now?</h2>
+        <p>Type an ingredient and we'll show you every recipe that uses it — ranked by how few extra things you'll need to buy.</p>
+      </div>
+      <div>
+        <div class="search-box">
+          <input type="text" placeholder="Try 'miso', 'leeks', 'chickpeas'…" aria-label="Search by ingredient">
+          <button aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </button>
+        </div>
+        <div class="chips">
+          <button class="chip">Miso</button>
+          <button class="chip">Leeks</button>
+          <button class="chip">Chickpeas</button>
+          <button class="chip">Fennel</button>
+          <button class="chip">Brown butter</button>
+          <button class="chip">Preserved lemon</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECIPE CARDS -->
+  <section id="recipes" class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">— 04 / From the archive</span>
+        <h2>Recipes worth <em>repeating</em>.</h2>
+      </div>
+      <p>Four reader favorites from the last twelve months. Every one has been cooked at least three times in our test kitchen.</p>
+    </div>
+
+    <div class="recipes">
+      <article class="card">
+        <div class="thumb">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="300" fill="#e8b53a"/>
+            <circle cx="200" cy="150" r="90" fill="#f7d9a8"/>
+            <circle cx="200" cy="150" r="70" fill="#c98a1e"/>
+            <g fill="#3d1f2e">
+              <circle cx="180" cy="140" r="4"/>
+              <circle cx="220" cy="160" r="4"/>
+              <circle cx="200" cy="180" r="4"/>
+              <circle cx="210" cy="130" r="4"/>
+            </g>
+            <g fill="#5b6b3a">
+              <ellipse cx="170" cy="170" rx="14" ry="5" transform="rotate(-30 170 170)"/>
+              <ellipse cx="230" cy="140" rx="14" ry="5" transform="rotate(30 230 140)"/>
+            </g>
+          </svg>
+          <span class="pill">Breakfast</span>
+        </div>
+        <div class="body">
+          <h4>Brown butter congee with crispy shallots</h4>
+          <p class="desc">Silky, savory, and endlessly adaptable. The brown butter is non-negotiable.</p>
+          <div class="foot">
+            <span>35 min</span>
+            <span class="diff"><i class="on"></i><i class="on"></i><i></i></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="300" fill="#5b6b3a"/>
+            <ellipse cx="200" cy="180" rx="140" ry="60" fill="#3d1f2e"/>
+            <ellipse cx="200" cy="170" rx="120" ry="45" fill="#e94b2c"/>
+            <g fill="#f7d9a8">
+              <circle cx="160" cy="160" r="6"/>
+              <circle cx="200" cy="175" r="6"/>
+              <circle cx="240" cy="160" r="6"/>
+              <circle cx="180" cy="185" r="5"/>
+              <circle cx="220" cy="185" r="5"/>
+            </g>
+            <g fill="#5b6b3a">
+              <ellipse cx="150" cy="140" rx="16" ry="6" transform="rotate(-20 150 140)"/>
+              <ellipse cx="250" cy="140" rx="16" ry="6" transform="rotate(20 250 140)"/>
+            </g>
+          </svg>
+          <span class="pill">Dinner</span>
+        </div>
+        <div class="body">
+          <h4>Spicy tomato &amp; chickpea skillet</h4>
+          <p class="desc">One pan, pantry-driven, and on the table in under thirty minutes.</p>
+          <div class="foot">
+            <span>25 min</span>
+            <span class="diff"><i class="on"></i><i></i><i></i></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="300" fill="#3d1f2e"/>
+            <circle cx="200" cy="150" r="100" fill="#e94b2c"/>
+            <circle cx="200" cy="150" r="80" fill="#c53a1f"/>
+            <circle cx="200" cy="150" r="50" fill="#f7d9a8"/>
+            <circle cx="200" cy="150" r="20" fill="#e8b53a"/>
+            <g fill="#5b6b3a">
+              <ellipse cx="140" cy="120" rx="18" ry="6" transform="rotate(-40 140 120)"/>
+              <ellipse cx="260" cy="180" rx="18" ry="6" transform="rotate(40 260 180)"/>
+            </g>
+          </svg>
+          <span class="pill">Dessert</span>
+        </div>
+        <div class="body">
+          <h4>Blood orange &amp; olive oil cake</h4>
+          <p class="desc">Tender, citrusy, and just barely sweet. Better on day two.</p>
+          <div class="foot">
+            <span>1 hr 10</span>
+            <span class="diff"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="300" fill="#e94b2c"/>
+            <ellipse cx="200" cy="200" rx="150" ry="50" fill="#3d1f2e"/>
+            <ellipse cx="200" cy="190" rx="130" ry="40" fill="#f7d9a8"/>
+            <g fill="#5b6b3a">
+              <ellipse cx="160" cy="180" rx="20" ry="7" transform="rotate(-25 160 180)"/>
+              <ellipse cx="240" cy="180" rx="20" ry="7" transform="rotate(25 240 180)"/>
+              <ellipse cx="200" cy="170" rx="18" ry="6" transform="rotate(-10 200 170)"/>
+            </g>
+            <g fill="#c98a1e">
+              <circle cx="180" cy="200" r="5"/>
+              <circle cx="220" cy="200" r="5"/>
+              <circle cx="200" cy="210" r="5"/>
+            </g>
+          </svg>
+          <span class="pill">Side</span>
+        </div>
+        <div class="body">
+          <h4>Charred broccolini with preserved lemon</h4>
+          <p class="desc">The side dish that quietly steals the show at every dinner.</p>
+          <div class="foot">
+            <span>20 min</span>
+            <span class="diff"><i class="on"></i><i></i><i></i></span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SHOPPING LIST + AUTHOR -->
+  <section id="list" class="wrap">
+    <div class="split">
+      <div class="shop">
+        <span class="sec-num">— 05 / Shopping list</span>
+        <h3>Your <em>weeknight</em> list, sorted.</h3>
+        <p class="sub">Auto-generated from the recipes you've saved this week. Tap to check things off.</p>
+
+        <ul class="shop-list">
+          <li class="done">
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Bone-in short ribs</span>
+            <span class="qty">2 kg</span>
+          </li>
+          <li class="done">
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Star anise</span>
+            <span class="qty">4 pods</span>
+          </li>
+          <li>
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Blood oranges</span>
+            <span class="qty">3</span>
+          </li>
+          <li>
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Flat-leaf parsley</span>
+            <span class="qty">1 bunch</span>
+          </li>
+          <li>
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Preserved lemons</span>
+            <span class="qty">1 jar</span>
+          </li>
+          <li>
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="name">Broccolini</span>
+            <span class="qty">2 bunches</span>
+          </li>
+        </ul>
+
+        <div class="shop-foot">
+          <span class="count"><b>2 of 6</b> items checked</span>
+          <a href="#" class="btn btn-ghost" style="padding:10px 18px;font-size:13px">Share list</a>
+        </div>
+      </div>
+
+      <aside class="author">
+        <div>
+          <span class="sec-num" style="color:var(--mustard)">— 06 / Author note</span>
+          <p class="quote">I started this cookbook because I was tired of recipes that assumed I had all day. These are the ones I actually cook — on a Tuesday, after work, with whatever's in the fridge.</p>
+        </div>
+        <div class="who">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">Maya Okonkwo</div>
+            <div class="role">Founder &amp; recipe developer</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <span class="mark"></span>
+          DIGITAL <span class="slash">/</span> COOKBOOK
+        </a>
+        <p>A living cookbook for people who cook on real weeknights. New recipes every Thursday.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#featured">Featured recipe</a></li>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#recipes">All recipes</a></li>
+          <li><a href="#search">Ingredient search</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Kitchen</h5>
+        <ul>
+          <li><a href="#list">Shopping list</a></li>
+          <li><a href="#">Meal planner</a></li>
+          <li><a href="#">Pantry tracker</a></li>
+          <li><a href="#">Cooking timers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#">Our test kitchen</a></li>
+          <li><a href="#">Editorial standards</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2025 Digital / Cookbook. Made with care, in a small kitchen.</span>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 20c1-3 2-6 2-6M8 10c0-2 2-4 4-4s4 2 4 4-2 4-4 4c-1 0-2-.5-2-1"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M11 10l4 2-4 2z" fill="currentColor"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Shopping list toggle
+  document.querySelectorAll('.shop-list li').forEach(li => {
+    li.addEventListener('click', () => {
+      li.classList.toggle('done');
+      const total = document.querySelectorAll('.shop-list li').length;
+      const done = document.querySelectorAll('.shop-list li.done').length;
+      document.querySelector('.shop-foot .count').innerHTML = `<b>${done} of ${total}</b> items checked`;
+    });
+  });
+
+  // Ingredient chips fill the search input
+  const input = document.querySelector('.search-box input');
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      input.value = chip.textContent;
+      input.focus();
+    });
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

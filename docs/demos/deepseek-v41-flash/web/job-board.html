@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKROOM — Find work that fits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --surface-warm: #f5efe6;
+    --ink: #1f1a14;
+    --ink-soft: #4a4238;
+    --ink-mute: #7a7062;
+    --line: #e8e0d3;
+    --line-strong: #d9cfbd;
+    --accent: #c2410c;
+    --accent-soft: #fef3ec;
+    --accent-deep: #9a3412;
+    --gold: #b45309;
+    --green: #166534;
+    --green-soft: #ecfdf5;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 2px rgba(31,26,20,.04), 0 1px 3px rgba(31,26,20,.06);
+    --shadow-md: 0 4px 12px rgba(31,26,20,.06), 0 2px 4px rgba(31,26,20,.04);
+    --shadow-lg: 0 12px 32px rgba(31,26,20,.08), 0 4px 8px rgba(31,26,20,.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  .serif { font-family: 'Source Serif 4', Georgia, serif; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 247, 242, 0.88);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 18px;
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    display: grid; place-items: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .nav-links a {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: background .15s, color .15s;
+  }
+  .nav-links a:hover { background: var(--surface-warm); color: var(--ink); }
+  .nav-links a.active { color: var(--ink); }
+
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .15s ease;
+    white-space: nowrap;
+  }
+  .btn-ghost { color: var(--ink-soft); }
+  .btn-ghost:hover { background: var(--surface-warm); color: var(--ink); }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover { background: #000; transform: translateY(-1px); }
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(194,65,12,.3), 0 4px 12px rgba(194,65,12,.2);
+  }
+  .btn-accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 56px 0 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(194,65,12,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+  }
+  .eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(194,65,12,.15);
+  }
+  h1.hero-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 52px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 28px;
+    line-height: 1.55;
+  }
+
+  /* Search bar */
+  .search {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 16px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr auto;
+    gap: 4px;
+    box-shadow: var(--shadow-md);
+    max-width: 640px;
+  }
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: background .15s;
+  }
+  .search-field:hover { background: var(--surface-warm); }
+  .search-field + .search-field { border-left: 1px solid var(--line); }
+  .search-field svg { flex-shrink: 0; color: var(--ink-mute); }
+  .search-field input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--ink);
+    width: 100%;
+    font-weight: 500;
+  }
+  .search-field input::placeholder { color: var(--ink-mute); font-weight: 400; }
+  .search-btn {
+    background: var(--accent);
+    color: #fff;
+    padding: 0 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background .15s;
+  }
+  .search-btn:hover { background: var(--accent-deep); }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    align-items: center;
+  }
+  .hero-tags .label {
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-right: 4px;
+  }
+  .tag-pill {
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .tag-pill:hover { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-soft); }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    height: 380px;
+  }
+  .hero-card {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+  .hero-card.main {
+    top: 20px; left: 0; right: 40px;
+    z-index: 2;
+  }
+  .hero-card.float {
+    bottom: 0; right: 0;
+    width: 240px;
+    z-index: 3;
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .hero-card.float .hc-title { color: #fff; }
+  .hero-card.float .hc-sub { color: rgba(255,255,255,.7); }
+  .hc-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .hc-logo {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-weight: 700;
+    color: #fff;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .hc-title { font-weight: 600; font-size: 14.5px; color: var(--ink); }
+  .hc-sub { font-size: 12.5px; color: var(--ink-mute); }
+  .hc-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .chip {
+    font-size: 11.5px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--surface-warm);
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .chip.green { background: var(--green-soft); color: var(--green); }
+  .chip.accent { background: var(--accent-soft); color: var(--accent-deep); }
+
+  .hero-card.float .stat-num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-card.float .stat-label {
+    font-size: 12.5px;
+    color: rgba(255,255,255,.7);
+  }
+  .hero-card.float .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+  .avatar-stack { display: flex; }
+  .avatar-stack span {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    margin-left: -8px;
+    display: grid; place-items: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .avatar-stack span:first-child { margin-left: 0; }
+
+  /* ---------- Stats strip ---------- */
+  .stats-strip {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    padding: 22px 0;
+    margin-top: 24px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .stat-item { display: flex; align-items: center; gap: 14px; }
+  .stat-item .num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .stat-item .lbl {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.3;
+  }
+
+  /* ---------- Section ---------- */
+  section.block { padding: 56px 0; }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 24px;
+  }
+  .section-head h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .section-head p {
+    font-size: 14.5px;
+    color: var(--ink-mute);
+    margin-top: 6px;
+    max-width: 520px;
+  }
+  .link-arrow {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .link-arrow:hover { gap: 10px; }
+  .link-arrow svg { transition: transform .15s; }
+
+  /* ---------- Job cards ---------- */
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .job-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: all .2s ease;
+    position: relative;
+  }
+  .job-card:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .job-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .job-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-weight: 700;
+    color: #fff;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .save-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--ink-mute);
+    transition: all .15s;
+  }
+  .save-btn:hover { background: var(--surface-warm); color: var(--accent); }
+  .save-btn.saved { color: var(--accent); }
+  .save-btn.saved svg { fill: currentColor; }
+
+  .job-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .job-company {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+  .job-company strong { color: var(--ink-soft); font-weight: 500; }
+
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .job-foot {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .salary {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .salary span { color: var(--ink-mute); font-weight: 400; font-size: 12.5px; }
+  .posted {
+    font-size: 12.5px;
+    color: var(--ink-mute);
+  }
+  .badge-new {
+    position: absolute;
+    top: 20px;
+    right: 56px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 5px;
+  }
+
+  /* ---------- Company spotlight ---------- */
+  .spotlight {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .spotlight-content {
+    padding: 44px 44px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .spotlight-logo {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    font-weight: 700;
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #0f766e, #115e59);
+  }
+  .spotlight h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .spotlight p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .spotlight-stats {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+  .spotlight-stats .s-num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .spotlight-stats .s-lbl {
+    font-size: 12.5px;
+    color: var(--ink-mute);
+  }
+  .spotlight-actions { display: flex; gap: 10px; }
+
+  .spotlight-visual {
+    background: linear-gradient(135deg, #f5efe6 0%, #ede4d5 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+  }
+  .spotlight-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(194,65,12,.12) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(15,118,110,.12) 0%, transparent 40%);
+  }
+  .sv-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(31,26,20,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31,26,20,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .sv-card {
+    position: absolute;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--line);
+  }
+  .sv-card.c1 { top: 40px; left: 40px; width: 200px; }
+  .sv-card.c2 { top: 130px; right: 40px; width: 220px; }
+  .sv-card.c3 { bottom: 40px; left: 60px; width: 240px; }
+  .sv-row { display: flex; align-items: center; gap: 10px; }
+  .sv-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .sv-label { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+  .sv-sub { font-size: 11.5px; color: var(--ink-mute); }
+  .sv-bar {
+    height: 6px;
+    background: var(--surface-warm);
+    border-radius: 3px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .sv-bar > div { height: 100%; border-radius: 3px; }
+
+  /* ---------- Saved searches ---------- */
+  .saved-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .saved-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    transition: all .2s;
+    cursor: pointer;
+    position: relative;
+  }
+  .saved-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .saved-card .sc-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    display: grid; place-items: center;
+    margin-bottom: 14px;
+  }
+  .saved-card .sc-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .saved-card .sc-meta {
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    margin-bottom: 12px;
+  }
+  .saved-card .sc-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .saved-card .sc-count .pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  /* ---------- Editorial ---------- */
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 20px;
+  }
+  .article {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .article:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .article-img {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+  .article.featured .article-img { height: 240px; }
+  .article-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+  .article-cat {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 10px;
+  }
+  .article h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .article.featured h3 { font-size: 24px; }
+  .article p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .article-meta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+  }
+  .article-meta .author-av {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* ---------- CTA banner ---------- */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--ink) 0%, #2a221a 100%);
+    border-radius: 20px;
+    padding: 48px 56px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 40px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 200px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(194,65,12,.25) 0%, transparent 70%);
+  }
+  .cta-banner h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .cta-banner p {
+    font-size: 15px;
+    color: rgba(255,255,255,.7);
+    max-width: 480px;
+    position: relative;
+  }
+  .cta-actions { display: flex; gap: 12px; position: relative; }
+  .btn-light {
+    background: #fff;
+    color: var(--ink);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14.5px;
+    transition: all .15s;
+  }
+  .btn-light:hover { background: var(--surface-warm); transform: translateY(-1px); }
+  .btn-outline-light {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14.5px;
+    transition: all .15s;
+  }
+  .btn-outline-light:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.4); }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding: 56px 0 32px;
+    margin-top: 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin: 14px 0 20px;
+    max-width: 280px;
+    line-height: 1.55;
+  }
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--accent-deep); }
+
+  .trust-bar {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .trust-badges {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .trust-badge svg { color: var(--green); }
+  .footer-legal {
+    display: flex;
+    gap: 20px;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+  }
+  .footer-legal a:hover { color: var(--ink); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { height: 320px; max-width: 480px; }
+    .jobs-grid { grid-template-columns: repeat(2, 1fr); }
+    .saved-grid { grid-template-columns: repeat(2, 1fr); }
+    .editorial-grid { grid-template-columns: 1fr 1fr; }
+    .article.featured { grid-column: span 2; }
+    .spotlight { grid-template-columns: 1fr; }
+    .spotlight-visual { min-height: 300px; }
+    .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .footer-brand { grid-column: span 3; }
+  }
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+    h1.hero-title { font-size: 38px; }
+    .search { grid-template-columns: 1fr; }
+    .search-field + .search-field { border-left: none; border-top: 1px solid var(--line); }
+    .search-btn { padding: 14px; justify-content: center; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .jobs-grid, .saved-grid, .editorial-grid { grid-template-columns: 1fr; }
+    .article.featured { grid-column: span 1; }
+    .cta-banner { grid-template-columns: 1fr; padding: 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: span 2; }
+    .nav-links { display: none; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="container nav">
+    <a href="#" class="brand">
+      <span class="brand-mark">W</span>
+      WORKROOM
+    </a>
+    <nav class="nav-links">
+      <a href="#" class="active">Find jobs</a>
+      <a href="#">Companies</a>
+      <a href="#">Salaries</a>
+      <a href="#">Career advice</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Post a job</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> 2,847 new roles this week</span>
+      <h1 class="hero-title">Find work that <em>fits</em> the life you're building.</h1>
+      <p class="hero-sub">Curated roles from vetted companies — with transparent salaries, real culture signals, and no recruiter spam.</p>
+
+      <form class="search" onsubmit="event.preventDefault();">
+        <label class="search-field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="text" placeholder="Role, skill, or company" value="Product Designer">
+        </label>
+        <label class="search-field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21s-7-6.5-7-11a7 7 0 1 1 14 0c0 4.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <input type="text" placeholder="City or remote" value="Remote · US">
+        </label>
+        <button class="search-btn" type="submit">
+          Search
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+
+      <div class="hero-tags">
+        <span class="label">Popular:</span>
+        <a href="#" class="tag-pill">Engineering</a>
+        <a href="#" class="tag-pill">Design</a>
+        <a href="#" class="tag-pill">Data &amp; AI</a>
+        <a href="#" class="tag-pill">Marketing</a>
+        <a href="#" class="tag-pill">Remote-first</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card main">
+        <div class="hc-head">
+          <div class="hc-logo" style="background: linear-gradient(135deg, #6366f1, #4338ca);">N</div>
+          <div>
+            <div class="hc-title">Senior Product Designer</div>
+            <div class="hc-sub">Northwind Labs · Remote (US)</div>
+          </div>
+        </div>
+        <div class="hc-meta">
+          <span class="chip green">$145k – $185k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip accent">Actively hiring</span>
+        </div>
+      </div>
+
+      <div class="hero-card float">
+        <div class="stat-num">94%</div>
+        <div class="stat-label">of candidates hear back within 5 days</div>
+        <div class="stat-row">
+          <div class="avatar-stack">
+            <span style="background:#c2410c;">A</span>
+            <span style="background:#0f766e;">M</span>
+            <span style="background:#7c3aed;">J</span>
+            <span style="background:#b45309;">+</span>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,.7);">12k hired this year</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS STRIP ============ -->
+<div class="stats-strip">
+  <div class="container stats-grid">
+    <div class="stat-item">
+      <div class="num">18,400+</div>
+      <div class="lbl">Open roles<br>across 42 industries</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">3,200</div>
+      <div class="lbl">Vetted companies<br>actively hiring</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">$128k</div>
+      <div class="lbl">Median salary<br>on WORKROOM</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">4.8/5</div>
+      <div class="lbl">Candidate satisfaction<br>from 12k reviews</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RECOMMENDED JOBS ============ -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Recommended for you</h2>
+        <p>Based on your profile, saved searches, and the roles you've viewed this week.</p>
+      </div>
+      <a href="#" class="link-arrow">View all 2,847 roles
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="jobs-grid">
+      <!-- Job 1 -->
+      <article class="job-card">
+        <span class="badge-new">New</span>
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #6366f1, #4338ca);">N</div>
+          <button class="save-btn saved" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">Senior Product Designer</h3>
+        <div class="job-company"><strong>Northwind Labs</strong> · Remote (US)</div>
+        <div class="job-tags">
+          <span class="chip green">$145k – $185k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">Figma</span>
+          <span class="chip">B2B SaaS</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$145k – $185k <span>· est.</span></div>
+          <div class="posted">2d ago</div>
+        </div>
+      </article>
+
+      <!-- Job 2 -->
+      <article class="job-card">
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #0f766e, #115e59);">H</div>
+          <button class="save-btn" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">Staff Frontend Engineer</h3>
+        <div class="job-company"><strong>Harbor Health</strong> · San Francisco, CA</div>
+        <div class="job-tags">
+          <span class="chip green">$190k – $240k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">React</span>
+          <span class="chip">TypeScript</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$190k – $240k <span>· est.</span></div>
+          <div class="posted">4d ago</div>
+        </div>
+      </article>
+
+      <!-- Job 3 -->
+      <article class="job-card">
+        <span class="badge-new">New</span>
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #b45309, #92400e);">A</div>
+          <button class="save-btn" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">Data Scientist, Growth</h3>
+        <div class="job-company"><strong>Arbor Analytics</strong> · New York, NY (Hybrid)</div>
+        <div class="job-tags">
+          <span class="chip green">$160k – $200k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">Python</span>
+          <span class="chip">SQL</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$160k – $200k <span>· est.</span></div>
+          <div class="posted">1d ago</div>
+        </div>
+      </article>
+
+      <!-- Job 4 -->
+      <article class="job-card">
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #7c3aed, #5b21b6);">L</div>
+          <button class="save-btn" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">Head of Marketing</h3>
+        <div class="job-company"><strong>Lumen Studio</strong> · Remote (Global)</div>
+        <div class="job-tags">
+          <span class="chip green">$170k – $210k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">B2C</span>
+          <span class="chip">Brand</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$170k – $210k <span>· est.</span></div>
+          <div class="posted">5d ago</div>
+        </div>
+      </article>
+
+      <!-- Job 5 -->
+      <article class="job-card">
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #dc2626, #991b1b);">V</div>
+          <button class="save-btn" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">Customer Success Lead</h3>
+        <div class="job-company"><strong>Verdant</strong> · Austin, TX (Hybrid)</div>
+        <div class="job-tags">
+          <span class="chip green">$110k – $140k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">SaaS</span>
+          <span class="chip">Enterprise</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$110k – $140k <span>· est.</span></div>
+          <div class="posted">3d ago</div>
+        </div>
+      </article>
+
+      <!-- Job 6 -->
+      <article class="job-card">
+        <span class="badge-new">New</span>
+        <div class="job-top">
+          <div class="job-logo" style="background: linear-gradient(135deg, #0891b2, #155e75);">S</div>
+          <button class="save-btn" aria-label="Save job">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+        <h3 class="job-title">DevOps Engineer</h3>
+        <div class="job-company"><strong>Skyline Systems</strong> · Remote (EU)</div>
+        <div class="job-tags">
+          <span class="chip green">$130k – $165k</span>
+          <span class="chip">Full-time</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">AWS</span>
+        </div>
+        <div class="job-foot">
+          <div class="salary">$130k – $165k <span>· est.</span></div>
+          <div class="posted">1d ago</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPANY SPOTLIGHT ============ -->
+<section class="block" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Company spotlight</h2>
+        <p>This week we're featuring teams that are hiring thoughtfully and paying transparently.</p>
+      </div>
+      <a href="#" class="link-arrow">Browse all companies
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="spotlight">
+      <div class="spotlight-content">
+        <div class="spotlight-logo">H</div>
+        <h3>Harbor Health is building the operating system for community care.</h3>
+        <p>Backed by 12 years of clinical research and a team of 340 across 14 states, Harbor Health is rethinking how primary care reaches the people who need it most. They're hiring across engineering, design, and clinical operations.</p>
+        <div class="spotlight-stats">
+          <div>
+            <div class="s-num">340</div>
+            <div class="s-lbl">Employees</div>
+          </div>
+          <div>
+            <div class="s-num">14</div>
+            <div class="s-lbl">Open roles</div>
+          </div>
+          <div>
+            <div class="s-num">4.7</div>
+            <div class="s-lbl">Glassdoor rating</div>
+          </div>
+        </div>
+        <div class="spotlight-actions">
+          <a href="#" class="btn btn-accent">View 14 open roles</a>
+          <a href="#" class="btn btn-ghost" style="border: 1px solid var(--line);">Company profile</a>
+        </div>
+      </div>
+      <div class="spotlight-visual">
+        <div class="sv-grid"></div>
+        <div class="sv-card c1">
+          <div class="sv-row">
+            <div class="sv-dot" style="background: #0f766e;"></div>
+            <div>
+              <div class="sv-label">Engineering</div>
+              <div class="sv-sub">6 open roles</div>
+            </div>
+          </div>
+          <div class="sv-bar"><div style="width: 72%; background: #0f766e;"></div></div>
+        </div>
+        <div class="sv-card c2">
+          <div class="sv-row">
+            <div class="sv-dot" style="background: #c2410c;"></div>
+            <div>
+              <div class="sv-label">Design</div>
+              <div class="sv-sub">3 open roles</div>
+            </div>
+          </div>
+          <div class="sv-bar"><div style="width: 45%; background: #c2410c;"></div></div>
+        </div>
+        <div class="sv-card c3">
+          <div class="sv-row">
+            <div class="sv-dot" style="background: #7c3aed;"></div>
+            <div>
+              <div class="sv-label">Clinical Ops</div>
+              <div class="sv-sub">5 open roles</div>
+            </div>
+          </div>
+          <div class="sv-bar"><div style="width: 60%; background: #7c3aed;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SAVED SEARCHES ============ -->
+<section class="block" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Your saved searches</h2>
+        <p>We'll notify you the moment a matching role goes live.</p>
+      </div>
+      <a href="#" class="link-arrow">Manage searches
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="saved-grid">
+      <div class="saved-card">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+        <div class="sc-title">Senior Product Designer</div>
+        <div class="sc-meta">Remote · $140k+ · Full-time</div>
+        <span class="sc-count"><span class="pulse"></span> 12 new this week</span>
+      </div>
+
+      <div class="saved-card">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+        <div class="sc-title">Frontend Engineer</div>
+        <div class="sc-meta">San Francisco · $180k+ · Hybrid</div>
+        <span class="sc-count"><span class="pulse"></span> 8 new this week</span>
+      </div>
+
+      <div class="saved-card">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+        <div class="sc-title">Data Scientist</div>
+        <div class="sc-meta">New York · $150k+ · Full-time</div>
+        <span class="sc-count"><span class="pulse"></span> 5 new this week</span>
+      </div>
+
+      <div class="saved-card">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+        <div class="sc-title">Head of Marketing</div>
+        <div class="sc-meta">Remote · $160k+ · Full-time</div>
+        <span class="sc-count"><span class="pulse"></span> 3 new this week</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDITORIAL ============ -->
+<section class="block" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Career editorial</h2>
+        <p>Practical advice from people who've been there — no fluff, no hustle culture.</p>
+      </div>
+      <a href="#" class="link-arrow">Read the journal
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="editorial-grid">
+      <!-- Featured -->
+      <article class="article featured">
+        <div class="article-img" style="background: linear-gradient(135deg, #fef3ec 0%, #fde4d3 100%);">
+          <svg viewBox="0 0 400 240" style="width:100%; height:100%;" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.2" fill="#c2410c" opacity="0.15"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="240" fill="url(#dots)"/>
+            <circle cx="320" cy="60" r="80" fill="#c2410c" opacity="0.08"/>
+            <circle cx="80" cy="200" r="60" fill="#b45309" opacity="0.1"/>
+            <rect x="60" y="80" width="180" height="12" rx="6" fill="#1f1a14" opacity="0.15"/>
+            <rect x="60" y="104" width="240" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="60" y="120" width="200" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="60" y="150" width="100" height="28" rx="14" fill="#c2410c" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Negotiation</div>
+          <h3>The salary conversation you're not having — and how to start it</h3>
+          <p>Most candidates leave $15k–$30k on the table because they wait for the offer. Here's a script for bringing up compensation in the first call, without making it awkward.</p>
+          <div class="article-meta">
+            <span class="author-av" style="background: #c2410c;">RK</span>
+            <span>Rachel Kim</span>
+            <span>·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="article">
+        <div class="article-img" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);">
+          <svg viewBox="0 0 300 180" style="width:100%; height:100%;" preserveAspectRatio="xMidYMid slice">
+            <circle cx="240" cy="40" r="50" fill="#0f766e" opacity="0.1"/>
+            <rect x="40" y="60" width="140" height="10" rx="5" fill="#1f1a14" opacity="0.15"/>
+            <rect x="40" y="80" width="180" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="40" y="96" width="120" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="40" y="120" width="80" height="24" rx="12" fill="#0f766e" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Remote work</div>
+          <h3>How to tell if a "remote-first" company actually means it</h3>
+          <p>Five questions to ask in the interview that reveal whether remote employees are truly first-class citizens.</p>
+          <div class="article-meta">
+            <span class="author-av" style="background: #0f766e;">DM</span>
+            <span>David Mensah</span>
+            <span>·</span>
+            <span>6 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Article 3 -->
+      <article class="article">
+        <div class="article-img" style="background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);">
+          <svg viewBox="0 0 300 180" style="width:100%; height:100%;" preserveAspectRatio="xMidYMid slice">
+            <circle cx="60" cy="140" r="60" fill="#7c3aed" opacity="0.1"/>
+            <rect x="60" y="50" width="160" height="10" rx="5" fill="#1f1a14" opacity="0.15"/>
+            <rect x="60" y="70" width="200" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="60" y="86" width="140" height="8" rx="4" fill="#1f1a14" opacity="0.1"/>
+            <rect x="60" y="110" width="90" height="24" rx="12" fill="#7c3aed" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="article-body">
+          <div class="article-cat">Career growth</div>
+          <h3>The case for staying put: when a lateral move beats a promotion</h3>
+          <p>Not every career jump needs to be up. Sometimes the smartest move is sideways — into a team that will teach you more.</p>
+          <div class="article-meta">
+            <span class="author-av" style="background: #7c3aed;">SP</span>
+            <span>Sofia Patel</span>
+            <span>·</span>
+            <span>5 min read</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BANNER ============ -->
+<section class="block" style="padding-top: 0;">
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h2>Get matched with roles that actually fit.</h2>
+        <p>Create a free profile, set your preferences, and let WORKROOM surface the right opportunities — no spam, no recruiter cold calls.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="btn-light">Create free profile</a>
+        <a href="#" class="btn-outline-light">How it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="brand">
+          <span class="brand-mark">W</span>
+          WORKROOM
+        </a>
+        <p>The job discovery platform for people who care about where they work — and why.</p>
+        <div class="trust-badges" style="margin-top: 0;">
+          <div class="trust-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            Verified employers
+          </div>
+          <div class="trust-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Salary transparency
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>For candidates</h4>
+        <ul>
+          <li><a href="#">Browse jobs</a></li>
+          <li><a href="#">Salary guide</a></li>
+          <li><a href="#">Career advice</a></li>
+          <li><a href="#">Create profile</a></li>
+          <li><a href="#">Saved searches</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>For employers</h4>
+        <ul>
+          <li><a href="#">Post a job</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Employer branding</a></li>
+          <li><a href="#">Talent search</a></li>
+          <li><a href="#">Success stories</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Trust &amp; safety</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Terms of service</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="trust-bar">
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          SOC 2 Type II certified
+        </div>
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+          GDPR compliant
+        </div>
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Equal opportunity employer
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>© 2025 WORKROOM, Inc.</span>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Save button toggle
+  document.querySelectorAll('.save-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.classList.toggle('saved');
+    });
+  });
+
+  // Subtle scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.job-card, .saved-card, .article, .spotlight').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(12px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

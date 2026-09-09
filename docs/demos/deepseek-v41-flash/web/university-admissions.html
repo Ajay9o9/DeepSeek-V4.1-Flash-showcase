@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNIVERSITY / ADMISSIONS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1a1e2b;
+      --paper: #f7f5f0;
+      --accent: #c94b2b;
+      --accent-soft: #e8d9d2;
+      --gold: #b89b6b;
+      --slate: #4a4f5e;
+      --mist: #eae7e0;
+      --white: #ffffff;
+      --shadow-sm: 0 4px 12px rgba(26, 30, 43, 0.06);
+      --shadow-md: 0 12px 32px rgba(26, 30, 43, 0.08);
+      --shadow-lg: 0 24px 48px rgba(26, 30, 43, 0.12);
+      --radius: 12px;
+      --radius-lg: 24px;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+    }
+
+    h3 {
+      font-size: clamp(1.3rem, 2vw, 1.6rem);
+    }
+
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .eyebrow--light {
+      color: var(--gold);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(247, 245, 240, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(26, 30, 43, 0.06);
+      transition: background 0.3s ease;
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .nav__logo {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav__logo span {
+      color: var(--accent);
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav__links a {
+      text-decoration: none;
+      color: var(--slate);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav__links a:hover {
+      color: var(--ink);
+    }
+
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav__links a:hover::after {
+      width: 100%;
+    }
+
+    .nav__cta {
+      background: var(--ink);
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav__cta:hover {
+      background: var(--accent) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav__cta::after {
+      display: none !important;
+    }
+
+    .nav__toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav__toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+      background: var(--paper);
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero__bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero__content {
+      max-width: 560px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero__desc {
+      font-size: 1.125rem;
+      color: var(--slate);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 8px 24px rgba(201, 75, 43, 0.3);
+    }
+
+    .btn--primary:hover {
+      background: #b03d20;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201, 75, 43, 0.4);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid rgba(26, 30, 43, 0.2);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn__arrow {
+      transition: transform 0.25s ease;
+    }
+
+    .btn:hover .btn__arrow {
+      transform: translateX(4px);
+    }
+
+    /* Hero visual */
+    .hero__visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero__card {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, #2a2f3f 0%, #1a1e2b 100%);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero__card svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero__badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      color: var(--white);
+    }
+
+    .hero__badge-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero__badge-value {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+    }
+
+    .hero__badge-value span {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+      margin-left: 0.5rem;
+    }
+
+    /* ---------- STATS BAR ---------- */
+    .stats {
+      background: var(--ink);
+      color: var(--white);
+      padding: 3rem 0;
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+      position: relative;
+    }
+
+    .stat:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .stat__number {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat__label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.04em;
+    }
+
+    /* ---------- SECTION HEADER ---------- */
+    .section-header {
+      max-width: 640px;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header .eyebrow {
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-header h2 {
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--slate);
+      font-size: 1.05rem;
+    }
+
+    /* ---------- PROGRAMS ---------- */
+    .programs {
+      background: var(--white);
+    }
+
+    .programs__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .program-card {
+      background: var(--paper);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+    }
+
+    .program-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(201, 75, 43, 0.15);
+    }
+
+    .program-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .program-card:nth-child(1) .program-card__icon {
+      background: #f0e6e0;
+      color: var(--accent);
+    }
+
+    .program-card:nth-child(2) .program-card__icon {
+      background: #e0e8f0;
+      color: #3a6ea5;
+    }
+
+    .program-card:nth-child(3) .program-card__icon {
+      background: #e6f0e0;
+      color: #4a7c3f;
+    }
+
+    .program-card:nth-child(4) .program-card__icon {
+      background: #f0e0e8;
+      color: #a53a6e;
+    }
+
+    .program-card:nth-child(5) .program-card__icon {
+      background: #f0ece0;
+      color: #a58a3a;
+    }
+
+    .program-card:nth-child(6) .program-card__icon {
+      background: #e0f0f0;
+      color: #3a8a8a;
+    }
+
+    .program-card h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    .program-card p {
+      color: var(--slate);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .program-card__link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+
+    .program-card__link:hover {
+      gap: 0.7rem;
+    }
+
+    /* ---------- CAMPUS LIFE ---------- */
+    .campus {
+      background: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .campus__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .campus__visual {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: linear-gradient(135deg, #2a2f3f, #1a1e2b);
+    }
+
+    .campus__visual svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .campus__content h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .campus__content > p {
+      color: var(--slate);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .campus__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .campus__list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .campus__list-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .campus__list li strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .campus__list li span {
+      font-size: 0.85rem;
+      color: var(--slate);
+    }
+
+    /* ---------- DEADLINES ---------- */
+    .deadlines {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .deadlines .section-header h2 {
+      color: var(--white);
+    }
+
+    .deadlines .section-header p {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .deadlines__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .deadline-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .deadline-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(184, 155, 107, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .deadline-card__tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .deadline-card:nth-child(1) .deadline-card__tag {
+      background: rgba(201, 75, 43, 0.2);
+      color: #e88a6e;
+    }
+
+    .deadline-card:nth-child(2) .deadline-card__tag {
+      background: rgba(184, 155, 107, 0.2);
+      color: var(--gold);
+    }
+
+    .deadline-card:nth-child(3) .deadline-card__tag {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .deadline-card__date {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .deadline-card__month {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .deadline-card__title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .deadline-card__desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.6;
+    }
+
+    /* ---------- STUDENT STORIES ---------- */
+    .stories {
+      background: var(--white);
+    }
+
+    .stories__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .story-card {
+      background: var(--paper);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .story-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .story-card__quote {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+      color: var(--ink);
+    }
+
+    .story-card__quote::before {
+      content: '\201C';
+      color: var(--accent);
+      font-size: 2rem;
+      line-height: 0;
+      vertical-align: -0.3em;
+      margin-right: 0.15em;
+    }
+
+    .story-card__author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(26, 30, 43, 0.08);
+    }
+
+    .story-card__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .story-card:nth-child(1) .story-card__avatar {
+      background: linear-gradient(135deg, #c94b2b, #e88a6e);
+    }
+
+    .story-card:nth-child(2) .story-card__avatar {
+      background: linear-gradient(135deg, #3a6ea5, #6ea5d8);
+    }
+
+    .story-card:nth-child(3) .story-card__avatar {
+      background: linear-gradient(135deg, #4a7c3f, #7cb86e);
+    }
+
+    .story-card__name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .story-card__detail {
+      font-size: 0.8rem;
+      color: var(--slate);
+    }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      background: var(--paper);
+      padding: 6rem 0;
+    }
+
+    .cta__inner {
+      background: linear-gradient(135deg, #2a2f3f 0%, #1a1e2b 100%);
+      border-radius: var(--radius-lg);
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta__inner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 75, 43, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta__inner::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184, 155, 107, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta__inner h2 {
+      color: var(--white);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta__inner p {
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn--light {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn--light:hover {
+      background: var(--gold);
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn--ghost:hover {
+      border-color: var(--white);
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: var(--ink);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer__brand {
+      max-width: 300px;
+    }
+
+    .footer__brand-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer__brand-logo span {
+      color: var(--accent);
+    }
+
+    .footer__brand p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer__social {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer__social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .footer__social a:hover {
+      background: var(--accent);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .footer__col h4 {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer__col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer__col a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer__col a:hover {
+      color: var(--white);
+    }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer__bottom p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .footer__bottom-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer__bottom-links a {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer__bottom-links a:hover {
+      color: var(--white);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero__inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero__visual {
+        order: -1;
+      }
+
+      .hero__card {
+        max-width: 400px;
+        aspect-ratio: 16/10;
+      }
+
+      .hero__content {
+        max-width: 100%;
+      }
+
+      .programs__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .campus__grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .campus__visual {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .deadlines__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stories__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav__links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid rgba(26, 30, 43, 0.08);
+        box-shadow: var(--shadow-md);
+      }
+
+      .nav__links.open {
+        display: flex;
+      }
+
+      .nav__toggle {
+        display: block;
+      }
+
+      .nav__toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .nav__toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav__toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+
+      .stat:nth-child(2)::after {
+        display: none;
+      }
+
+      .programs__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .deadlines__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stories__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta__inner {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .container {
+        padding: 0 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero__actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .cta__actions {
+        flex-direction: column;
+      }
+
+      .stats__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat::after {
+        display: none !important;
+      }
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="#" class="nav__logo">UNIVERSITY <span>/</span> ADMISSIONS</a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#campus">Campus Life</a></li>
+        <li><a href="#deadlines">Deadlines</a></li>
+        <li><a href="#stories">Student Stories</a></li>
+        <li><a href="#contact" class="nav__cta">Apply Now</a></li>
+      </ul>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="heroGlow1" cx="80%" cy="20%" r="50%">
+            <stop offset="0%" stop-color="#c94b2b" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#c94b2b" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="heroGlow2" cx="10%" cy="80%" r="50%">
+            <stop offset="0%" stop-color="#b89b6b" stop-opacity="0.06"/>
+            <stop offset="100%" stop-color="#b89b6b" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#heroGlow1)"/>
+        <rect width="1440" height="900" fill="url(#heroGlow2)"/>
+        <g opacity="0.04" stroke="#1a1e2b" stroke-width="1" fill="none">
+          <line x1="0" y1="200" x2="1440" y2="200"/>
+          <line x1="0" y1="400" x2="1440" y2="400"/>
+          <line x1="0" y1="600" x2="1440" y2="600"/>
+          <line x1="0" y1="800" x2="1440" y2="800"/>
+          <line x1="360" y1="0" x2="360" y2="900"/>
+          <line x1="720" y1="0" x2="720" y2="900"/>
+          <line x1="1080" y1="0" x2="1080" y2="900"/>
+        </g>
+      </svg>
+    </div>
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <div class="hero__eyebrow">
+          <span class="eyebrow">Fall 2026 Admissions</span>
+        </div>
+        <h1>Where curiosity becomes <em>purpose</em>.</h1>
+        <p class="hero__desc">
+          Join a community of scholars, makers, and leaders who are shaping the future. 
+          Our holistic admissions process looks beyond the transcript to find the spark that makes you, you.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary">
+            Start Your Application
+            <span class="btn__arrow">→</span>
+          </a>
+          <a href="#programs" class="btn btn--outline">
+            Explore Programs
+          </a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__card">
+          <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2a2f3f"/>
+                <stop offset="100%" stop-color="#1a1e2b"/>
+              </linearGradient>
+              <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#c94b2b" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#b89b6b" stop-opacity="0.2"/>
+              </linearGradient>
+            </defs>
+            <rect width="480" height="600" fill="url(#cardGrad)"/>
+            <!-- Abstract campus illustration -->
+            <g opacity="0.15">
+              <circle cx="240" cy="200" r="120" fill="none" stroke="#b89b6b" stroke-width="1"/>
+              <circle cx="240" cy="200" r="80" fill="none" stroke="#b89b6b" stroke-width="0.5"/>
+              <circle cx="240" cy="200" r="40" fill="none" stroke="#b89b6b" stroke-width="0.5"/>
+            </g>
+            <!-- Building silhouettes -->
+            <g fill="#ffffff" opacity="0.06">
+              <rect x="60" y="320" width="80" height="200" rx="2"/>
+              <rect x="160" y="280" width="100" height="240" rx="2"/>
+              <rect x="280" y="340" width="70" height="180" rx="2"/>
+              <rect x="370" y="300" width="60" height="220" rx="2"/>
+            </g>
+            <!-- Windows -->
+            <g fill="#b89b6b" opacity="0.15">
+              <rect x="75" y="340" width="12" height="16" rx="1"/>
+              <rect x="95" y="340" width="12" height="16" rx="1"/>
+              <rect x="115" y="340" width="12" height="16" rx="1"/>
+              <rect x="75" y="370" width="12" height="16" rx="1"/>
+              <rect x="95" y="370" width="12" height="16" rx="1"/>
+              <rect x="115" y="370" width="12" height="16" rx="1"/>
+              <rect x="175" y="300" width="14" height="18" rx="1"/>
+              <rect x="200" y="300" width="14" height="18" rx="1"/>
+              <rect x="225" y="300" width="14" height="18" rx="1"/>
+              <rect x="175" y="335" width="14" height="18" rx="1"/>
+              <rect x="200" y="335" width="14" height="18" rx="1"/>
+              <rect x="225" y="335" width="14" height="18" rx="1"/>
+              <rect x="295" y="360" width="12" height="16" rx="1"/>
+              <rect x="315" y="360" width="12" height="16" rx="1"/>
+              <rect x="295" y="390" width="12" height="16" rx="1"/>
+              <rect x="315" y="390" width="12" height="16" rx="1"/>
+              <rect x="385" y="320" width="12" height="16" rx="1"/>
+              <rect x="405" y="320" width="12" height="16" rx="1"/>
+              <rect x="385" y="350" width="12" height="16" rx="1"/>
+              <rect x="405" y="350" width="12" height="16" rx="1"/>
+            </g>
+            <!-- Tree shapes -->
+            <g fill="#b89b6b" opacity="0.08">
+              <circle cx="50" cy="500" r="30"/>
+              <circle cx="430" cy="490" r="25"/>
+              <circle cx="140" cy="510" r="20"/>
+            </g>
+            <!-- Accent line -->
+            <line x1="60" y1="520" x2="420" y2="520" stroke="url(#lineGrad)" stroke-width="1"/>
+          </svg>
+          <div class="hero__badge">
+            <div class="hero__badge-label">Acceptance Rate</div>
+            <div class="hero__badge-value">12.4% <span>— need-blind, need-based aid</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stat fade-in">
+          <div class="stat__number">18:1</div>
+          <div class="stat__label">Student-to-faculty ratio</div>
+        </div>
+        <div class="stat fade-in">
+          <div class="stat__number">94%</div>
+          <div class="stat__label">First-year retention rate</div>
+        </div>
+        <div class="stat fade-in">
+          <div class="stat__number">120+</div>
+          <div class="stat__label">Countries represented</div>
+        </div>
+        <div class="stat fade-in">
+          <div class="stat__number">$48M</div>
+          <div class="stat__label">Annual financial aid awarded</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="programs" id="programs">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow">Academic Programs</span>
+        <h2>Find your intellectual home.</h2>
+        <p>Choose from over 80 undergraduate majors and 60 graduate programs across six schools and colleges.</p>
+      </div>
+      <div class="programs__grid">
+        <div class="program-card fade-in">
+          <div class="program-card__icon">◈</div>
+          <h3>Arts & Humanities</h3>
+          <p>Explore literature, philosophy, history, and the visual and performing arts in a liberal arts tradition that prizes critical thinking.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-card__icon">⬡</div>
+          <h3>Engineering & Applied Science</h3>
+          <p>Build the future with hands-on research, design studios, and partnerships with industry leaders in robotics, AI, and sustainability.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-card__icon">✦</div>
+          <h3>Life Sciences & Medicine</h3>
+          <p>From molecular biology to public health, our programs prepare students for careers that improve lives and advance discovery.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-card__icon">◉</div>
+          <h3>Social Sciences</h3>
+          <p>Understand human behavior, societies, and institutions through rigorous research methods and interdisciplinary inquiry.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-card__icon">▣</div>
+          <h3>Business & Economics</h3>
+          <p>Develop analytical frameworks and ethical leadership skills for a rapidly changing global economy.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-card__icon">◐</div>
+          <h3>Interdisciplinary Studies</h3>
+          <p>Design your own major or pursue one of our signature programs that bridge traditional academic boundaries.</p>
+          <a href="#" class="program-card__link">View programs →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS LIFE -->
+  <section class="campus" id="campus">
+    <div class="container">
+      <div class="campus__grid">
+        <div class="campus__visual fade-in">
+          <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="campusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2a2f3f"/>
+                <stop offset="100%" stop-color="#1a1e2b"/>
+              </linearGradient>
+              <radialGradient id="campusGlow" cx="50%" cy="40%" r="50%">
+                <stop offset="0%" stop-color="#b89b6b" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#b89b6b" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="500" height="500" fill="url(#campusGrad)"/>
+            <rect width="500" height="500" fill="url(#campusGlow)"/>
+            <!-- Abstract campus map -->
+            <g stroke="#ffffff" stroke-opacity="0.08" stroke-width="1" fill="none">
+              <path d="M50,250 Q150,150 250,250 T450,250"/>
+              <path d="M50,300 Q150,200 250,300 T450,300"/>
+              <path d="M50,350 Q150,250 250,350 T450,350"/>
+            </g>
+            <!-- Buildings -->
+            <g fill="#ffffff" opacity="0.06">
+              <rect x="80" y="180" width="60" height="120" rx="2"/>
+              <rect x="160" y="140" width="80" height="160" rx="2"/>
+              <rect x="260" y="200" width="70" height="100" rx="2"/>
+              <rect x="350" y="160" width="70" height="140" rx="2"/>
+            </g>
+            <!-- Windows -->
+            <g fill="#b89b6b" opacity="0.12">
+              <rect x="92" y="195" width="10" height="14" rx="1"/>
+              <rect x="110" y="195" width="10" height="14" rx="1"/>
+              <rect x="92" y="220" width="10" height="14" rx="1"/>
+              <rect x="110" y="220" width="10" height="14" rx="1"/>
+              <rect x="175" y="155" width="12" height="16" rx="1"/>
+              <rect x="195" y="155" width="12" height="16" rx="1"/>
+              <rect x="215" y="155" width="12" height="16" rx="1"/>
+              <rect x="175" y="185" width="12" height="16" rx="1"/>
+              <rect x="195" y="185" width="12" height="16" rx="1"/>
+              <rect x="215" y="185" width="12" height="16" rx="1"/>
+              <rect x="275" y="215" width="10" height="14" rx="1"/>
+              <rect x="295" y="215" width="10" height="14" rx="1"/>
+              <rect x="275" y="240" width="10" height="14" rx="1"/>
+              <rect x="295" y="240" width="10" height="14" rx="1"/>
+              <rect x="365" y="175" width="10" height="14" rx="1"/>
+              <rect x="385" y="175" width="10" height="14" rx="1"/>
+              <rect x="365" y="200" width="10" height="14" rx="1"/>
+              <rect x="385" y="200" width="10" height="14" rx="1"/>
+            </g>
+            <!-- Trees -->
+            <g fill="#b89b6b" opacity="0.08">
+              <circle cx="60" cy="380" r="25"/>
+              <circle cx="440" cy="370" r="20"/>
+              <circle cx="250" cy="400" r="30"/>
+              <circle cx="150" cy="420" r="18"/>
+              <circle cx="350" cy="410" r="22"/>
+            </g>
+            <!-- Path -->
+            <path d="M250,500 Q250,400 250,350 Q250,300 200,280" stroke="#b89b6b" stroke-opacity="0.15" stroke-width="2" fill="none"/>
+            <path d="M250,500 Q250,400 250,350 Q250,300 300,280" stroke="#b89b6b" stroke-opacity="0.15" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="campus__content fade-in">
+          <span class="eyebrow">Campus Life</span>
+          <h2>More than a campus. A community.</h2>
+          <p>
+            Life at UNIVERSITY extends far beyond the classroom. With over 400 student organizations, 
+            Division I athletics, and a vibrant arts scene, there's always something to discover.
+          </p>
+          <ul class="campus__list">
+            <li>
+              <div class="campus__list-icon">◈</div>
+              <div>
+                <strong>400+ Student Organizations</strong>
+                <span>From a cappella groups to robotics teams, find your people.</span>
+              </div>
+            </li>
+            <li>
+              <div class="campus__list-icon">⬡</div>
+              <div>
+                <strong>Residential Colleges</strong>
+                <span>Live and learn in tight-knit communities led by faculty mentors.</span>
+              </div>
+            </li>
+            <li>
+              <div class="campus__list-icon">✦</div>
+              <div>
+                <strong>Global Opportunities</strong>
+                <span>Study abroad in 45 countries with dedicated funding support.</span>
+              </div>
+            </li>
+            <li>
+              <div class="campus__list-icon">◉</div>
+              <div>
+                <strong>Health & Wellness</strong>
+                <span>Comprehensive counseling, recreation, and wellness resources.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEADLINES -->
+  <section class="deadlines" id="deadlines">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow eyebrow--light">Key Dates</span>
+        <h2>Mark your calendar.</h2>
+        <p>Stay on track with these important admissions deadlines for the 2026–2027 academic year.</p>
+      </div>
+      <div class="deadlines__grid">
+        <div class="deadline-card fade-in">
+          <span class="deadline-card__tag">Early Action</span>
+          <div class="deadline-card__date">November 1</div>
+          <div class="deadline-card__month">2026</div>
+          <div class="deadline-card__title">Early Action Deadline</div>
+          <p class="deadline-card__desc">Non-binding early application for students who have completed their research and are ready to apply.</p>
+        </div>
+        <div class="deadline-card fade-in">
+          <span class="deadline-card__tag">Regular Decision</span>
+          <div class="deadline-card__date">January 5</div>
+          <div class="deadline-card__month">2027</div>
+          <div class="deadline-card__title">Regular Decision Deadline</div>
+          <p class="deadline-card__desc">The standard application deadline for first-year students seeking admission for the fall term.</p>
+        </div>
+        <div class="deadline-card fade-in">
+          <span class="deadline-card__tag">Transfer</span>
+          <div class="deadline-card__date">March 1</div>
+          <div class="deadline-card__month">2027</div>
+          <div class="deadline-card__title">Transfer Application Deadline</div>
+          <p class="deadline-card__desc">For students currently enrolled at another institution who wish to transfer to UNIVERSITY.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT STORIES -->
+  <section class="stories" id="stories">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="eyebrow">Student Stories</span>
+        <h2>Hear from our community.</h2>
+        <p>Current students share what drew them to UNIVERSITY and how they've made it their own.</p>
+      </div>
+      <div class="stories__grid">
+        <div class="story-card fade-in">
+          <p class="story-card__quote">
+            I came for the engineering program, but I stayed for the people. My professors know me by name, 
+            and my research advisor has become a lifelong mentor.
+          </p>
+          <div class="story-card__author">
+            <div class="story-card__avatar">M</div>
+            <div>
+              <div class="story-card__name">Maya Chen</div>
+              <div class="story-card__detail">Mechanical Engineering, Class of 2027</div>
+            </div>
+          </div>
+        </div>
+        <div class="story-card fade-in">
+          <p class="story-card__quote">
+            The interdisciplinary studies program let me combine my love of music and computer science. 
+            I'm now building tools that help independent artists reach new audiences.
+          </p>
+          <div class="story-card__author">
+            <div class="story-card__avatar">J</div>
+            <div>
+              <div class="story-card__name">James Okafor</div>
+              <div class="story-card__detail">Interdisciplinary Studies, Class of 2026</div>
+            </div>
+          </div>
+        </div>
+        <div class="story-card fade-in">
+          <p class="story-card__quote">
+            As a first-generation student, I was nervous about fitting in. But the community here is incredibly 
+            supportive, and I've found my voice as a leader in student government.
+          </p>
+          <div class="story-card__author">
+            <div class="story-card__avatar">S</div>
+            <div>
+              <div class="story-card__name">Sofia Ramirez</div>
+              <div class="story-card__detail">Political Science, Class of 2028</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta__inner fade-in">
+        <h2>Ready to begin?</h2>
+        <p>
+          The application for Fall 2027 opens on August 1, 2026. Sign up for updates, 
+          connect with an admissions counselor, or start your application today.
+        </p>
+        <div class="cta__actions">
+          <a href="#" class="btn btn--light">
+            Start Your Application
+            <span class="btn__arrow">→</span>
+          </a>
+          <a href="#" class="btn btn--ghost">
+            Request Information
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__brand-logo">UNIVERSITY <span>/</span> ADMISSIONS</div>
+          <p>
+            Office of Undergraduate Admissions<br>
+            123 College Avenue<br>
+            University City, ST 12345
+          </p>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Twitter">TW</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="LinkedIn">LI</a>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h4>Admissions</h4>
+          <ul>
+            <li><a href="#">Apply</a></li>
+            <li><a href="#">Visit Campus</a></li>
+            <li><a href="#">Tuition & Aid</a></li>
+            <li><a href="#">Application Status</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Academics</h4>
+          <ul>
+            <li><a href="#">Undergraduate Programs</a></li>
+            <li><a href="#">Graduate Programs</a></li>
+            <li><a href="#">Faculty Directory</a></li>
+            <li><a href="#">Research</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Admissions Counselors</a></li>
+            <li><a href="#">Events Calendar</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 UNIVERSITY / ADMISSIONS. All rights reserved.</p>
+        <div class="footer__bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Title IX</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    // Close mobile nav on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Scroll fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Nav background on scroll
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        nav.style.background = 'rgba(247, 245, 240, 0.95)';
+        nav.style.boxShadow = '0 4px 20px rgba(26, 30, 43, 0.06)';
+      } else {
+        nav.style.background = 'rgba(247, 245, 240, 0.85)';
+        nav.style.boxShadow = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>

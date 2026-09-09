@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIRLINE / LOUNGE — Elevated travel, redefined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1a1e24;
+      --paper: #f5f2ed;
+      --sand: #e8e2d9;
+      --gold: #b89b7b;
+      --gold-light: #d4c0a8;
+      --slate: #3a4149;
+      --mist: #d9d4cc;
+      --accent: #c17b4b;
+      --deep: #0f1419;
+      --radius: 12px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.06);
+      --shadow-lg: 0 24px 64px rgba(0,0,0,0.08);
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    h1 { font-size: clamp(2.8rem, 5vw, 4.2rem); }
+    h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
+    h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .text-muted {
+      color: var(--slate);
+      opacity: 0.75;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      background: rgba(245, 242, 237, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      transition: background 0.3s ease;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--ink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .logo-text {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-text span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--slate);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 100px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-primary:hover {
+      background: var(--slate);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--mist);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--deep);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(184, 155, 123, 0.3);
+    }
+
+    .btn-lg {
+      padding: 1rem 2.4rem;
+      font-size: 0.95rem;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 8rem 0 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: 
+        radial-gradient(ellipse 80% 60% at 70% 20%, rgba(184, 155, 123, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(193, 123, 75, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, var(--paper) 0%, var(--sand) 100%);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 25% 30%, rgba(184, 155, 123, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 75% 70%, rgba(193, 123, 75, 0.04) 0%, transparent 40%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 560px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem 0.4rem 0.6rem;
+      background: rgba(184, 155, 123, 0.12);
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--slate);
+      margin-bottom: 2rem;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--mist);
+    }
+
+    .stat-item .stat-number {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .stat-item .stat-label {
+      font-size: 0.75rem;
+      color: var(--slate);
+      opacity: 0.7;
+      margin-top: 0.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--deep);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(184, 155, 123, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -20%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(193, 123, 75, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header .card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .card-header .card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      color: #6bcf7f;
+      font-weight: 500;
+    }
+
+    .card-status .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #6bcf7f;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .card-destination {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+    }
+
+    .card-destination .dest-code {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--paper);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .card-destination .dest-name {
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      margin-top: 0.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    .card-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+    }
+
+    .detail-item .detail-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-item .detail-value {
+      font-size: 0.95rem;
+      color: var(--paper);
+      font-weight: 500;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-footer .footer-text {
+      font-size: 0.75rem;
+      color: var(--gold-light);
+      opacity: 0.7;
+    }
+
+    .card-footer .footer-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep);
+      font-size: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .hero-card:hover .footer-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Floating elements */
+    .float-el {
+      position: absolute;
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 0.8rem 1.2rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .float-el-1 {
+      top: 10%;
+      right: -5%;
+      animation-delay: 0s;
+    }
+
+    .float-el-2 {
+      bottom: 15%;
+      left: -8%;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .float-icon.gold {
+      background: rgba(184, 155, 123, 0.15);
+      color: var(--gold);
+    }
+
+    .float-icon.green {
+      background: rgba(107, 207, 127, 0.12);
+      color: #6bcf7f;
+    }
+
+    /* ---------- SEARCH SECTION ---------- */
+    .search-section {
+      padding: 5rem 0;
+      background: var(--paper);
+      position: relative;
+    }
+
+    .search-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .search-header h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .search-header p {
+      color: var(--slate);
+      opacity: 0.75;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-bar {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: box-shadow 0.3s;
+    }
+
+    .search-bar:focus-within {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .search-field {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .search-field svg {
+      width: 20px;
+      height: 20px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .search-field input {
+      border: none;
+      outline: none;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--ink);
+      width: 100%;
+      background: transparent;
+    }
+
+    .search-field input::placeholder {
+      color: var(--slate);
+      opacity: 0.5;
+    }
+
+    .search-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--mist);
+    }
+
+    .search-bar .btn {
+      margin: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .search-tags {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-tag {
+      padding: 0.4rem 1rem;
+      background: var(--sand);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--slate);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .search-tag:hover {
+      background: var(--gold);
+      color: var(--deep);
+      border-color: var(--gold);
+    }
+
+    /* ---------- AVAILABILITY ---------- */
+    .availability-section {
+      padding: 5rem 0;
+      background: var(--sand);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      color: var(--slate);
+      opacity: 0.75;
+    }
+
+    .availability-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .lounge-card {
+      background: var(--paper);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lounge-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .lounge-card .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .lounge-card .lounge-code {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .lounge-card .lounge-city {
+      font-size: 0.85rem;
+      color: var(--slate);
+      opacity: 0.7;
+      margin-top: 0.2rem;
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .availability-badge.available {
+      background: rgba(107, 207, 127, 0.12);
+      color: #4a9e5c;
+    }
+
+    .availability-badge.limited {
+      background: rgba(193, 123, 75, 0.12);
+      color: var(--accent);
+    }
+
+    .availability-badge.full {
+      background: rgba(220, 80, 80, 0.1);
+      color: #c0392b;
+    }
+
+    .availability-badge .badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .lounge-card .lounge-details {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--mist);
+    }
+
+    .lounge-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--slate);
+    }
+
+    .lounge-detail svg {
+      width: 16px;
+      height: 16px;
+      color: var(--gold);
+    }
+
+    .lounge-card .lounge-amenities {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .amenity-tag {
+      padding: 0.25rem 0.7rem;
+      background: var(--sand);
+      border-radius: 100px;
+      font-size: 0.7rem;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    .lounge-card .card-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lounge-card .card-action .price {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--ink);
+    }
+
+    .lounge-card .card-action .price span {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      color: var(--slate);
+      opacity: 0.6;
+    }
+
+    /* ---------- AMENITIES ---------- */
+    .amenities-section {
+      padding: 5rem 0;
+      background: var(--paper);
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .amenity-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .amenity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--gold-light);
+    }
+
+    .amenity-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sand), var(--paper));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.4rem;
+      color: var(--gold);
+      border: 1px solid var(--mist);
+    }
+
+    .amenity-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .amenity-card p {
+      font-size: 0.85rem;
+      color: var(--slate);
+      opacity: 0.75;
+      line-height: 1.6;
+    }
+
+    /* ---------- MEMBERSHIP ---------- */
+    .membership-section {
+      padding: 5rem 0;
+      background: var(--deep);
+      color: var(--paper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .membership-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(184, 155, 123, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .membership-section::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(193, 123, 75, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .membership-section .section-header {
+      position: relative;
+      z-index: 1;
+    }
+
+    .membership-section .section-header h2 {
+      color: var(--paper);
+    }
+
+    .membership-section .section-header p {
+      color: var(--gold-light);
+      opacity: 0.8;
+    }
+
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tier-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .tier-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(184, 155, 123, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .tier-card.featured {
+      background: rgba(184, 155, 123, 0.1);
+      border-color: var(--gold);
+    }
+
+    .tier-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--deep);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+    }
+
+    .tier-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--paper);
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-desc {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .tier-price {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--paper);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .tier-price span {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      opacity: 0.6;
+    }
+
+    .tier-features {
+      list-style: none;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tier-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+    }
+
+    .tier-features li svg {
+      width: 16px;
+      height: 16px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .tier-card .btn {
+      width: 100%;
+    }
+
+    /* ---------- PERKS ---------- */
+    .perks-section {
+      padding: 5rem 0;
+      background: var(--sand);
+    }
+
+    .perks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .perks-content h2 {
+      margin-bottom: 1rem;
+    }
+
+    .perks-content > p {
+      color: var(--slate);
+      opacity: 0.75;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+
+    .perk-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .perk-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .perk-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      border: 1px solid var(--mist);
+    }
+
+    .perk-item h4 {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .perk-item p {
+      font-size: 0.85rem;
+      color: var(--slate);
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+
+    .perks-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .perks-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--deep);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .perks-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(184, 155, 123, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .perks-card .card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .perks-card .perk-highlight {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+    }
+
+    .perks-card .perk-highlight .highlight-number {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      color: var(--paper);
+      line-height: 1;
+    }
+
+    .perks-card .perk-highlight .highlight-label {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      margin-top: 0.3rem;
+    }
+
+    .perks-card .perk-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .perks-card .perk-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .perks-card .perk-row .row-label {
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      opacity: 0.7;
+    }
+
+    .perks-card .perk-row .row-value {
+      font-size: 0.85rem;
+      color: var(--paper);
+      font-weight: 500;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta-section {
+      padding: 6rem 0;
+      background: var(--paper);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(184, 155, 123, 0.06) 0%, transparent 60%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section p {
+      color: var(--slate);
+      opacity: 0.75;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .cta-note {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--slate);
+      opacity: 0.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      background: var(--deep);
+      color: var(--paper);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand .logo-text {
+      color: var(--paper);
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      opacity: 0.6;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-col a {
+      text-decoration: none;
+      color: var(--gold-light);
+      opacity: 0.6;
+      font-size: 0.85rem;
+      transition: opacity 0.2s;
+    }
+
+    .footer-col a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      opacity: 0.4;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .float-el-1 { right: 0; }
+      .float-el-2 { left: 0; }
+
+      .availability-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .membership-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .perks-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .perks-content {
+        text-align: center;
+      }
+
+      .perks-content > p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .perk-list {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .perk-item {
+        text-align: left;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 7rem 0 3rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .search-bar {
+        flex-direction: column;
+        padding: 0.75rem;
+      }
+
+      .search-divider {
+        width: 100%;
+        height: 1px;
+      }
+
+      .search-bar .btn {
+        width: 100%;
+        margin: 0.25rem 0 0;
+      }
+
+      .availability-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .membership-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .float-el {
+        display: none;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .cta-actions .btn {
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.8rem; }
+
+      .hero-card {
+        padding: 1.75rem;
+      }
+
+      .card-destination .dest-code {
+        font-size: 2.5rem;
+      }
+
+      .tier-card {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    /* ---------- SCROLL ANIMATIONS ---------- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- CUSTOM SCROLLBAR ---------- */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--sand);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-text">AIRLINE <span>/</span> LOUNGE</div>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#availability">Lounges</a></li>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#membership">Membership</a></li>
+          <li><a href="#perks">Perks</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a href="#membership" class="btn btn-outline">Sign In</a>
+        <a href="#booking" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Now open in 42 cities worldwide
+        </div>
+        <h1>Travel, <em>elevated</em> to an art form.</h1>
+        <p>Discover a sanctuary above the clouds. AIRLINE / LOUNGE redefines the airport experience with curated spaces, exceptional cuisine, and seamless connectivity — wherever your journey takes you.</p>
+        <div class="hero-actions">
+          <a href="#booking" class="btn btn-primary btn-lg">Reserve Your Lounge</a>
+          <a href="#availability" class="btn btn-outline btn-lg">Explore Locations</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">42</div>
+            <div class="stat-label">Global Lounges</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1.2M</div>
+            <div class="stat-label">Members</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4.9</div>
+            <div class="stat-label">Guest Rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="card-header">
+            <span class="card-label">Next Departure</span>
+            <span class="card-status"><span class="status-dot"></span> On Time</span>
+          </div>
+          <div class="card-destination">
+            <div class="dest-code">LHR</div>
+            <div class="dest-name">London Heathrow · Terminal 5</div>
+          </div>
+          <div class="card-details">
+            <div class="detail-item">
+              <div class="detail-label">Gate</div>
+              <div class="detail-value">B42</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Boarding</div>
+              <div class="detail-value">14:35</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Lounge</div>
+              <div class="detail-value">The Concorde Room</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Access</div>
+              <div class="detail-value">First Class</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="footer-text">Your lounge is ready</span>
+            <div class="footer-arrow">→</div>
+          </div>
+        </div>
+        <div class="float-el float-el-1">
+          <div class="float-icon gold">✦</div>
+          <span>Quiet Zone Available</span>
+        </div>
+        <div class="float-el float-el-2">
+          <div class="float-icon green">✓</div>
+          <span>Priority Access</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SEARCH ========== -->
+  <section class="search-section" id="search">
+    <div class="container">
+      <div class="search-header fade-in">
+        <div class="eyebrow">Find Your Sanctuary</div>
+        <h2>Where are you flying today?</h2>
+        <p>Search by city, airport code, or lounge name to discover your next retreat.</p>
+      </div>
+      <div class="search-bar fade-in">
+        <div class="search-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="text" placeholder="City, airport, or lounge name..." id="searchInput">
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <input type="text" placeholder="Date of travel" id="dateInput">
+        </div>
+        <button class="btn btn-gold" onclick="handleSearch()">Search</button>
+      </div>
+      <div class="search-tags fade-in">
+        <span class="search-tag" onclick="setSearch('London')">London</span>
+        <span class="search-tag" onclick="setSearch('New York')">New York</span>
+        <span class="search-tag" onclick="setSearch('Tokyo')">Tokyo</span>
+        <span class="search-tag" onclick="setSearch('Dubai')">Dubai</span>
+        <span class="search-tag" onclick="setSearch('Singapore')">Singapore</span>
+        <span class="search-tag" onclick="setSearch('Paris')">Paris</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AVAILABILITY ========== -->
+  <section class="availability-section" id="availability">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="eyebrow">Live Availability</div>
+          <h2>Lounges near you</h2>
+          <p>Real-time capacity across our global network.</p>
+        </div>
+        <a href="#" class="btn btn-outline">View All 42 Lounges</a>
+      </div>
+      <div class="availability-grid">
+        <!-- Card 1 -->
+        <div class="lounge-card fade-in">
+          <div class="card-top">
+            <div>
+              <div class="lounge-code">LHR</div>
+              <div class="lounge-city">London Heathrow · T5</div>
+            </div>
+            <span class="availability-badge available"><span class="badge-dot"></span> Available</span>
+          </div>
+          <div class="lounge-details">
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Open 24h
+            </div>
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              120 guests
+            </div>
+          </div>
+          <div class="lounge-amenities">
+            <span class="amenity-tag">Fine Dining</span>
+            <span class="amenity-tag">Spa</span>
+            <span class="amenity-tag">Quiet Zone</span>
+          </div>
+          <div class="card-action">
+            <div class="price">$65 <span>/ visit</span></div>
+            <a href="#booking" class="btn btn-primary">Reserve</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="lounge-card fade-in">
+          <div class="card-top">
+            <div>
+              <div class="lounge-code">JFK</div>
+              <div class="lounge-city">New York JFK · T4</div>
+            </div>
+            <span class="availability-badge limited"><span class="badge-dot"></span> Limited</span>
+          </div>
+          <div class="lounge-details">
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              5:00 – 23:00
+            </div>
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              85 guests
+            </div>
+          </div>
+          <div class="lounge-amenities">
+            <span class="amenity-tag">Craft Bar</span>
+            <span class="amenity-tag">Workspace</span>
+            <span class="amenity-tag">Showers</span>
+          </div>
+          <div class="card-action">
+            <div class="price">$55 <span>/ visit</span></div>
+            <a href="#booking" class="btn btn-primary">Reserve</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="lounge-card fade-in">
+          <div class="card-top">
+            <div>
+              <div class="lounge-code">HND</div>
+              <div class="lounge-city">Tokyo Haneda · T3</div>
+            </div>
+            <span class="availability-badge available"><span class="badge-dot"></span> Available</span>
+          </div>
+          <div class="lounge-details">
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Open 24h
+            </div>
+            <div class="lounge-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              200 guests
+            </div>
+          </div>
+          <div class="lounge-amenities">
+            <span class="amenity-tag">Sushi Bar</span>
+            <span class="amenity-tag">Onsen</span>
+            <span class="amenity-tag">Tea Room</span>
+          </div>
+          <div class="card-action">
+            <div class="price">$75 <span>/ visit</span></div>
+            <a href="#booking" class="btn btn-primary">Reserve</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AMENITIES ========== -->
+  <section class="amenities-section" id="amenities">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="eyebrow">World-Class Comfort</div>
+          <h2>Everything you need, before you fly</h2>
+          <p>Thoughtfully designed spaces that cater to every kind of traveler.</p>
+        </div>
+      </div>
+      <div class="amenities-grid">
+        <div class="amenity-card fade-in">
+          <div class="amenity-icon">✦</div>
+          <h3>Fine Dining</h3>
+          <p>Seasonal menus crafted by award-winning chefs, served in an elegant setting.</p>
+        </div>
+        <div class="amenity-card fade-in">
+          <div class="amenity-icon">◈</div>
+          <h3>Wellness & Spa</h3>
+          <p>Rejuvenate with a massage, facial, or a refreshing shower before your flight.</p>
+        </div>
+        <div class="amenity-card fade-in">
+          <div class="amenity-icon">◇</div>
+          <h3>Quiet Workspaces</h3>
+          <p>Private pods with high-speed Wi-Fi, power outlets, and ergonomic seating.</p>
+        </div>
+        <div class="amenity-card fade-in">
+          <div class="amenity-icon">○</div>
+          <h3>Premium Bar</h3>
+          <p>Curated cocktails, rare spirits, and sommelier-selected wines from around the world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MEMBERSHIP ========== -->
+  <section class="membership-section" id="membership">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div>
+          <div class="eyebrow">Membership Tiers</div>
+          <h2>Choose your level of access</h2>
+          <p>Unlock a world of privileges with a membership designed around you.</p>
+        </div>
+      </div>
+      <div class="membership-grid">
+        <!-- Tier 1 -->
+        <div class="tier-card fade-in">
+          <div class="tier-name">Essential</div>
+          <div class="tier-desc">For the occasional traveler</div>
+          <div class="tier-price">$199 <span>/ year</span></div>
+          <ul class="tier-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Access to 15 lounges</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Complimentary Wi-Fi</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Light refreshments</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Digital membership card</li>
+          </ul>
+          <a href="#booking" class="btn btn-outline">Get Started</a>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-card featured fade-in">
+          <div class="tier-name">Signature</div>
+          <div class="tier-desc">For the frequent flyer</div>
+          <div class="tier-price">$499 <span>/ year</span></div>
+          <ul class="tier-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Access to all 42 lounges</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full dining & bar menu</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Spa & wellness access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority reservations</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 2 guest passes per year</li>
+          </ul>
+          <a href="#booking" class="btn btn-gold">Choose Signature</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-card fade-in">
+          <div class="tier-name">Infinite</div>
+          <div class="tier-desc">For the global elite</div>
+          <div class="tier-price">$1,299 <span>/ year</span></div>
+          <ul class="tier-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited global access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Private suites & showers</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Personal concierge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Chauffeur service</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 6 guest passes per year</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated account manager</li>
+          </ul>
+          <a href="#booking" class="btn btn-outline">Go Infinite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PERKS ========== -->
+  <section class="perks-section" id="perks">
+    <div class="container perks-grid">
+      <div class="perks-content fade-in">
+        <div class="eyebrow">Travel Perks</div>
+        <h2>More than a lounge. A lifestyle.</h2>
+        <p>Every membership unlocks a suite of travel benefits designed to make every journey seamless, from curb to cloud.</p>
+        <div class="perk-list">
+          <div class="perk-item">
+            <div class="perk-icon">✦</div>
+            <div>
+              <h4>Priority Security & Boarding</h4>
+              <p>Skip the queues with dedicated fast-track lanes at 42 airports worldwide.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon">◈</div>
+            <div>
+              <h4>Complimentary Upgrades</h4>
+              <p>Enjoy space-available upgrades on partner airlines with your membership tier.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon">◇</div>
+            <div>
+              <h4>Global Concierge</h4>
+              <p>24/7 support for bookings, changes, and special requests — wherever you are.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon">○</div>
+            <div>
+              <h4>Exclusive Partner Offers</h4>
+              <p>Access curated deals from luxury hotels, car rentals, and dining partners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="perks-visual fade-in">
+        <div class="perks-card">
+          <div class="card-label">Your Membership</div>
+          <div class="perk-highlight">
+            <div class="highlight-number">42</div>
+            <div class="highlight-label">Lounges accessible worldwide</div>
+          </div>
+          <div class="perk-divider"></div>
+          <div class="perk-row">
+            <span class="row-label">Tier</span>
+            <span class="row-value">Signature</span>
+          </div>
+          <div class="perk-row">
+            <span class="row-label">Member Since</span>
+            <span class="row-value">2021</span>
+          </div>
+          <div class="perk-row">
+            <span class="row-label">Visits This Year</span>
+            <span class="row-value">18</span>
+          </div>
+          <div class="perk-row">
+            <span class="row-label">Guest Passes</span>
+            <span class="row-value">2 remaining</span>
+          </div>
+          <div class="perk-divider" style="margin-top: 1.5rem;"></div>
+          <div class="perk-row">
+            <span class="row-label">Next Perk Unlock</span>
+            <span class="row-value" style="color: var(--gold);">2 visits away</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="cta-section" id="booking">
+    <div class="container">
+      <div class="eyebrow fade-in">Ready to Elevate?</div>
+      <h2 class="fade-in">Your lounge is waiting.</h2>
+      <p class="fade-in">Book your next visit in under 60 seconds. No credit card required for first-time guests.</p>
+      <div class="cta-actions fade-in">
+        <a href="#" class="btn btn-primary btn-lg">Book a Lounge Visit</a>
+        <a href="#membership" class="btn btn-outline btn-lg">Compare Memberships</a>
+      </div>
+      <div class="cta-note fade-in">Free cancellation up to 24 hours before your visit.</div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-mark"></div>
+            <div class="logo-text">AIRLINE <span>/</span> LOUNGE</div>
+          </a>
+          <p>Redefining the airport experience with curated spaces, exceptional service, and seamless connectivity across 42 global destinations.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#availability">Lounges</a></li>
+            <li><a href="#amenities">Amenities</a></li>
+            <li><a href="#membership">Membership</a></li>
+            <li><a href="#perks">Travel Perks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Partners</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 AIRLINE / LOUNGE. All rights reserved.</span>
+        <span>Designed for the modern traveler.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // ---------- SCROLL ANIMATIONS ----------
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // ---------- SEARCH FUNCTIONALITY ----------
+    function setSearch(value) {
+      const input = document.getElementById('searchInput');
+      input.value = value;
+      input.focus();
+      // Add a subtle highlight effect
+      input.parentElement.style.transition = 'background 0.3s';
+      input.parentElement.style.background = 'rgba(184, 155, 123, 0.08)';
+      setTimeout(() => {
+        input.parentElement.style.background = 'transparent';
+      }, 600);
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim();
+      const date = document.getElementById('dateInput').value.trim();
+      
+      if (!query) {
+        // Shake animation for empty search
+        const searchBar = document.querySelector('.search-bar');
+        searchBar.style.animation = 'shake 0.4s ease';
+        setTimeout(() => {
+          searchBar.style.animation = '';
+        }, 400);
+        return;
+      }
+
+      // Simulate search feedback
+      const btn = document.querySelector('.search-bar .btn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Searching...';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        
+        // Scroll to availability section
+        document.getElementById('availability').scrollIntoView({ behavior: 'smooth' });
+      }, 800);
+    }
+
+    // ---------- SHAKE ANIMATION ----------
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        75% { transform: translateX(6px); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // ---------- HEADER SCROLL EFFECT ----------
+    let lastScroll = 0;
+    const header = document.querySelector('.site-header');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        header.style.background = 'rgba(245, 242, 237, 0.95)';
+        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
+      } else {
+        header.style.background = 'rgba(245, 242, 237, 0.85)';
+        header.style.boxShadow = 'none';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // ---------- SMOOTH SCROLL FOR ANCHOR LINKS ----------
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // ---------- ENTER KEY FOR SEARCH ----------
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    });
+
+    document.getElementById('dateInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    });
+
+    // ---------- PARALLAX EFFECT ON HERO ----------
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroBg = document.querySelector('.hero-bg');
+      if (heroBg && scrolled < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrolled * 0.15}px)`;
+      }
+    });
+
+    // ---------- CARD HOVER TILT EFFECT ----------
+    document.querySelectorAll('.hero-card, .perks-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      });
+    });
+  </script>
+
+</body>
+</html>

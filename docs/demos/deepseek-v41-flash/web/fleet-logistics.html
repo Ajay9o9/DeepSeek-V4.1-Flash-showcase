@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLEET / LOGISTICS — Dispatch Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0E14;
+      --surface: #131820;
+      --surface-2: #1A2029;
+      --border: #232B38;
+      --text: #E8ECF1;
+      --text-dim: #8A94A6;
+      --text-mute: #5A6478;
+      --accent: #FF5C35;
+      --accent-glow: rgba(255, 92, 53, 0.15);
+      --green: #2DD4A7;
+      --green-glow: rgba(45, 212, 167, 0.12);
+      --amber: #F5B544;
+      --amber-glow: rgba(245, 181, 68, 0.12);
+      --blue: #4A9EFF;
+      --blue-glow: rgba(74, 158, 255, 0.12);
+      --red: #FF4D6A;
+      --red-glow: rgba(255, 77, 106, 0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .app {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      grid-template-rows: 56px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 100%);
+    }
+
+    .logo-slash {
+      color: var(--accent);
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    .topbar-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--green-glow);
+      color: var(--green);
+      border: 1px solid rgba(45, 212, 167, 0.2);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+
+    .topbar-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .topbar-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .topbar-btn.primary:hover {
+      background: #FF7050;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: 8px;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-mute);
+      padding: 8px 12px 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 100px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* ── Main Content ── */
+    .main {
+      overflow-y: auto;
+      padding: 20px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Page Header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      color: var(--text-dim);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ── Stats Row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+
+    .stat-card:nth-child(1)::before { background: var(--green); }
+    .stat-card:nth-child(2)::before { background: var(--blue); }
+    .stat-card:nth-child(3)::before { background: var(--amber); }
+    .stat-card:nth-child(4)::before { background: var(--accent); }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-mute);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .stat-change {
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-change.up { color: var(--green); }
+    .stat-change.down { color: var(--red); }
+    .stat-change.neutral { color: var(--text-dim); }
+
+    /* ── Map + Side Panel ── */
+    .map-section {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .map-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      min-height: 380px;
+    }
+
+    .map-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .map-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .map-legend {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.green { background: var(--green); }
+    .legend-dot.amber { background: var(--amber); }
+    .legend-dot.red { background: var(--red); }
+
+    .map-canvas {
+      width: 100%;
+      height: calc(100% - 45px);
+      position: relative;
+      background: radial-gradient(ellipse at 30% 40%, #1A2230 0%, #0E1219 70%);
+    }
+
+    .map-canvas svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Side Panel ── */
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .panel-count {
+      font-size: 11px;
+      color: var(--text-mute);
+      background: var(--surface-2);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .panel-body {
+      padding: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* ── Driver List ── */
+    .driver-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .driver-item:hover {
+      background: var(--surface-2);
+    }
+
+    .driver-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .driver-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .driver-name {
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .driver-route {
+      font-size: 11px;
+      color: var(--text-mute);
+    }
+
+    .driver-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .driver-status.active { background: var(--green); }
+    .driver-status.break { background: var(--amber); }
+    .driver-status.offline { background: var(--text-mute); }
+
+    /* ── Maintenance Alerts ── */
+    .alert-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .alert-item:hover {
+      background: var(--surface-2);
+    }
+
+    .alert-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 13px;
+    }
+
+    .alert-icon.critical { background: var(--red-glow); color: var(--red); }
+    .alert-icon.warning { background: var(--amber-glow); color: var(--amber); }
+    .alert-icon.info { background: var(--blue-glow); color: var(--blue); }
+
+    .alert-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert-title {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .alert-meta {
+      font-size: 11px;
+      color: var(--text-mute);
+    }
+
+    /* ── Route Cards ── */
+    .routes-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .route-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .route-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .route-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .route-id {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .route-status {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    .route-status.in-transit {
+      background: var(--green-glow);
+      color: var(--green);
+    }
+
+    .route-status.delayed {
+      background: var(--amber-glow);
+      color: var(--amber);
+    }
+
+    .route-status.loading {
+      background: var(--blue-glow);
+      color: var(--blue);
+    }
+
+    .route-path {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .route-city {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .route-arrow {
+      color: var(--text-mute);
+      font-size: 12px;
+    }
+
+    .route-progress {
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .route-progress-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .route-progress-bar.green { background: var(--green); }
+    .route-progress-bar.amber { background: var(--amber); }
+    .route-progress-bar.blue { background: var(--blue); }
+
+    .route-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-mute);
+    }
+
+    /* ── Dispatch Actions ── */
+    .dispatch-bar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      align-items: center;
+    }
+
+    .dispatch-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-right: 4px;
+    }
+
+    .dispatch-btn {
+      padding: 7px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-dim);
+    }
+
+    .dispatch-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .dispatch-btn.accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .dispatch-btn.accent:hover {
+      background: #FF7050;
+    }
+
+    .dispatch-spacer { flex: 1; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .routes-section { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .map-section { grid-template-columns: 1fr; }
+      .routes-section { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .topbar-center { display: none; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-card, .map-card, .panel-card, .route-card, .dispatch-bar {
+      animation: fadeIn 0.4s ease both;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.05s; }
+    .stat-card:nth-child(2) { animation-delay: 0.1s; }
+    .stat-card:nth-child(3) { animation-delay: 0.15s; }
+    .stat-card:nth-child(4) { animation-delay: 0.2s; }
+    .map-card { animation-delay: 0.25s; }
+    .panel-card:nth-child(1) { animation-delay: 0.3s; }
+    .panel-card:nth-child(2) { animation-delay: 0.35s; }
+    .route-card:nth-child(1) { animation-delay: 0.4s; }
+    .route-card:nth-child(2) { animation-delay: 0.45s; }
+    .route-card:nth-child(3) { animation-delay: 0.5s; }
+    .dispatch-bar { animation-delay: 0.55s; }
+
+    /* ── Vehicle pulse on map ── */
+    @keyframes vehiclePulse {
+      0%, 100% { r: 5; opacity: 1; }
+      50% { r: 7; opacity: 0.7; }
+    }
+
+    .vehicle-dot {
+      animation: vehiclePulse 2s ease-in-out infinite;
+    }
+
+    .vehicle-dot:nth-child(2) { animation-delay: 0.5s; }
+    .vehicle-dot:nth-child(3) { animation-delay: 1s; }
+    .vehicle-dot:nth-child(4) { animation-delay: 1.5s; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ── Top Bar ── -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo">
+          <div class="logo-mark">F</div>
+          <span>FLEET<span class="logo-slash">/</span>LOGISTICS</span>
+        </div>
+      </div>
+      <div class="topbar-center">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          All systems operational
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn">Export</button>
+        <button class="topbar-btn primary">+ New Dispatch</button>
+        <div class="avatar">JD</div>
+      </div>
+    </header>
+
+    <!-- ── Sidebar ── -->
+    <nav class="sidebar">
+      <div class="nav-section">
+        <div class="nav-label">Operations</div>
+        <a class="nav-item active" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          Dashboard
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </span>
+          Fleet Map
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </span>
+          Routes
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          Drivers
+        </a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Management</div>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          Maintenance
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          </span>
+          Analytics
+        </a>
+        <a class="nav-item" href="#">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          Settings
+        </a>
+      </div>
+    </nav>
+
+    <!-- ── Main Content ── -->
+    <main class="main">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Dispatch Control</h1>
+          <p class="page-subtitle">Real-time fleet overview · Updated 12 seconds ago</p>
+        </div>
+        <div class="header-actions">
+          <button class="topbar-btn">Filter</button>
+          <button class="topbar-btn">Sort</button>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Active Vehicles</div>
+          <div class="stat-value">47</div>
+          <div class="stat-change up">↑ 3 from yesterday</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">On-Time Delivery</div>
+          <div class="stat-value">94.2%</div>
+          <div class="stat-change up">↑ 1.8% this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. Route Time</div>
+          <div class="stat-value">3h 24m</div>
+          <div class="stat-change down">↓ 12m from avg</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Fuel Efficiency</div>
+          <div class="stat-value">8.4 km/L</div>
+          <div class="stat-change neutral">— Stable</div>
+        </div>
+      </div>
+
+      <!-- Map + Side Panel -->
+      <div class="map-section">
+        <div class="map-card">
+          <div class="map-header">
+            <div class="map-title">Live Fleet Map</div>
+            <div class="map-legend">
+              <div class="legend-item"><span class="legend-dot green"></span> Active</div>
+              <div class="legend-item"><span class="legend-dot amber"></span> Delayed</div>
+              <div class="legend-item"><span class="legend-dot red"></span> Alert</div>
+            </div>
+          </div>
+          <div class="map-canvas">
+            <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice">
+              <!-- Grid lines -->
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E2633" stroke-width="0.5"/>
+                </pattern>
+                <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#2DD4A7" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#2DD4A7" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#F5B544" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#F5B544" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#FF4D6A" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#FF4D6A" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="800" height="400" fill="url(#grid)"/>
+
+              <!-- Route lines -->
+              <path d="M 120 280 Q 250 200 380 220 Q 500 240 620 160" fill="none" stroke="#2DD4A7" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+              <path d="M 200 120 Q 350 180 480 140 Q 580 110 700 180" fill="none" stroke="#F5B544" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+              <path d="M 80 180 Q 200 100 340 160 Q 460 210 580 280" fill="none" stroke="#4A9EFF" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+
+              <!-- Glow areas -->
+              <circle cx="380" cy="220" r="60" fill="url(#glow1)"/>
+              <circle cx="480" cy="140" r="60" fill="url(#glow2)"/>
+              <circle cx="340" cy="160" r="60" fill="url(#glow3)"/>
+
+              <!-- Vehicle dots -->
+              <circle class="vehicle-dot" cx="380" cy="220" r="5" fill="#2DD4A7" stroke="#0B0E14" stroke-width="2"/>
+              <circle class="vehicle-dot" cx="480" cy="140" r="5" fill="#F5B544" stroke="#0B0E14" stroke-width="2"/>
+              <circle class="vehicle-dot" cx="340" cy="160" r="5" fill="#FF4D6A" stroke="#0B0E14" stroke-width="2"/>
+              <circle class="vehicle-dot" cx="620" cy="160" r="5" fill="#2DD4A7" stroke="#0B0E14" stroke-width="2"/>
+              <circle class="vehicle-dot" cx="200" cy="120" r="5" fill="#2DD4A7" stroke="#0B0E14" stroke-width="2"/>
+              <circle class="vehicle-dot" cx="580" cy="280" r="5" fill="#4A9EFF" stroke="#0B0E14" stroke-width="2"/>
+
+              <!-- City labels -->
+              <text x="380" y="245" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Chicago Hub</text>
+              <text x="480" y="125" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Detroit</text>
+              <text x="340" y="145" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Indianapolis</text>
+              <text x="620" y="145" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Cleveland</text>
+              <text x="200" y="105" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Milwaukee</text>
+              <text x="580" y="300" fill="#8A94A6" font-size="10" font-family="Inter, sans-serif" text-anchor="middle">Columbus</text>
+
+              <!-- Hub marker -->
+              <circle cx="380" cy="220" r="12" fill="none" stroke="#2DD4A7" stroke-width="1" opacity="0.4"/>
+              <circle cx="380" cy="220" r="20" fill="none" stroke="#2DD4A7" stroke-width="0.5" opacity="0.2"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="side-panel">
+          <!-- Driver List -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">Active Drivers</div>
+              <div class="panel-count">12 online</div>
+            </div>
+            <div class="panel-body">
+              <div class="driver-item">
+                <div class="driver-avatar" style="background: linear-gradient(135deg, #2DD4A7, #4A9EFF);">MR</div>
+                <div class="driver-info">
+                  <div class="driver-name">Marcus Rivera</div>
+                  <div class="driver-route">Route 47 · Chicago → Detroit</div>
+                </div>
+                <div class="driver-status active"></div>
+              </div>
+              <div class="driver-item">
+                <div class="driver-avatar" style="background: linear-gradient(135deg, #F5B544, #FF5C35);">SK</div>
+                <div class="driver-info">
+                  <div class="driver-name">Sarah Kim</div>
+                  <div class="driver-route">Route 12 · Indianapolis → Columbus</div>
+                </div>
+                <div class="driver-status active"></div>
+              </div>
+              <div class="driver-item">
+                <div class="driver-avatar" style="background: linear-gradient(135deg, #4A9EFF, #2DD4A7);">JT</div>
+                <div class="driver-info">
+                  <div class="driver-name">James Thompson</div>
+                  <div class="driver-route">Route 08 · Milwaukee → Chicago</div>
+                </div>
+                <div class="driver-status break"></div>
+              </div>
+              <div class="driver-item">
+                <div class="driver-avatar" style="background: linear-gradient(135deg, #FF5C35, #F5B544);">EP</div>
+                <div class="driver-info">
+                  <div class="driver-name">Elena Petrova</div>
+                  <div class="driver-route">Route 23 · Cleveland → Detroit</div>
+                </div>
+                <div class="driver-status active"></div>
+              </div>
+              <div class="driver-item">
+                <div class="driver-avatar" style="background: linear-gradient(135deg, #8A94A6, #5A6478);">DW</div>
+                <div class="driver-info">
+                  <div class="driver-name">David Wu</div>
+                  <div class="driver-route">Route 31 · Chicago → Indianapolis</div>
+                </div>
+                <div class="driver-status offline"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Maintenance Alerts -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">Maintenance Alerts</div>
+              <div class="panel-count">3 active</div>
+            </div>
+            <div class="panel-body">
+              <div class="alert-item">
+                <div class="alert-icon critical">!</div>
+                <div class="alert-content">
+                  <div class="alert-title">Brake pad replacement — Unit 47</div>
+                  <div class="alert-meta">Overdue by 2 days · Critical</div>
+                </div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-icon warning">⚠</div>
+                <div class="alert-content">
+                  <div class="alert-title">Oil change due — Unit 12</div>
+                  <div class="alert-meta">Due in 340 km · Warning</div>
+                </div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-icon info">i</div>
+                <div class="alert-content">
+                  <div class="alert-title">Tire rotation scheduled — Unit 08</div>
+                  <div class="alert-meta">Scheduled for Friday · Info</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route Cards -->
+      <div class="routes-section">
+        <div class="route-card">
+          <div class="route-header">
+            <div class="route-id">ROUTE 47</div>
+            <div class="route-status in-transit">In Transit</div>
+          </div>
+          <div class="route-path">
+            <span class="route-city">Chicago</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">Detroit</span>
+          </div>
+          <div class="route-progress">
+            <div class="route-progress-bar green" style="width: 68%;"></div>
+          </div>
+          <div class="route-footer">
+            <span>ETA 14:32</span>
+            <span>68% complete</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <div class="route-header">
+            <div class="route-id">ROUTE 12</div>
+            <div class="route-status delayed">Delayed</div>
+          </div>
+          <div class="route-path">
+            <span class="route-city">Indianapolis</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">Columbus</span>
+          </div>
+          <div class="route-progress">
+            <div class="route-progress-bar amber" style="width: 42%;"></div>
+          </div>
+          <div class="route-footer">
+            <span>ETA 16:15 (+45m)</span>
+            <span>42% complete</span>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <div class="route-header">
+            <div class="route-id">ROUTE 08</div>
+            <div class="route-status loading">Loading</div>
+          </div>
+          <div class="route-path">
+            <span class="route-city">Milwaukee</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">Chicago</span>
+          </div>
+          <div class="route-progress">
+            <div class="route-progress-bar blue" style="width: 15%;"></div>
+          </div>
+          <div class="route-footer">
+            <span>Departs 13:45</span>
+            <span>15% complete</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dispatch Actions -->
+      <div class="dispatch-bar">
+        <span class="dispatch-label">Dispatch Actions:</span>
+        <button class="dispatch-btn accent">Assign Route</button>
+        <button class="dispatch-btn">Reassign Driver</button>
+        <button class="dispatch-btn">Mark Delivered</button>
+        <button class="dispatch-btn">Report Issue</button>
+        <div class="dispatch-spacer"></div>
+        <button class="dispatch-btn">View All Routes →</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Simple interactivity: nav item active state
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Route card hover effect already in CSS
+    // Simulate live updates
+    const statValues = document.querySelectorAll('.stat-value');
+    setInterval(() => {
+      // Subtle pulse on the first stat
+      statValues[0].style.transition = 'opacity 0.3s';
+      statValues[0].style.opacity = '0.7';
+      setTimeout(() => {
+        statValues[0].style.opacity = '1';
+      }, 300);
+    }, 5000);
+  </script>
+</body>
+</html>

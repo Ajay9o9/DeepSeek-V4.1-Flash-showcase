@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DENTAL / CLINIC — Modern dentistry, human care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1f2b;
+      --ink-soft: #3a4152;
+      --paper: #f6f3ee;
+      --paper-warm: #efe9e0;
+      --accent: #c45a3c;        /* terracotta */
+      --accent-deep: #a8442a;
+      --mint: #b8d4c8;          /* soft sage */
+      --mint-deep: #7fa99a;
+      --gold: #d9a441;
+      --line: rgba(26,31,43,0.12);
+      --radius: 18px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 2px 8px rgba(26,31,43,0.06);
+      --shadow-md: 0 12px 32px rgba(26,31,43,0.10);
+      --shadow-lg: 0 24px 60px rgba(26,31,43,0.14);
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    .display {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .eyebrow--mint { color: var(--mint-deep); }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      width: min(1240px, 92vw);
+      margin-inline: auto;
+    }
+    section { padding-block: clamp(4rem, 8vw, 7rem); }
+
+    /* ---------- NAV ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246,243,238,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 1.1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+    }
+    .logo__mark {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+    }
+    .logo__slash { color: var(--accent); font-weight: 300; }
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+    .nav__links a { transition: color 0.2s; }
+    .nav__links a:hover { color: var(--accent); }
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.65rem 1.3rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .nav__cta:hover { background: var(--accent); transform: translateY(-1px); }
+    .nav__toggle { display: none; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .hero__title {
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      margin-block: 1.2rem 1.5rem;
+    }
+    .hero__title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero__lead {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 46ch;
+      margin-bottom: 2rem;
+    }
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.8rem;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    .btn--primary {
+      background: var(--accent);
+      color: var(--paper);
+      box-shadow: 0 8px 24px rgba(196,90,60,0.28);
+    }
+    .btn--primary:hover {
+      background: var(--accent-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(196,90,60,0.36);
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+    }
+    .btn--ghost:hover { border-color: var(--ink); }
+    .btn__arrow { transition: transform 0.25s; }
+    .btn:hover .btn__arrow { transform: translateX(3px); }
+
+    .hero__meta {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .hero__meta-item strong {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .hero__meta-item span {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+    }
+
+    /* Hero visual — abstract tooth / arch composition */
+    .hero__visual {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      display: grid;
+      place-items: center;
+    }
+    .hero__visual-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 50% 50% 46% 54% / 54% 46% 54% 46%;
+      background: radial-gradient(circle at 30% 25%, var(--mint) 0%, var(--mint-deep) 70%, #5f8a7c 100%);
+      opacity: 0.9;
+      animation: morph 14s ease-in-out infinite;
+    }
+    @keyframes morph {
+      0%, 100% { border-radius: 50% 50% 46% 54% / 54% 46% 54% 46%; }
+      50% { border-radius: 46% 54% 54% 46% / 46% 54% 46% 54%; }
+    }
+    .hero__visual-ring {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(246,243,238,0.5);
+      animation: spin 40s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero__tooth {
+      position: relative;
+      z-index: 2;
+      width: 62%;
+      filter: drop-shadow(0 20px 40px rgba(26,31,43,0.25));
+    }
+    .hero__badge {
+      position: absolute;
+      bottom: 6%;
+      right: 2%;
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 1rem 1.3rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 3;
+    }
+    .hero__badge-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .hero__badge-text strong { display: block; font-size: 0.9rem; }
+    .hero__badge-text span { font-size: 0.75rem; color: var(--ink-soft); }
+
+    /* ---------- MARQUEE / TRUST BAR ---------- */
+    .trust {
+      background: var(--ink);
+      color: var(--paper);
+      padding-block: 1.4rem;
+      overflow: hidden;
+    }
+    .trust__track {
+      display: flex;
+      gap: 3.5rem;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+    .trust__track span {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .trust__track span::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ---------- SECTION HEADER ---------- */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+    .section-head__title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      max-width: 18ch;
+    }
+    .section-head__desc {
+      max-width: 38ch;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .service {
+      background: var(--paper-warm);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    .service__icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.4rem;
+      color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .service__title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .service__desc {
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      margin-bottom: 1.2rem;
+    }
+    .service__link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .service__link svg { transition: transform 0.25s; }
+    .service:hover .service__link svg { transform: translateX(4px); }
+
+    /* ---------- TEAM ---------- */
+    .team { background: var(--paper-warm); }
+    .team__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .member {
+      text-align: center;
+    }
+    .member__portrait {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .member__portrait svg { width: 70%; height: 70%; }
+    .member:nth-child(1) .member__portrait { background: linear-gradient(135deg, #e8c9b8, #d9a441); }
+    .member:nth-child(2) .member__portrait { background: linear-gradient(135deg, var(--mint), var(--mint-deep)); }
+    .member:nth-child(3) .member__portrait { background: linear-gradient(135deg, #d4c5e0, #9b7fb5); }
+    .member:nth-child(4) .member__portrait { background: linear-gradient(135deg, #f0d5c0, var(--accent)); }
+    .member__name {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+    .member__role {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+    }
+
+    /* ---------- JOURNEY ---------- */
+    .journey__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      position: relative;
+    }
+    .journey__steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 8%;
+      right: 8%;
+      height: 1.5px;
+      background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 16px);
+      z-index: 0;
+    }
+    .step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .step__num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 1.2rem;
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--accent);
+      transition: all 0.3s;
+    }
+    .step:hover .step__num {
+      background: var(--accent);
+      color: var(--paper);
+      border-color: var(--accent);
+      transform: scale(1.08);
+    }
+    .step__title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      margin-bottom: 0.4rem;
+    }
+    .step__desc {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      max-width: 24ch;
+      margin-inline: auto;
+    }
+
+    /* ---------- INSURANCE ---------- */
+    .insurance {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius);
+      padding: clamp(2.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .insurance::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,90,60,0.25), transparent 70%);
+      pointer-events: none;
+    }
+    .insurance__title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-block: 0.8rem 1rem;
+    }
+    .insurance__desc {
+      color: rgba(246,243,238,0.75);
+      font-size: 0.98rem;
+      max-width: 42ch;
+    }
+    .insurance__list {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+    }
+    .insurance__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.95rem;
+    }
+    .insurance__check {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ---------- TESTIMONIALS ---------- */
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .quote {
+      background: var(--paper-warm);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transition: transform 0.3s;
+    }
+    .quote:hover { transform: translateY(-4px); }
+    .quote__stars {
+      display: flex;
+      gap: 3px;
+      color: var(--gold);
+    }
+    .quote__text {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--ink);
+      flex: 1;
+    }
+    .quote__author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .quote__avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--paper);
+      flex-shrink: 0;
+    }
+    .quote:nth-child(1) .quote__avatar { background: var(--accent); }
+    .quote:nth-child(2) .quote__avatar { background: var(--mint-deep); }
+    .quote:nth-child(3) .quote__avatar { background: var(--gold); }
+    .quote__name { font-weight: 600; font-size: 0.9rem; }
+    .quote__detail { font-size: 0.78rem; color: var(--ink-soft); }
+
+    /* ---------- LOCATION / CTA ---------- */
+    .location {
+      background: var(--paper-warm);
+    }
+    .location__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .location__map {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      background: var(--mint);
+      box-shadow: var(--shadow-md);
+    }
+    .location__map svg { width: 100%; height: 100%; }
+    .location__pin {
+      position: absolute;
+      top: 42%;
+      left: 48%;
+      transform: translate(-50%, -100%);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, -100%); }
+      50% { transform: translate(-50%, -115%); }
+    }
+    .location__info h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-block: 0.8rem 1.2rem;
+    }
+    .location__details {
+      display: grid;
+      gap: 1.2rem;
+      margin-block: 1.8rem;
+    }
+    .location__detail {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .location__detail-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .location__detail strong { display: block; font-size: 0.95rem; }
+    .location__detail span { font-size: 0.88rem; color: var(--ink-soft); }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding-block: 4rem 2rem;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+    .footer__brand .logo { color: var(--paper); margin-bottom: 1rem; }
+    .footer__brand p {
+      font-size: 0.9rem;
+      color: rgba(246,243,238,0.65);
+      max-width: 32ch;
+    }
+    .footer__col h4 {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+    .footer__col ul { list-style: none; display: grid; gap: 0.7rem; }
+    .footer__col a {
+      font-size: 0.9rem;
+      color: rgba(246,243,238,0.75);
+      transition: color 0.2s;
+    }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(246,243,238,0.12);
+      font-size: 0.82rem;
+      color: rgba(246,243,238,0.55);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero__grid { grid-template-columns: 1fr; }
+      .hero__visual { max-width: 420px; margin-inline: auto; }
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+      .team__grid { grid-template-columns: repeat(2, 1fr); }
+      .journey__steps { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+      .journey__steps::before { display: none; }
+      .testimonials__grid { grid-template-columns: 1fr; }
+      .insurance { grid-template-columns: 1fr; gap: 2rem; }
+      .location__grid { grid-template-columns: 1fr; }
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      .nav__links { display: none; }
+      .nav__toggle {
+        display: grid;
+        place-items: center;
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        border: 1.5px solid var(--line);
+      }
+      .services__grid { grid-template-columns: 1fr; }
+      .team__grid { grid-template-columns: 1fr 1fr; }
+      .journey__steps { grid-template-columns: 1fr; }
+      .hero__meta { flex-wrap: wrap; gap: 1.5rem; }
+      .footer__grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .team__grid { grid-template-columns: 1fr; }
+      .hero__actions { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="#" class="logo">
+        <span class="logo__mark">D</span>
+        DENTAL <span class="logo__slash">/</span> CLINIC
+      </a>
+      <nav class="nav__links">
+        <a href="#services">Services</a>
+        <a href="#team">Team</a>
+        <a href="#journey">Your Visit</a>
+        <a href="#insurance">Insurance</a>
+        <a href="#location">Location</a>
+      </nav>
+      <a href="#appointment" class="nav__cta">
+        Book Appointment
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <button class="nav__toggle" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <span class="eyebrow">Modern dentistry · Est. 2012</span>
+        <h1 class="display hero__title">
+          Dentistry that feels <em>human</em>, not clinical.
+        </h1>
+        <p class="hero__lead">
+          We combine precision care with a calm, unhurried environment. No rushed appointments, no confusing jargon — just a team that listens and a plan that fits your life.
+        </p>
+        <div class="hero__actions">
+          <a href="#appointment" class="btn btn--primary">
+            Book your visit
+            <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#services" class="btn btn--ghost">Explore services</a>
+        </div>
+        <div class="hero__meta">
+          <div class="hero__meta-item">
+            <strong>4,200+</strong>
+            <span>Patients cared for</span>
+          </div>
+          <div class="hero__meta-item">
+            <strong>4.9★</strong>
+            <span>Average rating</span>
+          </div>
+          <div class="hero__meta-item">
+            <strong>12 yrs</strong>
+            <span>Serving the community</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__visual-bg"></div>
+        <div class="hero__visual-ring"></div>
+        <!-- Abstract tooth SVG -->
+        <svg class="hero__tooth" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 10 C60 10 30 40 30 90 C30 130 40 160 50 200 C55 220 70 230 80 230 C90 230 92 210 100 210 C108 210 110 230 120 230 C130 230 145 220 150 200 C160 160 170 130 170 90 C170 40 140 10 100 10 Z" fill="#f6f3ee" stroke="#1a1f2b" stroke-width="3"/>
+          <path d="M70 70 C70 55 85 45 100 45 C115 45 130 55 130 70" stroke="#c45a3c" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="80" cy="100" r="4" fill="#1a1f2b"/>
+          <circle cx="120" cy="100" r="4" fill="#1a1f2b"/>
+          <path d="M85 130 Q100 145 115 130" stroke="#1a1f2b" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="hero__badge">
+          <div class="hero__badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="hero__badge-text">
+            <strong>Same-week openings</strong>
+            <span>New patients welcome</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST MARQUEE ============ -->
+  <div class="trust">
+    <div class="trust__track">
+      <span>Digital X-rays</span>
+      <span>Gentle sedation options</span>
+      <span>Transparent pricing</span>
+      <span>Family-friendly</span>
+      <span>Evening appointments</span>
+      <span>Digital X-rays</span>
+      <span>Gentle sedation options</span>
+      <span>Transparent pricing</span>
+      <span>Family-friendly</span>
+      <span>Evening appointments</span>
+    </div>
+  </div>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">What we do</span>
+          <h2 class="display section-head__title">Comprehensive care, thoughtfully delivered.</h2>
+        </div>
+        <p class="section-head__desc">
+          From routine cleanings to full smile restorations, every treatment is explained clearly and priced upfront — no surprises.
+        </p>
+      </div>
+
+      <div class="services__grid">
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 3 1 5 2 8 .5 1.5 1.5 3 2.5 3s1.5-1 2-2.5c.5-1.5 1-2.5 2.5-2.5s2 1 2.5 2.5c.5 1.5 1 2.5 2 2.5s2-1.5 2.5-3c1-3 2-5 2-8 0-4-3-7-7-7z"/></svg>
+          </div>
+          <h3 class="service__title">Preventive Care</h3>
+          <p class="service__desc">Cleanings, exams, and digital X-rays designed to catch issues early and keep your smile healthy for the long run.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+          </div>
+          <h3 class="service__title">Cosmetic Dentistry</h3>
+          <p class="service__desc">Whitening, veneers, and bonding that enhance your natural smile without looking overdone or artificial.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 12h8"/></svg>
+          </div>
+          <h3 class="service__title">Restorative Work</h3>
+          <p class="service__desc">Crowns, bridges, and implants crafted to restore function and confidence — with materials that last.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3 class="service__title">Emergency Visits</h3>
+          <p class="service__desc">Same-day appointments for pain, chips, or lost fillings. We keep slots open every day for urgent needs.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="service__title">Family & Pediatric</h3>
+          <p class="service__desc">Gentle, patient care for kids and adults alike. We make visits something to look forward to, not dread.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="service">
+          <div class="service__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="service__title">Sedation Options</h3>
+          <p class="service__desc">For anxious patients, we offer nitrous oxide and oral sedation to make treatment calm and comfortable.</p>
+          <a href="#" class="service__link">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section id="team" class="team">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Meet the team</span>
+          <h2 class="display section-head__title">People who genuinely care.</h2>
+        </div>
+        <p class="section-head__desc">
+          Our clinicians bring decades of combined experience — and a shared belief that good dentistry starts with listening.
+        </p>
+      </div>
+
+      <div class="team__grid">
+        <div class="member">
+          <div class="member__portrait">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="38" r="18" fill="#f6f3ee"/>
+              <path d="M20 90c0-16 13-28 30-28s30 12 30 28" fill="#f6f3ee"/>
+              <circle cx="44" cy="36" r="2" fill="#1a1f2b"/>
+              <circle cx="56" cy="36" r="2" fill="#1a1f2b"/>
+              <path d="M45 44 Q50 48 55 44" stroke="#1a1f2b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="member__name">Dr. Elena Vasquez</h3>
+          <p class="member__role">Lead Dentist & Founder</p>
+        </div>
+
+        <div class="member">
+          <div class="member__portrait">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="38" r="18" fill="#f6f3ee"/>
+              <path d="M20 90c0-16 13-28 30-28s30 12 30 28" fill="#f6f3ee"/>
+              <circle cx="44" cy="36" r="2" fill="#1a1f2b"/>
+              <circle cx="56" cy="36" r="2" fill="#1a1f2b"/>
+              <path d="M45 44 Q50 48 55 44" stroke="#1a1f2b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="member__name">Dr. Marcus Chen</h3>
+          <p class="member__role">Orthodontist</p>
+        </div>
+
+        <div class="member">
+          <div class="member__portrait">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="38" r="18" fill="#f6f3ee"/>
+              <path d="M20 90c0-16 13-28 30-28s30 12 30 28" fill="#f6f3ee"/>
+              <circle cx="44" cy="36" r="2" fill="#1a1f2b"/>
+              <circle cx="56" cy="36" r="2" fill="#1a1f2b"/>
+              <path d="M45 44 Q50 48 55 44" stroke="#1a1f2b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="member__name">Dr. Priya Nair</h3>
+          <p class="member__role">Pediatric Specialist</p>
+        </div>
+
+        <div class="member">
+          <div class="member__portrait">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="38" r="18" fill="#f6f3ee"/>
+              <path d="M20 90c0-16 13-28 30-28s30 12 30 28" fill="#f6f3ee"/>
+              <circle cx="44" cy="36" r="2" fill="#1a1f2b"/>
+              <circle cx="56" cy="36" r="2" fill="#1a1f2b"/>
+              <path d="M45 44 Q50 48 55 44" stroke="#1a1f2b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="member__name">Dr. James Okafor</h3>
+          <p class="member__role">Oral Surgeon</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PATIENT JOURNEY ============ -->
+  <section id="journey">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Your visit</span>
+          <h2 class="display section-head__title">What to expect, step by step.</h2>
+        </div>
+        <p class="section-head__desc">
+          We've designed every part of the experience to feel calm, clear, and respectful of your time.
+        </p>
+      </div>
+
+      <div class="journey__steps">
+        <div class="step">
+          <div class="step__num">01</div>
+          <h3 class="step__title">Book online</h3>
+          <p class="step__desc">Choose a time that works. We'll confirm within the hour and send everything you need.</p>
+        </div>
+        <div class="step">
+          <div class="step__num">02</div>
+          <h3 class="step__title">Meet your dentist</h3>
+          <p class="step__desc">A relaxed conversation about your goals, concerns, and history — no rushing.</p>
+        </div>
+        <div class="step">
+          <div class="step__num">03</div>
+          <h3 class="step__title">Get a clear plan</h3>
+          <p class="step__desc">We walk you through findings, options, and costs in plain language before anything begins.</p>
+        </div>
+        <div class="step">
+          <div class="step__num">04</div>
+          <h3 class="step__title">Ongoing care</h3>
+          <p class="step__desc">Gentle treatment, follow-ups, and reminders that keep your smile on track for years.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSURANCE ============ -->
+  <section id="insurance">
+    <div class="container">
+      <div class="insurance">
+        <div>
+          <span class="eyebrow eyebrow--mint">Insurance & payment</span>
+          <h2 class="display insurance__title">We make coverage simple.</h2>
+          <p class="insurance__desc">
+            We accept most major PPO plans and offer flexible payment options for uninsured patients. Our front desk team will verify your benefits before your first visit — so you know exactly what to expect.
+          </p>
+        </div>
+        <ul class="insurance__list">
+          <li>
+            <span class="insurance__check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span>In-network with Delta Dental, Cigna, Aetna, MetLife, and Guardian</span>
+          </li>
+          <li>
+            <span class="insurance__check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span>0% financing available through CareCredit for treatments over $500</span>
+          </li>
+          <li>
+            <span class="insurance__check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span>Transparent, itemized estimates before any work begins</span>
+          </li>
+          <li>
+            <span class="insurance__check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <span>HSA and FSA accepted — we'll help you maximize your benefits</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Patient stories</span>
+          <h2 class="display section-head__title">Kind words from our community.</h2>
+        </div>
+        <p class="section-head__desc">
+          We're proud of the relationships we've built — and the smiles we've helped keep healthy.
+        </p>
+      </div>
+
+      <div class="testimonials__grid">
+        <article class="quote">
+          <div class="quote__stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+          </div>
+          <p class="quote__text">
+            "I used to dread the dentist. Dr. Vasquez and her team completely changed that. They explained everything, never rushed me, and my crown looks and feels perfect."
+          </p>
+          <div class="quote__author">
+            <div class="quote__avatar">SM</div>
+            <div>
+              <div class="quote__name">Sarah Mitchell</div>
+              <div class="quote__detail">Patient since 2019</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="quote">
+          <div class="quote__stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+          </div>
+          <p class="quote__text">
+            "My kids actually ask when their next appointment is. Dr. Nair is incredible with children — patient, funny, and genuinely kind. The whole office feels welcoming."
+          </p>
+          <div class="quote__author">
+            <div class="quote__avatar">DR</div>
+            <div>
+              <div class="quote__name">David Ramirez</div>
+              <div class="quote__detail">Father of two</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="quote">
+          <div class="quote__stars">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+          </div>
+          <p class="quote__text">
+            "I had a dental emergency on a Saturday and they got me in within two hours. The care was excellent and the pricing was exactly what they quoted. No surprises."
+          </p>
+          <div class="quote__author">
+            <div class="quote__avatar">JT</div>
+            <div>
+              <div class="quote__name">Jasmine Thompson</div>
+              <div class="quote__detail">New patient, 2024</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOCATION / CTA ============ -->
+  <section id="location" class="location">
+    <div class="container location__grid">
+      <div class="location__map">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="300" fill="#b8d4c8"/>
+          <!-- roads -->
+          <path d="M0 120 H400" stroke="#f6f3ee" stroke-width="14"/>
+          <path d="M0 220 H400" stroke="#f6f3ee" stroke-width="10"/>
+          <path d="M120 0 V300" stroke="#f6f3ee" stroke-width="12"/>
+          <path d="M280 0 V300" stroke="#f6f3ee" stroke-width="8"/>
+          <!-- blocks -->
+          <rect x="20" y="20" width="80" height="80" fill="#a8c8ba" rx="4"/>
+          <rect x="140" y="20" width="120" height="80" fill="#a8c8ba" rx="4"/>
+          <rect x="300" y="20" width="80" height="80" fill="#a8c8ba" rx="4"/>
+          <rect x="20" y="140" width="80" height="60" fill="#a8c8ba" rx="4"/>
+          <rect x="140" y="140" width="120" height="60" fill="#a8c8ba" rx="4"/>
+          <rect x="300" y="140" width="80" height="60" fill="#a8c8ba" rx="4"/>
+          <rect x="20" y="240" width="80" height="40" fill="#a8c8ba" rx="4"/>
+          <rect x="140" y="240" width="120" height="40" fill="#a8c8ba" rx="4"/>
+          <rect x="300" y="240" width="80" height="40" fill="#a8c8ba" rx="4"/>
+          <!-- trees -->
+          <circle cx="60" cy="60" r="8" fill="#7fa99a"/>
+          <circle cx="340" cy="60" r="8" fill="#7fa99a"/>
+          <circle cx="60" cy="170" r="8" fill="#7fa99a"/>
+          <circle cx="340" cy="170" r="8" fill="#7fa99a"/>
+        </svg>
+        <div class="location__pin">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 0C8 0 0 8 0 18c0 12 18 26 18 26s18-14 18-26c0-10-8-18-18-18z" fill="#c45a3c"/>
+            <circle cx="18" cy="17" r="7" fill="#f6f3ee"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="location__info">
+        <span class="eyebrow">Visit us</span>
+        <h2 class="display">Find us in the heart of the city.</h2>
+        <div class="location__details">
+          <div class="location__detail">
+            <div class="location__detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>1420 Willow Street, Suite 200</strong>
+              <span>Portland, OR 97205</span>
+            </div>
+          </div>
+          <div class="location__detail">
+            <div class="location__detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <strong>Mon–Thu: 8am – 6pm</strong>
+              <span>Fri: 8am – 4pm · Sat: 9am – 2pm</span>
+            </div>
+          </div>
+          <div class="location__detail">
+            <div class="location__detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <strong>(503) 555-0142</strong>
+              <span>hello@dentalclinic.com</span>
+            </div>
+          </div>
+        </div>
+        <a href="#appointment" class="btn btn--primary">
+          Book your appointment
+          <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#" class="logo">
+            <span class="logo__mark">D</span>
+            DENTAL <span class="logo__slash">/</span> CLINIC
+          </a>
+          <p>Modern dentistry with a human touch. Serving Portland families since 2012.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Preventive Care</a></li>
+            <li><a href="#">Cosmetic Dentistry</a></li>
+            <li><a href="#">Restorative Work</a></li>
+            <li><a href="#">Emergency Visits</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Clinic</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Patient Journey</a></li>
+            <li><a href="#">Insurance</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Book Appointment</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2025 DENTAL / CLINIC. All rights reserved.</span>
+        <span>Privacy Policy · Terms of Service · Accessibility</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ APPOINTMENT CTA (anchor target) ============ -->
+  <div id="appointment" style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; visibility: hidden;"></div>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Simple mobile menu toggle (visual only)
+    const toggle = document.querySelector('.nav__toggle');
+    const links = document.querySelector('.nav__links');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isOpen = links.style.display === 'flex';
+        links.style.display = isOpen ? 'none' : 'flex';
+        links.style.position = 'absolute';
+        links.style.top = '100%';
+        links.style.left = '0';
+        links.style.right = '0';
+        links.style.background = 'var(--paper)';
+        links.style.flexDirection = 'column';
+        links.style.padding = '1.5rem 2rem';
+        links.style.borderBottom = '1px solid var(--line)';
+        links.style.gap = '1rem';
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOARD / GAME / STUDIO — Tactical Tabletop Worlds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0d0b;
+    --paper: #f2ede3;
+    --paper-2: #e8e1d2;
+    --rust: #c8502a;
+    --rust-deep: #8f3418;
+    --moss: #3d5a3a;
+    --gold: #d9a441;
+    --line: #1a1815;
+    --muted: #6b6459;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Paper grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,0.04) 0, transparent 1px),
+      radial-gradient(circle at 70% 80%, rgba(0,0,0,0.03) 0, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    mix-blend-mode: multiply;
+  }
+
+  .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--line);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-size: 15px;
+  }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+  }
+  .logo-mark span {
+    background: var(--ink);
+    border-radius: 2px;
+  }
+  .logo-mark span:nth-child(2) { background: var(--rust); }
+  .logo-mark span:nth-child(3) { background: var(--gold); }
+  .logo-mark span:nth-child(4) { background: var(--moss); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1.5px;
+    background: var(--rust);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--rust); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 60px 40px 80px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: calc(100vh - 60px);
+  }
+
+  .hero-left { position: relative; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust-deep);
+    margin-bottom: 24px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1.5px;
+    background: var(--rust);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 6.2vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 26px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn svg { width: 14px; height: 14px; }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1.5px solid var(--line);
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* Hero right — game box art */
+  .hero-right {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 560px;
+  }
+
+  .box-art {
+    position: relative;
+    width: 340px;
+    height: 460px;
+    background: linear-gradient(160deg, #1a1815 0%, #2a2620 100%);
+    border-radius: 4px;
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(0,0,0,0.1),
+      inset 0 0 0 1px rgba(255,255,255,0.05);
+    overflow: hidden;
+    transform: rotate(-3deg);
+    transition: transform 0.5s ease;
+  }
+  .box-art:hover { transform: rotate(-1deg) translateY(-6px); }
+
+  .box-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(217,164,65,0.35) 0, transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(200,80,42,0.4) 0, transparent 50%);
+  }
+
+  .box-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(242,237,227,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,237,227,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .box-content {
+    position: relative;
+    height: 100%;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--paper);
+  }
+
+  .box-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(242,237,227,0.6);
+  }
+
+  .box-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 54px;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+  .box-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .box-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(242,237,227,0.7);
+  }
+
+  .box-seal {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    position: relative;
+  }
+  .box-seal::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    border: 1px dashed rgba(217,164,65,0.5);
+  }
+
+  /* Floating dice / tokens */
+  .float-token {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    color: var(--paper);
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.4);
+    animation: float 6s ease-in-out infinite;
+  }
+  .token-1 {
+    width: 68px; height: 68px;
+    background: var(--rust);
+    top: 8%; left: 4%;
+    font-size: 26px;
+    animation-delay: 0s;
+  }
+  .token-2 {
+    width: 52px; height: 52px;
+    background: var(--moss);
+    bottom: 12%; right: 2%;
+    font-size: 20px;
+    animation-delay: 1.5s;
+  }
+  .token-3 {
+    width: 44px; height: 44px;
+    background: var(--gold);
+    color: var(--ink);
+    top: 55%; left: -2%;
+    font-size: 18px;
+    animation-delay: 3s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(6deg); }
+  }
+
+  /* ============ SECTION BASE ============ */
+  section {
+    padding: 100px 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 60px;
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .section-head h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .section-head h2 em { font-style: italic; color: var(--rust); }
+
+  .section-head p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 460px;
+    justify-self: end;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* ============ FEATURED GAME ============ */
+  .featured {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: none;
+    padding: 100px 40px;
+  }
+  .featured-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .featured .section-head { border-color: rgba(242,237,227,0.2); }
+  .featured .section-head p { color: rgba(242,237,227,0.6); }
+  .featured .section-num { color: var(--gold); }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .featured-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #2a2620, #1a1815);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(242,237,227,0.1);
+  }
+
+  .featured-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 25% 30%, rgba(217,164,65,0.4) 0, transparent 40%),
+      radial-gradient(circle at 75% 70%, rgba(200,80,42,0.5) 0, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(61,90,58,0.3) 0, transparent 60%);
+  }
+
+  .featured-visual svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .featured-info h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .featured-info h3 em { font-style: italic; color: var(--gold); }
+
+  .featured-tagline {
+    font-size: 18px;
+    color: rgba(242,237,227,0.75);
+    margin-bottom: 32px;
+    max-width: 520px;
+    line-height: 1.55;
+  }
+
+  .featured-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(242,237,227,0.15);
+    border-bottom: 1px solid rgba(242,237,227,0.15);
+    margin-bottom: 32px;
+  }
+  .meta-item .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(242,237,227,0.5);
+    margin-bottom: 6px;
+  }
+  .meta-item .meta-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--paper);
+  }
+
+  .featured-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .featured .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .featured .btn-primary:hover {
+    background: var(--paper);
+    border-color: var(--paper);
+    box-shadow: 4px 4px 0 var(--gold);
+  }
+  .featured .btn-ghost {
+    color: var(--paper);
+    border-color: rgba(242,237,227,0.4);
+  }
+  .featured .btn-ghost:hover {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+
+  /* ============ PLAY OVERVIEW ============ */
+  .play-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .play-step {
+    padding: 40px 32px;
+    border-right: 1.5px solid var(--line);
+    position: relative;
+    background: var(--paper);
+    transition: background 0.3s;
+  }
+  .play-step:last-child { border-right: none; }
+  .play-step:hover { background: var(--paper-2); }
+
+  .play-step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--rust);
+    opacity: 0.25;
+    margin-bottom: 16px;
+  }
+
+  .play-step h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .play-step p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .play-step-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  /* ============ COMPONENTS ============ */
+  .components {
+    background: var(--paper-2);
+    max-width: none;
+    padding: 100px 40px;
+  }
+  .components-inner { max-width: 1440px; margin: 0 auto; }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .comp-card {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 28px 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .comp-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .comp-visual {
+    height: 120px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .comp-card h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .comp-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .comp-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+  }
+
+  /* ============ EXPANSIONS ============ */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .exp-card {
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.3s;
+  }
+  .exp-card:hover { transform: translateY(-6px); }
+
+  .exp-visual {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .exp-visual svg { width: 100%; height: 100%; display: block; }
+
+  .exp-body { padding: 24px; }
+
+  .exp-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+  .tag-new { background: var(--rust); color: var(--paper); }
+  .tag-classic { background: var(--moss); color: var(--paper); }
+  .tag-soon { background: var(--gold); color: var(--ink); }
+
+  .exp-card h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .exp-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .exp-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+    font-size: 13px;
+  }
+  .exp-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+  }
+  .exp-link {
+    color: var(--rust);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .exp-link:hover { text-decoration: underline; }
+
+  /* ============ REVIEWS ============ */
+  .reviews {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: none;
+    padding: 100px 40px;
+  }
+  .reviews-inner { max-width: 1440px; margin: 0 auto; }
+  .reviews .section-head { border-color: rgba(242,237,227,0.2); }
+  .reviews .section-head p { color: rgba(242,237,227,0.6); }
+  .reviews .section-num { color: var(--gold); }
+
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .review-card {
+    background: rgba(242,237,227,0.04);
+    border: 1px solid rgba(242,237,227,0.12);
+    border-radius: 4px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .review-card:hover {
+    background: rgba(242,237,227,0.07);
+    border-color: rgba(217,164,65,0.4);
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+  .review-stars svg { width: 16px; height: 16px; }
+
+  .review-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.35;
+    margin-bottom: 24px;
+    flex: 1;
+    letter-spacing: -0.01em;
+  }
+  .review-quote em { font-style: italic; color: var(--gold); }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(242,237,227,0.12);
+  }
+  .review-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--paper);
+    flex-shrink: 0;
+  }
+  .review-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .review-role {
+    font-size: 12px;
+    color: rgba(242,237,227,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ STORE CTA ============ */
+  .store-cta {
+    padding: 100px 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--rust) 0%, var(--rust-deep) 100%);
+    border-radius: 6px;
+    padding: 70px 60px;
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(242,237,227,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,237,227,0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+  }
+
+  .cta-box::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217,164,65,0.4) 0, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .cta-content { position: relative; z-index: 1; }
+
+  .cta-content h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .cta-content h2 em { font-style: italic; color: var(--gold); }
+
+  .cta-content p {
+    font-size: 16px;
+    color: rgba(242,237,227,0.85);
+    max-width: 480px;
+    margin-bottom: 32px;
+    line-height: 1.55;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .cta-box .btn-primary {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+  .cta-box .btn-primary:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .cta-box .btn-ghost {
+    color: var(--paper);
+    border-color: rgba(242,237,227,0.5);
+  }
+  .cta-box .btn-ghost:hover {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+
+  .cta-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cta-stack {
+    position: relative;
+    width: 220px;
+    height: 260px;
+  }
+  .cta-stack .stack-box {
+    position: absolute;
+    width: 180px;
+    height: 240px;
+    border-radius: 4px;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
+  }
+  .stack-1 {
+    background: linear-gradient(160deg, #1a1815, #2a2620);
+    transform: rotate(-8deg) translate(-30px, 10px);
+  }
+  .stack-2 {
+    background: linear-gradient(160deg, var(--moss), #2a3d28);
+    transform: rotate(4deg) translate(20px, -10px);
+  }
+  .stack-3 {
+    background: linear-gradient(160deg, var(--gold), #b8862e);
+    transform: rotate(-2deg) translate(0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  /* ============ EVENTS ============ */
+  .events {
+    background: var(--paper-2);
+    max-width: none;
+    padding: 100px 40px;
+  }
+  .events-inner { max-width: 1440px; margin: 0 auto; }
+
+  .events-list {
+    border-top: 1.5px solid var(--line);
+  }
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 200px 140px;
+    gap: 32px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1.5px solid var(--line);
+    transition: background 0.2s, padding 0.2s;
+    cursor: pointer;
+  }
+  .event-row:hover {
+    background: var(--paper);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .event-date {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.1;
+  }
+  .event-date span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .event-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+  }
+  .event-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .event-loc {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .event-loc svg { width: 14px; height: 14px; color: var(--rust); }
+
+  .event-cta {
+    justify-self: end;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .event-cta svg { width: 14px; height: 14px; transition: transform 0.2s; }
+  .event-row:hover .event-cta svg { transform: translateX(4px); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 70px 40px 30px;
+  }
+  .footer-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(242,237,227,0.15);
+  }
+  .footer-brand .logo { color: var(--paper); margin-bottom: 20px; }
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(242,237,227,0.6);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+  .footer-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: rgba(242,237,227,0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--paper); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    font-size: 12px;
+    color: rgba(242,237,227,0.5);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-bottom .mono { color: rgba(242,237,227,0.4); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 60px; min-height: auto; }
+    .hero-right { min-height: 420px; }
+    .section-head { grid-template-columns: 1fr; gap: 20px; }
+    .section-head p { justify-self: start; }
+    .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+    .play-grid { grid-template-columns: 1fr; }
+    .play-step { border-right: none; border-bottom: 1.5px solid var(--line); }
+    .play-step:last-child { border-bottom: none; }
+    .comp-grid { grid-template-columns: repeat(2, 1fr); }
+    .exp-grid { grid-template-columns: 1fr; }
+    .review-grid { grid-template-columns: 1fr; }
+    .cta-box { grid-template-columns: 1fr; padding: 50px 32px; }
+    .cta-visual { display: none; }
+    .event-row { grid-template-columns: 100px 1fr; gap: 16px; }
+    .event-loc, .event-cta { grid-column: 2; justify-self: start; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    section, .featured, .components, .reviews, .events, .store-cta { padding: 60px 20px; }
+    .hero { padding: 30px 20px 50px; }
+    .hero h1 { font-size: 44px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .featured-meta { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr; }
+    .box-art { width: 280px; height: 380px; }
+    .box-title { font-size: 42px; }
+    .cta-box { padding: 40px 24px; }
+    .event-row { grid-template-columns: 1fr; }
+    .event-loc, .event-cta { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    BOARD / GAME / STUDIO
+  </div>
+  <ul class="nav-links">
+    <li><a href="#featured">Games</a></li>
+    <li><a href="#play">How to Play</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#expansions">Expansions</a></li>
+    <li><a href="#events">Events</a></li>
+  </ul>
+  <a href="#store" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Est. 2016 · Portland, OR</div>
+    <h1>Games that <em>rewrite</em> the table.</h1>
+    <p class="hero-sub">We design deep, replayable strategy games for people who love the weight of a well-made component and the tension of a perfectly balanced turn.</p>
+    <div class="hero-actions">
+      <a href="#featured" class="btn btn-primary">
+        Explore Games
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#play" class="btn btn-ghost">How to Play</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Games Shipped</div>
+      </div>
+      <div>
+        <div class="stat-num">340K</div>
+        <div class="stat-label">Copies Sold</div>
+      </div>
+      <div>
+        <div class="stat-num">4.8</div>
+        <div class="stat-label">Avg. BGG Rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="float-token token-1">◆</div>
+    <div class="float-token token-2">✦</div>
+    <div class="float-token token-3">●</div>
+    <div class="box-art">
+      <div class="box-grid"></div>
+      <div class="box-content">
+        <div class="box-top">
+          <span>BGS-014</span>
+          <span>2–4 Players</span>
+        </div>
+        <div>
+          <div class="box-title">Iron<em>Meridian</em></div>
+        </div>
+        <div class="box-bottom">
+          <span>90 min · Ages 14+</span>
+          <div class="box-seal">IM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED GAME -->
+<section class="featured" id="featured">
+  <div class="featured-inner">
+    <div class="section-head">
+      <div>
+        <span class="section-num">01 / FEATURED GAME</span>
+        <h2>Iron <em>Meridian</em></h2>
+      </div>
+      <p>Our flagship strategy game. Build a rail empire across a fractured continent, negotiate with rival barons, and outmaneuver the winter.</p>
+    </div>
+
+    <div class="featured-grid">
+      <div class="featured-visual">
+        <div class="featured-badge">Bestseller</div>
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(242,237,227,0.08)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="500" fill="url(#grid)"/>
+          <!-- Rail lines -->
+          <g stroke="#d9a441" stroke-width="2" fill="none" opacity="0.9">
+            <path d="M 40 400 Q 120 320 200 340 T 360 260"/>
+            <path d="M 60 200 Q 160 240 240 180 T 380 120"/>
+            <path d="M 100 460 Q 180 380 260 420 T 380 380"/>
+          </g>
+          <g stroke="#c8502a" stroke-width="1.5" fill="none" opacity="0.7" stroke-dasharray="4 4">
+            <path d="M 40 100 Q 140 160 220 100 T 380 60"/>
+            <path d="M 80 300 Q 180 260 260 300 T 380 280"/>
+          </g>
+          <!-- Nodes -->
+          <g fill="#f2ede3">
+            <circle cx="40" cy="400" r="5"/>
+            <circle cx="200" cy="340" r="5"/>
+            <circle cx="360" cy="260" r="5"/>
+            <circle cx="60" cy="200" r="5"/>
+            <circle cx="240" cy="180" r="5"/>
+            <circle cx="380" cy="120" r="5"/>
+            <circle cx="100" cy="460" r="5"/>
+            <circle cx="260" cy="420" r="5"/>
+          </g>
+          <g fill="#d9a441">
+            <circle cx="120" cy="320" r="4"/>
+            <circle cx="160" cy="240" r="4"/>
+            <circle cx="180" cy="380" r="4"/>
+          </g>
+          <!-- Compass rose -->
+          <g transform="translate(320, 420)" opacity="0.5">
+            <circle r="30" fill="none" stroke="#f2ede3" stroke-width="1"/>
+            <path d="M 0 -25 L 5 0 L 0 25 L -5 0 Z" fill="#d9a441"/>
+            <path d="M -25 0 L 0 5 L 25 0 L 0 -5 Z" fill="#f2ede3" opacity="0.6"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="featured-info">
+        <h3>Build the <em>line</em> that connects a continent.</h3>
+        <p class="featured-tagline">A 90-minute engine-builder for 2–4 players. Lay track, secure contracts, and time your investments against the shifting seasons. Every game tells a different story of ambition and compromise.</p>
+
+        <div class="featured-meta">
+          <div class="meta-item">
+            <div class="meta-label">Players</div>
+            <div class="meta-value">2–4</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Playtime</div>
+            <div class="meta-value">90 min</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Ages</div>
+            <div class="meta-value">14+</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Weight</div>
+            <div class="meta-value">3.4 / 5</div>
+          </div>
+        </div>
+
+        <div class="featured-actions">
+          <a href="#store" class="btn btn-primary">
+            Buy — $64
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#play" class="btn btn-ghost">Rulebook PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAY OVERVIEW -->
+<section id="play">
+  <div class="section-head">
+    <div>
+      <span class="section-num">02 / HOW TO PLAY</span>
+      <h2>Three phases. <em>One</em> empire.</h2>
+    </div>
+    <p>Iron Meridian runs on a tight three-phase loop. Learn it in ten minutes, master it over a hundred games.</p>
+  </div>
+
+  <div class="play-grid">
+    <div class="play-step">
+      <div class="play-step-num">01</div>
+      <svg class="play-step-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="6" y="6" width="32" height="32" rx="2"/>
+        <path d="M6 16h32M16 6v32"/>
+        <circle cx="26" cy="26" r="4" fill="currentColor"/>
+      </svg>
+      <h4>Survey &amp; Claim</h4>
+      <p>Draft terrain tiles from the central market. Each tile you claim opens new routes and blocks your rivals' expansion.</p>
+    </div>
+    <div class="play-step">
+      <div class="play-step-num">02</div>
+      <svg class="play-step-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M8 36 L22 8 L36 36 Z"/>
+        <path d="M14 28h16"/>
+        <circle cx="22" cy="20" r="3" fill="currentColor"/>
+      </svg>
+      <h4>Lay Track</h4>
+      <p>Spend iron and labor to connect cities. Longer routes mean bigger payouts — but every rail you build is a promise you must defend.</p>
+    </div>
+    <div class="play-step">
+      <div class="play-step-num">03</div>
+      <svg class="play-step-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="22" cy="22" r="14"/>
+        <path d="M22 8v28M8 22h28"/>
+        <path d="M14 14l16 16M30 14L14 30" opacity="0.4"/>
+      </svg>
+      <h4>Winter Reckoning</h4>
+      <p>When the season turns, contracts expire and debts come due. Score your network, pay your barons, and prepare for the next year.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section class="components" id="components">
+  <div class="components-inner">
+    <div class="section-head">
+      <div>
+        <span class="section-num">03 / IN THE BOX</span>
+        <h2>Heavy box. <em>Heavier</em> table presence.</h2>
+      </div>
+      <p>Every component is designed to be touched. Linen-finish cards, wooden tokens, and a mounted board that lays flat from the first play.</p>
+    </div>
+
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-visual">
+          <svg viewBox="0 0 120 120" width="100" height="100">
+            <rect x="10" y="20" width="100" height="80" rx="3" fill="#3d5a3a" stroke="#1a1815" stroke-width="1.5"/>
+            <path d="M10 40h100M10 60h100M10 80h100" stroke="#f2ede3" stroke-width="0.8" opacity="0.4"/>
+            <path d="M30 20v80M60 20v80M90 20v80" stroke="#f2ede3" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="45" cy="50" r="6" fill="#d9a441"/>
+            <circle cx="75" cy="70" r="6" fill="#c8502a"/>
+            <path d="M45 50 L75 70" stroke="#f2ede3" stroke-width="1.5" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <h4>Mounted Board</h4>
+        <p>Double-sided, 6-panel map with seasonal variants and a linen-textured finish.</p>
+        <div class="comp-count">1 × 90 × 60 cm</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-visual">
+          <svg viewBox="0 0 120 120" width="100" height="100">
+            <g transform="translate(20, 20)">
+              <rect width="40" height="60" rx="3" fill="#f2ede3" stroke="#1a1815" stroke-width="1.5"/>
+              <rect x="6" y="8" width="28" height="4" fill="#c8502a"/>
+              <rect x="6" y="18" width="20" height="3" fill="#1a1815" opacity="0.4"/>
+              <rect x="6" y="26" width="24" height="3" fill="#1a1815" opacity="0.4"/>
+              <rect x="6" y="34" width="16" height="3" fill="#1a1815" opacity="0.4"/>
+              <circle cx="20" cy="50" r="4" fill="#d9a441"/>
+            </g>
+            <g transform="translate(60, 40) rotate(8)">
+              <rect width="40" height="60" rx="3" fill="#f2ede3" stroke="#1a1815" stroke-width="1.5"/>
+              <rect x="6" y="8" width="28" height="4" fill="#3d5a3a"/>
+              <rect x="6" y="18" width="20" height="3" fill="#1a1815" opacity="0.4"/>
+              <rect x="6" y="26" width="24" height="3" fill="#1a1815" opacity="0.4"/>
+              <circle cx="20" cy="50" r="4" fill="#c8502a"/>
+            </g>
+          </svg>
+        </div>
+        <h4>Contract Cards</h4>
+        <p>120 unique contracts across four seasons, each with a hidden bonus objective.</p>
+        <div class="comp-count">120 cards</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-visual">
+          <svg viewBox="0 0 120 120" width="100" height="100">
+            <g>
+              <circle cx="30" cy="40" r="14" fill="#c8502a" stroke="#1a1815" stroke-width="1.5"/>
+              <text x="30" y="45" text-anchor="middle" font-family="DM Serif Display" font-size="14" fill="#f2ede3">3</text>
+            </g>
+            <g>
+              <circle cx="70" cy="40" r="14" fill="#3d5a3a" stroke="#1a1815" stroke-width="1.5"/>
+              <text x="70" y="45" text-anchor="middle" font-family="DM Serif Display" font-size="14" fill="#f2ede3">5</text>
+            </g>
+            <g>
+              <circle cx="50" cy="75" r="14" fill="#d9a441" stroke="#1a1815" stroke-width="1.5"/>
+              <text x="50" y="80" text-anchor="middle" font-family="DM Serif Display" font-size="14" fill="#1a1815">2</text>
+            </g>
+          </svg>
+        </div>
+        <h4>Iron Tokens</h4>
+        <p>Screen-printed wooden tokens in three denominations. Weighted for satisfying stacks.</p>
+        <div class="comp-count">80 pieces</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-visual">
+          <svg viewBox="0 0 120 120" width="100" height="100">
+            <g transform="translate(60, 60)">
+              <polygon points="0,-40 35,-20 35,20 0,40 -35,20 -35,-20" fill="#1a1815" stroke="#d9a441" stroke-width="1.5"/>
+              <polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14" fill="none" stroke="#d9a441" stroke-width="1" opacity="0.6"/>
+              <text x="0" y="6" text-anchor="middle" font-family="DM Serif Display" font-size="20" fill="#d9a441">IM</text>
+            </g>
+          </svg>
+        </div>
+        <h4>Baron Miniatures</h4>
+        <p>Four sculpted resin barons with unique sculpts and a shared paint-ready base.</p>
+        <div class="comp-count">4 miniatures</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPANSIONS -->
+<section id="expansions">
+  <div class="section-head">
+    <div>
+      <span class="section-num">04 / EXPANSIONS</span>
+      <h2>More world. <em>More</em> ways to lose.</h2>
+    </div>
+    <p>Each expansion adds a new region, a new mechanic, and a new reason to argue with your friends.</p>
+  </div>
+
+  <div class="exp-grid">
+    <div class="exp-card">
+      <div class="exp-visual">
+        <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="exp1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3d5a3a"/>
+              <stop offset="1" stop-color="#1a1815"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="220" fill="url(#exp1)"/>
+          <g stroke="#d9a441" stroke-width="1.5" fill="none" opacity="0.7">
+            <path d="M 0 180 Q 100 120 200 140 T 400 100"/>
+            <path d="M 0 100 Q 100 60 200 80 T 400 40"/>
+          </g>
+          <g fill="#f2ede3" opacity="0.9">
+            <circle cx="80" cy="150" r="4"/>
+            <circle cx="200" cy="140" r="4"/>
+            <circle cx="320" cy="120" r="4"/>
+          </g>
+          <text x="30" y="50" font-family="DM Serif Display" font-size="28" fill="#f2ede3" opacity="0.9">The Northern Reach</text>
+        </svg>
+      </div>
+      <div class="exp-body">
+        <span class="exp-tag tag-new">New Release</span>
+        <h4>The Northern Reach</h4>
+        <p>Push your rails into the frozen north. Adds ice tiles, a new baron faction, and a solo campaign mode.</p>
+        <div class="exp-foot">
+          <span class="exp-price">$38</span>
+          <a href="#store" class="exp-link">Add to Cart →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-visual">
+        <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="exp2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#c8502a"/>
+              <stop offset="1" stop-color="#8f3418"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="220" fill="url(#exp2)"/>
+          <g stroke="#f2ede3" stroke-width="1.5" fill="none" opacity="0.6">
+            <circle cx="200" cy="110" r="60"/>
+            <circle cx="200" cy="110" r="90"/>
+            <circle cx="200" cy="110" r="120"/>
+          </g>
+          <g fill="#d9a441">
+            <circle cx="200" cy="110" r="8"/>
+            <circle cx="260" cy="110" r="5"/>
+            <circle cx="140" cy="110" r="5"/>
+            <circle cx="200" cy="50" r="5"/>
+            <circle cx="200" cy="170" r="5"/>
+          </g>
+          <text x="30" y="50" font-family="DM Serif Display" font-size="28" fill="#f2ede3" opacity="0.9">The Gilded Coast</text>
+        </svg>
+      </div>
+      <div class="exp-body">
+        <span class="exp-tag tag-classic">Classic</span>
+        <h4>The Gilded Coast</h4>
+        <p>Trade routes, port cities, and a new market economy. The expansion that started it all, back in print.</p>
+        <div class="exp-foot">
+          <span class="exp-price">$34</span>
+          <a href="#store" class="exp-link">Add to Cart →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-visual">
+        <svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="exp3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#d9a441"/>
+              <stop offset="1" stop-color="#8f6a1e"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="220" fill="url(#exp3)"/>
+          <g stroke="#1a1815" stroke-width="1.5" fill="none" opacity="0.5">
+            <path d="M 0 110 Q 100 60 200 110 T 400 110"/>
+            <path d="M 0 140 Q 100 90 200 140 T 400 140"/>
+            <path d="M 0 80 Q 100 30 200 80 T 400 80"/>
+          </g>
+          <g fill="#1a1815">
+            <rect x="180" y="90" width="40" height="40" rx="2"/>
+            <rect x="60" y="100" width="20" height="20" rx="2"/>
+            <rect x="320" y="100" width="20" height="20" rx="2"/>
+          </g>
+          <text x="30" y="50" font-family="DM Serif Display" font-size="28" fill="#1a1815" opacity="0.9">The Ironworks</text>
+        </svg>
+      </div>
+      <div class="exp-body">
+        <span class="exp-tag tag-soon">Coming Q3</span>
+        <h4>The Ironworks</h4>
+        <p>Industrialize your network. Adds factories, pollution, and a worker placement layer that changes the whole game.</p>
+        <div class="exp-foot">
+          <span class="exp-price">$42</span>
+          <a href="#store" class="exp-link">Pre-order →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="reviews-inner">
+    <div class="section-head">
+      <div>
+        <span class="section-num">05 / REVIEWS</span>
+        <h2>What the table <em>says</em>.</h2>
+      </div>
+      <p>We don't pay for reviews. We just make games that people want to bring back to the table.</p>
+    </div>
+
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        </div>
+        <p class="review-quote">"Iron Meridian is the rare heavy game that <em>earns</em> its length. Every decision matters, and the winter phase is genuinely tense."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: var(--rust);">MK</div>
+          <div>
+            <div class="review-name">Marcus Kline</div>
+            <div class="review-role">Dice Tower · Reviewer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        </div>
+        <p class="review-quote">"The component quality is <em>absurd</em>. The board alone is worth the price of admission. This is a studio that respects its players."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: var(--moss);">SL</div>
+          <div>
+            <div class="review-name">Sofia Laurent</div>
+            <div class="review-role">Board Game Quest</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        </div>
+        <p class="review-quote">"I've played 40+ times and I'm still finding new strategies. The Northern Reach expansion <em>transforms</em> the base game."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background: var(--gold); color: var(--ink);">JT</div>
+          <div>
+            <div class="review-name">James Tran</div>
+            <div class="review-role">BGG Top 100 Reviewer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORE CTA -->
+<section class="store-cta" id="store">
+  <div class="cta-box">
+    <div class="cta-content">
+      <h2>Ready to <em>build</em> your empire?</h2>
+      <p>Free shipping on orders over $75. Every purchase includes a digital rulebook, a solo variant, and access to our private Discord community.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary">
+          Shop the Store
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#events" class="btn btn-ghost">Find a Demo</a>
+      </div>
+    </div>
+    <div class="cta-visual">
+      <div class="cta-stack">
+        <div class="stack-box stack-1"></div>
+        <div class="stack-box stack-2"></div>
+        <div class="stack-box stack-3">BGS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="events-inner">
+    <div class="section-head">
+      <div>
+        <span class="section-num">06 / COMMUNITY</span>
+        <h2>Come play <em>with us</em>.</h2>
+      </div>
+      <p>We host monthly game nights, tournament qualifiers, and design workshops. All skill levels welcome.</p>
+    </div>
+
+    <div class="events-list">
+      <div class="event-row">
+        <div class="event-date">
+          MAR 14
+          <span>2025 · 7PM</span>
+        </div>
+        <div>
+          <div class="event-title">Iron Meridian Open Play</div>
+          <div class="event-desc">Casual games, teaching tables, and a raffle for the Northern Reach expansion.</div>
+        </div>
+        <div class="event-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Guardian Games, Portland
+        </div>
+        <div class="event-cta">
+          RSVP
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="event-row">
+        <div class="event-date">
+          MAR 28
+          <span>2025 · 10AM</span>
+        </div>
+        <div>
+          <div class="event-title">Regional Qualifier — West Coast</div>
+          <div class="event-desc">Top 8 advance to the national championship in Chicago. $20 entry, prizes for all.</div>
+        </div>
+        <div class="event-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Mox Boarding House, Seattle
+        </div>
+        <div class="event-cta">
+          Register
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="event-row">
+        <div class="event-date">
+          APR 11
+          <span>2025 · 6PM</span>
+        </div>
+        <div>
+          <div class="event-title">Design Workshop: Engine Building</div>
+          <div class="event-desc">A hands-on session with our lead designer on building satisfying economic engines.</div>
+        </div>
+        <div class="event-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          BGS Studio, Portland
+        </div>
+        <div class="event-cta">
+          RSVP
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div class="event-row">
+        <div class="event-date">
+          MAY 02
+          <span>2025 · 12PM</span>
+        </div>
+        <div>
+          <div class="event-title">Ironworks Preview Night</div>
+          <div class="event-desc">Be the first to play the upcoming expansion. Limited to 40 attendees.</div>
+        </div>
+        <div class="event-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          BGS Studio, Portland
+        </div>
+        <div class="event-cta">
+          Waitlist
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          BOARD / GAME / STUDIO
+        </div>
+        <p>Independent board game design studio based in Portland, Oregon. We make heavy strategy games for people who love the table.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Games</h5>
+        <ul>
+          <li><a href="#featured">Iron Meridian</a></li>
+          <li><a href="#expansions">Northern Reach</a></li>
+          <li><a href="#expansions">Gilded Coast</a></li>
+          <li><a href="#expansions">Ironworks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Studio</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Design Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Kit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Replacement Parts</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 BOARD / GAME / STUDIO. All rights reserved.</div>
+      <div class="mono">MADE IN PORTLAND · BGS-014</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAKER / MARKETPLACE — objects with a pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1e1c1a;
+      --paper: #faf7f2;
+      --clay: #c96f4b;
+      --moss: #4f6d5e;
+      --ochre: #e3b448;
+      --slate: #3b3f46;
+      --mist: #e8e2d9;
+      --sand: #d9cfc0;
+      --white: #ffffff;
+      --radius-card: 24px;
+      --radius-btn: 40px;
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.04);
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 2rem;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.75rem 0 1.5rem;
+      border-bottom: 1px solid var(--sand);
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .logo span {
+      color: var(--clay);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      color: var(--slate);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--clay);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--ink);
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn-fill {
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--paper);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-fill:hover {
+      background: var(--clay);
+      border-color: var(--clay);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 5rem;
+    }
+
+    .hero-content {
+      max-width: 560px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 5vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--clay);
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      color: var(--slate);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--clay);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--white);
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #b85d3a;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid var(--ink);
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Hero visual — abstract ceramic vessel */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+    }
+
+    .vessel {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1/1.1;
+      background: radial-gradient(circle at 30% 30%, #e8d9c4, #c9b29b);
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+      box-shadow: var(--shadow-md), inset -10px -10px 20px rgba(0,0,0,0.08), inset 10px 10px 30px rgba(255,255,255,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vessel::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 20%;
+      width: 30%;
+      height: 30%;
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .vessel::after {
+      content: '';
+      position: absolute;
+      bottom: 10%;
+      right: 15%;
+      width: 40%;
+      height: 40%;
+      background: radial-gradient(circle, rgba(201, 111, 75, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .vessel-rim {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 12%;
+      background: radial-gradient(ellipse at center, #d9c4ae, #b89f86);
+      border-radius: 50%;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ---------- SECTION HEADERS ---------- */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .section-link {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--clay);
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .section-link:hover {
+      border-color: var(--clay);
+    }
+
+    /* ---------- FEATURED MAKERS ---------- */
+    .makers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .maker-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.8rem 1.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .maker-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .maker-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin-bottom: 1.2rem;
+      background: var(--mist);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--slate);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .maker-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 60%);
+    }
+
+    .maker-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .maker-craft {
+      font-size: 0.9rem;
+      color: var(--clay);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .maker-bio {
+      font-size: 0.95rem;
+      color: var(--slate);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .maker-link {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--sand);
+      transition: border-color 0.2s;
+    }
+
+    .maker-link:hover {
+      border-color: var(--clay);
+    }
+
+    /* ---------- PRODUCT GRID ---------- */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 5rem;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-image {
+      aspect-ratio: 1/1;
+      background: var(--mist);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Abstract product visuals */
+    .product-image.vase {
+      background: radial-gradient(circle at 40% 30%, #e8d9c4, #c9b29b);
+    }
+    .product-image.vase::after {
+      content: '';
+      position: absolute;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 60%;
+      background: radial-gradient(ellipse at center, #d9c4ae, #b89f86);
+      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+      box-shadow: inset -4px -4px 8px rgba(0,0,0,0.1);
+    }
+
+    .product-image.bowl {
+      background: radial-gradient(circle at 40% 30%, #d4c9b8, #b8a894);
+    }
+    .product-image.bowl::after {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 40%;
+      background: radial-gradient(ellipse at center, #c9b29b, #a89078);
+      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+      box-shadow: inset -4px -4px 8px rgba(0,0,0,0.1);
+    }
+
+    .product-image.textile {
+      background: linear-gradient(135deg, #e3b448, #c96f4b);
+    }
+    .product-image.textile::after {
+      content: '';
+      position: absolute;
+      inset: 20%;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 4px, transparent 4px, transparent 8px);
+      border-radius: 8px;
+    }
+
+    .product-image.wood {
+      background: linear-gradient(135deg, #8b6b4a, #5c3e2a);
+    }
+    .product-image.wood::after {
+      content: '';
+      position: absolute;
+      inset: 25%;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 2px, transparent 2px, transparent 6px);
+      border-radius: 4px;
+    }
+
+    .product-image.glass {
+      background: linear-gradient(135deg, #a8c8d8, #6a9bb5);
+    }
+    .product-image.glass::after {
+      content: '';
+      position: absolute;
+      inset: 20%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .product-image.leather {
+      background: linear-gradient(135deg, #a0522d, #6b3a1f);
+    }
+    .product-image.leather::after {
+      content: '';
+      position: absolute;
+      inset: 25%;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 8px);
+      border-radius: 6px;
+    }
+
+    .product-image.candle {
+      background: linear-gradient(135deg, #f5e6d3, #e8d0b0);
+    }
+    .product-image.candle::after {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 50%;
+      background: radial-gradient(ellipse at center, #f0dcc0, #d9c4a8);
+      border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+      box-shadow: inset -4px -4px 8px rgba(0,0,0,0.08);
+    }
+
+    .product-image.print {
+      background: linear-gradient(135deg, #4f6d5e, #2d4a3e);
+    }
+    .product-image.print::after {
+      content: '';
+      position: absolute;
+      inset: 20%;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 3px, transparent 3px, transparent 9px);
+      border-radius: 4px;
+    }
+
+    .product-info {
+      padding: 1.2rem 1.2rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-maker {
+      font-size: 0.85rem;
+      color: var(--slate);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--clay);
+      margin-top: auto;
+    }
+
+    /* ---------- CRAFT STORY ---------- */
+    .craft-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 5rem;
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 3.5rem 4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .craft-content {
+      max-width: 480px;
+    }
+
+    .craft-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 1rem;
+    }
+
+    .craft-title {
+      font-family: var(--font-serif);
+      font-size: 2.6rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .craft-text {
+      font-size: 1.05rem;
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .craft-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+
+    .craft-illustration {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1/1;
+      background: radial-gradient(circle at 30% 30%, #e8d9c4, #c9b29b);
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+      box-shadow: var(--shadow-md), inset -10px -10px 20px rgba(0,0,0,0.08), inset 10px 10px 30px rgba(255,255,255,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .craft-illustration::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 25%;
+      width: 25%;
+      height: 25%;
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .craft-illustration::after {
+      content: '';
+      position: absolute;
+      bottom: 15%;
+      right: 20%;
+      width: 35%;
+      height: 35%;
+      background: radial-gradient(circle, rgba(201, 111, 75, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* ---------- CATEGORIES ---------- */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 5rem;
+    }
+
+    .category-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 1.8rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .category-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--mist);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .category-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- SELLER CTA ---------- */
+    .seller-cta {
+      background: var(--ink);
+      border-radius: var(--radius-card);
+      padding: 4rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 5rem;
+      color: var(--paper);
+    }
+
+    .seller-content {
+      max-width: 480px;
+    }
+
+    .seller-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 1rem;
+    }
+
+    .seller-title {
+      font-family: var(--font-serif);
+      font-size: 2.6rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .seller-text {
+      font-size: 1.05rem;
+      color: var(--sand);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .seller-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-light {
+      background: var(--paper);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+
+    .btn-light:hover {
+      background: var(--ochre);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1.5px solid var(--sand);
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--paper);
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--paper);
+    }
+
+    .seller-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 280px;
+    }
+
+    .seller-illustration {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1/1;
+      background: radial-gradient(circle at 30% 30%, #e3b448, #c96f4b);
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+      box-shadow: var(--shadow-md), inset -10px -10px 20px rgba(0,0,0,0.15), inset 10px 10px 30px rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .seller-illustration::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 25%;
+      width: 25%;
+      height: 25%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .seller-illustration::after {
+      content: '';
+      position: absolute;
+      bottom: 15%;
+      right: 20%;
+      width: 35%;
+      height: 35%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* ---------- SHIPPING PROMISE ---------- */
+    .shipping-promise {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .promise-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.8rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .promise-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--mist);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .promise-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .promise-text {
+      font-size: 0.95rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      border-top: 1px solid var(--sand);
+      padding: 3rem 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .footer-logo span {
+      color: var(--clay);
+      font-style: italic;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.9rem;
+      color: var(--slate);
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--clay);
+    }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      color: var(--slate);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .hero-content {
+        max-width: 100%;
+      }
+      .hero-visual {
+        min-height: 300px;
+      }
+      .makers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .craft-story {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2.5rem;
+      }
+      .craft-content {
+        max-width: 100%;
+      }
+      .seller-cta {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2.5rem;
+      }
+      .seller-content {
+        max-width: 100%;
+      }
+      .shipping-promise {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 1rem;
+      }
+      .container {
+        padding: 0 1rem;
+      }
+      .site-header {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .makers-grid {
+        grid-template-columns: 1fr;
+      }
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .shipping-promise {
+        grid-template-columns: 1fr;
+      }
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .hero-title {
+        font-size: 2.8rem;
+      }
+      .craft-title,
+      .seller-title {
+        font-size: 2rem;
+      }
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-actions {
+        flex-direction: column;
+      }
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+      .seller-actions {
+        flex-direction: column;
+      }
+      .btn-light,
+      .btn-ghost {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="site-header">
+      <a href="#" class="logo">MAKER <span>/</span> MARKETPLACE</a>
+      <nav class="nav-links">
+        <a href="#">Shop</a>
+        <a href="#">Makers</a>
+        <a href="#">Journal</a>
+        <a href="#">About</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="btn-outline">Sign in</a>
+        <a href="#" class="btn-fill">Sell</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Objects with a pulse</p>
+        <h1 class="hero-title">Made by hand, <em>kept for life.</em></h1>
+        <p class="hero-desc">Discover one-of-a-kind ceramics, textiles, and woodwork from independent makers who care about the details.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary">Shop the collection</a>
+          <a href="#" class="btn-secondary">Meet the makers</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="vessel">
+          <div class="vessel-rim"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED MAKERS -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Featured makers</h2>
+        <a href="#" class="section-link">View all makers →</a>
+      </div>
+      <div class="makers-grid">
+        <div class="maker-card">
+          <div class="maker-avatar">L</div>
+          <h3 class="maker-name">Lena Ortiz</h3>
+          <p class="maker-craft">Ceramicist · Oaxaca</p>
+          <p class="maker-bio">Lena shapes each vessel by hand, letting the clay's natural texture guide the final form. Her work is fired in a wood kiln for a warm, organic finish.</p>
+          <a href="#" class="maker-link">View profile →</a>
+        </div>
+        <div class="maker-card">
+          <div class="maker-avatar">J</div>
+          <h3 class="maker-name">James Whitfield</h3>
+          <p class="maker-craft">Woodworker · Portland</p>
+          <p class="maker-bio">James sources reclaimed timber from local mills, turning forgotten boards into furniture and objects that carry their history forward.</p>
+          <a href="#" class="maker-link">View profile →</a>
+        </div>
+        <div class="maker-card">
+          <div class="maker-avatar">A</div>
+          <h3 class="maker-name">Amara Okafor</h3>
+          <p class="maker-craft">Textile artist · Lagos</p>
+          <p class="maker-bio">Amara weaves natural fibers into bold, tactile textiles. Each piece is dyed with plant-based pigments and finished with hand-stitched details.</p>
+          <a href="#" class="maker-link">View profile →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT GRID -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">New arrivals</h2>
+        <a href="#" class="section-link">Shop all →</a>
+      </div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-image vase"></div>
+          <div class="product-info">
+            <h3 class="product-name">Stoneware Vase</h3>
+            <p class="product-maker">Lena Ortiz</p>
+            <p class="product-price">$84</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image bowl"></div>
+          <div class="product-info">
+            <h3 class="product-name">Rustic Serving Bowl</h3>
+            <p class="product-maker">Lena Ortiz</p>
+            <p class="product-price">$62</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image textile"></div>
+          <div class="product-info">
+            <h3 class="product-name">Handwoven Throw</h3>
+            <p class="product-maker">Amara Okafor</p>
+            <p class="product-price">$145</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image wood"></div>
+          <div class="product-info">
+            <h3 class="product-name">Walnut Cutting Board</h3>
+            <p class="product-maker">James Whitfield</p>
+            <p class="product-price">$78</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image glass"></div>
+          <div class="product-info">
+            <h3 class="product-name">Blown Glass Tumbler</h3>
+            <p class="product-maker">Maya Chen</p>
+            <p class="product-price">$38</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image leather"></div>
+          <div class="product-info">
+            <h3 class="product-name">Leather Journal</h3>
+            <p class="product-maker">Elena Rossi</p>
+            <p class="product-price">$56</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image candle"></div>
+          <div class="product-info">
+            <h3 class="product-name">Soy Candle — Cedar</h3>
+            <p class="product-maker">Noah Kim</p>
+            <p class="product-price">$28</p>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image print"></div>
+          <div class="product-info">
+            <h3 class="product-name">Linocut Print</h3>
+            <p class="product-maker">Sofia Lindqvist</p>
+            <p class="product-price">$45</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRAFT STORY -->
+    <section class="craft-story">
+      <div class="craft-content">
+        <p class="craft-eyebrow">The craft story</p>
+        <h2 class="craft-title">Every object has a maker behind it.</h2>
+        <p class="craft-text">We believe in the slow process — the wheel-thrown curve, the hand-sanded edge, the dye that takes three days to set. Our makers work in small batches, often alone, always with intention. When you buy from MAKER / MARKETPLACE, you're not just getting a product. You're getting a piece of someone's practice.</p>
+        <a href="#" class="btn-secondary">Read the journal</a>
+      </div>
+      <div class="craft-visual">
+        <div class="craft-illustration"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Browse by craft</h2>
+        <a href="#" class="section-link">All categories →</a>
+      </div>
+      <div class="categories-grid">
+        <a href="#" class="category-card">
+          <div class="category-icon">🏺</div>
+          <span class="category-name">Ceramics</span>
+        </a>
+        <a href="#" class="category-card">
+          <div class="category-icon">🧵</div>
+          <span class="category-name">Textiles</span>
+        </a>
+        <a href="#" class="category-card">
+          <div class="category-icon">🪵</div>
+          <span class="category-name">Woodwork</span>
+        </a>
+        <a href="#" class="category-card">
+          <div class="category-icon">💎</div>
+          <span class="category-name">Glass</span>
+        </a>
+        <a href="#" class="category-card">
+          <div class="category-icon">📓</div>
+          <span class="category-name">Leather</span>
+        </a>
+        <a href="#" class="category-card">
+          <div class="category-icon">🕯️</div>
+          <span class="category-name">Home</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SELLER CTA -->
+    <section class="seller-cta">
+      <div class="seller-content">
+        <p class="seller-eyebrow">For makers</p>
+        <h2 class="seller-title">Your craft deserves a wider audience.</h2>
+        <p class="seller-text">Join a community of independent makers who are building sustainable practices. We handle the logistics, you focus on the work. No listing fees, no monthly subscriptions — just a simple commission when you sell.</p>
+        <div class="seller-actions">
+          <a href="#" class="btn-light">Start selling</a>
+          <a href="#" class="btn-ghost">Learn more</a>
+        </div>
+      </div>
+      <div class="seller-visual">
+        <div class="seller-illustration"></div>
+      </div>
+    </section>
+
+    <!-- SHIPPING PROMISE -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Our shipping promise</h2>
+      </div>
+      <div class="shipping-promise">
+        <div class="promise-card">
+          <div class="promise-icon">📦</div>
+          <h3 class="promise-title">Carefully packed</h3>
+          <p class="promise-text">Every order is wrapped by the maker using recycled and biodegradable materials. No plastic, ever.</p>
+        </div>
+        <div class="promise-card">
+          <div class="promise-icon">🚚</div>
+          <h3 class="promise-title">Carbon-neutral delivery</h3>
+          <p class="promise-text">We offset every shipment and partner with carriers who prioritize efficiency and renewable energy.</p>
+        </div>
+        <div class="promise-card">
+          <div class="promise-icon">↩️</div>
+          <h3 class="promise-title">30-day returns</h3>
+          <p class="promise-text">If it's not right, send it back. We'll cover the return shipping and make sure the maker is still paid.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <a href="#" class="footer-logo">MAKER <span>/</span> MARKETPLACE</a>
+      <div class="footer-links">
+        <a href="#">Shop</a>
+        <a href="#">Makers</a>
+        <a href="#">Journal</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+      <p class="footer-copy">© 2025 MAKER / MARKETPLACE. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

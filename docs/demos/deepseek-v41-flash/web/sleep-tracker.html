@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLEEP / TRACKER — nocturnal intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0B0E1A;
+      --bg-surface: #13172A;
+      --bg-elevated: #1C2138;
+      --border-subtle: #2A2F4A;
+      --text-primary: #F0F2FF;
+      --text-secondary: #9BA3C4;
+      --text-muted: #5E6688;
+      --accent-lavender: #B8A9FF;
+      --accent-cyan: #7EE0FF;
+      --accent-amber: #FFB86B;
+      --accent-rose: #FF8FA3;
+      --accent-mint: #7EFFC4;
+      --glow-lavender: rgba(184, 169, 255, 0.15);
+      --glow-cyan: rgba(126, 224, 255, 0.12);
+      --font-display: 'Instrument Serif', serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Ambient background ── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse at center, var(--glow-lavender) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+
+    .ambient::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: -5%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(ellipse at center, var(--glow-cyan) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 28px 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, var(--accent-lavender), var(--accent-cyan), var(--accent-lavender));
+      position: relative;
+      box-shadow: 0 0 20px var(--glow-lavender);
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: var(--bg-deep);
+    }
+
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background: var(--accent-lavender);
+      box-shadow: 0 0 12px var(--accent-lavender);
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+    }
+
+    nav a.active {
+      color: var(--accent-lavender);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--accent-lavender);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-mint);
+      box-shadow: 0 0 8px var(--accent-mint);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Hero / Score ── */
+    .hero {
+      padding: 48px 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
+    .score-display {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .score-number {
+      font-family: var(--font-display);
+      font-size: 140px;
+      line-height: 0.85;
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-lavender) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.04em;
+    }
+
+    .score-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .score-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .score-delta {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent-mint);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .score-delta svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .score-caption {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      max-width: 380px;
+    }
+
+    .score-caption em {
+      color: var(--accent-lavender);
+      font-style: italic;
+    }
+
+    /* ── Graph card ── */
+    .graph-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 28px 28px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .graph-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-lavender), transparent);
+      opacity: 0.5;
+    }
+
+    .graph-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .graph-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .graph-legend {
+      display: flex;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    .legend-dot.deep { background: var(--accent-lavender); }
+    .legend-dot.rem { background: var(--accent-cyan); }
+    .legend-dot.light { background: var(--accent-amber); }
+
+    .graph-svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+
+    .graph-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .graph-footer span strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 32px;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+
+    .stat-value small {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    .stat-bar {
+      height: 3px;
+      background: var(--bg-elevated);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 1s ease;
+    }
+
+    .stat-bar-fill.lavender { background: var(--accent-lavender); }
+    .stat-bar-fill.cyan { background: var(--accent-cyan); }
+    .stat-bar-fill.amber { background: var(--accent-amber); }
+    .stat-bar-fill.rose { background: var(--accent-rose); }
+
+    /* ── Main grid ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      padding: 40px 0 60px;
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-lavender);
+    }
+
+    /* ── Routine ── */
+    .routine-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .routine-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .routine-item:hover {
+      background: var(--bg-elevated);
+      border-color: var(--accent-lavender);
+      transform: translateX(4px);
+    }
+
+    .routine-time {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 52px;
+      letter-spacing: 0.05em;
+    }
+
+    .routine-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .routine-icon.lavender { background: rgba(184, 169, 255, 0.12); color: var(--accent-lavender); }
+    .routine-icon.cyan { background: rgba(126, 224, 255, 0.12); color: var(--accent-cyan); }
+    .routine-icon.amber { background: rgba(255, 184, 107, 0.12); color: var(--accent-amber); }
+    .routine-icon.rose { background: rgba(255, 143, 163, 0.12); color: var(--accent-rose); }
+
+    .routine-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .routine-text {
+      flex: 1;
+    }
+
+    .routine-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .routine-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .routine-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .routine-item:hover .routine-check {
+      border-color: var(--accent-lavender);
+    }
+
+    .routine-check.done {
+      background: var(--accent-lavender);
+      border-color: var(--accent-lavender);
+    }
+
+    .routine-check.done svg {
+      width: 10px;
+      height: 10px;
+      color: var(--bg-deep);
+    }
+
+    /* ── Sound selector ── */
+    .sound-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .sound-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sound-card:hover {
+      border-color: var(--accent-cyan);
+      background: var(--bg-elevated);
+    }
+
+    .sound-card.active {
+      border-color: var(--accent-cyan);
+      background: rgba(126, 224, 255, 0.06);
+    }
+
+    .sound-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent-cyan);
+    }
+
+    .sound-wave {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 24px;
+      margin-bottom: 12px;
+    }
+
+    .sound-wave span {
+      width: 2px;
+      background: var(--text-muted);
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    .sound-card.active .sound-wave span {
+      background: var(--accent-cyan);
+      animation: wave 1.2s ease-in-out infinite;
+    }
+
+    .sound-card.active .sound-wave span:nth-child(1) { animation-delay: 0s; height: 8px; }
+    .sound-card.active .sound-wave span:nth-child(2) { animation-delay: 0.1s; height: 16px; }
+    .sound-card.active .sound-wave span:nth-child(3) { animation-delay: 0.2s; height: 22px; }
+    .sound-card.active .sound-wave span:nth-child(4) { animation-delay: 0.3s; height: 14px; }
+    .sound-card.active .sound-wave span:nth-child(5) { animation-delay: 0.4s; height: 20px; }
+    .sound-card.active .sound-wave span:nth-child(6) { animation-delay: 0.5s; height: 10px; }
+    .sound-card.active .sound-wave span:nth-child(7) { animation-delay: 0.6s; height: 18px; }
+    .sound-card.active .sound-wave span:nth-child(8) { animation-delay: 0.7s; height: 12px; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.6); }
+      50% { transform: scaleY(1.2); }
+    }
+
+    .sound-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .sound-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Coaching insight ── */
+    .insight-card {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--glow-lavender) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .insight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-lavender);
+      background: rgba(184, 169, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .insight-badge svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .insight-text {
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .insight-text em {
+      color: var(--accent-lavender);
+      font-style: italic;
+    }
+
+    .insight-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+      z-index: 1;
+    }
+
+    .insight-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .insight-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-lavender), var(--accent-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--bg-deep);
+    }
+
+    .insight-author-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .insight-author-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .insight-author-role {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .insight-action {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-lavender);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .insight-action:hover {
+      gap: 10px;
+    }
+
+    .insight-action svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--accent-lavender);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 20px;
+      }
+      nav {
+        display: none;
+      }
+      .score-number {
+        font-size: 100px;
+      }
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .sound-grid {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .fade-up:nth-child(1) { animation-delay: 0.1s; }
+    .fade-up:nth-child(2) { animation-delay: 0.2s; }
+    .fade-up:nth-child(3) { animation-delay: 0.3s; }
+    .fade-up:nth-child(4) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+  <div class="ambient"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <span>Sleep / Tracker</span>
+      </div>
+      <nav>
+        <a href="#" class="active">Tonight</a>
+        <a href="#">Trends</a>
+        <a href="#">Routine</a>
+        <a href="#">Sounds</a>
+        <a href="#">Insights</a>
+      </nav>
+      <div class="header-meta">
+        <span class="status-dot"></span>
+        <span>Synced 2m ago</span>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-left fade-up">
+        <div class="eyebrow">Last night · Tue, 14 May</div>
+        <div class="score-display">
+          <div class="score-number">87</div>
+          <div class="score-meta">
+            <span class="score-label">Sleep score</span>
+            <span class="score-delta">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 10V2M6 2L2 6M6 2L10 6"/>
+              </svg>
+              +4 vs. avg
+            </span>
+          </div>
+        </div>
+        <p class="score-caption">
+          A <em>restorative night</em> — your deepest sleep arrived earlier than usual, and you woke without an alarm.
+        </p>
+      </div>
+
+      <div class="graph-card fade-up">
+        <div class="graph-header">
+          <div class="graph-title">Sleep architecture · 7h 42m</div>
+          <div class="graph-legend">
+            <div class="legend-item"><span class="legend-dot deep"></span>Deep</div>
+            <div class="legend-item"><span class="legend-dot rem"></span>REM</div>
+            <div class="legend-item"><span class="legend-dot light"></span>Light</div>
+          </div>
+        </div>
+        <svg class="graph-svg" viewBox="0 0 600 180" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="deepGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#B8A9FF" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#B8A9FF" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="remGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7EE0FF" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#7EE0FF" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="lightGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFB86B" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#FFB86B" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Grid lines -->
+          <line x1="0" y1="45" x2="600" y2="45" stroke="#2A2F4A" stroke-width="0.5" stroke-dasharray="2 4"/>
+          <line x1="0" y1="90" x2="600" y2="90" stroke="#2A2F4A" stroke-width="0.5" stroke-dasharray="2 4"/>
+          <line x1="0" y1="135" x2="600" y2="135" stroke="#2A2F4A" stroke-width="0.5" stroke-dasharray="2 4"/>
+
+          <!-- Light sleep (bottom layer) -->
+          <path d="M0,140 C30,130 50,120 80,125 C110,130 130,145 160,140 C190,135 210,120 240,125 C270,130 290,145 320,140 C350,135 370,120 400,125 C430,130 450,145 480,140 C510,135 530,120 560,125 C580,128 590,135 600,140 L600,180 L0,180 Z" fill="url(#lightGrad)"/>
+          <path d="M0,140 C30,130 50,120 80,125 C110,130 130,145 160,140 C190,135 210,120 240,125 C270,130 290,145 320,140 C350,135 370,120 400,125 C430,130 450,145 480,140 C510,135 530,120 560,125 C580,128 590,135 600,140" fill="none" stroke="#FFB86B" stroke-width="1.5" opacity="0.6"/>
+
+          <!-- REM sleep (middle layer) -->
+          <path d="M0,110 C30,100 50,90 80,95 C110,100 130,115 160,110 C190,105 210,90 240,95 C270,100 290,115 320,110 C350,105 370,90 400,95 C430,100 450,115 480,110 C510,105 530,90 560,95 C580,98 590,105 600,110 L600,180 L0,180 Z" fill="url(#remGrad)"/>
+          <path d="M0,110 C30,100 50,90 80,95 C110,100 130,115 160,110 C190,105 210,90 240,95 C270,100 290,115 320,110 C350,105 370,90 400,95 C430,100 450,115 480,110 C510,105 530,90 560,95 C580,98 590,105 600,110" fill="none" stroke="#7EE0FF" stroke-width="1.5" opacity="0.7"/>
+
+          <!-- Deep sleep (top layer) -->
+          <path d="M0,80 C30,70 50,60 80,65 C110,70 130,85 160,80 C190,75 210,60 240,65 C270,70 290,85 320,80 C350,75 370,60 400,65 C430,70 450,85 480,80 C510,75 530,60 560,65 C580,68 590,75 600,80 L600,180 L0,180 Z" fill="url(#deepGrad)"/>
+          <path d="M0,80 C30,70 50,60 80,65 C110,70 130,85 160,80 C190,75 210,60 240,65 C270,70 290,85 320,80 C350,75 370,60 400,65 C430,70 450,85 480,80 C510,75 530,60 560,65 C580,68 590,75 600,80" fill="none" stroke="#B8A9FF" stroke-width="1.5" opacity="0.8"/>
+
+          <!-- Data points -->
+          <circle cx="80" cy="65" r="3" fill="#B8A9FF"/>
+          <circle cx="240" cy="65" r="3" fill="#B8A9FF"/>
+          <circle cx="400" cy="65" r="3" fill="#B8A9FF"/>
+          <circle cx="560" cy="65" r="3" fill="#B8A9FF"/>
+        </svg>
+        <div class="graph-footer">
+          <span>Bedtime <strong>23:14</strong></span>
+          <span>Wake <strong>06:56</strong></span>
+          <span>Efficiency <strong>94%</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats row -->
+    <section class="stats-row">
+      <div class="stat fade-up">
+        <span class="stat-label">Time asleep</span>
+        <span class="stat-value">7<small>h</small> 42<small>m</small></span>
+        <div class="stat-bar"><div class="stat-bar-fill lavender" style="width: 88%"></div></div>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-label">Deep sleep</span>
+        <span class="stat-value">1<small>h</small> 28<small>m</small></span>
+        <div class="stat-bar"><div class="stat-bar-fill cyan" style="width: 72%"></div></div>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-label">REM sleep</span>
+        <span class="stat-value">1<small>h</small> 54<small>m</small></span>
+        <div class="stat-bar"><div class="stat-bar-fill amber" style="width: 81%"></div></div>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-label">Restfulness</span>
+        <span class="stat-value">92<small>%</small></span>
+        <div class="stat-bar"><div class="stat-bar-fill rose" style="width: 92%"></div></div>
+      </div>
+    </section>
+
+    <!-- Main grid -->
+    <section class="main-grid">
+      <!-- Left column -->
+      <div>
+        <!-- Bedtime routine -->
+        <div class="section-title">Bedtime routine · Tonight</div>
+        <div class="routine-list">
+          <div class="routine-item">
+            <span class="routine-time">21:30</span>
+            <div class="routine-icon lavender">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                <circle cx="12" cy="12" r="4"/>
+              </svg>
+            </div>
+            <div class="routine-text">
+              <div class="routine-name">Dim the lights</div>
+              <div class="routine-desc">Reduce blue light · 30 min</div>
+            </div>
+            <div class="routine-check done">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6l3 3 5-6"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="routine-item">
+            <span class="routine-time">22:00</span>
+            <div class="routine-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 0 0-7-7z"/>
+                <path d="M9 21h6"/>
+              </svg>
+            </div>
+            <div class="routine-text">
+              <div class="routine-name">Herbal tea & journal</div>
+              <div class="routine-desc">Chamomile · 3 gratitudes</div>
+            </div>
+            <div class="routine-check done">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6l3 3 5-6"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="routine-item">
+            <span class="routine-time">22:30</span>
+            <div class="routine-icon amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div class="routine-text">
+              <div class="routine-name">Read fiction</div>
+              <div class="routine-desc">Paper book · 20 min</div>
+            </div>
+            <div class="routine-check"></div>
+          </div>
+
+          <div class="routine-item">
+            <span class="routine-time">23:00</span>
+            <div class="routine-icon rose">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 0 0-7-7z"/>
+                <path d="M9 21h6"/>
+              </svg>
+            </div>
+            <div class="routine-text">
+              <div class="routine-name">Lights out</div>
+              <div class="routine-desc">Target bedtime · 23:15</div>
+            </div>
+            <div class="routine-check"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div>
+        <!-- Sound selector -->
+        <div class="section-title">Soundscape · Now playing</div>
+        <div class="sound-grid">
+          <div class="sound-card active">
+            <div class="sound-wave">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="sound-name">Rain on canvas</div>
+            <div class="sound-meta">Ambient · 8h loop</div>
+          </div>
+
+          <div class="sound-card">
+            <div class="sound-wave">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="sound-name">Deep ocean</div>
+            <div class="sound-meta">Binaural · 6h loop</div>
+          </div>
+
+          <div class="sound-card">
+            <div class="sound-wave">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="sound-name">Forest at dusk</div>
+            <div class="sound-meta">Nature · 8h loop</div>
+          </div>
+
+          <div class="sound-card">
+            <div class="sound-wave">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="sound-name">White noise</div>
+            <div class="sound-meta">Static · 8h loop</div>
+          </div>
+        </div>
+
+        <!-- Coaching insight -->
+        <div class="section-title" style="margin-top: 32px;">Coaching insight</div>
+        <div class="insight-card">
+          <div class="insight-badge">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 1v10M1 6h10"/>
+            </svg>
+            Weekly pattern
+          </div>
+          <p class="insight-text">
+            Your deep sleep peaks when you're in bed before <em>23:30</em>. Try shifting lights-out 15 minutes earlier this week.
+          </p>
+          <div class="insight-footer">
+            <div class="insight-author">
+              <div class="insight-avatar">DR</div>
+              <div class="insight-author-info">
+                <span class="insight-author-name">Dr. Rhea Mendez</span>
+                <span class="insight-author-role">Sleep physiologist</span>
+              </div>
+            </div>
+            <a href="#" class="insight-action">
+              Read more
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 6h8M6 2l4 4-4 4"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>© 2025 Sleep / Tracker · Nocturnal intelligence</div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Methodology</a>
+        <a href="#">Support</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Sound card selection
+    document.querySelectorAll('.sound-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
+    // Routine check toggle
+    document.querySelectorAll('.routine-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const check = item.querySelector('.routine-check');
+        check.classList.toggle('done');
+        if (check.classList.contains('done')) {
+          check.innerHTML = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-6"/></svg>';
+        } else {
+          check.innerHTML = '';
+        }
+      });
+    });
+
+    // Animate stat bars on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.stat-bar-fill').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 300);
+      });
+    });
+  </script>
+</body>
+</html>

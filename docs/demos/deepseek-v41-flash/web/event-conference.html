@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGNAL / 26 — The conference for builders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0b;
+      --bg-2:      #111113;
+      --bg-3:      #18181b;
+      --border:    #26262b;
+      --border-2:  #33333a;
+      --text:      #f2f2f0;
+      --text-2:    #a0a0a8;
+      --text-3:    #6b6b74;
+      --chartreuse:#d4ff3f;
+      --chartreuse-dim: #a8cc2e;
+      --orange:    #ff6b2c;
+      --orange-dim:#cc5522;
+      --radius:    12px;
+      --radius-lg: 20px;
+      --max:       1200px;
+      --font:      'Inter', system-ui, -apple-system, sans-serif;
+      --mono:      'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Typography ───────────────────────────────────────── */
+    .mono {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--chartreuse);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--chartreuse);
+    }
+
+    h1, h2, h3, h4 { line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,11,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo .slash { color: var(--chartreuse); }
+    .nav-logo .year { color: var(--text-3); font-weight: 500; }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 9px 20px;
+      background: var(--chartreuse);
+      color: #0a0a0b;
+      border-radius: 100px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(212,255,63,0.3);
+    }
+
+    .nav-toggle { display: none; }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 64px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-bg canvas {
+      width: 100%;
+      height: 100%;
+      opacity: 0.55;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 0 60px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-meta .badge {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--border-2);
+      border-radius: 100px;
+      color: var(--text-2);
+    }
+    .hero-meta .badge.accent {
+      border-color: var(--chartreuse);
+      color: var(--chartreuse);
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 10vw, 8.5rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.92;
+      margin-bottom: 28px;
+    }
+    .hero-title .line { display: block; }
+    .hero-title .accent { color: var(--chartreuse); }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--text);
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--chartreuse);
+      color: #0a0a0b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(212,255,63,0.35);
+    }
+    .btn-primary .arrow { transition: transform 0.2s; }
+    .btn-primary:hover .arrow { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border: 1px solid var(--border-2);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--text-2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .hero-stat .num {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .hero-stat .num .accent { color: var(--chartreuse); }
+    .hero-stat .label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* ── Marquee ──────────────────────────────────────────── */
+    .marquee {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 18px 0;
+      background: var(--bg-2);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 48px;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .marquee-item .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--chartreuse);
+      flex-shrink: 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── Sections ─────────────────────────────────────────── */
+    .section { padding: 100px 0; }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.04em;
+    }
+    .section-desc {
+      color: var(--text-2);
+      max-width: 400px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ── Speakers ─────────────────────────────────────────── */
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .speaker-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .speaker-card:hover {
+      border-color: var(--border-2);
+      transform: translateY(-4px);
+    }
+    .speaker-avatar {
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .speaker-avatar svg { width: 100%; height: 100%; }
+    .speaker-info {
+      padding: 20px;
+    }
+    .speaker-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .speaker-role {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+    .speaker-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+    }
+    .speaker-tag.keynote {
+      border-color: var(--chartreuse);
+      color: var(--chartreuse);
+    }
+
+    /* ── Schedule ─────────────────────────────────────────── */
+    .schedule-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .schedule-tab {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-2);
+      transition: all 0.2s;
+    }
+    .schedule-tab:hover { border-color: var(--border-2); color: var(--text); }
+    .schedule-tab.active {
+      background: var(--chartreuse);
+      color: #0a0a0b;
+      border-color: var(--chartreuse);
+      font-weight: 600;
+    }
+
+    .schedule-list { display: flex; flex-direction: column; }
+    .schedule-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .schedule-item:hover { background: rgba(255,255,255,0.02); }
+    .schedule-time {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--chartreuse);
+      letter-spacing: 0.04em;
+    }
+    .schedule-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .schedule-speaker {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-top: 2px;
+    }
+    .schedule-type {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+    .schedule-type.keynote { border-color: var(--chartreuse); color: var(--chartreuse); }
+    .schedule-type.workshop { border-color: var(--orange); color: var(--orange); }
+    .schedule-type.break { border-color: var(--border); color: var(--text-3); }
+
+    /* ── Venue ────────────────────────────────────────────── */
+    .venue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .venue-visual {
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .venue-visual svg { width: 100%; height: 100%; }
+    .venue-info h3 {
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .venue-info p {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .venue-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .venue-detail {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .venue-detail .icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--chartreuse);
+    }
+    .venue-detail .icon svg { width: 16px; height: 16px; }
+    .venue-detail .text strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .venue-detail .text span {
+      font-size: 0.82rem;
+      color: var(--text-2);
+    }
+
+    /* ── Tickets ──────────────────────────────────────────── */
+    .tickets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .ticket-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .ticket-card:hover {
+      border-color: var(--border-2);
+      transform: translateY(-4px);
+    }
+    .ticket-card.featured {
+      border-color: var(--chartreuse);
+      background: linear-gradient(180deg, rgba(212,255,63,0.06) 0%, var(--bg-2) 40%);
+    }
+    .ticket-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      padding: 5px 16px;
+      background: var(--chartreuse);
+      color: #0a0a0b;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
+    }
+    .ticket-tier {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+    .ticket-price {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .ticket-price .currency {
+      font-size: 1.2rem;
+      vertical-align: super;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .ticket-price .period {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-3);
+      letter-spacing: 0;
+    }
+    .ticket-desc {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .ticket-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+    .ticket-features li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+    .ticket-features li svg {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      color: var(--chartreuse);
+    }
+    .ticket-features li.dim { color: var(--text-3); }
+    .ticket-features li.dim svg { color: var(--text-3); }
+
+    .ticket-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .ticket-btn.primary {
+      background: var(--chartreuse);
+      color: #0a0a0b;
+    }
+    .ticket-btn.primary:hover {
+      box-shadow: 0 6px 24px rgba(212,255,63,0.3);
+      transform: translateY(-1px);
+    }
+    .ticket-btn.secondary {
+      border: 1px solid var(--border-2);
+      color: var(--text);
+    }
+    .ticket-btn.secondary:hover {
+      border-color: var(--text-2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ── Sponsors ─────────────────────────────────────────── */
+    .sponsors-tier {
+      margin-bottom: 48px;
+    }
+    .sponsors-tier-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sponsors-tier-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .sponsors-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .sponsor-logo {
+      flex: 1;
+      min-width: 140px;
+      height: 80px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-2);
+      transition: border-color 0.3s, background 0.3s;
+      padding: 16px;
+    }
+    .sponsor-logo:hover {
+      border-color: var(--border-2);
+      background: var(--bg-3);
+    }
+    .sponsor-logo svg { height: 28px; width: auto; opacity: 0.5; transition: opacity 0.3s; }
+    .sponsor-logo:hover svg { opacity: 0.9; }
+
+    /* ── CTA Banner ───────────────────────────────────────── */
+    .cta-banner {
+      background: var(--chartreuse);
+      color: #0a0a0b;
+      border-radius: var(--radius-lg);
+      padding: 64px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+    }
+    .cta-banner h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      letter-spacing: -0.04em;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-banner p {
+      font-size: 0.95rem;
+      opacity: 0.7;
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-banner .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: #0a0a0b;
+      color: var(--chartreuse);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    .cta-banner .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 64px 0 40px;
+      margin-top: 100px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .nav-logo { margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      max-width: 280px;
+      line-height: 1.6;
+    }
+    .footer-col h4 {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--chartreuse); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: var(--text-3);
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-2);
+      transition: all 0.2s;
+    }
+    .footer-social a:hover {
+      border-color: var(--chartreuse);
+      color: var(--chartreuse);
+    }
+    .footer-social svg { width: 16px; height: 16px; }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+      .tickets-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 8px;
+      }
+      .nav-toggle span {
+        width: 22px; height: 2px;
+        background: var(--text);
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+      .venue-grid { grid-template-columns: 1fr; }
+      .schedule-item { grid-template-columns: 70px 1fr; }
+      .schedule-type { display: none; }
+      .hero-stats { gap: 32px; }
+      .cta-banner { padding: 40px 28px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) {
+      .speakers-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 3rem; }
+    }
+
+    /* ── Reveal animation ─────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        SIGNAL<span class="slash">/</span><span class="year">26</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#speakers">Speakers</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#venue">Venue</a></li>
+        <li><a href="#tickets">Tickets</a></li>
+        <li><a href="#sponsors">Sponsors</a></li>
+      </ul>
+      <a href="#tickets" class="nav-cta">Register</a>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-bg">
+      <canvas id="heroCanvas"></canvas>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-meta">
+        <span class="badge accent">Oct 14–16, 2026</span>
+        <span class="badge">Berlin, Germany</span>
+        <span class="badge">3 days · 2 stages</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="line">The signal</span>
+        <span class="line accent">is in the</span>
+        <span class="line outline">noise.</span>
+      </h1>
+      <p class="hero-sub">
+        SIGNAL / 26 brings together 1,200 builders, designers, and founders for three days of talks, workshops, and late-night conversations that actually matter.
+      </p>
+      <div class="hero-actions">
+        <a href="#tickets" class="btn-primary">
+          Register now
+          <span class="arrow">→</span>
+        </a>
+        <a href="#schedule" class="btn-ghost">
+          View schedule
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">1,200<span class="accent">+</span></div>
+          <div class="label">Attendees</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">48</div>
+          <div class="label">Speakers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">3</div>
+          <div class="label">Days</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">12</div>
+          <div class="label">Workshops</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Marquee ──────────────────────────────────────────── -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-item">
+        <span class="dot"></span> Keynotes
+        <span class="dot"></span> Workshops
+        <span class="dot"></span> Networking
+        <span class="dot"></span> Product demos
+        <span class="dot"></span> Fireside chats
+        <span class="dot"></span> After-parties
+        <span class="dot"></span> Career fair
+        <span class="dot"></span> Keynotes
+        <span class="dot"></span> Workshops
+        <span class="dot"></span> Networking
+        <span class="dot"></span> Product demos
+        <span class="dot"></span> Fireside chats
+        <span class="dot"></span> After-parties
+        <span class="dot"></span> Career fair
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Speakers ─────────────────────────────────────────── -->
+  <section class="section" id="speakers">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Speakers</div>
+          <h2 class="section-title">Voices shaping<br>what's next.</h2>
+        </div>
+        <p class="section-desc">
+          Founders, engineers, and designers from the teams building the tools you use every day.
+        </p>
+      </div>
+      <div class="speakers-grid">
+        <!-- Speaker 1 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#d4ff3f" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#d4ff3f" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#d4ff3f" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Maya Chen</div>
+            <div class="speaker-role">VP of Engineering, Vercel</div>
+            <span class="speaker-tag keynote">Keynote</span>
+          </div>
+        </div>
+        <!-- Speaker 2 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#ff6b2c" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#ff6b2c" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#ff6b2c" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Jonas Weber</div>
+            <div class="speaker-role">Founder & CEO, Linear</div>
+            <span class="speaker-tag keynote">Keynote</span>
+          </div>
+        </div>
+        <!-- Speaker 3 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#d4ff3f" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#d4ff3f" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#d4ff3f" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Amara Okafor</div>
+            <div class="speaker-role">Design Director, Figma</div>
+            <span class="speaker-tag">Talk</span>
+          </div>
+        </div>
+        <!-- Speaker 4 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#ff6b2c" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#ff6b2c" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#ff6b2c" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Liam Park</div>
+            <div class="speaker-role">Staff Engineer, Stripe</div>
+            <span class="speaker-tag">Workshop</span>
+          </div>
+        </div>
+        <!-- Speaker 5 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#d4ff3f" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#d4ff3f" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#d4ff3f" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Sofia Reyes</div>
+            <div class="speaker-role">Head of AI, Notion</div>
+            <span class="speaker-tag keynote">Keynote</span>
+          </div>
+        </div>
+        <!-- Speaker 6 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#ff6b2c" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#ff6b2c" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#ff6b2c" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">David Kim</div>
+            <div class="speaker-role">CTO, Supabase</div>
+            <span class="speaker-tag">Talk</span>
+          </div>
+        </div>
+        <!-- Speaker 7 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#d4ff3f" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#d4ff3f" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#d4ff3f" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#d4ff3f" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Elena Voss</div>
+            <div class="speaker-role">Principal Designer, Raycast</div>
+            <span class="speaker-tag">Workshop</span>
+          </div>
+        </div>
+        <!-- Speaker 8 -->
+        <div class="speaker-card reveal">
+          <div class="speaker-avatar">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="200" fill="#1a1a1e"/>
+              <circle cx="100" cy="80" r="36" fill="#ff6b2c" opacity="0.15"/>
+              <circle cx="100" cy="80" r="36" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="100" cy="80" r="20" fill="#ff6b2c" opacity="0.3"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="#ff6b2c" opacity="0.12"/>
+              <path d="M40 200 Q40 140 100 140 Q160 140 160 200" fill="none" stroke="#ff6b2c" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="speaker-info">
+            <div class="speaker-name">Marcus Thorne</div>
+            <div class="speaker-role">Founder, Resend</div>
+            <span class="speaker-tag">Talk</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Schedule ─────────────────────────────────────────── -->
+  <section class="section" id="schedule" style="background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Schedule</div>
+          <h2 class="section-title">Three days.<br>Zero filler.</h2>
+        </div>
+        <p class="section-desc">
+          Every session is curated. No pay-to-play talks, no fluff — just the ideas and tools that move the needle.
+        </p>
+      </div>
+
+      <div class="schedule-tabs reveal">
+        <button class="schedule-tab active" data-day="day1">Day 1 — Oct 14</button>
+        <button class="schedule-tab" data-day="day2">Day 2 — Oct 15</button>
+        <button class="schedule-tab" data-day="day3">Day 3 — Oct 16</button>
+      </div>
+
+      <div class="schedule-list" id="scheduleList">
+        <!-- Day 1 -->
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">09:00</div>
+          <div>
+            <div class="schedule-title">Opening Keynote: The Signal in the Noise</div>
+            <div class="schedule-speaker">Maya Chen — VP of Engineering, Vercel</div>
+          </div>
+          <span class="schedule-type keynote">Keynote</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">10:30</div>
+          <div>
+            <div class="schedule-title">Building for the Next Billion Developers</div>
+            <div class="schedule-speaker">Jonas Weber — Founder & CEO, Linear</div>
+          </div>
+          <span class="schedule-type keynote">Keynote</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">12:00</div>
+          <div>
+            <div class="schedule-title">Lunch & Networking</div>
+            <div class="schedule-speaker">Main hall & terrace</div>
+          </div>
+          <span class="schedule-type break">Break</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">13:30</div>
+          <div>
+            <div class="schedule-title">Design Systems That Scale</div>
+            <div class="schedule-speaker">Amara Okafor — Design Director, Figma</div>
+          </div>
+          <span class="schedule-type">Talk</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">15:00</div>
+          <div>
+            <div class="schedule-title">Workshop: Edge Functions in Practice</div>
+            <div class="schedule-speaker">Liam Park — Staff Engineer, Stripe</div>
+          </div>
+          <span class="schedule-type workshop">Workshop</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day1">
+          <div class="schedule-time">17:00</div>
+          <div>
+            <div class="schedule-title">Fireside: The Future of AI Interfaces</div>
+            <div class="schedule-speaker">Sofia Reyes — Head of AI, Notion</div>
+          </div>
+          <span class="schedule-type">Fireside</span>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">09:00</div>
+          <div>
+            <div class="schedule-title">Keynote: Databases at the Edge</div>
+            <div class="schedule-speaker">David Kim — CTO, Supabase</div>
+          </div>
+          <span class="schedule-type keynote">Keynote</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">10:30</div>
+          <div>
+            <div class="schedule-title">The Craft of Developer Tools</div>
+            <div class="schedule-speaker">Elena Voss — Principal Designer, Raycast</div>
+          </div>
+          <span class="schedule-type">Talk</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">12:00</div>
+          <div>
+            <div class="schedule-title">Lunch & Networking</div>
+            <div class="schedule-speaker">Main hall & terrace</div>
+          </div>
+          <span class="schedule-type break">Break</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">13:30</div>
+          <div>
+            <div class="schedule-title">Workshop: Email Infrastructure at Scale</div>
+            <div class="schedule-speaker">Marcus Thorne — Founder, Resend</div>
+          </div>
+          <span class="schedule-type workshop">Workshop</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">15:00</div>
+          <div>
+            <div class="schedule-title">Panel: Open Source Sustainability</div>
+            <div class="schedule-speaker">Multiple speakers</div>
+          </div>
+          <span class="schedule-type">Panel</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day2" style="display:none;">
+          <div class="schedule-time">17:00</div>
+          <div>
+            <div class="schedule-title">After-Party & Live Demos</div>
+            <div class="schedule-speaker">Rooftop venue</div>
+          </div>
+          <span class="schedule-type break">Social</span>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">09:00</div>
+          <div>
+            <div class="schedule-title">Keynote: What We're Building Next</div>
+            <div class="schedule-speaker">Maya Chen & Jonas Weber</div>
+          </div>
+          <span class="schedule-type keynote">Keynote</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">10:30</div>
+          <div>
+            <div class="schedule-title">Workshop: Design Tokens & Theming</div>
+            <div class="schedule-speaker">Amara Okafor — Design Director, Figma</div>
+          </div>
+          <span class="schedule-type workshop">Workshop</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">12:00</div>
+          <div>
+            <div class="schedule-title">Lunch & Networking</div>
+            <div class="schedule-speaker">Main hall & terrace</div>
+          </div>
+          <span class="schedule-type break">Break</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">13:30</div>
+          <div>
+            <div class="schedule-title">Talk: Performance as a Feature</div>
+            <div class="schedule-speaker">Liam Park — Staff Engineer, Stripe</div>
+          </div>
+          <span class="schedule-type">Talk</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">15:00</div>
+          <div>
+            <div class="schedule-title">Closing Keynote: The Next Signal</div>
+            <div class="schedule-speaker">Sofia Reyes — Head of AI, Notion</div>
+          </div>
+          <span class="schedule-type keynote">Keynote</span>
+        </div>
+        <div class="schedule-item reveal" data-day="day3" style="display:none;">
+          <div class="schedule-time">16:30</div>
+          <div>
+            <div class="schedule-title">Closing Remarks & Farewell</div>
+            <div class="schedule-speaker">SIGNAL / 26 team</div>
+          </div>
+          <span class="schedule-type break">Closing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Venue ────────────────────────────────────────────── -->
+  <section class="section" id="venue">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Venue</div>
+          <h2 class="section-title">Kraftwerk Berlin</h2>
+        </div>
+        <p class="section-desc">
+          A former power plant turned iconic event space in the heart of Berlin. Industrial bones, modern comfort.
+        </p>
+      </div>
+      <div class="venue-grid">
+        <div class="venue-visual reveal">
+          <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a1a1e"/>
+                <stop offset="100%" stop-color="#0a0a0b"/>
+              </linearGradient>
+              <linearGradient id="glowGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d4ff3f" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#d4ff3f" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="450" fill="url(#skyGrad)"/>
+            <!-- Stars -->
+            <circle cx="80" cy="60" r="1.5" fill="#fff" opacity="0.3"/>
+            <circle cx="200" cy="40" r="1" fill="#fff" opacity="0.2"/>
+            <circle cx="350" cy="80" r="1.5" fill="#fff" opacity="0.25"/>
+            <circle cx="500" cy="50" r="1" fill="#fff" opacity="0.2"/>
+            <circle cx="550" cy="120" r="1.5" fill="#fff" opacity="0.15"/>
+            <circle cx="120" cy="130" r="1" fill="#fff" opacity="0.2"/>
+            <!-- Building silhouette -->
+            <rect x="100" y="180" width="400" height="270" fill="#111113" stroke="#26262b" stroke-width="1"/>
+            <!-- Windows -->
+            <rect x="130" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.08"/>
+            <rect x="190" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.12"/>
+            <rect x="250" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.06"/>
+            <rect x="310" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.1"/>
+            <rect x="370" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.08"/>
+            <rect x="430" y="210" width="40" height="50" fill="#d4ff3f" opacity="0.12"/>
+            <rect x="130" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.1"/>
+            <rect x="190" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.06"/>
+            <rect x="250" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.12"/>
+            <rect x="310" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.08"/>
+            <rect x="370" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.1"/>
+            <rect x="430" y="290" width="40" height="50" fill="#d4ff3f" opacity="0.06"/>
+            <!-- Chimneys -->
+            <rect x="140" y="120" width="30" height="60" fill="#111113" stroke="#26262b" stroke-width="1"/>
+            <rect x="430" y="140" width="30" height="40" fill="#111113" stroke="#26262b" stroke-width="1"/>
+            <!-- Glow -->
+            <rect x="100" y="180" width="400" height="270" fill="url(#glowGrad)"/>
+            <!-- Ground -->
+            <rect x="0" y="440" width="600" height="10" fill="#0a0a0b"/>
+            <!-- Text -->
+            <text x="300" y="420" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#6b6b74" letter-spacing="3">KRAFTWERK BERLIN</text>
+          </svg>
+        </div>
+        <div class="venue-info reveal">
+          <h3>Where industry meets energy.</h3>
+          <p>
+            Kraftwerk Berlin is a 1960s power plant transformed into one of Europe's most distinctive event venues. With 3,000 m² of raw industrial space, soaring ceilings, and state-of-the-art AV, it's the perfect backdrop for a conference that's anything but ordinary.
+          </p>
+          <div class="venue-details">
+            <div class="venue-detail">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="text">
+                <strong>Köpenicker Str. 70, 10179 Berlin</strong>
+                <span>5 min from Heinrich-Heine-Straße U-Bahn</span>
+              </div>
+            </div>
+            <div class="venue-detail">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div class="text">
+                <strong>October 14–16, 2026</strong>
+                <span>Doors open at 08:00 each day</span>
+              </div>
+            </div>
+            <div class="venue-detail">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="text">
+                <strong>1,200 capacity</strong>
+                <span>Two stages, workshop rooms, and a rooftop terrace</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tickets ──────────────────────────────────────────── -->
+  <section class="section" id="tickets" style="background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Tickets</div>
+          <h2 class="section-title">Pick your pass.</h2>
+        </div>
+        <p class="section-desc">
+          Early-bird pricing ends August 31. All passes include lunch, coffee, and access to the after-party.
+        </p>
+      </div>
+      <div class="tickets-grid">
+        <!-- Standard -->
+        <div class="ticket-card reveal">
+          <div class="ticket-tier">Standard</div>
+          <div class="ticket-price"><span class="currency">€</span>399</div>
+          <div class="ticket-desc">Full access to all talks, panels, and the expo hall.</div>
+          <ul class="ticket-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> All keynotes & talks</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Expo hall access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lunch & coffee</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> After-party access</li>
+            <li class="dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Workshop access</li>
+            <li class="dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Recorded sessions</li>
+          </ul>
+          <a href="#" class="ticket-btn secondary">Get Standard</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="ticket-card featured reveal">
+          <div class="ticket-tier">Pro</div>
+          <div class="ticket-price"><span class="currency">€</span>699</div>
+          <div class="ticket-desc">Everything in Standard, plus workshops and recordings.</div>
+          <ul class="ticket-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> All keynotes & talks</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Expo hall access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lunch & coffee</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> After-party access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> All workshop access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Recorded sessions</li>
+          </ul>
+          <a href="#" class="ticket-btn primary">Get Pro</a>
+        </div>
+
+        <!-- Team -->
+        <div class="ticket-card reveal">
+          <div class="ticket-tier">Team</div>
+          <div class="ticket-price"><span class="currency">€</span>2,499</div>
+          <div class="ticket-desc">Four Pro passes at a discount, plus a private team lounge.</div>
+          <ul class="ticket-features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 4× Pro passes</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Private team lounge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated concierge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reserved seating</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> All workshop access</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Recorded sessions</li>
+          </ul>
+          <a href="#" class="ticket-btn secondary">Get Team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sponsors ─────────────────────────────────────────── -->
+  <section class="section" id="sponsors">
+    <div class="container">
+      <div class="section-header reveal">
+        <div>
+          <div class="section-label">Sponsors</div>
+          <h2 class="section-title">Backed by<br>the best.</h2>
+        </div>
+        <p class="section-desc">
+          SIGNAL / 26 is made possible by companies that believe in the power of community and craft.
+        </p>
+      </div>
+
+      <div class="sponsors-tier reveal">
+        <div class="sponsors-tier-label">Platinum</div>
+        <div class="sponsors-row">
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="3" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Vercel</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="16" r="8" fill="#ff6b2c"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Linear</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="8" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Figma</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="sponsors-tier reveal">
+        <div class="sponsors-tier-label">Gold</div>
+        <div class="sponsors-row">
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="3" fill="#ff6b2c"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Stripe</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="16" r="8" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Notion</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="3" fill="#ff6b2c"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Supabase</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="16" r="8" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Raycast</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="sponsors-tier reveal">
+        <div class="sponsors-tier-label">Community</div>
+        <div class="sponsors-row">
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="3" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Resend</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="16" r="8" fill="#ff6b2c"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Clerk</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="8" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">PlanetScale</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="16" r="8" fill="#ff6b2c"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Turso</text>
+            </svg>
+          </div>
+          <div class="sponsor-logo">
+            <svg viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="8" width="16" height="16" rx="3" fill="#d4ff3f"/>
+              <text x="24" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f2f2f0">Neon</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA Banner ───────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <div>
+          <h2>Ready to tune in?</h2>
+          <p>Early-bird pricing ends August 31. Secure your spot today.</p>
+        </div>
+        <a href="#tickets" class="btn-dark">
+          Register now
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            SIGNAL<span class="slash">/</span><span class="year">26</span>
+          </div>
+          <p>
+            The conference for builders, designers, and founders who care about craft. Berlin, October 14–16, 2026.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Conference</h4>
+          <ul>
+            <li><a href="#speakers">Speakers</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#venue">Venue</a></li>
+            <li><a href="#tickets">Tickets</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="#">Code of Conduct</a></li>
+            <li><a href="#">Volunteer</a></li>
+            <li><a href="#">Scholarships</a></li>
+            <li><a href="#">Press Kit</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@signal26.com">hello@signal26.com</a></li>
+            <li><a href="#">Sponsorship</a></li>
+            <li><a href="#">Media Inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 SIGNAL Conference. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Hero canvas: typographic generative art ──────────────
+    (function() {
+      const canvas = document.getElementById('heroCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr;
+      let time = 0;
+      let animId;
+
+      const chars = 'SIGNAL/26';
+      const accentChars = 'SIGNAL';
+      const particles = [];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth;
+        h = canvas.clientHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        initParticles();
+      }
+
+      function initParticles() {
+        particles.length = 0;
+        const count = Math.min(Math.floor(w * h / 18000), 120);
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            char: chars[Math.floor(Math.random() * chars.length)],
+            size: 10 + Math.random() * 24,
+            opacity: 0.04 + Math.random() * 0.12,
+            accent: Math.random() > 0.7,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.005 + Math.random() * 0.015
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+
+        // Draw connecting lines
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              const alpha = (1 - dist / 120) * 0.06;
+              ctx.strokeStyle = `rgba(212, 255, 63, ${alpha})`;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw particles
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.phase += p.speed;
+
+          // Wrap around
+          if (p.x < -50) p.x = w + 50;
+          if (p.x > w + 50) p.x = -50;
+          if (p.y < -50) p.y = h + 50;
+          if (p.y > h + 50) p.y = -50;
+
+          const pulse = 0.5 + 0.5 * Math.sin(p.phase);
+          const alpha = p.opacity * (0.6 + 0.4 * pulse);
+
+          ctx.font = `700 ${p.size}px 'Inter', sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          if (p.accent) {
+            ctx.fillStyle = `rgba(212, 255, 63, ${alpha * 1.5})`;
+          } else {
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          }
+          ctx.fillText(p.char, p.x, p.y);
+        }
+
+        time++;
+        animId = requestAnimationFrame(draw);
+      }
+
+      resize();
+      draw();
+
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(animId);
+        resize();
+        draw();
+      });
+    })();
+
+    // ── Schedule tabs ────────────────────────────────────────
+    (function() {
+      const tabs = document.querySelectorAll('.schedule-tab');
+      const items = document.querySelectorAll('.schedule-item');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const day = tab.dataset.day;
+
+          items.forEach(item => {
+            if (item.dataset.day === day) {
+              item.style.display = 'grid';
+              // Trigger reveal
+              requestAnimationFrame(() => {
+                item.classList.add('visible');
+              });
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+
+    // ── Scroll reveal ────────────────────────────────────────
+    (function() {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      reveals.forEach(el => observer.observe(el));
+    })();
+
+    // ── Mobile nav toggle ────────────────────────────────────
+    (function() {
+      const toggle = document.querySelector('.nav-toggle');
+      const links = document.querySelector('.nav-links');
+      if (toggle && links) {
+        toggle.addEventListener('click', () => {
+          const isOpen = links.style.display === 'flex';
+          links.style.display = isOpen ? 'none' : 'flex';
+          links.style.position = 'absolute';
+          links.style.top = '64px';
+          links.style.left = '0';
+          links.style.right = '0';
+          links.style.background = 'rgba(10,10,11,0.98)';
+          links.style.flexDirection = 'column';
+          links.style.padding = '24px';
+          links.style.gap = '20px';
+          links.style.borderBottom = '1px solid var(--border)';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUCTION / HOUSE — Fine Art & Objects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1614;
+    --ink-soft: #3d3530;
+    --paper: #f4efe6;
+    --paper-warm: #ebe4d6;
+    --paper-deep: #e0d7c4;
+    --accent: #b8442a;
+    --accent-deep: #8a2f1c;
+    --gold: #c9a961;
+    --gold-deep: #a8894a;
+    --line: #c9bfa9;
+    --line-soft: #d9d0bc;
+    --green: #4a5d3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(201,169,97,0.08), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(184,68,42,0.05), transparent 45%);
+    min-height: 100vh;
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.15 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0 20px;
+    position: relative;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+
+  .topbar-left { display: flex; gap: 28px; }
+  .topbar-left span { display: flex; align-items: center; gap: 8px; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(184,68,42,0.15);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .topbar-right { display: flex; gap: 24px; align-items: center; }
+  .topbar-right a { color: var(--ink-soft); text-decoration: none; transition: color .2s; }
+  .topbar-right a:hover { color: var(--accent); }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .brand h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .brand h1 .slash {
+    color: var(--accent);
+    font-style: italic;
+    margin: 0 2px;
+  }
+
+  .brand .est {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    padding-bottom: 6px;
+  }
+
+  nav.main {
+    display: flex;
+    gap: 34px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-bottom: 6px;
+  }
+
+  nav.main a {
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color .2s;
+  }
+  nav.main a:hover { color: var(--accent); }
+  nav.main a.active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  /* ============ HERO / FEATURED LOT ============ */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 56px;
+    padding: 44px 0 40px;
+    align-items: start;
+  }
+
+  .lot-visual {
+    position: relative;
+    aspect-ratio: 4 / 3.4;
+    background: linear-gradient(160deg, #2a2420 0%, #1a1614 100%);
+    overflow: hidden;
+    border: 1px solid var(--ink);
+  }
+
+  /* The artwork — abstract composition via SVG */
+  .lot-visual svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .lot-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    padding: 7px 12px;
+    text-transform: uppercase;
+    z-index: 3;
+    border: 1px solid var(--ink);
+  }
+
+  .lot-badge.live {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lot-badge.live .dot { background: var(--paper); box-shadow: 0 0 0 3px rgba(244,239,230,0.25); }
+
+  .lot-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(201,169,97,0.25);
+    margin: 14px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .lot-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: var(--paper);
+    z-index: 3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  /* Right column — lot details */
+  .lot-info {
+    padding-top: 4px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .lot-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .lot-title em {
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+
+  .lot-artist {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 26px;
+    font-weight: 400;
+  }
+  .lot-artist strong { color: var(--ink); font-weight: 600; }
+
+  .lot-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 32px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 26px;
+  }
+  .meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 5px;
+  }
+  .meta-item .value {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ============ BIDDING PANEL ============ */
+  .bid-panel {
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    padding: 26px 28px 24px;
+    position: relative;
+  }
+  .bid-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+  }
+
+  .bid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+  .bid-header .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .bid-header .lot-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .current-bid {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .current-bid .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 54px;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .current-bid .currency {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--ink-soft);
+  }
+  .bid-sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bid-sub .bidders {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Timer */
+  .timer {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .timer-cell {
+    flex: 1;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 8px 10px;
+    text-align: center;
+    position: relative;
+  }
+  .timer-cell .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    display: block;
+  }
+  .timer-cell .unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-top: 6px;
+    display: block;
+  }
+  .timer-cell.urgent { background: var(--accent); }
+
+  /* Bid input */
+  .bid-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .bid-input {
+    flex: 1;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .bid-input:focus { border-color: var(--accent); }
+  .bid-input::placeholder { color: var(--ink-soft); opacity: 0.5; }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 14px 22px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--accent-deep); }
+
+  .quick-bids {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .quick-bid {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 9px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: 0.04em;
+  }
+  .quick-bid:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(184,68,42,0.04);
+  }
+
+  .bid-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .bid-footer .watch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .bid-footer .watch:hover { color: var(--accent); }
+  .bid-footer .watch svg { width: 14px; height: 14px; }
+
+  /* ============ PROVENANCE ============ */
+  .provenance {
+    padding: 40px 0 44px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+  }
+  .prov-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .prov-label .num {
+    display: block;
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--accent);
+    letter-spacing: 0;
+    margin-bottom: 4px;
+  }
+  .prov-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .prov-timeline::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--line);
+  }
+  .prov-step {
+    position: relative;
+    padding-right: 24px;
+  }
+  .prov-step::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    z-index: 1;
+  }
+  .prov-step .year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 22px 0 6px;
+    letter-spacing: 0.05em;
+  }
+  .prov-step .desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .prov-step .desc strong { color: var(--ink); font-weight: 600; }
+
+  /* ============ UPCOMING LOTS ============ */
+  .upcoming {
+    padding: 44px 0 60px;
+    border-top: 1px solid var(--line);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 32px;
+  }
+  .section-head h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .section-head h2 em { font-style: italic; color: var(--accent-deep); }
+  .section-head .view-all {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color .2s;
+  }
+  .section-head .view-all:hover { color: var(--accent); }
+
+  .lots-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .lot-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: transform .3s, box-shadow .3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .lot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(26,22,20,0.12);
+  }
+
+  .card-visual {
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .card-visual svg { width: 100%; height: 100%; display: block; }
+
+  .card-num {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 8px;
+    border: 1px solid var(--ink);
+    z-index: 2;
+  }
+
+  .card-body {
+    padding: 18px 18px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-artist {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .card-title em { font-style: italic; }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .card-meta .est-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+  .card-meta .est-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .card-meta .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .card-meta .time strong { color: var(--accent); font-weight: 500; }
+
+  /* ============ ACCOUNT CTA ============ */
+  .account-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .account-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 340px; height: 100%;
+    background: radial-gradient(circle at right, rgba(201,169,97,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .account-cta .cta-text { position: relative; z-index: 1; }
+  .account-cta .cta-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .account-cta h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .account-cta h3 em { font-style: italic; color: var(--gold); }
+  .account-cta p {
+    font-size: 14px;
+    color: rgba(244,239,230,0.7);
+    max-width: 520px;
+    line-height: 1.55;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(244,239,230,0.3);
+  }
+  .btn-ghost:hover { border-color: var(--paper); background: rgba(244,239,230,0.06); }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-gold:hover { background: var(--gold-deep); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.08em;
+  }
+  footer .foot-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+  footer .foot-brand .slash { color: var(--accent); font-style: italic; }
+  footer .foot-links { display: flex; gap: 24px; }
+  footer .foot-links a { color: var(--ink-soft); text-decoration: none; transition: color .2s; }
+  footer .foot-links a:hover { color: var(--accent); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1100px) {
+    .wrap { padding: 0 32px; }
+    .hero { grid-template-columns: 1fr; gap: 36px; }
+    .lot-title { font-size: 38px; }
+    .lots-grid { grid-template-columns: repeat(2, 1fr); }
+    .provenance { grid-template-columns: 1fr; gap: 24px; }
+    .prov-timeline { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
+    .prov-timeline::before { display: none; }
+    .prov-step::before { display: none; }
+    .prov-step .year { margin-top: 0; }
+    .account-cta { grid-template-columns: 1fr; padding: 36px 32px; }
+    .cta-actions { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 20px; }
+    .topbar { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .topbar-left, .topbar-right { flex-wrap: wrap; gap: 16px; }
+    .masthead { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .brand h1 { font-size: 32px; }
+    nav.main { flex-wrap: wrap; gap: 18px; }
+    .lot-title { font-size: 30px; }
+    .current-bid .amount { font-size: 42px; }
+    .lots-grid { grid-template-columns: 1fr; }
+    .prov-timeline { grid-template-columns: 1fr; }
+    .bid-input-row { flex-direction: column; }
+    .quick-bids { flex-wrap: wrap; }
+    .quick-bid { flex: 1 1 40%; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .account-cta h3 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="topbar">
+      <div class="topbar-left">
+        <span><span class="dot"></span> Live auction in progress</span>
+        <span>London · 14:32 GMT</span>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Register to bid</a>
+        <a href="#">Sign in</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+
+    <div class="masthead">
+      <div class="brand">
+        <h1>AUCTION<span class="slash">/</span>HOUSE</h1>
+        <span class="est">Est. 1974</span>
+      </div>
+      <nav class="main">
+        <a href="#" class="active">Live</a>
+        <a href="#">Upcoming</a>
+        <a href="#">Results</a>
+        <a href="#">Departments</a>
+        <a href="#">Private Sales</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO / FEATURED LOT ============ -->
+  <section class="hero">
+    <div class="lot-visual">
+      <div class="lot-badge live"><span class="dot"></span> Lot 47 · Live</div>
+      <div class="lot-frame"></div>
+      <svg viewBox="0 0 800 680" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2a2420"/>
+            <stop offset="1" stop-color="#14100e"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+            <stop offset="0" stop-color="#c9a961" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#c9a961" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="form1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#b8442a"/>
+            <stop offset="1" stop-color="#8a2f1c"/>
+          </linearGradient>
+          <linearGradient id="form2" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#c9a961"/>
+            <stop offset="1" stop-color="#a8894a"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="680" fill="url(#bg)"/>
+        <rect width="800" height="680" fill="url(#glow)"/>
+        <!-- Abstract composition -->
+        <ellipse cx="400" cy="340" rx="230" ry="230" fill="none" stroke="#c9a961" stroke-width="0.8" opacity="0.4"/>
+        <ellipse cx="400" cy="340" rx="180" ry="180" fill="none" stroke="#c9a961" stroke-width="0.5" opacity="0.3"/>
+        <path d="M 220 480 Q 400 180 580 480 Z" fill="url(#form1)" opacity="0.9"/>
+        <path d="M 280 480 Q 400 260 520 480 Z" fill="url(#form2)" opacity="0.85"/>
+        <circle cx="400" cy="300" r="60" fill="#f4efe6" opacity="0.9"/>
+        <circle cx="400" cy="300" r="60" fill="none" stroke="#1a1614" stroke-width="1"/>
+        <line x1="180" y1="480" x2="620" y2="480" stroke="#f4efe6" stroke-width="1" opacity="0.5"/>
+        <line x1="180" y1="500" x2="620" y2="500" stroke="#f4efe6" stroke-width="0.5" opacity="0.3"/>
+        <!-- Signature mark -->
+        <path d="M 560 560 q 20 -30 40 0 q 20 30 40 0" fill="none" stroke="#c9a961" stroke-width="1.2" opacity="0.7"/>
+        <text x="400" y="620" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#c9a961" opacity="0.6" letter-spacing="4">MMXXIV</text>
+      </svg>
+      <div class="lot-caption">
+        <span>Oil &amp; gold leaf on linen</span>
+        <span>142 × 118 cm</span>
+      </div>
+    </div>
+
+    <div class="lot-info">
+      <div class="eyebrow">Featured Lot · Contemporary Art</div>
+      <h2 class="lot-title">The Golden <em>Meridian</em></h2>
+      <p class="lot-artist">by <strong>Elena Vasquez-Reyes</strong> · b. 1968, Seville</p>
+
+      <div class="lot-meta">
+        <div class="meta-item">
+          <div class="label">Provenance</div>
+          <div class="value">Private Collection, Madrid</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Exhibited</div>
+          <div class="value">Tate Modern, 2019</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Estimate</div>
+          <div class="value">£180,000 – £240,000</div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Condition</div>
+          <div class="value">Excellent · Framed</div>
+        </div>
+      </div>
+
+      <!-- BIDDING PANEL -->
+      <div class="bid-panel">
+        <div class="bid-header">
+          <span class="label">Current Bid</span>
+          <span class="lot-num">LOT 47 / 128</span>
+        </div>
+
+        <div class="current-bid">
+          <span class="currency">£</span>
+          <span class="amount" id="currentBid">196,500</span>
+        </div>
+        <div class="bid-sub">
+          <span class="bidders">14 bidders</span> · Next minimum: <strong id="nextMin">£198,000</strong>
+        </div>
+
+        <!-- TIMER -->
+        <div class="timer" id="timer">
+          <div class="timer-cell">
+            <span class="num" id="tHours">00</span>
+            <span class="unit">Hours</span>
+          </div>
+          <div class="timer-cell">
+            <span class="num" id="tMins">04</span>
+            <span class="unit">Minutes</span>
+          </div>
+          <div class="timer-cell urgent">
+            <span class="num" id="tSecs">37</span>
+            <span class="unit">Seconds</span>
+          </div>
+        </div>
+
+        <!-- BID INPUT -->
+        <div class="bid-input-row">
+          <input type="text" class="bid-input" id="bidInput" placeholder="Enter bid amount" value="198,000">
+          <button class="btn btn-primary" id="placeBid">Place Bid</button>
+        </div>
+
+        <div class="quick-bids">
+          <button class="quick-bid" data-inc="2000">+ £2,000</button>
+          <button class="quick-bid" data-inc="5000">+ £5,000</button>
+          <button class="quick-bid" data-inc="10000">+ £10,000</button>
+        </div>
+
+        <div class="bid-footer">
+          <div class="watch">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span>Watch this lot</span>
+          </div>
+          <div>Buyer's premium 25%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROVENANCE ============ -->
+  <section class="provenance">
+    <div class="prov-label">
+      <span class="num">04</span>
+      Provenance &amp; Exhibition History
+    </div>
+    <div class="prov-timeline">
+      <div class="prov-step">
+        <div class="year">1998</div>
+        <div class="desc">Commissioned directly from the artist by <strong>the Marchetti family</strong>, Milan.</div>
+      </div>
+      <div class="prov-step">
+        <div class="year">2007</div>
+        <div class="desc">Acquired by <strong>Galerie Saint-Honoré</strong>, Paris. Exhibited in "New Iberia".</div>
+      </div>
+      <div class="prov-step">
+        <div class="year">2019</div>
+        <div class="desc">Major retrospective at <strong>Tate Modern</strong>, London. Catalogue raisonné no. 214.</div>
+      </div>
+      <div class="prov-step">
+        <div class="year">2024</div>
+        <div class="desc">Consigned from a <strong>distinguished private collection</strong>, Madrid.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UPCOMING LOTS ============ -->
+  <section class="upcoming">
+    <div class="section-head">
+      <h2>Upcoming <em>Lots</em></h2>
+      <a href="#" class="view-all">View all 128 lots →</a>
+    </div>
+
+    <div class="lots-grid">
+
+      <!-- Card 1 -->
+      <article class="lot-card">
+        <div class="card-visual">
+          <div class="card-num">LOT 48</div>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#4a5d3a"/>
+                <stop offset="1" stop-color="#2a3520"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#c1)"/>
+            <circle cx="200" cy="200" r="120" fill="none" stroke="#c9a961" stroke-width="1" opacity="0.6"/>
+            <circle cx="200" cy="200" r="80" fill="#f4efe6" opacity="0.9"/>
+            <path d="M 100 300 Q 200 180 300 300" fill="none" stroke="#c9a961" stroke-width="2"/>
+            <line x1="60" y1="340" x2="340" y2="340" stroke="#f4efe6" stroke-width="0.8" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-artist">Hiroshi Tanaka</div>
+          <h3 class="card-title">Silent <em>Orbit</em> No. 3</h3>
+          <div class="card-meta">
+            <div>
+              <div class="est-label">Estimate</div>
+              <div class="est-value">£45,000 – £65,000</div>
+            </div>
+            <div class="time">Opens in<br><strong>2h 14m</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="lot-card">
+        <div class="card-visual">
+          <div class="card-num">LOT 49</div>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#8a2f1c"/>
+                <stop offset="1" stop-color="#4a1810"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#c2)"/>
+            <rect x="80" y="80" width="240" height="240" fill="none" stroke="#c9a961" stroke-width="1.5"/>
+            <rect x="120" y="120" width="160" height="160" fill="#f4efe6" opacity="0.85"/>
+            <circle cx="200" cy="200" r="40" fill="#1a1614"/>
+            <line x1="80" y1="200" x2="320" y2="200" stroke="#c9a961" stroke-width="0.8" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-artist">Marguerite Devereux</div>
+          <h3 class="card-title">Red <em>Interior</em></h3>
+          <div class="card-meta">
+            <div>
+              <div class="est-label">Estimate</div>
+              <div class="est-value">£120,000 – £160,000</div>
+            </div>
+            <div class="time">Opens in<br><strong>2h 14m</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="lot-card">
+        <div class="card-visual">
+          <div class="card-num">LOT 50</div>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1a1614"/>
+                <stop offset="1" stop-color="#3d3530"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#c3)"/>
+            <path d="M 0 300 Q 100 200 200 280 T 400 240" fill="none" stroke="#c9a961" stroke-width="2"/>
+            <path d="M 0 340 Q 100 240 200 320 T 400 280" fill="none" stroke="#c9a961" stroke-width="1" opacity="0.6"/>
+            <circle cx="280" cy="140" r="50" fill="#b8442a" opacity="0.9"/>
+            <circle cx="280" cy="140" r="50" fill="none" stroke="#f4efe6" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-artist">Anders Lindqvist</div>
+          <h3 class="card-title">Northern <em>Drift</em></h3>
+          <div class="card-meta">
+            <div>
+              <div class="est-label">Estimate</div>
+              <div class="est-value">£28,000 – £42,000</div>
+            </div>
+            <div class="time">Opens in<br><strong>2h 14m</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="lot-card">
+        <div class="card-visual">
+          <div class="card-num">LOT 51</div>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c4" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#c9a961"/>
+                <stop offset="1" stop-color="#8a6f3a"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="400" fill="url(#c4)"/>
+            <circle cx="200" cy="200" r="140" fill="none" stroke="#1a1614" stroke-width="1.5"/>
+            <circle cx="200" cy="200" r="100" fill="none" stroke="#1a1614" stroke-width="1"/>
+            <circle cx="200" cy="200" r="60" fill="#1a1614"/>
+            <circle cx="200" cy="200" r="20" fill="#f4efe6"/>
+            <line x1="60" y1="200" x2="340" y2="200" stroke="#1a1614" stroke-width="0.8" opacity="0.5"/>
+            <line x1="200" y1="60" x2="200" y2="340" stroke="#1a1614" stroke-width="0.8" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-artist">Sofia Marchetti</div>
+          <h3 class="card-title">Solar <em>Study</em> VII</h3>
+          <div class="card-meta">
+            <div>
+              <div class="est-label">Estimate</div>
+              <div class="est-value">£75,000 – £95,000</div>
+            </div>
+            <div class="time">Opens in<br><strong>2h 14m</strong></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ ACCOUNT CTA ============ -->
+  <section class="account-cta">
+    <div class="cta-text">
+      <div class="cta-eyebrow">Bidder Account</div>
+      <h3>Register to bid on <em>exceptional</em> works.</h3>
+      <p>Create a bidder account to place live bids, track lots, and receive private previews from our specialists. Approval typically within 24 hours.</p>
+    </div>
+    <div class="cta-actions">
+      <button class="btn btn-ghost">Sign In</button>
+      <button class="btn btn-gold">Register to Bid</button>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="foot-brand">AUCTION<span class="slash">/</span>HOUSE</div>
+    <div class="foot-links">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Conditions of Sale</a>
+      <a href="#">Contact</a>
+    </div>
+    <div>© 2024 Auction House Ltd · London</div>
+  </footer>
+
+</div>
+
+<script>
+  // ============ AUCTION TIMER ============
+  (function() {
+    let totalSeconds = 4 * 60 + 37; // 4m 37s
+    const tHours = document.getElementById('tHours');
+    const tMins = document.getElementById('tMins');
+    const tSecs = document.getElementById('tSecs');
+    const timerCells = document.querySelectorAll('.timer-cell');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      if (totalSeconds <= 0) {
+        totalSeconds = 0;
+        clearInterval(interval);
+        timerCells.forEach(c => c.classList.add('urgent'));
+        return;
+      }
+      totalSeconds--;
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      tHours.textContent = pad(h);
+      tMins.textContent = pad(m);
+      tSecs.textContent = pad(s);
+
+      // Urgent state when under 60s
+      if (totalSeconds < 60) {
+        timerCells.forEach(c => c.classList.add('urgent'));
+      }
+    }
+
+    const interval = setInterval(tick, 1000);
+  })();
+
+  // ============ BIDDING LOGIC ============
+  (function() {
+    let currentBid = 196500;
+    const increment = 1500;
+    const bidInput = document.getElementById('bidInput');
+    const currentBidEl = document.getElementById('currentBid');
+    const nextMinEl = document.getElementById('nextMin');
+    const placeBidBtn = document.getElementById('placeBid');
+
+    function formatNumber(n) {
+      return n.toLocaleString('en-GB');
+    }
+
+    function updateDisplay() {
+      currentBidEl.textContent = formatNumber(currentBid);
+      const nextMin = currentBid + increment;
+      nextMinEl.textContent = '£' + formatNumber(nextMin);
+      bidInput.value = formatNumber(nextMin);
+    }
+
+    // Quick bid buttons
+    document.querySelectorAll('.quick-bid').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const inc = parseInt(btn.dataset.inc, 10);
+        const nextMin = currentBid + increment;
+        bidInput.value = formatNumber(nextMin + inc);
+      });
+    });
+
+    // Place bid
+    placeBidBtn.addEventListener('click', () => {
+      const raw = bidInput.value.replace(/[^0-9]/g, '');
+      const amount = parseInt(raw, 10);
+      const nextMin = currentBid + increment;
+
+      if (!amount || amount < nextMin) {
+        bidInput.style.borderColor = '#b8442a';
+        bidInput.style.background = 'rgba(184,68,42,0.06)';
+        setTimeout(() => {
+          bidInput.style.borderColor = '';
+          bidInput.style.background = '';
+        }, 1200);
+        return;
+      }
+
+      currentBid = amount;
+      updateDisplay();
+
+      // Success feedback
+      placeBidBtn.textContent = 'Bid Placed ✓';
+      placeBidBtn.style.background = '#4a5d3a';
+      setTimeout(() => {
+        placeBidBtn.textContent = 'Place Bid';
+        placeBidBtn.style.background = '';
+      }, 1600);
+    });
+
+    // Format input on blur
+    bidInput.addEventListener('blur', () => {
+      const raw = bidInput.value.replace(/[^0-9]/g, '');
+      if (raw) bidInput.value = formatNumber(parseInt(raw, 10));
+    });
+
+    updateDisplay();
+  })();
+
+  // ============ WATCH TOGGLE ============
+  (function() {
+    const watch = document.querySelector('.bid-footer .watch');
+    let watching = false;
+    watch.addEventListener('click', () => {
+      watching = !watching;
+      const span = watch.querySelector('span');
+      span.textContent = watching ? 'Watching ✓' : 'Watch this lot';
+      watch.style.color = watching ? '#b8442a' : '';
+    });
+  })();
+</script>
+
+</body>
+</html>

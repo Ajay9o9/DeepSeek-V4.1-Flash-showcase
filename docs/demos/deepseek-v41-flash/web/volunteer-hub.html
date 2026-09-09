@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOLUNTEER / HUB — Find your place in the work that matters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1f1c;
+    --ink-soft: #3d4540;
+    --paper: #f4f1ea;
+    --paper-warm: #ebe6da;
+    --moss: #2d4a3e;
+    --moss-deep: #1e3329;
+    --clay: #c65f3f;
+    --clay-soft: #e08a6b;
+    --sun: #e8b84b;
+    --sky: #a8c5d6;
+    --line: rgba(26, 31, 28, 0.12);
+    --line-strong: rgba(26, 31, 28, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--moss);
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+
+  .logo-mark::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sun);
+  }
+
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px dashed var(--moss);
+    opacity: 0.5;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--clay); }
+
+  .nav-links a.active { color: var(--ink); }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -22px;
+    height: 2px;
+    background: var(--clay);
+  }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-ghost {
+    color: var(--ink);
+    background: transparent;
+  }
+  .btn-ghost:hover { background: var(--paper-warm); }
+
+  .btn-primary {
+    background: var(--moss);
+    color: var(--paper);
+  }
+  .btn-primary:hover {
+    background: var(--moss-deep);
+    transform: translateY(-1px);
+  }
+
+  .btn-clay {
+    background: var(--clay);
+    color: var(--paper);
+  }
+  .btn-clay:hover {
+    background: #a94a2e;
+    transform: translateY(-1px);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 72px 48px 96px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--moss);
+    padding: 6px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero-eyebrow .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--clay);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 5.4vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  .hero h1 .underline {
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .underline::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 6px;
+    height: 12px;
+    background: var(--sun);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 36px;
+    line-height: 1.55;
+  }
+
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    padding: 6px 6px 6px 22px;
+    max-width: 560px;
+    box-shadow: 0 4px 24px rgba(26, 31, 28, 0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .search-bar:focus-within {
+    border-color: var(--moss);
+    box-shadow: 0 6px 32px rgba(45, 74, 62, 0.15);
+  }
+
+  .search-bar svg { flex-shrink: 0; color: var(--ink-soft); }
+
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15.5px;
+    color: var(--ink);
+    padding: 12px 14px;
+  }
+
+  .search-bar input::placeholder { color: #9a9a92; }
+
+  .search-bar .divider {
+    width: 1px;
+    height: 24px;
+    background: var(--line);
+    margin: 0 4px;
+  }
+
+  .search-bar select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 12px 8px;
+    cursor: pointer;
+  }
+
+  .search-bar .btn-primary {
+    padding: 12px 24px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    align-items: center;
+  }
+
+  .hero-tags .label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+
+  .tag {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: var(--paper-warm);
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .tag:hover {
+    background: var(--moss);
+    color: var(--paper);
+  }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    height: 520px;
+  }
+
+  .hero-card {
+    position: absolute;
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 20px 60px rgba(26, 31, 28, 0.12);
+    border: 1px solid var(--line);
+  }
+
+  .hero-card-main {
+    top: 20px;
+    right: 0;
+    width: 340px;
+    z-index: 3;
+  }
+
+  .hero-card-main .card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .org-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--moss), var(--moss-deep));
+    display: grid;
+    place-items: center;
+    color: var(--sun);
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .org-avatar.clay { background: linear-gradient(135deg, var(--clay), #a94a2e); color: #fff; }
+  .org-avatar.sun { background: linear-gradient(135deg, var(--sun), #c99a2e); color: var(--moss-deep); }
+
+  .card-head .org-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .card-head .org-meta {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .hero-card-main h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .hero-card-main p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .hero-card-saved {
+    bottom: 40px;
+    left: 0;
+    width: 260px;
+    z-index: 4;
+    background: var(--moss);
+    color: var(--paper);
+    border: none;
+  }
+
+  .hero-card-saved .saved-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-card-saved h5 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .hero-card-saved p {
+    font-size: 13px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+
+  .hero-card-stat {
+    top: 200px;
+    left: 20px;
+    width: 200px;
+    z-index: 2;
+    background: var(--sun);
+    border: none;
+    color: var(--moss-deep);
+  }
+
+  .hero-card-stat .big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-card-stat .label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .hero-card-stat .sub {
+    font-size: 11.5px;
+    opacity: 0.7;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Decorative shapes */
+  .deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .deco-1 {
+    width: 180px; height: 180px;
+    background: var(--sky);
+    opacity: 0.35;
+    top: 60px;
+    left: 40px;
+  }
+
+  .deco-2 {
+    width: 100px; height: 100px;
+    border: 2px dashed var(--clay);
+    opacity: 0.4;
+    bottom: 120px;
+    right: 40px;
+  }
+
+  /* ---------- IMPACT STRIP ---------- */
+  .impact {
+    background: var(--moss-deep);
+    color: var(--paper);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .impact::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 184, 75, 0.12), transparent 70%);
+  }
+
+  .impact-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    position: relative;
+  }
+
+  .impact-item {
+    border-left: 1px solid rgba(244, 241, 234, 0.15);
+    padding-left: 28px;
+  }
+
+  .impact-item:first-child { border-left: none; padding-left: 0; }
+
+  .impact-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--sun);
+    margin-bottom: 8px;
+  }
+
+  .impact-num .unit {
+    font-size: 28px;
+    color: var(--paper);
+    opacity: 0.6;
+  }
+
+  .impact-label {
+    font-size: 14.5px;
+    color: rgba(244, 241, 234, 0.75);
+    line-height: 1.4;
+  }
+
+  /* ---------- SECTION ---------- */
+  section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 3.4vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 620px;
+  }
+
+  .section-head h2 em {
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  .section-head .desc {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 380px;
+    line-height: 1.55;
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  /* ---------- CAUSES ---------- */
+  .causes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .cause-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+  }
+
+  .cause-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(26, 31, 28, 0.1);
+    border-color: var(--moss);
+  }
+
+  .cause-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    transition: transform 0.25s;
+  }
+
+  .cause-card:hover .cause-icon { transform: scale(1.08) rotate(-4deg); }
+
+  .cause-icon svg { width: 26px; height: 26px; }
+
+  .cause-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .cause-card p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .cause-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--clay);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cause-count::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .cause-card:hover .cause-count::after { transform: translateX(4px); }
+
+  /* ---------- SHIFTS ---------- */
+  .shifts-section {
+    background: var(--paper-warm);
+    max-width: none;
+    padding: 96px 0;
+  }
+
+  .shifts-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .shifts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .shift-row {
+    display: grid;
+    grid-template-columns: 90px 1fr auto auto;
+    gap: 28px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 28px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .shift-row:hover {
+    border-color: var(--moss);
+    box-shadow: 0 8px 24px rgba(26, 31, 28, 0.07);
+    transform: translateX(4px);
+  }
+
+  .shift-date {
+    text-align: center;
+    border-right: 1px solid var(--line);
+    padding-right: 20px;
+  }
+
+  .shift-date .day {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--clay);
+  }
+
+  .shift-date .month {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .shift-info h4 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .shift-info .org {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .shift-info .org .dot-sep {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+    opacity: 0.5;
+  }
+
+  .shift-tags {
+    display: flex;
+    gap: 8px;
+  }
+
+  .shift-tag {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--paper-warm);
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .shift-tag.urgent {
+    background: rgba(198, 95, 63, 0.12);
+    color: var(--clay);
+  }
+
+  .shift-action {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .shift-spots {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  .shift-spots strong { color: var(--moss); font-weight: 600; }
+
+  .shift-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--paper-warm);
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .shift-row:hover .shift-arrow {
+    background: var(--moss);
+    color: var(--paper);
+  }
+
+  /* ---------- SAVED + CTA ---------- */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: stretch;
+  }
+
+  .saved-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 36px;
+  }
+
+  .saved-panel .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .saved-panel h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+  }
+
+  .saved-panel .count-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--moss);
+    color: var(--paper);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  .saved-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+
+  .saved-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .saved-item .org-avatar { width: 40px; height: 40px; font-size: 17px; border-radius: 10px; }
+
+  .saved-item .info { flex: 1; }
+  .saved-item .info h5 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .saved-item .info p {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .saved-item .bookmark {
+    color: var(--clay);
+    flex-shrink: 0;
+  }
+
+  .cta-panel {
+    background: var(--moss);
+    color: var(--paper);
+    border-radius: 24px;
+    padding: 44px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cta-panel::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 184, 75, 0.2), transparent 70%);
+  }
+
+  .cta-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 2px dashed rgba(244, 241, 234, 0.2);
+  }
+
+  .cta-panel .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .cta-panel h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-panel p {
+    font-size: 15px;
+    opacity: 0.8;
+    line-height: 1.55;
+    margin-bottom: 32px;
+    position: relative;
+    max-width: 380px;
+  }
+
+  .cta-panel .btn-clay {
+    align-self: flex-start;
+    position: relative;
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 48px 32px;
+  }
+
+  .footer-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+  }
+
+  .footer-brand .logo { color: var(--paper); margin-bottom: 20px; }
+  .footer-brand .logo-mark { background: var(--sun); }
+  .footer-brand .logo-mark::before { background: var(--moss-deep); }
+  .footer-brand .logo-mark::after { border-color: var(--sun); }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(244, 241, 234, 0.6);
+    line-height: 1.6;
+    max-width: 300px;
+  }
+
+  .footer-col h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: rgba(244, 241, 234, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--paper); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 13px;
+    color: rgba(244, 241, 234, 0.5);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom .socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .footer-bottom .socials a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(244, 241, 234, 0.2);
+    display: grid;
+    place-items: center;
+    color: rgba(244, 241, 234, 0.7);
+    transition: all 0.2s;
+  }
+
+  .footer-bottom .socials a:hover {
+    background: var(--sun);
+    color: var(--moss-deep);
+    border-color: var(--sun);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { height: 460px; max-width: 500px; }
+    .causes-grid { grid-template-columns: repeat(2, 1fr); }
+    .impact-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .impact-item:nth-child(3) { border-left: none; padding-left: 0; }
+    .bottom-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 820px) {
+    .nav-inner { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 48px 24px 64px; }
+    section { padding: 64px 24px; }
+    .shifts-inner { padding: 0 24px; }
+    .impact { padding: 48px 24px; }
+    .shift-row { grid-template-columns: 70px 1fr; gap: 16px; }
+    .shift-tags, .shift-action { grid-column: 2; }
+    .shift-action { justify-content: space-between; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    footer { padding: 48px 24px 24px; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 560px) {
+    .causes-grid { grid-template-columns: 1fr; }
+    .impact-inner { grid-template-columns: 1fr; }
+    .impact-item { border-left: none; padding-left: 0; border-top: 1px solid rgba(244,241,234,0.15); padding-top: 24px; }
+    .impact-item:first-child { border-top: none; padding-top: 0; }
+    .search-bar { flex-wrap: wrap; border-radius: 20px; padding: 12px; }
+    .search-bar input { width: 100%; }
+    .search-bar .divider { display: none; }
+    .search-bar .btn-primary { width: 100%; justify-content: center; margin-top: 8px; }
+    .hero-card-main { width: 280px; }
+    .hero-card-saved { width: 220px; }
+    .hero-card-stat { width: 160px; }
+    .hero-card-stat .big { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      VOLUNTEER / HUB
+    </a>
+    <ul class="nav-links">
+      <li><a href="#opportunities" class="active">Opportunities</a></li>
+      <li><a href="#causes">Causes</a></li>
+      <li><a href="#shifts">Shifts</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#organizations">For Organizations</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Join the hub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="opportunities">
+  <div class="hero-content">
+    <span class="hero-eyebrow">
+      <span class="dot"></span>
+      1,247 open shifts this week
+    </span>
+    <h1>Find your place in the <em>work</em> that <span class="underline">matters</span>.</h1>
+    <p class="hero-sub">Connect with local organizations, commit to causes you care about, and track the difference you make — all in one place.</p>
+
+    <form class="search-bar" onsubmit="event.preventDefault();">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search roles, orgs, or skills…" aria-label="Search opportunities">
+      <span class="divider"></span>
+      <select aria-label="Location">
+        <option>Near me</option>
+        <option>Remote</option>
+        <option>Brooklyn, NY</option>
+        <option>Oakland, CA</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div class="hero-tags">
+      <span class="label">Popular:</span>
+      <a href="#" class="tag">Food rescue</a>
+      <a href="#" class="tag">Tutoring</a>
+      <a href="#" class="tag">Trail cleanup</a>
+      <a href="#" class="tag">Senior care</a>
+      <a href="#" class="tag">Animal shelter</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="deco-circle deco-1"></div>
+    <div class="deco-circle deco-2"></div>
+
+    <div class="hero-card hero-card-main">
+      <div class="card-head">
+        <div class="org-avatar">R</div>
+        <div>
+          <div class="org-name">Riverside Food Bank</div>
+          <div class="org-meta">Brooklyn, NY · 2.4 mi away</div>
+        </div>
+      </div>
+      <h4>Weekend produce sorting &amp; distribution</h4>
+      <p>Help sort fresh produce and pack family boxes for neighbors facing food insecurity.</p>
+      <div class="card-meta">
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Sat, Nov 16
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          3 hrs
+        </span>
+      </div>
+    </div>
+
+    <div class="hero-card hero-card-stat">
+      <div class="big">18k</div>
+      <div class="label">volunteers active this month</div>
+      <div class="sub">+12% vs. last month</div>
+    </div>
+
+    <div class="hero-card hero-card-saved">
+      <div class="saved-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12a2 2 0 0 1 2 2v18l-8-5-8 5V4a2 2 0 0 1 2-2z"/></svg>
+        Saved for later
+      </div>
+      <h5>Community garden build day</h5>
+      <p>Green Roots Collective · Sun, Nov 17</p>
+    </div>
+  </div>
+</header>
+
+<!-- IMPACT STRIP -->
+<section class="impact" id="impact">
+  <div class="impact-inner">
+    <div class="impact-item">
+      <div class="impact-num">2.4<span class="unit">M</span></div>
+      <div class="impact-label">Hours contributed by hub volunteers since 2019</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">3,180</div>
+      <div class="impact-label">Partner organizations across 42 cities</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">$58<span class="unit">M</span></div>
+      <div class="impact-label">Estimated community value created last year</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">94<span class="unit">%</span></div>
+      <div class="impact-label">Of volunteers return for a second shift</div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUSES -->
+<section id="causes">
+  <div class="section-head">
+    <div>
+      <span class="section-eyebrow">Browse by cause</span>
+      <h2>Where do you want to make a <em>difference</em>?</h2>
+    </div>
+    <p class="desc">Every cause on the hub is vetted, verified, and connected to real organizations doing the work on the ground.</p>
+  </div>
+
+  <div class="causes-grid">
+    <a href="#" class="cause-card">
+      <div class="cause-icon" style="background: rgba(198, 95, 63, 0.12); color: var(--clay);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M5 11v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8"/></svg>
+      </div>
+      <h3>Food &amp; Hunger</h3>
+      <p>Sort produce, pack boxes, and deliver meals to families facing food insecurity.</p>
+      <span class="cause-count">312 open roles</span>
+    </a>
+
+    <a href="#" class="cause-card">
+      <div class="cause-icon" style="background: rgba(45, 74, 62, 0.12); color: var(--moss);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+      </div>
+      <h3>Environment</h3>
+      <p>Restore trails, plant trees, and protect local waterways with community crews.</p>
+      <span class="cause-count">248 open roles</span>
+    </a>
+
+    <a href="#" class="cause-card">
+      <div class="cause-icon" style="background: rgba(232, 184, 75, 0.18); color: #a07a1e;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <h3>Education</h3>
+      <p>Tutor students, mentor teens, and support after-school programs in your area.</p>
+      <span class="cause-count">186 open roles</span>
+    </a>
+
+    <a href="#" class="cause-card">
+      <div class="cause-icon" style="background: rgba(168, 197, 214, 0.3); color: #4a6b7d;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </div>
+      <h3>Health &amp; Care</h3>
+      <p>Visit seniors, support clinics, and provide companionship to those who need it.</p>
+      <span class="cause-count">204 open roles</span>
+    </a>
+  </div>
+</section>
+
+<!-- SHIFTS -->
+<section class="shifts-section" id="shifts">
+  <div class="shifts-inner">
+    <div class="section-head">
+      <div>
+        <span class="section-eyebrow">Upcoming shifts</span>
+        <h2>Pick a time. Show up. <em>Change something.</em></h2>
+      </div>
+      <a href="#" class="btn btn-ghost" style="border: 1px solid var(--line-strong);">View all 1,247 shifts →</a>
+    </div>
+
+    <div class="shifts-list">
+      <a href="#" class="shift-row">
+        <div class="shift-date">
+          <div class="day">16</div>
+          <div class="month">Nov</div>
+        </div>
+        <div class="shift-info">
+          <h4>Weekend produce sorting &amp; distribution</h4>
+          <div class="org">
+            Riverside Food Bank
+            <span class="dot-sep"></span>
+            Brooklyn, NY
+          </div>
+        </div>
+        <div class="shift-tags">
+          <span class="shift-tag">Food &amp; Hunger</span>
+          <span class="shift-tag urgent">Urgent</span>
+        </div>
+        <div class="shift-action">
+          <div class="shift-spots"><strong>8</strong> spots left</div>
+          <div class="shift-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="shift-row">
+        <div class="shift-date">
+          <div class="day">17</div>
+          <div class="month">Nov</div>
+        </div>
+        <div class="shift-info">
+          <h4>Community garden build day</h4>
+          <div class="org">
+            Green Roots Collective
+            <span class="dot-sep"></span>
+            Oakland, CA
+          </div>
+        </div>
+        <div class="shift-tags">
+          <span class="shift-tag">Environment</span>
+        </div>
+        <div class="shift-action">
+          <div class="shift-spots"><strong>14</strong> spots left</div>
+          <div class="shift-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="shift-row">
+        <div class="shift-date">
+          <div class="day">19</div>
+          <div class="month">Nov</div>
+        </div>
+        <div class="shift-info">
+          <h4>After-school reading buddies (grades 2–4)</h4>
+          <div class="org">
+            Maplewood Learning Center
+            <span class="dot-sep"></span>
+            Remote
+          </div>
+        </div>
+        <div class="shift-tags">
+          <span class="shift-tag">Education</span>
+          <span class="shift-tag">Remote</span>
+        </div>
+        <div class="shift-action">
+          <div class="shift-spots"><strong>3</strong> spots left</div>
+          <div class="shift-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="shift-row">
+        <div class="shift-date">
+          <div class="day">23</div>
+          <div class="month">Nov</div>
+        </div>
+        <div class="shift-info">
+          <h4>Senior companionship visits — Cedar Grove</h4>
+          <div class="org">
+            Cedar Grove Senior Living
+            <span class="dot-sep"></span>
+            Brooklyn, NY
+          </div>
+        </div>
+        <div class="shift-tags">
+          <span class="shift-tag">Health &amp; Care</span>
+        </div>
+        <div class="shift-action">
+          <div class="shift-spots"><strong>6</strong> spots left</div>
+          <div class="shift-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SAVED + CTA -->
+<section id="organizations">
+  <div class="bottom-grid">
+    <div class="saved-panel">
+      <div class="panel-head">
+        <h3>Saved opportunities</h3>
+        <span class="count-badge">3 saved</span>
+      </div>
+
+      <div class="saved-item">
+        <div class="org-avatar clay">G</div>
+        <div class="info">
+          <h5>Community garden build day</h5>
+          <p>Green Roots Collective · Sun, Nov 17</p>
+        </div>
+        <svg class="bookmark" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12a2 2 0 0 1 2 2v18l-8-5-8 5V4a2 2 0 0 1 2-2z"/></svg>
+      </div>
+
+      <div class="saved-item">
+        <div class="org-avatar sun">M</div>
+        <div class="info">
+          <h5>After-school reading buddies</h5>
+          <p>Maplewood Learning Center · Tue, Nov 19</p>
+        </div>
+        <svg class="bookmark" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12a2 2 0 0 1 2 2v18l-8-5-8 5V4a2 2 0 0 1 2-2z"/></svg>
+      </div>
+
+      <div class="saved-item">
+        <div class="org-avatar">R</div>
+        <div class="info">
+          <h5>Weekend produce sorting</h5>
+          <p>Riverside Food Bank · Sat, Nov 16</p>
+        </div>
+        <svg class="bookmark" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12a2 2 0 0 1 2 2v18l-8-5-8 5V4a2 2 0 0 1 2-2z"/></svg>
+      </div>
+    </div>
+
+    <div class="cta-panel">
+      <div>
+        <div class="eyebrow">For organizations</div>
+        <h3>Post a shift. Reach thousands of ready volunteers.</h3>
+        <p>Whether you're a neighborhood nonprofit or a national network, the hub gives you the tools to recruit, schedule, and celebrate your volunteers.</p>
+      </div>
+      <a href="#" class="btn btn-clay">
+        List your organization
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark"></span>
+          VOLUNTEER / HUB
+        </a>
+        <p>A community-powered platform connecting people to the causes and organizations that need them most.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Volunteer</h5>
+        <ul>
+          <li><a href="#">Browse opportunities</a></li>
+          <li><a href="#">Causes</a></li>
+          <li><a href="#">Saved shifts</a></li>
+          <li><a href="#">Impact tracker</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Organizations</h5>
+        <ul>
+          <li><a href="#">Post a shift</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Success stories</a></li>
+          <li><a href="#">Partner directory</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#">Our mission</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2024 Volunteer Hub. Built with care in Brooklyn.</div>
+      <div class="socials">
+        <a href="#" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21H9z"/></svg>
+        </a>
+        <a href="#" aria-label="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
