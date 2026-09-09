@@ -1,11 +1,21 @@
 # DeepSeek-V4.1 Flash Showcase
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/ajay9o9?style=for-the-badge&logo=github)](https://github.com/sponsors/ajay9o9)
+[![Open the live showcase](https://img.shields.io/badge/Live_Showcase-DeepSeek--V4.1--Flash-4d6bfe?style=for-the-badge)](https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/)
 [![Follow on X](https://img.shields.io/badge/Follow_on_X-%40ItsmeAjayKV-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/ItsmeAjayKV)
 
 100 websites, one sample each, generated with **DeepSeek-V4.1-Flash** via the
 official API. Same gallery theme as [Qwen3.8 Showcase](https://ajay9o9.github.io/Qwen3.8-showcase/):
 cards, live HTML, presentation mode. Three.js scenes are not part of this repo.
+
+**[Open the live DeepSeek-V4.1 Flash Showcase ↗](https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/)** — browse the generated websites, click any card to open the original page, or use the presentation view.
+
+<p align="center">
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/architecture-studio/desktop.png" alt="DeepSeek architecture studio" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/creative-gallery/desktop.png" alt="DeepSeek creative gallery" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/cinema-streaming/desktop.png" alt="DeepSeek cinema streaming" width="48%"></a>
+  <a href="https://ajay9o9.github.io/DeepSeek-V4.1-Flash-showcase/"><img src="docs/screenshots/deepseek-v41-flash/web/fashion-editorial/desktop.png" alt="DeepSeek fashion editorial" width="48%"></a>
+</p>
 
 Local preview (after export):
 
